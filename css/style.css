@@ -336,3 +336,11 @@ nav a:hover, nav a.active{
         display: none;
     }
 }
+/* Mobile Navigation Toggle Styles */
+#nav-menu {
+    display: none; /* Keeps it hidden until clicked */
+}
+
+#nav-menu.show {
+    display: block !important; /* Forces it to show when clicked */
+}
