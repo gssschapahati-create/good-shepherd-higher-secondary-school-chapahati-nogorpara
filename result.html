@@ -1,167 +1,284 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Examination Results - Good Shepherd School</title>
-  <!-- Links to your main styling files -->
-  <link rel="icon" type="image/png" href="images/favico.png">
-  <link rel="stylesheet" href="css/style.css">
-  
-  <style>
-    /* Styling for the synchronized Result Box Section */
-    .modern-notice-card {
-      width: 95%;
-      max-width: 850px;
-      margin: 40px auto;
-      background: #ffffff;
-      border-radius: 12px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-      border: 1px solid #eef2f5;
-      font-family: 'Segoe UI', system-ui, sans-serif;
-      overflow: hidden;
-    }
-    .notice-card-header {
-      background: linear-gradient(135deg, #31aab7, #248c98);
-      padding: 18px 24px;
-      color: #ffffff;
-    }
-    .header-title {
-      font-size: 1.2rem;
-      font-weight: 600;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      letter-spacing: 0.5px;
-    }
-    .notice-list-wrapper {
-      padding: 10px 24px;
-      background: #fafbfc;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-    .modern-notice-item {
-      background: #ffffff;
-      padding: 16px 20px;
-      border-radius: 8px;
-      border-left: 4px solid #31aab7;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-    .modern-notice-item:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-    }
-    .notice-meta {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 6px;
-    }
-    .notice-date {
-      font-size: 0.85rem;
-      color: #8898aa;
-      font-weight: 600;
-    }
-    .badge-new {
-      background: #ffe2e2;
-      color: #ff4d4d;
-      font-size: 0.7rem;
-      font-weight: 700;
-      padding: 2px 8px;
-      border-radius: 20px;
-      letter-spacing: 0.5px;
-    }
-    .notice-body {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 20px;
-    }
-    .notice-text {
-      font-size: 1rem;
-      color: #32325d;
-      font-weight: 500;
-      margin: 0;
-      line-height: 1.4;
-    }
-    .notice-btn {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      padding: 8px 16px;
-      font-size: 0.85rem;
-      font-weight: 600;
-      border-radius: 6px;
-      text-decoration: none;
-      white-space: nowrap;
-      transition: all 0.2s;
-    }
-    .btn-dl { background: #e8f7f9; color: #248c98; }
-    .btn-dl:hover { background: #31aab7; color: #ffffff; }
-    .btn-ln { background: #e6f0ff; color: #0061ff; }
-    .btn-ln:hover { background: #0061ff; color: #ffffff; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Examination Results - Good Shepherd School</title>
+    <link rel="icon" type="images/png" href="images/favico.png">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* CSS styling for the Automated Hero Banner Slideshow */
+        .slider-container {
+            position: relative;
+            width: 100%;
+            height: 450px;
+            overflow: hidden;
+            background-color: #000;
+        }
+        .slides-wrapper {
+            display: flex;
+            width: 300%;
+            height: 100%;
+            animation: schoolSlideshow 15s infinite ease-in-out;
+        }
+        .slide-img {
+            width: 33.333%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        @keyframes schoolSlideshow {
+            0%, 28% { transform: translateX(0%); }
+            33%, 61% { transform: translateX(-33.333%); }
+            66%, 94% { transform: translateX(-66.666%); }
+            100% { transform: translateX(0%); }
+        }
+        .slider-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.45);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: #ffffff;
+            padding: 20px;
+            box-sizing: border-box;
+            z-index: 5;
+        }
+        .animate-school-name {
+            font-size: 2.5rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin: 0;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
+            animation: textFadeTracking 2.5s ease-out infinite alternate;
+        }
+        @keyframes textFadeTracking {
+            0% { letter-spacing: 1px; opacity: 0.8; transform: scale(0.98); }
+            100% { letter-spacing: 4px; opacity: 1; transform: scale(1.02); }
+        }
+
+        /* Centered Bottom-Middle Footer Styling Block */
+        .site-footer {
+            background-color: #222222;
+            color: #bbbbbb;
+            padding: 30px 0;
+            font-size: 14px;
+            text-align: center;
+            border-top: 3px solid #2e7d32;
+            margin-top: 40px;
+            width: 100%;
+        }
+        .site-footer .container { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+        .site-footer p { margin: 5px 0; }
+
+        @media (max-width: 768px) {
+            .slider-container { height: 250px; }
+            .animate-school-name { font-size: 1.5rem; }
+        }
+
+        /* =======================================================
+           Professional Static Notice & Result Component Card Box 
+           ======================================================= */
+        .modern-notice-card {
+            width: 95%;
+            max-width: 850px;
+            margin: 40px auto;
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            border: 1px solid #eef2f5;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            overflow: hidden;
+        }
+        .notice-card-header {
+            background: linear-gradient(135deg, #31aab7, #248c98);
+            padding: 18px 24px;
+            color: #ffffff;
+        }
+        .header-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            letter-spacing: 0.5px;
+        }
+        .notice-list-wrapper {
+            padding: 10px 24px;
+            background: #fafbfc;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .modern-notice-item {
+            background: #ffffff;
+            padding: 16px 20px;
+            border-radius: 8px;
+            border-left: 4px solid #31aab7;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .modern-notice-item:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+        .notice-meta {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 6px;
+        }
+        .notice-date {
+            font-size: 0.85rem;
+            color: #8898aa;
+            font-weight: 600;
+        }
+        .badge-new {
+            background: #ffe2e2;
+            color: #ff4d4d;
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 20px;
+            letter-spacing: 0.5px;
+        }
+        .notice-body {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+        }
+        .notice-text {
+            font-size: 1rem;
+            color: #32325d;
+            font-weight: 500;
+            margin: 0;
+            line-height: 1.4;
+            text-align: left;
+        }
+        .notice-btn {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            border-radius: 6px;
+            text-decoration: none;
+            white-space: nowrap;
+            transition: all 0.2s;
+        }
+        .btn-dl { background: #e8f7f9; color: #248c98; }
+        .btn-dl:hover { background: #31aab7; color: #ffffff; }
+        .btn-ln { background: #e6f0ff; color: #0061ff; }
+        .btn-ln:hover { background: #0061ff; color: #ffffff; }
+    </style>
 </head>
 <body>
 
-  <!-- Complete Site Navigation (Matches folder structure in screenshot) -->
-  <nav class="navbar">
-    <div class="nav-container">
-      <a href="index.html">Home</a>
-      <a href="about.html">About</a>
-      <a href="admission.html">Admission</a>
-      <a href="events.html">Events</a>
-      <a href="faculty.html">Faculty</a>
-      <a href="gallery.html">Gallery</a>
-      <a href="result.html" class="active">Result</a>
-      <a href="notice.html">Notice</a>
-      <a href="contact.html">Contact</a>
-      <a href="blog.html">Blog</a>
-    </div>
-  </nav>
-
-  <!-- Clean Static Box Results Component Layout -->
-  <div class="modern-notice-card">
-    <div class="notice-card-header">
-      <div class="header-title">
-        <span class="header-icon">🎓</span> Academic Examination Results
-      </div>
+    <!-- Motto Top Ribbon Banner -->
+    <div class="header">
+        <div class="container flex-header"><b>Our School Motto:</b> <marquee class="motto-marquee">"To Learn, To Lead"</marquee></div>
     </div>
 
-    <div class="notice-list-wrapper">
-      
-      <!-- Result Entry Row 1 -->
-      <div class="modern-notice-item">
-        <div class="notice-meta">
-          <span class="notice-date">19-May-2026</span>
-          <span class="badge-new">NEW</span>
+    <!-- Complete Unified Site Navigation Header Block Menu -->
+    <div class="nav-wrapper">
+        <div class="container nav-container">
+            <img src="images/logo.png" alt="School Logo" class="logo">
+            <button class="menu-toggle" id="mobile-menu">☰</button>
+            <nav id="nav-menu">
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="admission.html">Admission</a>
+                <a href="events.html">Events</a>
+                <a href="faculty.html">Faculty</a>
+                <a href="gallery.html">Gallery</a>
+                <a href="result.html" class="active">Result</a>
+                <a href="notice.html">Notice</a>
+                <a href="contact.html">Contact</a>
+                <a href="blog.html">Blog</a>
+            </nav>
         </div>
-        <div class="notice-body">
-          <p class="notice-text">Final Board Promotion Examination Results - Class X</p>
-          <a href="#" class="notice-btn btn-dl">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg> Download Result
-          </a>
-        </div>
-      </div>
-
-      <!-- Result Entry Row 2 -->
-      <div class="modern-notice-item">
-        <div class="notice-meta">
-          <span class="notice-date">15-May-2026</span>
-          <span class="badge-new">NEW</span>
-        </div>
-        <div class="notice-body">
-          <p class="notice-text">Annual Clearance Report Card Portal - Class I to VIII</p>
-          <a href="#" class="notice-btn btn-ln">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg> Open Result Portal
-          </a>
-        </div>
-      </div>
-
     </div>
-  </div>
+
+    <!-- Automated Image Slideshow Main Content Area Section Hero Panel -->
+    <div class="slider-container">
+        <div class="slides-wrapper">
+            <img src="images/slide1.jpg" alt="School Banner Image 1" class="slide-img">
+            <img src="images/slide2.jpg" alt="School Banner Image 2" class="slide-img">
+            <img src="images/slide3.jpg" alt="School Banner Image 3" class="slide-img">
+        </div>
+        <div class="slider-overlay">
+            <h1 class="animate-school-name">Good Shepherd School</h1>
+        </div>
+    </div>
+
+    <!-- Professional Clean Static Examination Results Card Display Panel -->
+    <div class="modern-notice-card">
+        <div class="notice-card-header">
+            <div class="header-title">
+                <span class="header-icon">🎓</span> Academic Examination Results
+            </div>
+        </div>
+
+        <div class="notice-list-wrapper">
+          
+            <!-- Result Row Entry 1 -->
+            <div class="modern-notice-item">
+                <div class="notice-meta">
+                    <span class="notice-date">19-May-2026</span>
+                    <span class="badge-new">NEW</span>
+                </div>
+                <div class="notice-body">
+                    <p class="notice-text">Final Board Promotion Examination Results - Class X</p>
+                    <a href="#" class="notice-btn btn-dl">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg> Download Result
+                    </a>
+                </div>
+            </div>
+
+            <!-- Result Row Entry 2 -->
+            <div class="modern-notice-item">
+                <div class="notice-meta">
+                    <span class="notice-date">15-May-2026</span>
+                    <span class="badge-new">NEW</span>
+                </div>
+                <div class="notice-body">
+                    <p class="notice-text">Annual Clearance Report Card Portal - Class I to VIII</p>
+                    <a href="#" class="notice-btn btn-ln">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg> Open Result Portal
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Centered Brand Footer Block -->
+    <footer class="site-footer">
+        <div class="container">
+            <p>&copy; 2026 Good Shepherd Higher Secondary School. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript Mobile Navigation Drawer Engine -->
+    <script>
+        const mobileMenu = document.getElementById('mobile-menu');
+        const navMenu = document.getElementById('nav-menu');
+
+        if(mobileMenu && navMenu) {
+            mobileMenu.addEventListener('click', () => {
+                navMenu.classList.toggle('active');
+            });
+        }
+    </script>
 
 </body>
 </html>
