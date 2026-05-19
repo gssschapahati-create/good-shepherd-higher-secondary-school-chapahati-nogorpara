@@ -107,49 +107,186 @@
             </nav>
         </div>
     </div>
-<!-- Main Notice Box Section -->
-<div class="notice-container">
-  <!-- Fixed Header -->
-  <div class="notice-header">
-    <div class="col-date">Date</div>
-    <div class="col-title">Notice Title</div>
-    <div class="col-action">Action</div>
+<!-- Modern Professional Notice Box Section -->
+<div class="modern-notice-card">
+  <div class="notice-card-header">
+    <div class="header-title">
+      <span class="header-icon">📢</span> Official Notices & Announcements
+    </div>
   </div>
 
-  <!-- Scrolling Content Box -->
-  <div class="marquee-box">
-    <marquee direction="up" scrollamount="4" style="height:320px;" onmouseover="this.stop();" onmouseout="this.start();">
+  <div class="notice-scroll-wrapper">
+    <div class="notice-scroll-content">
       
       <!-- Notice Item 1 -->
-      <div class="notice-row">
-        <div class="col-date">18-Mar-2026</div>
-        <div class="col-title">Registration Notice for Class IX <span class="badge-new">New</span></div>
-        <div class="col-action"><a href="#" class="btn-download">🗀 Download File</a></div>
+      <div class="modern-notice-item">
+        <div class="notice-meta">
+          <span class="notice-date">18-Mar-2026</span>
+          <span class="badge-new">NEW</span>
+        </div>
+        <div class="notice-body">
+          <p class="notice-text">Registration Notice for Class IX</p>
+          <a href="#" class="notice-btn btn-dl">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg> Download File
+          </a>
+        </div>
       </div>
 
       <!-- Notice Item 2 -->
-      <div class="notice-row">
-        <div class="col-date">14-May-2026</div>
-        <div class="col-title">Class XI Registration for ID Card, for the Academic Session 2026-2027 <span class="badge-new">New</span></div>
-        <div class="col-action"><a href="#" class="btn-link">🔗 Click the Link</a></div>
+      <div class="modern-notice-item">
+        <div class="notice-meta">
+          <span class="notice-date">14-May-2026</span>
+          <span class="badge-new">NEW</span>
+        </div>
+        <div class="notice-body">
+          <p class="notice-text">Class XI Registration for ID Card, for the Academic Session 2026-2027</p>
+          <a href="#" class="notice-btn btn-ln">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg> Click the Link
+          </a>
+        </div>
       </div>
 
       <!-- Notice Item 3 -->
-      <div class="notice-row">
-        <div class="col-date">18-Mar-2026</div>
-        <div class="col-title">Tobacco Rally Notice <span class="badge-new">New</span></div>
-        <div class="col-action"><a href="#" class="btn-download">🗀 Download File</a></div>
+      <div class="modern-notice-item">
+        <div class="notice-meta">
+          <span class="notice-date">18-Mar-2026</span>
+          <span class="badge-new">NEW</span>
+        </div>
+        <div class="notice-body">
+          <p class="notice-text">Tobacco Rally Notice & Event Schedule</p>
+          <a href="#" class="notice-btn btn-dl">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg> Download File
+          </a>
+        </div>
       </div>
 
       <!-- Notice Item 4 -->
-      <div class="notice-row">
-        <div class="col-date">14-May-2026</div>
-        <div class="col-title">Notice for the Class XI Submit the Choosen Subject <span class="badge-new">New</span></div>
-        <div class="col-action"><a href="#" class="btn-link">🔗 Click the Link</a></div>
+      <div class="modern-notice-item">
+        <div class="notice-meta">
+          <span class="notice-date">14-May-2026</span>
+          <span class="badge-new">NEW</span>
+        </div>
+        <div class="notice-body">
+          <p class="notice-text">Notice for the Class XI Submit the Chosen Subject Forms</p>
+          <a href="#" class="notice-btn btn-ln">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg> Click the Link
+          </a>
+        </div>
       </div>
 
-    </marquee>
+    </div>
   </div>
+</div>
+
+<!-- Scoped Styles for quick and flawless installation -->
+<style>
+  .modern-notice-card {
+    width: 100%;
+    max-width: 850px;
+    margin: 40px auto;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    border: 1px solid #eef2f5;
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    overflow: hidden;
+  }
+  .notice-card-header {
+    background: linear-gradient(135deg, #31aab7, #248c98);
+    padding: 18px 24px;
+    color: #ffffff;
+  }
+  .header-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    letter-spacing: 0.5px;
+  }
+  .notice-scroll-wrapper {
+    height: 340px;
+    position: relative;
+    overflow: hidden;
+    background: #fafbfc;
+  }
+  .notice-scroll-content {
+    display: flex;
+    flex-direction: column;
+    padding: 10px 20px;
+    animation: smoothScrollUp 20s linear infinite;
+  }
+  .notice-scroll-wrapper:hover .notice-scroll-content {
+    animation-play-state: paused;
+  }
+  .modern-notice-item {
+    background: #ffffff;
+    padding: 20px;
+    margin: 10px 0;
+    border-radius: 8px;
+    border-left: 4px solid #31aab7;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .modern-notice-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+  }
+  .notice-meta {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 8px;
+  }
+  .notice-date {
+    font-size: 0.85rem;
+    color: #8898aa;
+    font-weight: 600;
+  }
+  .badge-new {
+    background: #ffe2e2;
+    color: #ff4d4d;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 20px;
+    letter-spacing: 0.5px;
+  }
+  .notice-body {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+  }
+  .notice-text {
+    font-size: 1rem;
+    color: #32325d;
+    font-weight: 500;
+    margin: 0;
+    line-height: 1.4;
+  }
+  .notice-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    border-radius: 6px;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background 0.2s;
+  }
+  .btn-dl { background: #e8f7f9; color: #248c98; }
+  .btn-dl:hover { background: #31aab7; color: #ffffff; }
+  .btn-ln { background: #e6f0ff; color: #0061ff; }
+  .btn-ln:hover { background: #0061ff; color: #ffffff; }
+
+  @keyframes smoothScrollUp {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-50%); }
+  }
+</style>
              </div>
           </div>
       </div>
