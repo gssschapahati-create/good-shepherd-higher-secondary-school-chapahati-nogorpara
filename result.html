@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Examination Results - Good Shepherd Higher Secondary School</title>
+  <style>
+    /* Global Site Setup */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      background-color: #f4f6f9;
+      font-family: 'Segoe UI', system-ui, sans-serif;
+    }
+
+    /* Top Identity Header Bar */
+    header {
+      background-color: #31aab7;
+      color: white;
+      text-align: center;
+      padding: 20px 10px;
+    }
+    header h1 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 5px;
+    }
+    header p {
+      font-size: 0.95rem;
+      opacity: 0.9;
+    }
+
+    /* Sticky Navigation Menu */
+    nav {
+      background-color: #333;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      display: flex;
+      justify-content: center;
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      padding: 14px 20px;
+      font-size: 1rem;
+      font-weight: 500;
+      transition: background-color 0.2s;
+    }
+    nav a:hover, nav a.active {
+      background-color: #31aab7;
+    }
+
+    /* Modern Professional Layout Container */
+    .modern-notice-card {
+      width: 95%;
+      max-width: 850px;
+      margin: 40px auto;
+      background: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      border: 1px solid #eef2f5;
+      overflow: hidden;
+    }
+
+    /* Shared Box Header Theme */
+    .notice-card-header {
+      background: linear-gradient(135deg, #31aab7, #248c98);
+      padding: 18px 24px;
+      color: #ffffff;
+    }
+    .header-title {
+      font-size: 1.2rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      letter-spacing: 0.5px;
+    }
+
+    /* Static Box List Engine */
+    .notice-list-wrapper {
+      padding: 10px 24px;
+      background: #fafbfc;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    /* Clean Card Rows (Zero Bottom Border Layout) */
+    .modern-notice-item {
+      background: #ffffff;
+      padding: 16px 20px;
+      border-radius: 8px;
+      border-left: 4px solid #31aab7;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .modern-notice-item:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
+
+    /* Meta Information Labels */
+    .notice-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 6px;
+    }
+    .notice-date {
+      font-size: 0.85rem;
+      color: #8898aa;
+      font-weight: 600;
+    }
+    .badge-new {
+      background: #ffe2e2;
+      color: #ff4d4d;
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 20px;
+      letter-spacing: 0.5px;
+    }
+
+    /* Align Row Items */
+    .notice-body {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+    }
+    .notice-text {
+      font-size: 1rem;
+      color: #32325d;
+      font-weight: 500;
+      margin: 0;
+      line-height: 1.4;
+    }
+
+    /* Consistent Action Buttons */
+    .notice-btn {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 16px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      border-radius: 6px;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: all 0.2s;
+    }
+    .btn-dl { background: #e8f7f9; color: #248c98; }
+    .btn-dl:hover { background: #31aab7; color: #ffffff; }
+    .btn-ln { background: #e6f0ff; color: #0061ff; }
+    .btn-ln:hover { background: #0061ff; color: #ffffff; }
+
+    /* Clean Sticky Bottom Footer */
+    footer {
+      background-color: #333;
+      color: white;
+      text-align: center;
+      padding: 15px;
+      font-size: 0.85rem;
+      margin-top: 60px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Logo Branding Header -->
+  <header>
+    <h1>GOOD SHEPHERD HIGHER SECONDARY SCHOOL</h1>
+    <p>Jongksha, Meghalaya - 793015</p>
+  </header>
+
+  <!-- Complete Site Navigation Sync Menu -->
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="about.html">About Us</a>
+    <a href="notice.html">Notice Board</a>
+    <a href="result.html" class="active">Results</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+
+  <!-- Clean Static Box Layout Matching Notice Elements -->
+  <div class="modern-notice-card">
+    <div class="notice-card-header">
+      <div class="header-title">
+        <span class="header-icon">🎓</span> Academic Examination Results
+      </div>
+    </div>
+
+    <div class="notice-list-wrapper">
+      
+      <!-- Result Item 1 -->
+      <div class="modern-notice-item">
+        <div class="notice-meta">
+          <span class="notice-date">19-May-2026</span>
+          <span class="badge-new">NEW</span>
+        </div>
+        <div class="notice-body">
+          <p class="notice-text">Final Board Promotion Examination Results - Class X</p>
+          <a href="#" class="notice-btn btn-dl">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg> Download Result
+          </a>
+        </div>
+      </div>
+
+      <!-- Result Item 2 -->
+      <div class="modern-notice-item">
+        <div class="notice-meta">
+          <span class="notice-date">15-May-2026</span>
+          <span class="badge-new">NEW</span>
+        </div>
+        <div class="notice-body">
+          <p class="notice-text">Annual Clearance Report Card Portal - Class I to VIII</p>
+          <a href="#" class="notice-btn btn-ln">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg> Open Result Portal
+          </a>
+        </div>
+      </div>
+
+      <!-- Result Item 3 -->
+      <div class="modern-notice-item">
+        <div class="notice-meta">
+          <span class="notice-date">12-May-2026</span>
+          <span class="badge-new">NEW</span>
+        </div>
+        <div class="notice-body">
+          <p class="notice-text">Higher Secondary Selection Test Results - Class XII</p>
+          <a href="#" class="notice-btn btn-dl">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg> Download File
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Footer Layout Block -->
+  <footer>
+    <p>&copy; 2026 Good Shepherd Higher Secondary School. All Rights Reserved.</p>
+  </footer>
+
+</body>
+</html>
