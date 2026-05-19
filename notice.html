@@ -107,7 +107,7 @@
             </nav>
         </div>
     </div>
-<!-- Modern Professional Notice Box Section -->
+<!-- Professional Scrollable Notice Box Section -->
 <div class="modern-notice-card">
   <div class="notice-card-header">
     <div class="header-title">
@@ -116,7 +116,8 @@
   </div>
 
   <div class="notice-scroll-wrapper">
-    <div class="notice-scroll-content">
+    <!-- Scrolling Content Engine -->
+    <marquee direction="up" scrollamount="3" style="height: 340px;" onmouseover="this.stop();" onmouseout="this.start();">
       
       <!-- Notice Item 1 -->
       <div class="modern-notice-item">
@@ -174,11 +175,11 @@
         </div>
       </div>
 
-    </div>
+    </marquee>
   </div>
 </div>
 
-<!-- Scoped Styles for quick and flawless installation -->
+<!-- Scoped CSS Styles -->
 <style>
   .modern-notice-card {
     width: 100%;
@@ -206,37 +207,23 @@
   }
   .notice-scroll-wrapper {
     height: 340px;
-    position: relative;
-    overflow: hidden;
-    background: #fafbfc;
-  }
-  .notice-scroll-content {
-    display: flex;
-    flex-direction: column;
     padding: 10px 20px;
-    animation: smoothScrollUp 20s linear infinite;
-  }
-  .notice-scroll-wrapper:hover .notice-scroll-content {
-    animation-play-state: paused;
+    background: #fafbfc;
+    overflow: hidden;
   }
   .modern-notice-item {
     background: #ffffff;
-    padding: 20px;
-    margin: 10px 0;
+    padding: 16px 20px;
+    margin-bottom: 12px;
     border-radius: 8px;
     border-left: 4px solid #31aab7;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-  }
-  .modern-notice-item:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
   }
   .notice-meta {
     display: flex;
     align-items: center;
     gap: 12px;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
   }
   .notice-date {
     font-size: 0.85rem;
@@ -248,7 +235,7 @@
     color: #ff4d4d;
     font-size: 0.7rem;
     font-weight: 700;
-    padding: 3px 8px;
+    padding: 2px 8px;
     border-radius: 20px;
     letter-spacing: 0.5px;
   }
@@ -275,17 +262,12 @@
     border-radius: 6px;
     text-decoration: none;
     white-space: nowrap;
-    transition: background 0.2s;
+    transition: all 0.2s;
   }
   .btn-dl { background: #e8f7f9; color: #248c98; }
   .btn-dl:hover { background: #31aab7; color: #ffffff; }
   .btn-ln { background: #e6f0ff; color: #0061ff; }
   .btn-ln:hover { background: #0061ff; color: #ffffff; }
-
-  @keyframes smoothScrollUp {
-    0% { transform: translateY(0); }
-    100% { transform: translateY(-50%); }
-  }
 </style>
              </div>
           </div>
