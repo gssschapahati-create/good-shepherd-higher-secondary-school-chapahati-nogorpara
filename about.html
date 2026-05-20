@@ -74,9 +74,47 @@
             border-right: 1px solid #e0e0e0;
             border-top: 1px solid #e0e0e0;
             border-bottom: 1px solid #e0e0e0;
-            max-width: 800px;
-            margin: 30px auto 0 auto;
+            max-width: 850px;
+            margin: 30px auto;
             text-align: left;
+        }
+
+        /* Structured Layout Styles for Sub-Activities */
+        .sub-heading {
+            color: #2e7d32;
+            font-size: 1.5rem;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #e8f5e9;
+            padding-bottom: 5px;
+        }
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 15px;
+        }
+        .info-item-box {
+            background: #fbfbfb;
+            border: 1px solid #eaeaea;
+            padding: 20px;
+            border-radius: 6px;
+        }
+        .info-item-box h4 {
+            margin-top: 0;
+            color: #222;
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+        .badge-meta {
+            display: inline-block;
+            background: #e8f5e9;
+            color: #2e7d32;
+            font-size: 11px;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+            margin-top: 8px;
         }
 
         /* Centered Footer Styling */
@@ -211,8 +249,57 @@
             <h2 class="heading">Our Profile & History</h2>
             
             <div class="profile-card">
+                <!-- Introduction Segment -->
                 <p style="font-size:16px; line-height:1.8; color:#444; margin: 0;"><strong>Good Shepherd Higher Secondary School</strong> is managed by Good Shepherd Church Chapahati. Our institution stands as a structural symbol of quality education, deep-rooted ethical values, and holistic human growth.</p>
-                <p style="font-size:16px; line-height:1.8; color:#444; margin-top:15px; margin-bottom: 0;">We are wholeheartedly committed to building equitable learning systems. Our systems support all diverse student populations—including Garos, Hajongs, Bengalis, and others—irrespective of local caste, background, or economic status.</p>
+                <p style="font-size:16px; line-height:1.8; color:#444; margin-top:15px; margin-bottom: 0;">We are wholeheartedly committed to building equitable learning systems. Our systems support all diverse student populations—including Garos, Hajongs, Bengalis, and others—irrespective of local caste, background, or economic status. The school has conducted various activities aimed at promoting holistic development and strengthening community ties through education.</p>
+                
+                <h3 class="sub-heading">Educational & Co-Curricular Programs</h3>
+                <p style="font-size:15px; line-height:1.7; color:#555;">We conduct structured regular academic classes from <strong>9:00 am to 2:35 pm</strong>. To evaluate learning standards, we organize one Unit Test before the Half Yearly Examinations and an additional Unit Test before the final Annual Examinations. Notably, during the last three consecutive years, our institution has proudly secured <strong>100% passing metrics</strong> in the official SSLC board examinations.</p>
+
+                <div class="info-grid">
+                    <div class="info-item-box">
+                        <h4>Parent-Teacher Meetings (PTMs)</h4>
+                        <p style="font-size:14px; margin:0; color:#666;">Regular interactive meetings map individual developmental progress and track campus initiatives. These metrics maximize foundational home environments.</p>
+                        <span class="badge-meta">Frequency: Quarterly</span>
+                    </div>
+                    <div class="info-item-box">
+                        <h4>Teachers' Day Celebrations</h4>
+                        <p style="font-size:14px; margin:0; color:#666;">Observed on September 5 annually to honor dedicated instructors. Features skits, student speeches, and symbolic performance acts.</p>
+                        <span class="badge-meta">Timeline: Sept 5th</span>
+                    </div>
+                    <div class="info-item-box">
+                        <h4>Children’s Day Programs</h4>
+                        <p style="font-size:14px; margin:0; color:#666;">Dedicated celebrations designed around recreational balance, student-centric focus projects, and community values.</p>
+                        <span class="badge-meta">Timeline: Annual</span>
+                    </div>
+                </div>
+
+                <h3 class="sub-heading">Annual & Cultural Functions</h3>
+                <div class="info-grid">
+                    <div class="info-item-box">
+                        <h4>Annual Main Function</h4>
+                        <p style="font-size:14px; margin:0; color:#666;">Brings together parents, village elders, and local dignitaries to acknowledge student honors, distribute academic excellence certificates, and build strong civic connections.</p>
+                    </div>
+                    <div class="info-item-box">
+                        <h4>Cultural Showcase Programs</h4>
+                        <p style="font-size:14px; margin:0; color:#666;">Provides dedicated structural platforms honoring the authentic cultural layout of Garos, Hajongs, and Bengalis through dance styles, music arts, and historical skits.</p>
+                    </div>
+                </div>
+
+                <h3 class="sub-heading">Physical Infrastructure & Social Responsibility</h3>
+                <div class="info-grid">
+                    <div class="info-item-box">
+                        <h4>Games & Sports Meet</h4>
+                        <p style="font-size:14px; margin:0; color:#666;">Annual sports days host track races, complex team assignments, and individual field athletics to instill systematic teamwork, daily physical health, and self-discipline parameters.</p>
+                    </div>
+                    <div class="info-item-box">
+                        <h4>Underprivileged Education Outreach</h4>
+                        <p style="font-size:14px; margin:0; color:#666;">Central to the core mission values of the Good Shepherd Church context, this continuous structure gives targeted educational materials and access to local village students regardless of class constraints.</p>
+                    </div>
+                </div>
+
+                <h3 class="sub-heading">Conclusion</h3>
+                <p style="font-size:15px; line-height:1.7; color:#444; margin-bottom:0;">Good Shepherd Higher Secondary School continues to provide a well-rounded educational experience, promoting intellectual, cultural, and physical development. Through events and social outreach, the school remains committed to being a beacon of hope for the community and fostering a spirit of unity and learning among students.</p>
             </div>
             
         </div>
@@ -228,26 +315,26 @@
                 <div class="box-container">
                     <div class="cert-box">
                         <img src="images/award1.png" alt="Award 1" onerror="this.src='https://placehold.co'">
-                        <p>Certificate of Appreciation</p>
+                        <p>Academic Excellence</p>
                     </div>
                     <div class="cert-box">
                         <img src="images/award2.png" alt="Award 2" onerror="this.src='https://placehold.co'">
-                        <p>State Award Science Exhibition</p>
+                        <p>Best Sports School</p>
                     </div>
                     <div class="cert-box">
                         <img src="images/award3.png" alt="Award 3" onerror="this.src='https://placehold.co'">
-                        <p>Awards Certificate</p>
+                        <p>Cultural Champion</p>
                     </div>
                 </div>
             </div>
 
             <!-- Right Column: Our School Certificates -->
             <div class="cert-column">
-                <h3>Our School Certificates/School Marksheet</h3>
+                <h3>Our School Certificates</h3>
                 <div class="box-container">
                     <div class="cert-box">
                         <img src="images/cert1.png" alt="Certificate 1" onerror="this.src='https://placehold.co'">
-                        <p>Students Marksheet</p>
+                        <p>MBOSE Board Affiliation</p>
                     </div>
                     <div class="cert-box">
                         <img src="images/cert2.png" alt="Certificate 2" onerror="this.src='https://placehold.co'">
