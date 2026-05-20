@@ -64,6 +64,21 @@
             100% { letter-spacing: 4px; opacity: 1; transform: scale(1.02); }
         }
 
+        /* Profile Section Description Box Styling */
+        .profile-card {
+            background: #ffffff;
+            padding: 35px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border-left: 5px solid #2e7d32;
+            border-right: 1px solid #e0e0e0;
+            border-top: 1px solid #e0e0e0;
+            border-bottom: 1px solid #e0e0e0;
+            max-width: 800px;
+            margin: 30px auto 0 auto;
+            text-align: left;
+        }
+
         /* Centered Footer Styling */
         .site-footer {
             background-color: #222222;
@@ -97,6 +112,8 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.05);
             border-top: 4px solid #2e7d32;
         }
+        
+        /* Centered Headings for Certificates */
         .cert-column h3 {
             color: #222222;
             font-size: 1.4rem;
@@ -105,6 +122,7 @@
             letter-spacing: 1px;
             border-bottom: 2px solid #eeeeee;
             padding-bottom: 10px;
+            text-align: center;
         }
         .box-container {
             display: flex;
@@ -187,13 +205,16 @@
         </div>
     </div>
 
+    <!-- Main Section with Boxed Description -->
     <div class="main-section">
         <div class="container">
             <h2 class="heading">Our Profile & History</h2>
-            <div style="font-size:16px; line-height:1.8; color:#444; max-width:800px; margin:0 auto;">
-                <p><strong>Good Shepherd Higher Secondary School</strong> is managed by Good Shepherd Church Chapahati. Our institution stands as a structural symbol of quality education, deep-rooted ethical values, and holistic human growth.</p>
-                <p style="margin-top:15px;">We are wholeheartedly committed to building equitable learning systems. Our systems support all diverse student populations—including Garos, Hajongs, Bengalis, and others—irrespective of local caste, background, or economic status.</p>
+            
+            <div class="profile-card">
+                <p style="font-size:16px; line-height:1.8; color:#444; margin: 0;"><strong>Good Shepherd Higher Secondary School</strong> is managed by Good Shepherd Church Chapahati. Our institution stands as a structural symbol of quality education, deep-rooted ethical values, and holistic human growth.</p>
+                <p style="font-size:16px; line-height:1.8; color:#444; margin-top:15px; margin-bottom: 0;">We are wholeheartedly committed to building equitable learning systems. Our systems support all diverse student populations—including Garos, Hajongs, Bengalis, and others—irrespective of local caste, background, or economic status.</p>
             </div>
+            
         </div>
     </div>
 
