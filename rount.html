@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Good Shepherd Higher Secondary School - Half Yearly Exam Routine</title>
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background-color: #f4f7f6;
+      color: #2d3748;
+      margin: 0;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .routine-container {
+      background-color: #ffffff;
+      width: 100%;
+      max-width: 900px;
+      padding: 35px;
+      border-radius: 12px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+      border: 1px solid #e2e8f0;
+    }
+
+    .header-section {
+      text-align: center;
+      margin-bottom: 30px;
+      border-bottom: 3px double #2b6cb0;
+      padding-bottom: 20px;
+    }
+
+    .school-title {
+      font-size: 26px;
+      font-weight: 800;
+      color: #1a365d;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 6px;
+    }
+
+    .exam-subtitle {
+      font-size: 18px;
+      font-weight: 600;
+      color: #4a5568;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 6px;
+    }
+
+    .class-tags {
+      font-size: 15px;
+      color: #718096;
+      font-weight: 500;
+    }
+
+    .table-responsive-wrapper {
+      width: 100%;
+      overflow-x: auto;
+      margin-bottom: 30px;
+      border-radius: 8px;
+      border: 1px solid #cbd5e0;
+    }
+
+    .routine-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 15px;
+      min-width: 650px;
+    }
+
+    .routine-table th {
+      background-color: #2b6cb0;
+      color: #ffffff;
+      text-align: left;
+      padding: 14px 18px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      border-bottom: 2px solid #2b4c7e;
+    }
+
+    .routine-table td {
+      padding: 14px 18px;
+      border-bottom: 1px solid #e2e8f0;
+      color: #2d3748;
+      transition: background-color 0.15s ease;
+    }
+
+    .routine-table tbody tr:nth-child(even) {
+      background-color: #f7fafc;
+    }
+
+    .clickable-row {
+      cursor: pointer;
+    }
+
+    .clickable-row:hover {
+      background-color: #ebf8ff !important;
+    }
+
+    .clickable-row:active {
+      background-color: #bee3f8 !important;
+    }
+
+    .clickable-row.row-selected {
+      background-color: #e2e8f0 !important;
+      border-left: 4px solid #2b6cb0;
+    }
+
+    .date-col {
+      font-weight: 600;
+      color: #2b6cb0;
+      white-space: nowrap;
+    }
+
+    .authority-sign {
+      margin-top: 40px;
+      text-align: right;
+      font-size: 15px;
+      font-weight: 600;
+      color: #4a5568;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 600px) {
+      body {
+        padding: 10px;
+      }
+      .routine-container {
+        padding: 20px 15px;
+      }
+      .school-title {
+        font-size: 20px;
+      }
+      .exam-subtitle {
+        font-size: 15px;
+      }
+      .routine-table th, .routine-table td {
+        padding: 12px 14px;
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="routine-container">
+    <div class="header-section">
+      <div class="school-title">Good Shepherd Higher Secondary School</div>
+      <div class="exam-subtitle">Half Yearly Examination Routine, 2026</div>
+      <div class="class-tags">Classes: Nursery, LKG &amp; UKG</div>
+    </div>
+
+    <div class="table-responsive-wrapper">
+      <table class="routine-table">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Class: Nursery</th>
+            <th>Class: LKG</th>
+            <th>Class: UKG</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="clickable-row" onclick="handleRowClick(this)">
+            <td class="date-col">08/06/2026</td>
+            <td>English (Capital Letters)</td>
+            <td>Spell / Dictation</td>
+            <td>Spell/Dict &amp; Handwriting</td>
+          </tr>
+          <tr class="clickable-row" onclick="handleRowClick(this)">
+            <td class="date-col">09/06/2026</td>
+            <td>Numbers (1 to 50)</td>
+            <td>Catechism / Rhymes &amp; Conversation</td>
+            <td>Reading/ Conversation &amp; Rhymes</td>
+          </tr>
+          <tr class="clickable-row" onclick="handleRowClick(this)">
+            <td class="date-col">10/06/2026</td>
+            <td>Drawing (Page 2 to 10)</td>
+            <td>Handwriting</td>
+            <td>Catechism &amp; Drawing</td>
+          </tr>
+          <tr class="clickable-row" onclick="handleRowClick(this)">
+            <td class="date-col">11/06/2026</td>
+            <td>Conversation (Page 3 to 6)</td>
+            <td>Drawing</td>
+            <td>English</td>
+          </tr>
+          <tr class="clickable-row" onclick="handleRowClick(this)">
+            <td class="date-col">12/06/2026</td>
+            <td>Rhymes &amp; Picture Disc.</td>
+            <td>English</td>
+            <td>Garo</td>
+          </tr>
+          <tr class="clickable-row" onclick="handleRowClick(this)">
+            <td class="date-col">15/06/2026</td>
+            <td>Catechism (Diary Prayer No. 6)</td>
+            <td>Maths</td>
+            <td>Mathematics</td>
+          </tr>
+          <tr class="clickable-row" onclick="handleRowClick(this)">
+            <td class="date-col">16/06/2026</td>
+            <td>G.K. (Page 2 to 6)</td>
+            <td>G.K.</td>
+            <td>GK</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="authority-sign">
+      <p>By Order,</p>
+      <p>Headmistress</p>
+    </div>
+  </div>
+
+  <script>
+    function handleRowClick(element) {
+      const allRows = element.parentElement.querySelectorAll('.clickable-row');
+      allRows.forEach(row => {
+        if (row !== element) {
+          row.classList.remove('row-selected');
+        }
+      });
+      element.classList.toggle('row-selected');
+    }
+  </script>
+
+</body>
+</html>
