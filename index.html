@@ -179,6 +179,91 @@
             border: 1px solid #e0e0e0;
             box-shadow: 0 4px 6px rgba(0,0,0,0.05);
         }
+
+        /* --- Collapsible Routine Dropdown Styling --- */
+        .routine-dropdown-wrapper {
+            margin: 30px 0;
+        }
+        .routine-toggle-btn {
+            width: 100%;
+            background-color: #1a365d;
+            color: #ffffff;
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-align: left;
+            padding: 15px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: background-color 0.2s ease;
+        }
+        .routine-toggle-btn:hover {
+            background-color: #2b6cb0;
+        }
+        .routine-toggle-btn .arrow-icon {
+            font-size: 1.4rem;
+            transition: transform 0.3s ease;
+        }
+        .routine-toggle-btn.active .arrow-icon {
+            transform: rotate(180deg);
+        }
+        .routine-collapse-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out, padding 0.4s ease;
+            background-color: #ffffff;
+            border-radius: 0 0 6px 6px;
+            border: 1px solid #cbd5e0;
+            border-top: none;
+        }
+        .routine-inner-body {
+            padding: 25px;
+        }
+        .routine-table-responsive {
+            width: 100%;
+            overflow-x: auto;
+            border-radius: 6px;
+            border: 1px solid #cbd5e0;
+        }
+        .routine-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 15px;
+            min-width: 600px;
+        }
+        .routine-table th {
+            background-color: #2b6cb0;
+            color: #ffffff;
+            text-align: left;
+            padding: 12px 15px;
+            font-weight: 600;
+        }
+        .routine-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #e2e8f0;
+            color: #2d3748;
+        }
+        .routine-table tbody tr:nth-child(even) {
+            background-color: #f7fafc;
+        }
+        .routine-table tbody tr:hover {
+            background-color: #ebf8ff;
+            cursor: pointer;
+        }
+        .routine-date-col {
+            font-weight: 600;
+            color: #2b6cb0;
+        }
+        .routine-signature {
+            text-align: right;
+            margin-top: 20px;
+            font-weight: bold;
+            color: #4a5568;
+        }
     </style>
 </head>
 <body>
@@ -197,7 +282,7 @@
             <img src="images/logo.png" alt="School Logo" class="logo">
             <button class="menu-toggle" id="mobile-menu">&#9776;</button>
             <nav id="nav-menu">
-                <a href="index.html"  class="active">Home</a>
+                <a href="index.html" class="active">Home</a>
                 <a href="about.html">About</a>
                 <a href="admission.html">Admission</a>
                 <a href="events.html">Events</a>
@@ -214,11 +299,12 @@
     <!-- Hero Banner Slider with Animated School Text Overlay -->
     <div class="slider-container">
         <div class="slider">
-            <img src="images/event.png" alt="School Campus Slider" style="width:100%; display:block;">>
+            <img src="images/event.png" alt="School Campus Slider" style="width:100%; display:block;">
         </div>
         <div class="slider-overlay">
             <h1 class="animate-school-name">GOOD SHEPHERD HIGHER SECONDARY SCHOOL</h1>
-            <p style="font-size: 1.2rem; margin-top: 10px; font-weight: 300; text-shadow: 1px 1px 4px rgba(0,0,0,0.6);"></div>
+            <p style="font-size: 1.2rem; margin-top: 10px; font-weight: 300; text-shadow: 1px 1px 4px rgba(0,0,0,0.6);"></p>
+        </div>
     </div>
 
     <!-- Dynamic Board Sections -->
@@ -265,8 +351,84 @@
         </div>
     </div>
 
+    <!-- Collapsible Exam Routine Dropdown Block -->
+    <div class="main-section" style="padding: 20px 0 0 0;">
+        <div class="container">
+            <div class="routine-dropdown-wrapper">
+                <button type="button" class="routine-toggle-btn" id="routineToggle">
+                    <span>📅 Click to View: Half Yearly Examination Routine (Nursery, LKG, UKG)</span>
+                    <span class="arrow-icon">&#9662;</span>
+                </button>
+                <div class="routine-collapse-content" id="routineContent">
+                    <div class="routine-inner-body">
+                        <h3 style="margin-top:0; color:#1a365d; border-bottom:2px solid #cbd5e0; padding-bottom:8px;">Examination Schedule - 2026</h3>
+                        <div class="routine-table-responsive">
+                            <table class="routine-table">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Class: Nursery</th>
+                                        <th>Class: LKG</th>
+                                        <th>Class: UKG</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="routine-date-col">08/06/2026</td>
+                                        <td>English (Capital Letters)</td>
+                                        <td>Spell / Dictation</td>
+                                        <td>Spell/Dict &amp; Handwriting</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="routine-date-col">09/06/2026</td>
+                                        <td>Numbers (1 to 50)</td>
+                                        <td>Catechism / Rhymes &amp; Conversation</td>
+                                        <td>Reading/ Conversation &amp; Rhymes</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="routine-date-col">10/06/2026</td>
+                                        <td>Drawing (Page 2 to 10)</td>
+                                        <td>Handwriting</td>
+                                        <td>Catechism &amp; Drawing</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="routine-date-col">11/06/2026</td>
+                                        <td>Conversation (Page 3 to 6)</td>
+                                        <td>Drawing</td>
+                                        <td>English</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="routine-date-col">12/06/2026</td>
+                                        <td>Rhymes &amp; Picture Disc.</td>
+                                        <td>English</td>
+                                        <td>Garo</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="routine-date-col">15/06/2026</td>
+                                        <td>Catechism (Diary Prayer No. 6)</td>
+                                        <td>Maths</td>
+                                        <td>Mathematics</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="routine-date-col">16/06/2026</td>
+                                        <td>G.K. (Page 2 to 6)</td>
+                                        <td>G.K.</td>
+                                        <td>GK</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="routine-signature">
+                            <p>By Order,<br>Headmistress</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Integrated School Information & Contacts Grid Section -->
-    <div class="main-section" style="padding: 50px 0;">
+    <div class="main-section" style="padding: 30px 0 50px 0;">
         <div class="container">
             
             <div class="contact-row-grid">
@@ -423,5 +585,18 @@
     </footer>
 
     <script src="JavaScript/script.js"></script>
+    
+    <!-- Dropdown Interactivity Script -->
+    <script>
+        document.getElementById('routineToggle').addEventListener('click', function() {
+            this.classList.toggle('active');
+            var content = document.getElementById('routineContent');
+            if (content.style.maxHeight && content.style.maxHeight !== "0px") {
+                content.style.maxHeight = "0px";
+            } else {
+                content.style.maxHeight = content.scrollHeight + "px";
+            }
+        });
+    </script>
 </body>
 </html>
