@@ -192,7 +192,7 @@
 
         /* --- Collapsible Routine Dropdown Styling --- */
         .routine-dropdown-wrapper {
-            margin: 30px 0;
+            margin: 15px 0;
         }
         .routine-toggle-btn {
             width: 100%;
@@ -242,7 +242,11 @@
         .routine-table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 15px;
+            font-size: 14px;
+            min-width: 1000px; /* Expanded minimum layout width for the larger grid */
+        }
+        /* Custom adjustment for smaller nursery table */
+        .nursery-table {
             min-width: 600px;
         }
         .routine-table th {
@@ -251,10 +255,11 @@
             text-align: left;
             padding: 12px 15px;
             font-weight: 600;
+            border: 1px solid #cbd5e0;
         }
         .routine-table td {
             padding: 12px 15px;
-            border-bottom: 1px solid #e2e8f0;
+            border: 1px solid #e2e8f0;
             color: #2d3748;
         }
         .routine-table tbody tr:nth-child(even) {
@@ -273,6 +278,18 @@
             margin-top: 20px;
             font-weight: bold;
             color: #4a5568;
+        }
+        .routine-nb-box {
+            background-color: #f7fafc;
+            border-left: 4px solid #2b6cb0;
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 4px;
+            font-size: 14px;
+            color: #2d3748;
+        }
+        .routine-nb-box p {
+            margin: 4px 0;
         }
     </style>
 </head>
@@ -357,8 +374,11 @@
         </div>
     </div>
 
+    <!-- Exam Routines Section Container -->
     <div class="main-section" style="padding: 20px 0 0 0;">
         <div class="container">
+            
+            <!-- 1st Dropdown: Nursery, LKG, UKG -->
             <div class="routine-dropdown-wrapper">
                 <button type="button" class="routine-toggle-btn" id="routineToggle">
                     <span> Click to View: Half Yearly Examination Routine (Nursery, LKG, UKG)</span>
@@ -368,7 +388,7 @@
                     <div class="routine-inner-body">
                         <h3 style="margin-top:0; color:#1a365d; border-bottom:2px solid #cbd5e0; padding-bottom:8px;">Examination Schedule - 2026</h3>
                         <div class="routine-table-responsive">
-                            <table class="routine-table">
+                            <table class="routine-table nursery-table">
                                 <thead>
                                     <tr>
                                         <th>Date</th>
@@ -429,170 +449,40 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
 
-    <div class="main-section" style="padding: 30px 0 50px 0;">
-        <div class="container">
-            
-            <div class="contact-row-grid">
-                
-                <div class="contact-card-box">
-                    <h2 class="contact-box-title">🗺️ School Profile</h2>
-                    
-                    <div class="contact-item">
-                        <div class="contact-label">Address:</div>
-                        <div class="contact-value">Chapahati - Nogorpara, South West Garo Hills, Meghalaya - 794106</div>
-                    </div>
-
-                    <div class="contact-item">
-                        <div class="contact-label">Managed By:</div>
-                        <div class="contact-value">Good Shepherd Church Chapahati</div>
-                    </div>
-
-                    <div class="contact-item">
-                        <div class="contact-label">Affiliation:</div>
-                        <div class="contact-value">Affiliated to MBOSE</div>
-                    </div>
-
-                    <div class="contact-item">
-                        <div class="contact-label">School Timing:</div>
-                        <div class="contact-value">9:00 am to 2:35 pm (Monday to Friday)</div>
-                    </div>
-
-                    <div class="contact-item">
-                        <div class="contact-label">Classes Offered:</div>
-                        <div class="contact-value">Pre-Primary Section to Higher Secondary Section</div>
-                    </div>
-
-                    <div class="contact-item">
-                        <div class="contact-label">Medium of Instruction:</div>
-                        <div class="contact-value">English</div>
-                    </div>
-                    
-                    <div class="contact-item">
-                        <div class="contact-label">Office Phone:</div>
-                        <div class="contact-value">
-                            <a href="tel:+919863106661">+91 98631 06661</a>
-                            <a href="https://wa.me/919863106661" target="_blank" class="whatsapp-link">💬 WhatsApp</a>
-                        </div>
-                    </div>
-                    
-                    <div class="contact-item">
-                        <div class="contact-label">Official Email:</div>
-                        <div class="contact-value"><a href="mailto:gssschapahati@gmail.com">gssschapahati@gmail.com</a></div>
-                    </div>
-                    
-                    <div class="contact-item">
-                        <div class="contact-label">Social Media:</div>
-                        <div class="contact-value">
-                            <a href="https://youtube.com/@gssschapahati?si=UrbK2XogcOBW7Ebl" target="_blank" class="social-btn btn-youtube">YouTube</a>
-                            <a href="#" target="_blank" class="social-btn btn-facebook">Facebook</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="contact-card-box">
-                    <h2 class="contact-box-title">👤 Key Personnel Contacts</h2>
-                    
-                    <div class="contact-item">
-                        <div class="contact-label">Principal:</div>
-                        <div class="contact-value">
-                            <strong>Fr. Francis Kizhakkevelikakathu</strong><br>
-                            <a href="tel:+918414977686">+91 84149 77686</a>
-                            <a href="https://wa.me/918414977686" target="_blank" class="whatsapp-link">💬 WhatsApp</a>
-                        </div>
-                    </div>
-                    
-                    <div class="contact-item">
-                        <div class="contact-label">Headmistress:</div>
-                        <div class="contact-value">
-                            <strong>Sr. Brijitha N Marak</strong><br>
-                            <a href="tel:+918974822126">+91 89748 22126</a>
-                            <a href="https://wa.me/918974822126" target="_blank" class="whatsapp-link">💬 WhatsApp</a>
-                        </div>
-                    </div>
-                    
-                    <div class="contact-item">
-                        <div class="contact-label">1st Head Teacher:</div>
-                        <div class="contact-value">
-                            <strong>Sir. Nishit Ranjan Ghosh</strong><br>
-                            <a href="tel:+917005783404">+91 70057 83404</a>
-                            <a href="https://wa.me/917005783404" target="_blank" class="whatsapp-link">💬 WhatsApp</a>
-                        </div>
-                    </div>
-                    
-                    <div class="contact-item">
-                        <div class="contact-label">2nd Head Teacher:</div>
-                        <div class="contact-value">
-                            <strong>Sir. Jekush D Sangma</strong><br>
-                            <a href="tel:+916009690235">+91 60096 90235</a>
-                            <a href="https://wa.me/916009690235" target="_blank" class="whatsapp-link">💬 WhatsApp</a>
-                        </div>
-                    </div>
-                    
-                    <div class="contact-item">
-                        <div class="contact-label">Head Clerk (LDA):</div>
-                        <div class="contact-value">
-                            <strong>Sir. Sengkan M Sangma</strong><br>
-                            <a href="tel:+918131813772">+91 81318 13772</a> <a href="https://wa.me/918131813772" target="_blank" class="whatsapp-link">💬 WA</a><br>
-                            <a href="tel:+918258813963">+91 82588 13963</a> <a href="https://wa.me/918258813963" target="_blank" class="whatsapp-link">💬 WA</a><br>
-                            <span style="font-size: 13px; color: #666;">Email: <a href="mailto:sengkanxangma@gmail.com">sengkanxangma@gmail.com</a></span>
-                        </div>
-                    </div>
-                </div>
-
-            </div> </div>
-    </div>
-
-    <div class="main-section gray-bg" style="padding: 40px 0;">
-        <div class="container">
-            <h2 style="text-align: center; color: #222222; margin-bottom: 10px;">Our Online Portals</h2>
-            <div class="portal-grid">
-                <div class="portal-card">
-                    <h3>Student Portal</h3>
-                    <p>Access your classes, results, and other notification.</p>
-                    <a href="https://script.google.com/macros/s/AKfycbw8yobiqLFwwIsvtUzKVD0PPDIB6E-2akL05LTU1sYMT7Tz9KSyGVua2uFTB1bRCU_mDA/exec" class="portal-btn">Login as Student</a>
-                </div>
-                <div class="portal-card">
-                    <h3>Staff Portal</h3>
-                    <p>Manage performance metrics, register student profiles, and update internal academic tasks.</p>
-                    <a href="https://script.google.com/macros/s/AKfycbxmFSqTPsRQ-g4LCWroX79NFhoELs__TQSgZ8w8BkiZMA2sUfXgrJvC5t7D_zaFNZqy/exec" class="portal-btn staff">Login as Faculty</a>
-                </div>
-                <div class="portal-card">
-                    <h3>Udise+ Portal</h3>
-                    <p>Only Teachers can access this Portal.</p>
-                    <a href="https://script.google.com/macros/s/AKfycbxqPGyMjOC0KOCeTf3feo1A3ofhpd03WGvSgpktg87ZXxg__CohLVw1mdVxLp66eJwYlA/exec" class="portal-btn staff">Login as Faculty</a>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="container">
-        <div class="map-container">
-            <iframe src="https://maps.app.goo.gl/oBtDULRki3RemcQx5?g_st=ac" width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-        </div>
-    </div>
-
-    <footer class="site-footer">
-        <div class="container">
-            <p>© 2026 Good Shepherd Higher Secondary School, Chapahati. All Rights Reserved.</p>
-            <p style="font-size: 12px; color: #888;">Managed by Good Shepherd Church Chapahati | Powered by Local Administration Desk</p>
-        </div>
-    </footer>
-
-    <script src="JavaScript/script.js"></script>
-    
-    <script>
-        document.getElementById('routineToggle').addEventListener('click', function() {
-            this.classList.toggle('active');
-            var content = document.getElementById('routineContent');
-            if (content.style.maxHeight && content.style.maxHeight !== "0px") {
-                content.style.maxHeight = "0px";
-            } else {
-                content.style.maxHeight = content.scrollHeight + "px";
-            }
-        });
-    </script>
-</body>
-</html>
+            <!-- 2nd Dropdown: L.P / U.P / Secondary / Higher School (Class I - X) from 335898.jpg -->
+            <div class="routine-dropdown-wrapper">
+                <button type="button" class="routine-toggle-btn" id="mainRoutineToggle">
+                    <span> Click to View: Half Yearly Examination Routine (Classes I - X)</span>
+                    <span class="arrow-icon">▾</span>
+                </button>
+                <div class="routine-collapse-content" id="mainRoutineContent">
+                    <div class="routine-inner-body">
+                        <h3 style="margin-top:0; color:#1a365d; border-bottom:2px solid #cbd5e0; padding-bottom:8px;">
+                            Routine for L.P / U.P / Secondary / Higher School Half Yearly Examinations - 2026
+                        </h3>
+                        <p style="font-weight: bold; margin-bottom: 15px; color:#2d3748;">TIME: 09 A.M TO 12 NOON</p>
+                        
+                        <div class="routine-table-responsive">
+                            <table class="routine-table">
+                                <thead>
+                                    <tr>
+                                        <th>Date & Day</th>
+                                        <th>I</th>
+                                        <th>II</th>
+                                        <th>III</th>
+                                        <th>IV</th>
+                                        <th>V</th>
+                                        <th>VI</th>
+                                        <th>VII</th>
+                                        <th>VIII</th>
+                                        <th>IX</th>
+                                        <th>X</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="routine-date-col">17-06-2026<br><small>Wednesday</small></td>
+                                        <td>Mathematics</td>
+                                        <td>Science</td>
+                                        <td>Scie
