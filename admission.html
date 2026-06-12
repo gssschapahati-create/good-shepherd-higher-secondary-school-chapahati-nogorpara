@@ -3,183 +3,1316 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admission - Good Shepherd School</title>
-    <link rel="icon" type="images/png" href="images/favico.png">
-    <link rel="stylesheet" href="css/style.css">
+    <title>Admission Management System | Good Shepherd Higher Secondary School</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* Automated Hero Banner Slideshow */
-        .slider-container {
-            position: relative;
-            width: 100%;
-            height: 450px;
-            overflow: hidden;
-            background-color: #000;
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght=300;400;500;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
         }
-        .slides-wrapper {
-            display: flex;
-            width: 300%;
-            height: 100%;
-            animation: schoolSlideshow 15s infinite ease-in-out;
+        .tab-content {
+            display: none;
         }
-        .slide-img {
-            width: 33.333%;
-            height: 100%;
-            object-fit: cover;
+        .tab-content.active {
             display: block;
         }
-        @keyframes schoolSlideshow {
-            0%, 28% { transform: translateX(0%); }
-            33%, 61% { transform: translateX(-33.333%); }
-            66%, 94% { transform: translateX(-66.666%); }
-            100% { transform: translateX(0%); }
-        }
-        .slider-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.45);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            color: #ffffff;
-            padding: 20px;
-            box-sizing: border-box;
-            z-index: 5;
-        }
-        .animate-school-name {
-            font-size: 2.5rem;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin: 0;
-            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
-            animation: textFadeTracking 2.5s ease-out infinite alternate;
-        }
-        @keyframes textFadeTracking {
-            0% { letter-spacing: 1px; opacity: 0.8; transform: scale(0.98); }
-            100% { letter-spacing: 4px; opacity: 1; transform: scale(1.02); }
-        }
-
-        /* Matched Typography Styles from Contact Page */
-        .admission-main-heading {
-            margin-top: 0; 
-            margin-bottom: 25px; 
-            color: #222; 
-            border-bottom: 2px solid #2e7d32; 
-            padding-bottom: 10px; 
-            font-size: 24px;
-        }
-        .admission-description {
-            margin-bottom: 30px; 
-            font-size: 15px; 
-            line-height: 1.5;
-            color: #555;
-        }
-        .notice-board-table {
-            font-size: 15px;
-        }
-        .table-header {
-            font-size: 16px;
-            font-weight: 700;
-            letter-spacing: 0.5px;
-        }
-
-        /* Centered Footer Styling */
-        .site-footer {
-            background-color: #222222;
-            color: #bbbbbb;
-            padding: 30px 0;
-            font-size: 14px;
-            text-align: center;
-            border-top: 3px solid #2e7d32;
-            margin-top: 40px;
-            width: 100%;
-        }
-        .site-footer .container { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
-        .site-footer p { margin: 5px 0; }
-
-        @media (max-width: 768px) {
-            .slider-container { height: 250px; }
-            .animate-school-name { font-size: 1.5rem; }
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            #print-area, #print-area * {
+                visibility: visible;
+            }
+            #print-area {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+            }
+            .no-print {
+                display: none !important;
+            }
         }
     </style>
 </head>
-<body>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col">
 
-    <div class="header">
-        <div class="container flex-header"><b>Our School Motto:</b> <marquee class="motto-marquee">"To Learn, To Lead"</marquee></div>
-    </div>
-
-    <div class="nav-wrapper">
-        <div class="container nav-container">
-            <img src="images/logo.png" alt="School Logo" class="logo">
-            <button class="menu-toggle" id="mobile-menu">☰</button>
-            <nav id="nav-menu">
-                <a href="index.html">Home</a>
-                <a href="about.html">About</a>
-                <a href="admission.html"  class="active">Admission</a>
-                <a href="events.html">Events</a>
-                <a href="faculty.html">Faculty</a>
-                <a href="gallery.html">Gallery</a>
-                <a href="result.html">Result</a>
-                <a href="notice.html">Notice</a>
-                <a href="contact.html">Contact</a>
-                <a href="blog.html">Blog</a>
+    <header class="bg-indigo-900 text-white shadow-md">
+        <div class="max-w-7xl mx-auto px-4 py-5 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="flex items-center gap-4 text-center sm:text-left">
+                <div class="bg-white p-1.5 rounded-full text-indigo-900 w-16 h-16 flex items-center justify-center shadow overflow-hidden shrink-0">
+                    <img id="header-logo-display" src="" alt="School Logo" class="w-full h-full object-contain hidden">
+                    <i id="header-logo-fallback" class="fa-solid fa-school text-3xl text-indigo-900"></i>
+                </div>
+                <div>
+                    <h1 class="text-2xl font-bold tracking-tight">GOOD SHEPHERD HIGHER SECONDARY SCHOOL</h1>
+                    <p class="text-indigo-200 text-sm font-medium">Nogorpara, Meghalaya | Admission & Portal System</p>
+                </div>
+            </div>
+            <nav class="flex space-x-1 bg-indigo-950 p-1 rounded-lg border border-indigo-800">
+                <button onclick="switchTab('new-admission')" id="btn-new-admission" class="tab-btn px-4 py-2 text-xs sm:text-sm font-medium rounded-md transition-all text-white bg-indigo-600 shadow-sm">
+                    <i class="fa-solid fa-user-plus mr-1"></i> New Admission
+                </button>
+                <button onclick="switchTab('renewal-admission')" id="btn-renewal-admission" class="tab-btn px-4 py-2 text-xs sm:text-sm font-medium rounded-md transition-all text-indigo-200 hover:text-white hidden">
+                    <i class="fa-solid fa-arrows-rotate mr-1"></i> Renewal Admission
+                </button>
+                <button onclick="switchTab('admin-dashboard')" id="btn-admin-dashboard" class="tab-btn px-4 py-2 text-xs sm:text-sm font-medium rounded-md transition-all text-indigo-200 hover:text-white">
+                    <i class="fa-solid fa-user-gear mr-1"></i> Staff Dashboard Login
+                </button>
             </nav>
         </div>
-    </div>
+    </header>
 
-    <!-- Universal Image Slideshow Hero Block -->
-    <div class="slider-container">
-        <div class="slides-wrapper">
-            <img src="images/1.jpg" alt="School Campus View" class="slide-img">
-            <img src="images/2.jpg" alt="School Campus View" class="slide-img">
-            <img src="images/3.jpg" alt="School Campus View" class="slide-img">
-            <img src="images/4.jpg" alt="School Campus View" class="slide-img">
-            <img src="images/5.jpg" alt="School Campus View" class="slide-img">
-            <img src="images/6.jpg" alt="School Campus View" class="slide-img">
-            <img src="images/7.jpg" alt="School Campus View" class="slide-img">
-            <img src="images/8.jpg" alt="School Campus View" class="slide-img">
-            <img src="images/9.jpg" alt="School Campus View" class="slide-img">
-            <img src="images/10.jpg" alt="School Campus View" class="slide-img">
-        </div>
-        <div class="slider-overlay">
-            <h1 class="animate-school-name">ADMISSION OPEN</h1>
-            <p style="font-size: 1.2rem; margin-top: 10px; font-weight: 300; text-shadow: 1px 1px 4px rgba(0,0,0,0.6);">TRY TO BE SOMEONE IN THE FUTURE</p>
-        </div>
-    </div>
-
-    <div class="main-section" style="padding: 40px 0;">
-        <div class="container">
-            <h2 class="admission-main-heading">Student Admission Portal</h2>
-            <p class="admission-description">Follow the official registration data link below to submit applications online.</p>
-            
-            <div class="notice-board-table">
-                <div class="table-row table-header">
-                    <div>Academic Year</div>
-                    <div>Admission Details & Portal Links</div>
-                    <div>Action</div>
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 py-8 sm:px-6 lg:px-8">
+        
+        <section id="new-admission" class="tab-content active">
+            <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+                <div class="p-6 bg-gradient-to-r from-indigo-800 to-indigo-700 text-white">
+                    <h2 class="text-xl font-semibold">Application Form for New Admission</h2>
+                    <p class="text-indigo-100 text-xs mt-1">Please ensure all required fields are accurately filled prior to moving to the submission phase.</p>
                 </div>
-                <div class="table-row">
-                    <div class="date-col" style="font-weight: bold; color: #2e7d32;">2026 - 2027</div>
-                    <div class="title-col"><strong>Online Registration Form</strong> <img src="images/new (1).gif" alt="new"><br><span style="font-size:14px; color:#777;">Click to open external data registration portal.</span></div>
-                    <div><a href="https://forms.gle/tsg1QFjy9BRnpega6" target="_blank" class="download-btn" style="background-color: #2e7d32;">📝 Apply Online</a></div>
+
+                <form id="newAdmissionForm" class="p-6 space-y-8" onsubmit="handleNewAdmission(event)">
+                    <div>
+                        <h3 class="text-lg font-medium text-slate-900 border-b border-slate-200 pb-2 mb-4">
+                            <span class="inline-flex items-center justify-center bg-indigo-100 text-indigo-800 rounded-full w-6 h-6 text-sm font-bold mr-2">1</span>
+                            General Profile
+                        </h3>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Student's Full Name <span class="text-rose-500">*</span></label>
+                                <input type="text" id="new_student_name" required class="w-full rounded-md border-slate-300 border p-2.5 shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-colors" placeholder="First Middle Last">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Date of Birth (DOB) <span class="text-rose-500">*</span></label>
+                                <input type="date" id="new_dob" required class="w-full rounded-md border-slate-300 border p-2.5 shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-colors">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Gender <span class="text-rose-500">*</span></label>
+                                <select id="new_gender" required class="w-full rounded-md border-slate-300 border p-2.5 shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-colors">
+                                    <option value="">-- Select Gender --</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Aadhaar Card Number <span class="text-rose-500">*</span></label>
+                                <input type="text" id="new_aadhaar" required pattern="\d{12}" maxlength="12" class="w-full rounded-md border-slate-300 border p-2.5 shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-colors" placeholder="12-digit numeric value">
+                                <p class="text-slate-400 text-xs mt-1">Must be exactly 12 numeric digits.</p>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Social Category <span class="text-rose-500">*</span></label>
+                                <select id="new_social_category" required class="w-full rounded-md border-slate-300 border p-2.5 shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-colors">
+                                    <option value="">-- Select Category --</option>
+                                    <option value="General">General</option>
+                                    <option value="ST">ST (Scheduled Tribe)</option>
+                                    <option value="SC">SC (Scheduled Caste)</option>
+                                    <option value="OBC">OBC</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Minority Status <span class="text-rose-500">*</span></label>
+                                <select id="new_minority" required class="w-full rounded-md border-slate-300 border p-2.5 shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-colors">
+                                    <option value="">-- Select Status --</option>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Religion Status <span class="text-rose-500">*</span></label>
+                                <select id="new_religion" required onchange="toggleChristianFields(this.value)" class="w-full rounded-md border-slate-300 border p-2.5 shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-colors">
+                                    <option value="">-- Select Religion --</option>
+                                    <option value="Christian">Christian</option>
+                                    <option value="Hindu">Hindu</option>
+                                    <option value="Muslim">Muslim</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+
+                            <div id="denom_container" class="hidden">
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Christian Denomination <span class="text-rose-500">*</span></label>
+                                <select id="new_denomination" onchange="toggleCatholicFields(this.value)" class="w-full rounded-md border-slate-300 border p-2.5 shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-colors">
+                                    <option value="">-- Select Denomination --</option>
+                                    <option value="Catholic">Catholic</option>
+                                    <option value="Baptist">Baptist</option>
+                                    <option value="Presbyterian">Presbyterian</option>
+                                    <option value="Church of God">Church of God</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+
+                            <div id="catholic_parish_container" class="hidden">
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Is this candidate from another Parish? <span class="text-rose-500">*</span></label>
+                                <select id="new_other_parish" onchange="toggleParishLetter(this.value)" class="w-full rounded-md border-slate-300 border p-2.5 shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-colors">
+                                    <option value="No">No (Home Parish)</option>
+                                    <option value="Yes">Yes (Other Parish)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div id="parish_letter_alert" class="hidden mt-4 p-4 bg-amber-50 border border-amber-200 text-amber-900 rounded-md text-sm flex items-start gap-2">
+                            <i class="fa-solid fa-triangle-exclamation mt-0.5 text-amber-600"></i>
+                            <div>
+                                <strong>Parish Priest Recommendation Mandatory:</strong> Because the candidate belongs to an outside parish, a physical signed recommendation letter from your Parish Priest must be provided during hard copy collection.
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
+                            <div class="md:col-span-2">
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Permanent Address <span class="text-rose-500">*</span></label>
+                                <input type="text" id="new_address" required class="w-full rounded-md border-slate-300 border p-2.5 shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-colors" placeholder="House, Village, PO, Block Details">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Pincode <span class="text-rose-500">*</span></label>
+                                <input type="text" id="new_pincode" required pattern="\d{6}" maxlength="6" class="w-full rounded-md border-slate-300 border p-2.5 shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-colors" placeholder="794103">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1">State <span class="text-rose-500">*</span></label>
+                                <select id="new_state" required class="w-full rounded-md border-slate-300 border p-2.5 shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-colors">
+                                    <option value="">-- Select State --</option>
+                                    <option value="Meghalaya" selected>Meghalaya</option>
+                                    <option value="Assam">Assam</option>
+                                    <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+                                    <option value="Nagaland">Nagaland</option>
+                                    <option value="Manipur">Manipur</option>
+                                    <option value="Mizoram">Mizoram</option>
+                                    <option value="Tripura">Tripura</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Mobile Number <span class="text-rose-500">*</span></label>
+                                <input type="tel" id="new_mobile" required pattern="[6-9]\d{9}" maxlength="10" class="w-full rounded-md border-slate-300 border p-2.5 shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-colors" placeholder="10-digit mobile number">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Email Address <span class="text-rose-500">*</span></label>
+                                <input type="email" id="new_email" required class="w-full rounded-md border-slate-300 border p-2.5 shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-colors" placeholder="username@domain.com">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Blood Group <span class="text-rose-500">*</span></label>
+                                <select id="new_blood_group" required class="w-full rounded-md border-slate-300 border p-2.5 shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-colors">
+                                    <option value="">-- Select Blood Group --</option>
+                                    <option value="A+">A+</option><option value="A-">A-</option><option value="B+">B+</option><option value="B-">B-</option>
+                                    <option value="O+">O+</option><option value="O-">O-</option><option value="AB+">AB+</option><option value="AB-">AB-</option>
+                                    <option value="Unknown">Unknown/Not Tested</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg font-medium text-slate-900 border-b border-slate-200 pb-2 mb-4">
+                            <span class="inline-flex items-center justify-center bg-indigo-100 text-indigo-800 rounded-full w-6 h-6 text-sm font-bold mr-2">2</span>
+                            Parents Details
+                        </h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Father's Name <span class="text-rose-500">*</span></label>
+                                <input type="text" id="father_name" required class="w-full rounded-md border-slate-300 border p-2.5 shadow-sm">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Mother's Name <span class="text-rose-500">*</span></label>
+                                <input type="text" id="mother_name" required class="w-full rounded-md border-slate-300 border p-2.5 shadow-sm">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Father's Aadhaar Card Number <span class="text-rose-500">*</span></label>
+                                <input type="text" id="father_aadhaar" required pattern="\d{12}" maxlength="12" class="w-full rounded-md border-slate-300 border p-2.5 shadow-sm" placeholder="12-digit numeric value">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Mother's Aadhaar Card Number <span class="text-rose-500">*</span></label>
+                                <input type="text" id="mother_aadhaar" required pattern="\d{12}" maxlength="12" class="w-full rounded-md border-slate-300 border p-2.5 shadow-sm" placeholder="12-digit numeric value">
+                            </div>
+                            <div class="md:col-span-2">
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Parents' Primary Mobile Number <span class="text-rose-500">*</span></label>
+                                <input type="tel" id="parents_mobile" required pattern="[6-9]\d{9}" maxlength="10" class="w-full rounded-md border-slate-300 border p-2.5 shadow-sm" placeholder="Alternative contact number">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg font-medium text-slate-900 border-b border-slate-200 pb-2 mb-4">
+                            <span class="inline-flex items-center justify-center bg-indigo-100 text-indigo-800 rounded-full w-6 h-6 text-sm font-bold mr-2">3</span>
+                            Admission Sought & Academic Background
+                        </h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Class for Which Admission is Requested <span class="text-rose-500">*</span></label>
+                                <select id="admission_class" required onchange="evaluateSchoolingRequirement(this.value)" class="w-full rounded-md border-slate-300 border p-2.5 shadow-sm">
+                                    <option value="">-- Select Class --</option>
+                                    <option value="Nursery">Nursery</option><option value="LKG">LKG</option><option value="UKG">UKG</option>
+                                    <option value="Class I">Class I</option><option value="Class II">Class II</option><option value="Class III">Class III</option>
+                                    <option value="Class IV">Class IV</option><option value="Class V">Class V</option><option value="Class VI">Class VI</option>
+                                    <option value="Class VII">Class VII</option><option value="Class VIII">Class VIII</option>
+                                    <option value="Class XI">Class XI (Higher Secondary)</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Why do you choose Good Shepherd School? <span class="text-rose-500">*</span></label>
+                                <select id="why_choose" required class="w-full rounded-md border-slate-300 border p-2.5 shadow-sm">
+                                    <option value="">-- Select a Reason --</option>
+                                    <option value="The school excels in providing quality education with strong values.">The school excels in providing quality education with strong values.</option>
+                                    <option value="It offers excellent infrastructure and institutional co-curricular support.">It offers excellent infrastructure and institutional co-curricular support.</option>
+                                    <option value="Highly qualified teaching faculty and outstanding discipline standards.">Highly qualified teaching faculty and outstanding discipline standards.</option>
+                                    <option value="Proximity to home and trusted historical reputation in the community.">Proximity to home and trusted historical reputation in the community.</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div id="previous_schooling_section" class="bg-slate-50 border border-slate-200 rounded-lg p-5 space-y-4">
+                            <h4 class="text-sm font-semibold text-slate-800 uppercase tracking-wider flex items-center gap-1.5">
+                                <i class="fa-solid fa-graduation-cap text-indigo-600"></i> Previous Schooling Information
+                            </h4>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                <div class="md:col-span-2">
+                                    <label class="block text-xs font-medium text-slate-600 mb-1">Last School Name <span class="school-req text-rose-500">*</span></label>
+                                    <input type="text" id="prev_school_name" class="w-full rounded-md border-slate-300 border p-2 text-sm">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-medium text-slate-600 mb-1">School Address <span class="school-req text-rose-500">*</span></label>
+                                    <input type="text" id="prev_school_address" class="w-full rounded-md border-slate-300 border p-2 text-sm">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-medium text-slate-600 mb-1">Pincode <span class="school-req text-rose-500">*</span></label>
+                                    <input type="text" id="prev_school_pincode" pattern="\d{6}" maxlength="6" class="w-full rounded-md border-slate-300 border p-2 text-sm" placeholder="6-digit pin">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-medium text-slate-600 mb-1">State <span class="school-req text-rose-500">*</span></label>
+                                    <select id="prev_school_state" class="w-full rounded-md border-slate-300 border p-2 text-sm">
+                                        <option value="">-- Select --</option>
+                                        <option value="Meghalaya">Meghalaya</option>
+                                        <option value="Assam">Assam</option>
+                                        <option value="Other">Other</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-medium text-slate-600 mb-1">Studied From Year <span class="school-req text-rose-500">*</span></label>
+                                    <select id="prev_from_year" class="w-full rounded-md border-slate-300 border p-2 text-sm">
+                                        <option value="">-- From --</option>
+                                        <script>
+                                            for(let y=2018; y<=2026; y++) document.write(`<option value="${y}">${y}</option>`);
+                                        </script>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-medium text-slate-600 mb-1">Studied Till Year <span class="school-req text-rose-500">*</span></label>
+                                    <select id="prev_to_year" class="w-full rounded-md border-slate-300 border p-2 text-sm">
+                                        <option value="">-- Till --</option>
+                                        <script>
+                                            for(let y=2018; y<=2026; y++) document.write(`<option value="${y}">${y}</option>`);
+                                        </script>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-medium text-slate-600 mb-1">Result Status <span class="school-req text-rose-500">*</span></label>
+                                    <select id="prev_result" class="w-full rounded-md border-slate-300 border p-2 text-sm">
+                                        <option value="">-- Select Status --</option>
+                                        <option value="Passed">Passed</option>
+                                        <option value="Failed">Failed</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-medium text-slate-600 mb-1">Total Marks Obtained <span class="school-req text-rose-500">*</span></label>
+                                    <input type="number" id="prev_total_marks" class="w-full rounded-md border-slate-300 border p-2 text-sm" placeholder="e.g. 420">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-medium text-slate-600 mb-1">Percentage (%) <span class="school-req text-rose-500">*</span></label>
+                                    <input type="text" id="prev_percentage" class="w-full rounded-md border-slate-300 border p-2 text-sm" placeholder="e.g. 84.2%">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pt-4 text-right">
+                        <button type="button" onclick="showUndertakingSection('new')" class="bg-indigo-600 hover:bg-indigo-700 text-white font-medium px-6 py-3 rounded-lg shadow-sm transition-colors">
+                            Proceed to Undertaking & Policy Verification <i class="fa-solid fa-arrow-right ml-1"></i>
+                        </button>
+                    </div>
+
+                    <div id="new_undertaking_panel" class="hidden border border-slate-200 bg-slate-50 rounded-xl p-6 space-y-6">
+                        <div class="bg-white p-6 border border-slate-200 rounded-lg max-h-96 overflow-y-scroll text-sm space-y-4 shadow-inner">
+                            <h3 class="text-base font-bold text-center border-b pb-3 text-indigo-900 uppercase">Code of Ethics and Behavior</h3>
+                            <ol class="list-decimal pl-5 space-y-2 text-slate-600 text-justify">
+                                <li>Students are to come to the school neatly dressed in the prescribed uniform only.</li>
+                                <li>Use of Mobile phones by students within the school premises is strictly forbidden.</li>
+                                <li>Smoking, pan, alcoholic drinks, and drugs are strictly forbidden inside and outside the campus.</li>
+                                <li>No disrespect should be shown to articles or images of religion and worship.</li>
+                            </ol>
+                        </div>
+
+                        <div class="flex items-start gap-3 bg-white p-4 border border-indigo-100 rounded-lg">
+                            <input type="checkbox" id="new_ethics_agree" required class="mt-1 w-4 h-4 rounded text-indigo-600 border-slate-300 focus:ring-indigo-500">
+                            <label for="new_ethics_agree" class="text-sm text-slate-700">
+                                <strong>Declaration Agreement:</strong> I hereby declare that the information provided is correct. We agree to follow the discipline and academic requirements of the school.
+                            </label>
+                        </div>
+
+                        <div class="bg-white border border-slate-200 rounded-lg p-5 space-y-4">
+                            <h4 class="font-semibold text-slate-900 text-sm border-b pb-2"><i class="fa-solid fa-paperclip text-indigo-600 mr-1"></i> Digital Document Upload Panel</h4>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+                                <div class="p-3 bg-slate-50 border rounded space-y-1"><label class="font-medium text-slate-700 block">Recent Passport Size Photo <span class="text-rose-500">*</span></label><input type="file" required class="w-full"></div>
+                                <div class="p-3 bg-slate-50 border rounded space-y-1"><label class="font-medium text-slate-700 block">Birth Certificate <span class="text-rose-500">*</span></label><input type="file" required class="w-full"></div>
+                                <div class="p-3 bg-slate-50 border rounded space-y-1"><label class="font-medium text-slate-700 block">Candidate Aadhaar Card <span class="text-rose-500">*</span></label><input type="file" required class="w-full"></div>
+                                <div class="p-3 bg-slate-50 border rounded space-y-1"><label class="font-medium text-slate-700 block">Parents Aadhaar / EPIC Card <span class="text-rose-500">*</span></label><input type="file" required class="w-full"></div>
+                                <div id="file_conditional_marksheet" class="p-3 bg-slate-50 border rounded space-y-1 hidden"><label class="font-medium text-slate-700 block">Last School Marksheet <span class="text-rose-500">*</span></label><input type="file" id="input_file_marksheet" class="w-full"></div>
+                                <div id="file_conditional_mbose" class="p-3 bg-slate-50 border rounded space-y-1 hidden md:col-span-2 grid grid-cols-1 sm:grid-cols-3 gap-2">
+                                    <div><label class="font-medium text-slate-700 block mb-1">SSLC Marksheet <span class="text-rose-500">*</span></label><input type="file" id="input_file_sslc" class="w-full"></div>
+                                    <div><label class="font-medium text-slate-700 block mb-1">SSLC Admit Card <span class="text-rose-500">*</span></label><input type="file" id="input_file_admit" class="w-full"></div>
+                                    <div><label class="font-medium text-slate-700 block mb-1">MBOSE Registration Card <span class="text-rose-500">*</span></label><input type="file" id="input_file_mbose" class="w-full"></div>
+                                </div>
+                                <div id="file_conditional_priest" class="p-3 bg-amber-50 border border-amber-200 rounded space-y-1 hidden md:col-span-2"><label class="font-medium text-amber-900 block">Parish Priest Recommendation Letter <span class="text-rose-500">*</span></label><input type="file" id="input_file_priest" class="w-full"></div>
+                            </div>
+                        </div>
+
+                        <div class="bg-indigo-50 border border-indigo-200 rounded-lg p-5">
+                            <h4 class="font-semibold text-indigo-950 text-sm border-b border-indigo-200 pb-2 mb-4">
+                                <i class="fa-solid fa-qrcode mr-1"></i> Form Submission Payment Gateway Portal
+                            </h4>
+                            <div class="flex flex-col md:flex-row gap-6 items-center">
+                                <div class="bg-white p-4 border border-indigo-300 rounded-lg shadow-sm text-center w-48 shrink-0">
+                                    <div class="w-40 h-40 bg-slate-100 rounded flex items-center justify-center mx-auto mb-2 border border-slate-300 overflow-hidden relative">
+                                        <img id="student-qr-display" src="" alt="Scan QR Code" class="w-full h-full object-contain hidden">
+                                        <div id="student-qr-fallback" class="text-slate-400 flex flex-col items-center justify-center p-2">
+                                            <i class="fa-solid fa-qrcode text-5xl mb-1"></i>
+                                            <span class="text-[10px] text-center leading-tight">Waiting for Admin to link QR code...</span>
+                                        </div>
+                                    </div>
+                                    <p class="text-xs font-bold text-slate-700">Scan to Remit Fees</p>
+                                </div>
+                                
+                                <div class="flex-grow grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                    <div class="sm:col-span-2">
+                                        <label class="block text-xs font-medium text-slate-700 mb-1">Upload Successful Payment Screenshot <span class="text-rose-500">*</span></label>
+                                        <input type="file" required class="w-full bg-white border p-2 rounded text-xs">
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-medium text-slate-700 mb-1">Transaction Reference Number <span class="text-rose-500">*</span></label>
+                                        <input type="text" id="new_pay_ref" required class="w-full bg-white border p-2.5 rounded text-sm placeholder-slate-400" placeholder="UTR / Ref ID">
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-medium text-slate-700 mb-1">Payment Remittance Date <span class="text-rose-500">*</span></label>
+                                        <input type="date" id="new_pay_date" required class="w-full bg-white border p-2.5 rounded text-sm">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="pt-4 border-t border-slate-200 flex justify-end">
+                            <button type="submit" class="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold px-8 py-3.5 rounded-lg shadow transition-colors flex items-center gap-2">
+                                <i class="fa-solid fa-cloud-arrow-up"></i> Register & Submit Form Data
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+
+        <section id="renewal-admission" class="tab-content">
+            <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+                <div class="p-6 bg-gradient-to-r from-teal-800 to-teal-700 text-white">
+                    <h2 class="text-xl font-semibold">Application Form for Renewal Admission</h2>
+                    <p class="text-teal-100 text-xs mt-1">For existing active structural students seeking enrollment continuity.</p>
+                </div>
+
+                <form id="renewalAdmissionForm" class="p-6 space-y-8" onsubmit="handleRenewalAdmission(event)">
+                    <div>
+                        <h3 class="text-lg font-medium text-slate-900 border-b border-slate-200 pb-2 mb-4">General Profile</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Student's Full Name <span class="text-rose-500">*</span></label>
+                                <input type="text" id="ren_student_name" required class="w-full rounded-md border-slate-300 border p-2.5 shadow-sm">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Date of Birth (DOB) <span class="text-rose-500">*</span></label>
+                                <input type="date" id="ren_dob" required class="w-full rounded-md border-slate-300 border p-2.5 shadow-sm">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Social Category <span class="text-rose-500">*</span></label>
+                                <select id="ren_social_category" required class="w-full rounded-md border-slate-300 border p-2.5 shadow-sm">
+                                    <option value="">-- Select Category --</option><option value="General">General</option><option value="ST">ST</option><option value="SC">SC</option><option value="OBC">OBC</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Minority Status <span class="text-rose-500">*</span></label>
+                                <select id="ren_minority" required class="w-full rounded-md border-slate-300 border p-2.5 shadow-sm">
+                                    <option value="">-- Select Status --</option><option value="Yes">Yes</option><option value="No">No</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Christian Denomination <span class="text-rose-500">*</span></label>
+                                <select id="ren_denomination" required class="w-full rounded-md border-slate-300 border p-2.5 shadow-sm">
+                                    <option value="Non-Christian">Non-Christian / Not Applicable</option>
+                                    <option value="Catholic">Catholic</option><option value="Baptist">Baptist</option><option value="Presbyterian">Presbyterian</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Last Term Examination Status <span class="text-rose-500">*</span></label>
+                                <select id="ren_last_status" required class="w-full rounded-md border-slate-300 border p-2.5 shadow-sm">
+                                    <option value="">-- Select Status --</option><option value="Passed">Passed</option><option value="Failed">Failed</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
+                            <div class="md:col-span-2">
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Permanent Address <span class="text-rose-500">*</span></label>
+                                <input type="text" id="ren_address" required class="w-full rounded-md border-slate-300 border p-2.5 shadow-sm">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Pincode <span class="text-rose-500">*</span></label>
+                                <input type="text" id="ren_pincode" required pattern="\d{6}" maxlength="6" class="w-full rounded-md border-slate-300 border p-2.5 shadow-sm">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1">State <span class="text-rose-500">*</span></label>
+                                <select id="ren_state" required class="w-full rounded-md border-slate-300 border p-2.5 shadow-sm">
+                                    <option value="Meghalaya" selected>Meghalaya</option><option value="Assam">Assam</option><option value="Other">Other</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Admission Seeking for Class <span class="text-rose-500">*</span></label>
+                                <select id="ren_class" required class="w-full rounded-md border-slate-300 border p-2.5 shadow-sm">
+                                    <option value="">-- Select Target Class --</option>
+                                    <option value="LKG">LKG</option><option value="UKG">UKG</option><option value="Class I">Class I</option><option value="Class II">Class II</option><option value="Class III">Class III</option><option value="Class IV">Class IV</option><option value="Class V">Class V</option><option value="Class VI">Class VI</option><option value="Class VII">Class VII</option><option value="Class VIII">Class VIII</option><option value="Class IX">Class IX</option><option value="Class X">Class X</option><option value="Class XII">Class XII</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="mt-6 p-4 bg-teal-50/50 border border-teal-100 rounded-lg grid grid-cols-1 sm:grid-cols-3 gap-4">
+                            <div>
+                                <label class="block text-xs font-semibold text-teal-900 mb-1">Admission Receipt Number (Editable)</label>
+                                <input type="text" id="ren_receipt_no" class="w-full bg-white border rounded p-2 text-sm font-mono" placeholder="GSHSS/2026/REC-XXXX">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-teal-900 mb-1">Date (Auto/Editable)</label>
+                                <input type="date" id="ren_receipt_date" class="w-full bg-white border rounded p-2 text-sm">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-teal-900 mb-1">Amount (₹ Enterable)</label>
+                                <input type="number" id="ren_amount" class="w-full bg-white border rounded p-2 text-sm font-medium" placeholder="0.00">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pt-2 text-right">
+                        <button type="button" onclick="showUndertakingSection('renewal')" class="bg-teal-700 hover:bg-teal-800 text-white font-medium px-6 py-3 rounded-lg shadow-sm transition-colors">
+                            Proceed to Policies & Submission Panel <i class="fa-solid fa-arrow-right ml-1"></i>
+                        </button>
+                    </div>
+
+                    <div id="renewal_undertaking_panel" class="hidden border border-slate-200 bg-slate-50 rounded-xl p-6 space-y-4">
+                        <div class="flex items-start gap-3 bg-white p-4 border border-teal-100 rounded-lg">
+                            <input type="checkbox" id="ren_ethics_agree" required class="mt-1 w-4 h-4 rounded text-teal-600 border-slate-300 focus:ring-teal-500">
+                            <label for="ren_ethics_agree" class="text-sm text-slate-700">
+                                <strong>Renewal Continuity Consent:</strong> I verify that all historical details recorded align cleanly with our institutional files. We explicitly agree to consistently maintain compliance with the Code of Ethics framework.
+                            </label>
+                        </div>
+                        <div class="flex justify-end pt-2">
+                            <button type="submit" class="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold px-8 py-3.5 rounded-lg shadow transition-colors">
+                                Process Renewal Registration
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+
+        <section id="admin-dashboard" class="tab-content">
+            
+            <div id="admin-auth-wall" class="max-w-md mx-auto my-12 bg-white rounded-xl border p-6 shadow-sm">
+                <div class="text-center mb-6">
+                    <div class="inline-flex items-center justify-center bg-indigo-50 text-indigo-600 rounded-full w-12 h-12 text-xl mb-2">
+                        <i class="fa-solid fa-lock"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-slate-900">Administrative Login Required</h3>
+                    <p class="text-xs text-slate-400 mt-1">Please provide credential keys to open dashboard tracking ledgers.</p>
+                </div>
+                <form onsubmit="handleAdminLogin(event)" class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 mb-1">User ID</label>
+                        <input type="text" id="auth_userid" required class="w-full border rounded p-2.5 text-sm bg-white font-medium text-slate-800" placeholder="Admin or Accountant Key">
+                        <p class="text-[10px] text-slate-400 mt-1">Accepts Admin UID: <strong>Sengkan156</strong> or Accountant UID: <strong>AccountantGSHSS</strong></p>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 mb-1">Password</label>
+                        <input type="password" id="auth_password" required class="w-full border rounded p-2.5 text-sm focus:ring-indigo-500 focus:border-indigo-500" placeholder="••••••••">
+                    </div>
+                    <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold py-2.5 rounded shadow-sm transition-colors">
+                        Authenticate Access Session
+                    </button>
+                </form>
+                
+                <div class="text-center mt-6 pt-4 border-t border-dashed">
+                    <button onclick="triggerTestingReset()" class="text-xs text-slate-400 hover:text-indigo-600 transition-colors underline font-medium">
+                        <i class="fa-solid fa-arrows-rotate mr-1"></i> Testing Utility: Reset Password to Default State
+                    </button>
+                </div>
+            </div>
+
+            <div id="admin-force-reset-wall" class="hidden max-w-md mx-auto my-12 bg-white rounded-xl border border-amber-200 p-6 shadow-sm">
+                <div class="text-center mb-4">
+                    <div class="inline-flex items-center justify-center bg-amber-50 text-amber-600 rounded-full w-12 h-12 text-xl mb-2">
+                        <i class="fa-solid fa-shield-halved"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-slate-900">Security Update Required</h3>
+                    <p class="text-xs text-slate-500 mt-1">You are accessing the portal via the default configuration profile key. You must update your password to maintain entry rights.</p>
+                </div>
+                <form onsubmit="handleForcePasswordUpdate(event)" class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 mb-1">New Complex Password</label>
+                        <input type="password" id="new_secure_pass" required class="w-full border rounded p-2.5 text-sm placeholder-slate-300" placeholder="Enter exactly 6 alphanumeric values">
+                        <p class="text-[11px] text-indigo-600 font-medium mt-1"><i class="fa-solid fa-circle-info"></i> Security policy constraint: Rule requirement asks for exactly 6 digits mixed with characters and numbers.</p>
+                    </div>
+                    <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold py-2.5 rounded shadow transition-colors">
+                        Save Changes & Launch Dashboard
+                    </button>
+                </form>
+            </div>
+
+            <div id="admin-secure-content" class="hidden space-y-6">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-slate-100 p-4 rounded-xl border border-slate-200">
+                    <div>
+                        <h3 class="text-base font-bold text-slate-900">Welcome back, Portal Staff Account (<span id="display-logged-role" class="text-indigo-700">Staff</span>)</h3>
+                        <p class="text-xs text-slate-500">Logged session active for registry operations.</p>
+                    </div>
+                    <div class="flex gap-2 w-full sm:w-auto">
+                        <button onclick="openManualPasswordChange()" class="bg-white hover:bg-slate-50 text-slate-700 border text-xs font-semibold px-3 py-2 rounded-lg transition-colors">
+                            <i class="fa-solid fa-key mr-1"></i> Change Password
+                        </button>
+                        <button onclick="handleAdminLogout()" class="bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 text-xs font-semibold px-4 py-2 rounded-lg transition-colors">
+                            <i class="fa-solid fa-power-off mr-1"></i> Kill Active Session
+                        </button>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl border shadow-sm p-6 space-y-6">
+                    <h3 class="text-sm font-bold text-slate-900 uppercase tracking-wide border-b pb-2 flex items-center gap-2">
+                        <i class="fa-solid fa-sliders text-indigo-600"></i> Institutional Media Asset Controls
+                    </h3>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="border rounded-xl p-4 bg-slate-50/50 flex flex-col justify-between gap-4">
+                            <div>
+                                <h4 class="text-xs font-bold text-slate-800 uppercase flex items-center gap-1.5">
+                                    <i class="fa-solid fa-image text-indigo-600"></i> Update Institutional School Logo
+                                </h4>
+                                <p class="text-[11px] text-slate-500 mt-1 leading-relaxed">
+                                    Upload the formal high-resolution institutional emblem graphic image file. This changes the registration portal title banners, headers, and becomes the main watermark layer on generated PDFs.
+                                </p>
+                            </div>
+                            <div class="flex items-center gap-4 mt-2">
+                                <div class="w-16 h-16 bg-white border rounded-lg flex items-center justify-center overflow-hidden shrink-0 shadow-sm">
+                                    <img id="admin-logo-preview" src="" alt="Logo View" class="w-full h-full object-contain hidden">
+                                    <i id="admin-logo-placeholder" class="fa-solid fa-school text-2xl text-slate-300"></i>
+                                </div>
+                                <input type="file" id="admin-logo-file-input" accept="image/*" onchange="processLogoImageUpload(event)" class="text-xs text-slate-500 file:mr-3 file:py-1.5 file:px-3 file:rounded-md file:border-0 file:text-xs file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100 cursor-pointer">
+                            </div>
+                        </div>
+
+                        <div class="border rounded-xl p-4 bg-slate-50/50 flex flex-col justify-between gap-4">
+                            <div>
+                                <h4 class="text-xs font-bold text-slate-800 uppercase flex items-center gap-1.5">
+                                    <i class="fa-solid fa-qrcode text-indigo-600"></i> Update Institutional Payment QR
+                                </h4>
+                                <p class="text-[11px] text-slate-500 mt-1 leading-relaxed">
+                                    Upload your standard dynamic payment QR layout (GPay/UPI/Bank standard). This links live into checking checkout workflows when prospective applicants run submissions.
+                                </p>
+                            </div>
+                            <div class="flex items-center gap-4 mt-2">
+                                <div class="w-16 h-16 bg-white border rounded-lg flex items-center justify-center overflow-hidden shrink-0 shadow-sm">
+                                    <img id="admin-qr-preview" src="" alt="QR View" class="w-full h-full object-contain hidden">
+                                    <i id="admin-qr-placeholder" class="fa-solid fa-qrcode text-2xl text-slate-300"></i>
+                                </div>
+                                <input type="file" id="admin-qr-file-input" accept="image/*" onchange="processQRImageUpload(event)" class="text-xs text-slate-500 file:mr-3 file:py-1.5 file:px-3 file:rounded-md file:border-0 file:text-xs file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100 cursor-pointer">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <div class="bg-white p-5 rounded-xl border shadow-sm flex items-center justify-between">
+                        <div>
+                            <p class="text-xs font-medium text-slate-500 uppercase tracking-wider">Total Submissions</p>
+                            <h3 id="stat-total" class="text-3xl font-bold text-slate-900 mt-1">0</h3>
+                        </div>
+                        <div class="text-indigo-600 bg-indigo-50 p-3 rounded-lg text-2xl"><i class="fa-solid fa-folder-open"></i></div>
+                    </div>
+                    <div class="bg-white p-5 rounded-xl border shadow-sm flex items-center justify-between">
+                        <div>
+                            <p class="text-xs font-medium text-slate-500 uppercase tracking-wider">Confirmed/Approved</p>
+                            <h3 id="stat-confirmed" class="text-3xl font-bold text-emerald-600 mt-1">0</h3>
+                        </div>
+                        <div class="text-emerald-600 bg-emerald-50 p-3 rounded-lg text-2xl"><i class="fa-solid fa-circle-check"></i></div>
+                    </div>
+                    <div class="bg-white p-5 rounded-xl border shadow-sm flex items-center justify-between">
+                        <div>
+                            <p class="text-xs font-medium text-slate-500 uppercase tracking-wider">Pending Audit</p>
+                            <h3 id="stat-pending" class="text-3xl font-bold text-amber-600 mt-1">0</h3>
+                        </div>
+                        <div class="text-amber-600 bg-amber-50 p-3 rounded-lg text-2xl"><i class="fa-solid fa-clock-rotate-left"></i></div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl border shadow-sm p-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+                    <div class="w-full sm:w-96 relative">
+                        <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </span>
+                        <input type="text" id="adminSearch" oninput="renderDashboardTable()" class="w-full pl-9 pr-4 py-2 text-sm border rounded-lg focus:outline-none focus:ring-1 focus:ring-indigo-500" placeholder="Filter roster by student's First Name...">
+                    </div>
+                    <div class="flex items-center gap-2 w-full sm:w-auto justify-end">
+                        <button onclick="exportToExcelFile()" class="bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-semibold px-4 py-2 rounded-lg flex items-center gap-1.5 transition-colors">
+                            <i class="fa-solid fa-file-excel"></i> Download Excel (.CSV) Data
+                        </button>
+                        <button onclick="clearSystemDataMock()" class="text-rose-600 hover:bg-rose-50 text-xs font-medium px-3 py-2 rounded-lg transition-colors">
+                            Reset Database Mock
+                        </button>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl border shadow-sm overflow-hidden">
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse">
+                            <thead>
+                                <tr class="bg-slate-100 border-b border-slate-200 text-slate-700 text-xs uppercase font-semibold tracking-wider">
+                                    <th class="p-4">Submission Ref ID</th>
+                                    <th class="p-4">Student Identity Details</th>
+                                    <th class="p-4">Target Class</th>
+                                    <th class="p-4">Type</th>
+                                    <th class="p-4">Payment Parameters</th>
+                                    <th class="p-4 text-center">Status Flag</th>
+                                    <th class="p-4 text-right">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="dashboardTableBody" class="text-sm divide-y divide-slate-100 text-slate-600"></tbody>
+                        </table>
+                    </div>
+                    <div id="emptyStateContainer" class="hidden p-12 text-center text-slate-400">
+                        <i class="fa-solid fa-box-archive text-4xl mb-2 block"></i>
+                        No student submission logs detected inside database indices.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <div id="acknowledgementModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden flex items-center justify-center p-4 z-50 overflow-y-auto">
+        <div class="bg-white rounded-xl shadow-2xl max-w-2xl w-full my-8 relative border border-slate-200 overflow-hidden flex flex-col max-h-[90vh]">
+            <div class="no-print bg-slate-100 border-b p-4 flex justify-between items-center shrink-0">
+                <span class="text-xs font-bold text-slate-600 uppercase tracking-wider"><i class="fa-solid fa-envelope-circle-check text-indigo-600 mr-1"></i> Form Dispatch Acknowledgement E-Receipt</span>
+                <div class="flex items-center gap-2">
+                    <button id="modal-print-btn" onclick="triggerReceiptPrint()" class="bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold px-4 py-2 rounded-md shadow-sm transition-colors flex items-center gap-1.5">
+                        <i class="fa-solid fa-print"></i> Print / Save as PDF
+                    </button>
+                    <button onclick="closeAcknowledgementSlip()" class="bg-white hover:bg-slate-200 border text-slate-700 text-xs font-medium px-3 py-2 rounded-md transition-colors">
+                        Dismiss
+                    </button>
+                </div>
+            </div>
+
+            <div id="print-area" class="p-8 space-y-6 relative overflow-y-auto flex-grow bg-white">
+                <div class="absolute inset-0 flex items-center justify-center pointer-events-none select-none opacity-[0.06] p-12 z-0">
+                    <img id="receipt-watermark-display" src="" alt="Watermark" class="w-full max-w-xs object-contain hidden">
+                    <i id="receipt-watermark-fallback" class="fa-solid fa-school text-[200px] text-slate-900"></i>
+                </div>
+
+                <div class="relative z-10 flex items-center justify-between border-b-2 border-indigo-900 pb-4">
+                    <div class="flex items-center gap-4">
+                        <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center overflow-hidden shrink-0 border">
+                            <img id="receipt-logo-display" src="" alt="Receipt Logo" class="w-full h-full object-contain hidden">
+                            <i id="receipt-logo-fallback" class="fa-solid fa-school text-3xl text-indigo-900"></i>
+                        </div>
+                        <div>
+                            <h2 class="text-lg font-bold text-indigo-900 tracking-tight leading-tight">GOOD SHEPHERD HIGHER SECONDARY SCHOOL</h2>
+                            <p class="text-[11px] text-slate-500 font-medium">Nogorpara, Meghalaya, India</p>
+                            <p class="text-[10px] text-slate-400 font-mono mt-0.5">Office Registry Data Dispatch System &bull; 2026</p>
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <span class="inline-block bg-emerald-50 text-emerald-800 border border-emerald-200 text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded">
+                            Application Received
+                        </span>
+                    </div>
+                </div>
+
+                <div class="relative z-10 space-y-4">
+                    <div id="candidate-download-block-notice" class="hidden p-3 bg-amber-50 text-amber-900 border border-amber-200 text-xs rounded-md font-medium no-print">
+                        <i class="fa-solid fa-circle-info text-amber-600 mr-1"></i> Submission logged successfully. Printing or downloading digital receipts is restricted for candidates on this terminal.
+                    </div>
+
+                    <div class="bg-slate-50 p-4 rounded-lg border text-xs space-y-1">
+                        <div class="text-slate-500 font-medium">Dear Applicant / Parent,</div>
+                        <p class="text-slate-600 leading-relaxed text-justify">
+                            This document serves as formal acknowledgement that your digitized admission application file has been successfully captured and committed to the internal administrative ledger indices of Good Shepherd Higher Secondary School. A matching copy of this tracking ledger has been dispatched via automated email processing.
+                        </p>
+                    </div>
+
+                    <div>
+                        <h4 class="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">Registered Candidate Ledger Context</h4>
+                        <table class="w-full border text-xs text-left">
+                            <tbody>
+                                <tr class="border-b bg-slate-50/50"><td class="p-2.5 font-medium text-slate-500 w-1/3 border-r">Application Ref ID</td><td id="ack-id" class="p-2.5 font-mono font-bold text-slate-900">---</td></tr>
+                                <tr class="border-b"><td class="p-2.5 font-medium text-slate-500 border-r">Student Full Name</td><td id="ack-name" class="p-2.5 font-semibold text-slate-900">---</td></tr>
+                                <tr class="border-b bg-slate-50/50"><td class="p-2.5 font-medium text-slate-500 border-r">Requested Target Class</td><td id="ack-class" class="p-2.5 font-medium text-slate-800">---</td></tr>
+                                <tr class="border-b"><td class="p-2.5 font-medium text-slate-500 border-r">Submission Registry Type</td><td id="ack-type" class="p-2.5 text-slate-700">---</td></tr>
+                                <tr class="border-b bg-slate-50/50"><td class="p-2.5 font-medium text-slate-500 border-r">Payment Transaction Reference</td><td id="ack-ref" class="p-2.5 font-mono text-slate-700">---</td></tr>
+                                <tr><td class="p-2.5 font-medium text-slate-500 border-r">Timestamp Verified</td><td id="ack-time" class="p-2.5 text-slate-600">---</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="border-t pt-4 mt-6 text-[10px] text-slate-400 space-y-2">
+                        <p class="text-justify font-medium leading-relaxed text-slate-500">
+                            <strong>Next Operational Steps:</strong> Bring your original verification documents and the requisite physical passport size sets during hard copy file validation dates announced by the Head Clerk workspace.
+                        </p>
+                        <div class="flex justify-between items-center pt-4 border-t border-dashed">
+                            <div>System Authenticated E-Sign &bull; Office of Administration</div>
+                            <div class="font-mono text-[9px]">GSHSS-REGISTRY-2026-ACTIVE</div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <footer class="site-footer">
-        <div class="container">
-            <p>&copy; 2026 Good Shepherd Higher Secondary School, Chapahati. All Rights Reserved.</p>
-            <p style="font-size: 12px; color: #888;">Managed by Good Shepherd Church Chapahati | Powered by Local Administration Desk</p>
-        </div>
+    <footer class="bg-slate-900 text-slate-400 text-xs py-4 border-t border-slate-800 text-center">
+        <div>Good Shepherd Higher Secondary School Registry Portal &bull; System Active Academic Year 2026</div>
     </footer>
 
-    <script src="JavaScript/script.js"></script>
+    <script>
+        // Set Immutable System Account Constants
+        const ADMIN_UID = "Sengkan156";
+        const ACCOUNTANT_UID = "AccountantGSHSS";
+        const DEFAULT_PASSWORD = "asd-123";
+
+        // Initialize Internal Storage Indexes
+        let appDatabase = JSON.parse(localStorage.getItem('gshss_db')) || [];
+        let sessionAuthenticated = JSON.parse(sessionStorage.getItem('gshss_auth')) || false;
+        let loggedUserRole = sessionStorage.getItem('gshss_role') || '';
+        
+        // Setup configuration parameters inside LocalStorage indices safely
+        if (!localStorage.getItem('gshss_admin_password')) {
+            localStorage.setItem('gshss_admin_password', DEFAULT_PASSWORD);
+            localStorage.setItem('gshss_is_first_login', 'true');
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            const todayStr = new Date().toISOString().split('T')[0];
+            if(document.getElementById('new_pay_date')) document.getElementById('new_pay_date').value = todayStr;
+            if(document.getElementById('ren_receipt_date')) document.getElementById('ren_receipt_date').value = todayStr;
+            
+            syncLoadedMediaAssets();
+            evaluateAuthViewStates();
+        });
+
+        function switchTab(targetTabId) {
+            // Guard clause for Renewal Admission View
+            if (targetTabId === 'renewal-admission' && !sessionAuthenticated) {
+                alert("Access Denied: The Renewal Admission form is visible and accessible only to the Admin and Accountant.");
+                switchTab('new-admission');
+                return;
+            }
+
+            document.querySelectorAll('.tab-content').forEach(element => element.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('bg-indigo-600', 'text-white', 'shadow-sm', 'bg-teal-600');
+                btn.classList.add('text-indigo-200', 'hover:text-white');
+            });
+
+            document.getElementById(targetTabId).classList.add('active');
+            const targetedButton = document.getElementById(`btn-${targetTabId}`);
+            
+            if (targetedButton) {
+                targetedButton.classList.remove('text-indigo-200', 'hover:text-white');
+                if(targetTabId === 'renewal-admission') {
+                    targetedButton.classList.add('bg-teal-600', 'text-white', 'shadow-sm');
+                } else {
+                    targetedButton.classList.add('bg-indigo-600', 'text-white', 'shadow-sm');
+                }
+            }
+
+            if(targetTabId === 'admin-dashboard') {
+                evaluateAuthViewStates();
+            }
+        }
+
+        // Dashboard Authenticator Handling Pipeline supporting Admin and Accountant
+        function handleAdminLogin(event) {
+            event.preventDefault();
+            const inputUID = document.getElementById('auth_userid').value.trim();
+            const inputPass = document.getElementById('auth_password').value;
+            
+            const realPassword = localStorage.getItem('gshss_admin_password');
+            const isFirstLogin = localStorage.getItem('gshss_is_first_login') === 'true';
+
+            if ((inputUID === ADMIN_UID || inputUID === ACCOUNTANT_UID) && inputPass === realPassword) {
+                if (isFirstLogin && inputPass === DEFAULT_PASSWORD) {
+                    // Force the system configuration update screen view
+                    document.getElementById('admin-auth-wall').classList.add('hidden');
+                    document.getElementById('admin-force-reset-wall').classList.remove('hidden');
+                } else {
+                    sessionAuthenticated = true;
+                    loggedUserRole = inputUID === ADMIN_UID ? "Admin" : "Accountant";
+                    sessionStorage.setItem('gshss_auth', JSON.stringify(true));
+                    sessionStorage.setItem('gshss_role', loggedUserRole);
+                    evaluateAuthViewStates();
+                }
+            } else {
+                alert("Security Authorization Rejected: Invalid Authentication Match.");
+            }
+        }
+
+        // Complex 6-Digit Alphanumeric Mixed Content Pass Rule Evaluator
+        function validateMixedPasswordPolicy(passwordStr) {
+            const standardLengthCheck = passwordStr.length === 6;
+            const containsLetters = /[A-Za-z]/.test(passwordStr);
+            const containsNumbers = /\d/.test(passwordStr);
+            return standardLengthCheck && containsLetters && containsNumbers;
+        }
+
+        function handleForcePasswordUpdate(event) {
+            event.preventDefault();
+            const newPasswordValue = document.getElementById('new_secure_pass').value.trim();
+
+            if (!validateMixedPasswordPolicy(newPasswordValue)) {
+                alert("Constraint Violation: Password must be exactly 6 characters long and combine a mix of characters and numeric numbers.");
+                return;
+            }
+
+            localStorage.setItem('gshss_admin_password', newPasswordValue);
+            localStorage.setItem('gshss_is_first_login', 'false');
+            
+            sessionAuthenticated = true;
+            loggedUserRole = "Admin"; // Default context assignment on fresh setup
+            sessionStorage.setItem('gshss_auth', JSON.stringify(true));
+            sessionStorage.setItem('gshss_role', loggedUserRole);
+            
+            document.getElementById('admin-force-reset-wall').classList.add('hidden');
+            document.getElementById('new_secure_pass').value = '';
+            
+            alert("Security Log Matrix Updated: Administrative account configuration password successfully changed.");
+            evaluateAuthViewStates();
+        }
+
+        function openManualPasswordChange() {
+            const promptPass = prompt("Enter a new password (exactly 6 characters combining letters and numbers):");
+            if (promptPass === null) return; 
+            
+            if (validateMixedPasswordPolicy(promptPass)) {
+                localStorage.setItem('gshss_admin_password', promptPass);
+                localStorage.setItem('gshss_is_first_login', 'false');
+                alert("Success: Password updated cleanly.");
+            } else {
+                alert("Invalid configuration. Password change criteria rejected.");
+            }
+        }
+
+        function handleAdminLogout() {
+            sessionAuthenticated = false;
+            loggedUserRole = '';
+            sessionStorage.removeItem('gshss_auth');
+            sessionStorage.removeItem('gshss_role');
+            evaluateAuthViewStates();
+            switchTab('new-admission');
+        }
+
+        function evaluateAuthViewStates() {
+            const authWall = document.getElementById('admin-auth-wall');
+            const forceWall = document.getElementById('admin-force-reset-wall');
+            const coreContent = document.getElementById('admin-secure-content');
+            const btnRenewal = document.getElementById('btn-renewal-admission');
+
+            document.getElementById('auth_password').value = '';
+
+            if (sessionAuthenticated) {
+                authWall.classList.add('hidden');
+                forceWall.classList.add('hidden');
+                coreContent.classList.remove('hidden');
+                document.getElementById('display-logged-role').innerText = loggedUserRole;
+                
+                // Unhide the renewal tab only for verified staff sessions
+                if(btnRenewal) btnRenewal.classList.remove('hidden');
+                renderDashboardTable();
+            } else {
+                authWall.classList.remove('hidden');
+                forceWall.classList.add('hidden');
+                coreContent.classList.add('hidden');
+                
+                // Strict isolation filter: ensure renewal tab remains completely locked
+                if(btnRenewal) btnRenewal.classList.add('hidden');
+            }
+        }
+
+        function triggerTestingReset() {
+            if(confirm("Are you sure you want to restore the portal account back to factory default strings?")) {
+                localStorage.removeItem('gshss_admin_password');
+                localStorage.removeItem('gshss_is_first_login');
+                sessionStorage.clear();
+                location.reload();
+            }
+        }
+
+        function processQRImageUpload(event) {
+            const uploadedFile = event.target.files[0];
+            if(uploadedFile) {
+                const imgReader = new FileReader();
+                imgReader.onload = function(e) {
+                    localStorage.setItem('gshss_active_qr', e.target.result);
+                    syncLoadedMediaAssets();
+                    alert("System Matrix Notification: Payment gateway QR Code successfully uploaded.");
+                };
+                imgReader.readAsDataURL(uploadedFile);
+            }
+        }
+
+        function processLogoImageUpload(event) {
+            const uploadedFile = event.target.files[0];
+            if(uploadedFile) {
+                const imgReader = new FileReader();
+                imgReader.onload = function(e) {
+                    localStorage.setItem('gshss_school_logo', e.target.result);
+                    syncLoadedMediaAssets();
+                    alert("System Matrix Notification: Institutional School Logo saved.");
+                };
+                imgReader.readAsDataURL(uploadedFile);
+            }
+        }
+
+        function syncLoadedMediaAssets() {
+            const storedQRBase64 = localStorage.getItem('gshss_active_qr');
+            const storedLogoBase64 = localStorage.getItem('gshss_school_logo');
+            
+            const studentQRImg = document.getElementById('student-qr-display');
+            const studentQRRelease = document.getElementById('student-qr-fallback');
+            const adminQRImg = document.getElementById('admin-qr-preview');
+            const adminQRPlaceholder = document.getElementById('admin-qr-placeholder');
+
+            if(storedQRBase64) {
+                if(studentQRImg) { studentQRImg.src = storedQRBase64; studentQRImg.classList.remove('hidden'); studentQRRelease.classList.add('hidden'); }
+                if(adminQRImg) { adminQRImg.src = storedQRBase64; adminQRImg.classList.remove('hidden'); adminQRPlaceholder.classList.add('hidden'); }
+            }
+
+            const headerLogoImg = document.getElementById('header-logo-display');
+            const headerLogoFallback = document.getElementById('header-logo-fallback');
+            const adminLogoImg = document.getElementById('admin-logo-preview');
+            const adminLogoPlaceholder = document.getElementById('admin-logo-placeholder');
+            const receiptLogoImg = document.getElementById('receipt-logo-display');
+            const receiptLogoFallback = document.getElementById('receipt-logo-fallback');
+            const receiptWatermarkImg = document.getElementById('receipt-watermark-display');
+            const receiptWatermarkFallback = document.getElementById('receipt-watermark-fallback');
+
+            if(storedLogoBase64) {
+                if(headerLogoImg) { headerLogoImg.src = storedLogoBase64; headerLogoImg.classList.remove('hidden'); headerLogoFallback.classList.add('hidden'); }
+                if(adminLogoImg) { adminLogoImg.src = storedLogoBase64; adminLogoImg.classList.remove('hidden'); adminLogoPlaceholder.classList.add('hidden'); }
+                if(receiptLogoImg) { receiptLogoImg.src = storedLogoBase64; receiptLogoImg.classList.remove('hidden'); receiptLogoFallback.classList.add('hidden'); }
+                if(receiptWatermarkImg) { receiptWatermarkImg.src = storedLogoBase64; receiptWatermarkImg.classList.remove('hidden'); receiptWatermarkFallback.classList.add('hidden'); }
+            }
+        }
+
+        function toggleChristianFields(val) {
+            const el = document.getElementById('denom_container');
+            if(val === 'Christian') { el.classList.remove('hidden'); document.getElementById('new_denomination').setAttribute('required','required'); }
+            else { el.classList.add('hidden'); document.getElementById('new_denomination').removeAttribute('required'); toggleCatholicFields(''); }
+        }
+        function toggleCatholicFields(val) {
+            const el = document.getElementById('catholic_parish_container');
+            if(val === 'Catholic') el.classList.remove('hidden');
+            else { el.classList.add('hidden'); toggleParishLetter('No'); document.getElementById('new_other_parish').value='No'; }
+            evaluateUploadRequirements();
+        }
+        function toggleParishLetter(val) {
+            const alertBox = document.getElementById('parish_letter_alert');
+            if(val === 'Yes') alertBox.classList.remove('hidden');
+            else alertBox.classList.add('hidden');
+            evaluateUploadRequirements();
+        }
+        function evaluateSchoolingRequirement(cl) {
+            const sec = document.getElementById('previous_schooling_section');
+            const inputs = sec.querySelectorAll('input, select');
+            if(cl === 'Nursery' || cl === '') {
+                sec.classList.add('opacity-40');
+                inputs.forEach(i => i.removeAttribute('required'));
+            } else {
+                sec.classList.remove('opacity-40');
+                inputs.forEach(i => i.setAttribute('required','required'));
+            }
+            evaluateUploadRequirements();
+        }
+        function evaluateUploadRequirements() {
+            const targetClass = document.getElementById('admission_class').value;
+            const denom = document.getElementById('new_denomination').value;
+            const marksheetBox = document.getElementById('file_conditional_marksheet');
+            const mboseBox = document.getElementById('file_conditional_mbose');
+            const priestBox = document.getElementById('file_conditional_priest');
+
+            if(['LKG','UKG','Class I','Class II','Class III','Class IV','Class V','Class VI','Class VII','Class VIII'].includes(targetClass)) {
+                marksheetBox.classList.remove('hidden'); document.getElementById('input_file_marksheet').setAttribute('required','required');
+                mboseBox.classList.add('hidden'); toggleMboseFields(false);
+            } else if(targetClass === 'Class XI') {
+                marksheetBox.classList.add('hidden'); document.getElementById('input_file_marksheet').removeAttribute('required');
+                mboseBox.classList.remove('hidden'); toggleMboseFields(true);
+            } else {
+                marksheetBox.classList.add('hidden'); mboseBox.classList.add('hidden'); toggleMboseFields(false);
+            }
+
+            if(denom === 'Catholic') {
+                priestBox.classList.remove('hidden'); document.getElementById('input_file_priest').setAttribute('required','required');
+            } else {
+                priestBox.classList.add('hidden'); document.getElementById('input_file_priest').removeAttribute('required');
+            }
+        }
+        function toggleMboseFields(req) {
+            const f1=document.getElementById('input_file_sslc'), f2=document.getElementById('input_file_admit'), f3=document.getElementById('input_file_mbose');
+            if(req){ f1.setAttribute('required','required'); f2.setAttribute('required','required'); f3.setAttribute('required','required'); }
+            else { f1.removeAttribute('required'); f2.removeAttribute('required'); f3.removeAttribute('required'); }
+        }
+        function showUndertakingSection(type) {
+            document.getElementById(`${type}_undertaking_panel`).classList.remove('hidden');
+            document.getElementById(`${type}_undertaking_panel`).scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function checkDuplicateRecord(name, dob, className) {
+            return appDatabase.some(r => r.studentName.toLowerCase() === name.toLowerCase() && r.dob === dob && r.targetClass === className);
+        }
+
+        // Updated Modal compiler tracking who is invoking the display trigger action
+        function compileAcknowledgementSlip(payload, isCandidateAction = true) {
+            document.getElementById('ack-id').innerText = payload.id;
+            document.getElementById('ack-name').innerText = payload.studentName;
+            document.getElementById('ack-class').innerText = payload.targetClass;
+            document.getElementById('ack-type').innerText = payload.type;
+            document.getElementById('ack-ref').innerText = payload.paymentRef;
+            document.getElementById('ack-time').innerText = payload.timestamp;
+
+            const printButton = document.getElementById('modal-print-btn');
+            const noticeBanner = document.getElementById('candidate-download-block-notice');
+
+            if (isCandidateAction && !sessionAuthenticated) {
+                // Hide print and download facilities for general public candidates
+                if (printButton) printButton.classList.add('hidden');
+                if (noticeBanner) noticeBanner.classList.remove('hidden');
+            } else {
+                // Retain printing/download visibility for Admin or Accountant profiles
+                if (printButton) printButton.classList.remove('hidden');
+                if (noticeBanner) noticeBanner.classList.add('hidden');
+            }
+
+            syncLoadedMediaAssets();
+            document.getElementById('acknowledgementModal').classList.remove('hidden');
+        }
+
+        function closeAcknowledgementSlip() {
+            document.getElementById('acknowledgementModal').classList.add('hidden');
+        }
+
+        function triggerReceiptPrint() {
+            // Additional safety layer to stop candidate printing via keyboard shortcuts
+            if (!sessionAuthenticated && document.getElementById('modal-print-btn').classList.contains('hidden')) {
+                alert("Security Action: Download and Print controls are disabled on this candidate terminal context.");
+                return;
+            }
+            window.print();
+        }
+
+        function handleNewAdmission(e) {
+            e.preventDefault();
+            const sName = document.getElementById('new_student_name').value.trim();
+            const sDob = document.getElementById('new_dob').value;
+            const sClass = document.getElementById('admission_class').value;
+
+            if (checkDuplicateRecord(sName, sDob, sClass)) {
+                alert(`Submission Blocked: Registration parameters duplicate existing ledger profiles.`);
+                return;
+            }
+
+            const payload = {
+                id: "NEW-" + Math.floor(100000 + Math.random() * 900000),
+                timestamp: new Date().toLocaleString(),
+                type: "New Admission Application",
+                studentName: sName,
+                dob: sDob,
+                gender: document.getElementById('new_gender').value,
+                aadhaar: document.getElementById('new_aadhaar').value,
+                category: document.getElementById('new_social_category').value,
+                minority: document.getElementById('new_minority').value,
+                religion: document.getElementById('new_religion').value,
+                denomination: document.getElementById('new_denomination').value || 'N/A',
+                address: document.getElementById('new_address').value,
+                pincode: document.getElementById('new_pincode').value,
+                state: document.getElementById('new_state').value,
+                paymentRef: document.getElementById('new_pay_ref').value,
+                paymentDate: document.getElementById('new_pay_date').value,
+                targetClass: sClass,
+                status: "Pending Approval"
+            };
+
+            appDatabase.push(payload);
+            localStorage.setItem('gshss_db', JSON.stringify(appDatabase));
+            
+            document.getElementById('newAdmissionForm').reset();
+            document.getElementById('new_undertaking_panel').classList.add('hidden');
+            
+            compileAcknowledgementSlip(payload, true);
+        }
+
+        function handleRenewalAdmission(e) {
+            e.preventDefault();
+            const sName = document.getElementById('ren_student_name').value.trim();
+            const sDob = document.getElementById('ren_dob').value;
+            const sClass = document.getElementById('ren_class').value;
+
+            if (checkDuplicateRecord(sName, sDob, sClass)) {
+                alert(`Submission Blocked: Identity metrics matched existing entry profiles.`);
+                return;
+            }
+
+            const payload = {
+                id: "REN-" + Math.floor(100000 + Math.random() * 900000),
+                timestamp: new Date().toLocaleString(),
+                type: "Renewal Continuity Profile",
+                studentName: sName,
+                dob: sDob,
+                gender: 'Verified Record Profile',
+                aadhaar: 'Secured Key Inbound Mapping Active',
+                category: document.getElementById('ren_social_category').value,
+                minority: document.getElementById('ren_minority').value,
+                religion: document.getElementById('ren_denomination').value !== 'Non-Christian' ? 'Christian' : 'Other',
+                denomination: document.getElementById('ren_denomination').value,
+                address: document.getElementById('ren_address').value,
+                pincode: document.getElementById('ren_pincode').value,
+                state: document.getElementById('ren_state').value,
+                paymentRef: document.getElementById('ren_receipt_no').value || 'OFFLINE-DESK-RENEWAL',
+                paymentDate: document.getElementById('ren_receipt_date').value,
+                targetClass: sClass,
+                status: "Pending Approval"
+            };
+
+            appDatabase.push(payload);
+            localStorage.setItem('gshss_db', JSON.stringify(appDatabase));
+            
+            document.getElementById('renewalAdmissionForm').reset();
+            document.getElementById('renewal_undertaking_panel').classList.add('hidden');
+            
+            compileAcknowledgementSlip(payload, false);
+        }
+
+        function renderDashboardTable() {
+            if(!sessionAuthenticated) return;
+            const searchInput = document.getElementById('adminSearch').value.toLowerCase();
+            const tableBody = document.getElementById('dashboardTableBody');
+            const emptyState = document.getElementById('emptyStateContainer');
+            
+            tableBody.innerHTML = '';
+
+            const filtered = appDatabase.filter(r => {
+                const firstName = r.studentName.split(' ')[0].toLowerCase();
+                return firstName.includes(searchInput);
+            });
+
+            document.getElementById('stat-total').innerText = appDatabase.length;
+            document.getElementById('stat-confirmed').innerText = appDatabase.filter(r => r.status === 'Confirmed').length;
+            document.getElementById('stat-pending').innerText = appDatabase.filter(r => r.status === 'Pending Approval').length;
+
+            if(filtered.length === 0) { emptyState.classList.remove('hidden'); return; } 
+            else { emptyState.classList.add('hidden'); }
+
+            filtered.forEach(record => {
+                const tr = document.createElement('tr');
+                tr.className = "hover:bg-slate-50/80 transition-colors";
+                let badge = record.status === 'Confirmed' ? 'bg-emerald-100 text-emerald-800 border-emerald-200' : 'bg-amber-100 text-amber-800 border-amber-200';
+
+                tr.innerHTML = `
+                    <td class="p-4 font-mono text-xs text-slate-900 font-semibold">${record.id}</td>
+                    <td class="p-4">
+                        <div class="font-medium text-slate-900">${record.studentName}</div>
+                        <div class="text-xs text-slate-400">DOB: ${record.dob} | Aadhaar: ${record.aadhaar}</div>
+                    </td>
+                    <td class="p-4 font-medium text-slate-800">${record.targetClass}</td>
+                    <td class="p-4">
+                        <span class="text-xs px-2 py-0.5 rounded-full font-medium ${record.type.includes('New') ? 'bg-indigo-50 text-indigo-700 border-indigo-100' : 'bg-teal-50 text-teal-700 border-teal-100'}">${record.type}</span>
+                    </td>
+                    <td class="p-4 text-xs">
+                        <div class="font-medium text-slate-700">${record.paymentRef}</div>
+                        <div class="text-slate-400">${record.paymentDate}</div>
+                    </td>
+                    <td class="p-4 text-center"><span class="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-semibold border ${badge}">${record.status}</span></td>
+                    <td class="p-4 text-right flex items-center justify-end gap-2">
+                        <button onclick="viewAdmissionSlipFromRoster('${record.id}')" class="bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border border-indigo-200 text-xs font-medium px-2.5 py-1.5 rounded transition-colors" title="View & Print Form Ledger"><i class="fa-solid fa-print"></i> View</button>
+                        ${record.status === 'Pending Approval' ? `
+                            <button onclick="approveStudentAdmission('${record.id}')" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-medium px-3 py-1.5 rounded transition-colors shadow-sm">Approve</button>
+                        ` : `<span class="text-xs text-emerald-600 font-medium"><i class="fa-solid fa-square-check"></i> Verified</span>`}
+                    </td>
+                `;
+                tableBody.appendChild(tr);
+            });
+        }
+
+        function viewAdmissionSlipFromRoster(recordId) {
+            const chosenRecord = appDatabase.find(item => item.id === recordId);
+            if(chosenRecord) {
+                // Open acknowledgment slip layout explicitly bypassing candidate print restrictions
+                compileAcknowledgementSlip(chosenRecord, false);
+            }
+        }
+
+        function approveStudentAdmission(id) {
+            const idx = appDatabase.findIndex(r => r.id === id);
+            if (idx != -1) {
+                appDatabase[idx].status = "Confirmed";
+                localStorage.setItem('gshss_db', JSON.stringify(appDatabase));
+                alert("Roster Confirmed! Dispatched automated confirmation notifications.");
+                renderDashboardTable();
+            }
+        }
+
+        // Functional Client-Side Excel/CSV Processing Pipeline Engine
+        function exportToExcelFile() {
+            if (appDatabase.length === 0) {
+                alert("Export Notice: No candidate records located inside database indices to build spreadsheet reports.");
+                return;
+            }
+
+            // Define structural document layout header string parameters
+            let csvDataRows = [
+                ["Submission Ref ID", "Student Name", "Date of Birth", "Class", "Application Type", "Payment Reference", "Remittance Date", "Status State"]
+            ];
+
+            // Build item records loop mapping rows
+            appDatabase.forEach(item => {
+                csvDataRows.push([
+                    item.id,
+                    `"${item.studentName}"`,
+                    item.dob,
+                    `"${item.targetClass}"`,
+                    `"${item.type}"`,
+                    `"${item.paymentRef}"`,
+                    item.paymentDate,
+                    item.status
+                ]);
+            });
+
+            // Convert raw matrices context array parameters into string rows formatting
+            let structuralContentStr = "data:text/csv;charset=utf-8," 
+                + csvDataRows.map(rowVector => rowVector.join(",")).join("\n");
+
+            const deploymentURI = encodeURI(structuralContentStr);
+            const hiddenDownloadTrigger = document.createElement("a");
+            hiddenDownloadTrigger.setAttribute("href", deploymentURI);
+            hiddenDownloadTrigger.setAttribute("download", "GSHSS_Admission_Registry_Report_2026.csv");
+            
+            document.body.appendChild(hiddenDownloadTrigger);
+            hiddenDownloadTrigger.click();
+            document.body.removeChild(hiddenDownloadTrigger);
+        }
+
+        function clearSystemDataMock() {
+            if(confirm("Flush mock execution databases? This deletes tracking logs.")) {
+                localStorage.removeItem('gshss_db'); appDatabase = []; renderDashboardTable();
+            }
+        }
+    </script>
 </body>
 </html>
