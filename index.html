@@ -294,6 +294,69 @@
         .card-heading a:hover {
             text-decoration: underline;
         }
+
+        /* Donation QR Code Box Styles */
+        #donation-qr-box {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 250px;
+            background-color: #ffffff;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            z-index: 1000; /* Ensure it's on top */
+            display: none; /* Initially hidden */
+        }
+
+        #donation-qr-box.show {
+            display: block; /* Show when 'show' class is added */
+        }
+
+        #donation-qr-title {
+            font-weight: bold;
+            color: #2e7d32;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        #qr-code-placeholder {
+            width: 150px;
+            height: 150px;
+            margin: 0 auto;
+            border: 2px solid #000;
+            background-color: #f0f0f0; /* Light gray background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #555;
+            font-size: 1.2rem;
+            position: relative;
+        }
+
+        /* Close button for the donation box */
+        #close-donation-box {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            color: #999;
+            cursor: pointer;
+        }
+
+        #close-donation-box:hover {
+            color: #555;
+        }
+
+        #qr-scan-label {
+            margin-top: 10px;
+            font-size: 13px;
+            color: #666;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
@@ -910,6 +973,16 @@
         </div>
     </footer>
 
+    <!-- Donation QR Code Box -->
+    <div id="donation-qr-box">
+        <button id="close-donation-box" onclick="closeDonationBox()">&times;</button>
+        <div id="donation-qr-title">Support Good Shepherd</div>
+        <div id="qr-code-placeholder">
+            <span style="font-family: monospace; font-size: 2rem;">[QR CODE]</span>
+        </div>
+        <div id="qr-scan-label">Scan to Donate</div>
+    </div>
+
     <script src="JavaScript/script.js"></script>
     
     <script>
@@ -922,6 +995,15 @@
                 content.style.maxHeight = content.scrollHeight + "px";
             }
         }
+
+        function closeDonationBox() {
+            document.getElementById('donation-qr-box').classList.remove('show');
+        }
+
+        // Optionally show the box after a short delay
+        setTimeout(function() {
+            document.getElementById('donation-qr-box').classList.add('show');
+        }, 1500); // 1.5 seconds delay
     </script>
 </body>
 </html>
