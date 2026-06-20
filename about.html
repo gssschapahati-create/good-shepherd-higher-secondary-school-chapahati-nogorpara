@@ -363,7 +363,39 @@
             <p style="font-size: 12px; color: #888;">Managed by Good Shepherd Church Chapahati | Powered by Local Administration Desk</p>
         </div>
     </footer>
+     <!-- Donation QR Code Box -->
+   <div id="donation-qr-box">
+        <button id="close-donation-box" onclick="closeDonationBox()">&times;</button>
+        <div id="donation-qr-title">Support Good Shepherd</div>
+        
+        <div id="qr-code-placeholder">
+            <img src="https://i.postimg.cc/t42Rp5Mq/ba025f5a-46f7-4f4c-b0fd-fe8be4d93747.jpg" alt="Donation QR Code" style="max-width: 100%; height: auto; border-radius: 8px;">
+        </div>
+        
+        <div id="qr-scan-label">Scan to Donate</div>
+    </div>
 
     <script src="JavaScript/script.js"></script>
+    
+    <script>
+        function toggleDropdown(contentId, btnElement) {
+            btnElement.classList.toggle('active');
+            var content = document.getElementById(contentId);
+            if (content.style.maxHeight && content.style.maxHeight !== "0px") {
+                content.style.maxHeight = "0px";
+            } else {
+                content.style.maxHeight = content.scrollHeight + "px";
+            }
+        }
+
+        function closeDonationBox() {
+            document.getElementById('donation-qr-box').classList.remove('show');
+        }
+
+        // Optionally show the box after a short delay
+        setTimeout(function() {
+            document.getElementById('donation-qr-box').classList.add('show');
+        }, 1500); // 1.5 seconds delay
+    </script>
 </body>
 </html>
