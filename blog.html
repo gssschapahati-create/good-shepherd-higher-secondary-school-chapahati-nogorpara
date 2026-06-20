@@ -443,6 +443,128 @@
         </div>
     </footer>
 
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <style>
+        /* CSS to make the box float at the bottom right corner */
+        #donation-qr-box {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 220px;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.15); /* Gives it a floating shadow */
+            padding: 20px;
+            text-align: center;
+            z-index: 9999; /* Keeps it on top of other dashboard elements */
+            
+            /* Hidden by default before the JS triggers */
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        /* The class added by JavaScript to show the box */
+        #donation-qr-box.show {
+            opacity: 1;
+            pointer-events: auto;
+            /* Adds a subtle continuous floating animation */
+            animation: floatHover 4s ease-in-out infinite; 
+        }
+
+        /* Animation for the gentle floating effect */
+        @keyframes floatHover {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+            100% { transform: translateY(0px); }
+        }
+
+        /* Styling the close button */
+        #close-donation-box {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            background: transparent;
+            border: none;
+            font-size: 24px;
+            color: #888;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        #close-donation-box:hover {
+            color: #ff0000;
+        }
+
+        /* Title styling */
+        #donation-qr-title {
+            font-weight: bold;
+            font-size: 1.1rem;
+            color: #333;
+            margin-bottom: 12px;
+            margin-top: 5px;
+        }
+
+        /* Ensuring the image stays strictly inside the box */
+        #qr-code-placeholder img {
+            width: 100%; /* Fills the container safely */
+            max-width: 160px;
+            height: auto;
+            border-radius: 8px;
+            border: 2px solid #f0f0f0;
+        }
+
+        /* Label at the bottom */
+        #qr-scan-label {
+            margin-top: 10px;
+            font-size: 0.9rem;
+            color: #666;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Donation QR Code Box -->
+    <div id="donation-qr-box">
+        <button id="close-donation-box" onclick="closeDonationBox()">&times;</button>
+        <div id="donation-qr-title">Support Good Shepherd</div>
+        
+        <div id="qr-code-placeholder">
+            <img src="https://i.postimg.cc/Yqrxh2S0/Whats-App-Image-2026-06-11-at-8-45-01-PM.jpg" alt="Donation QR Code">
+        </div>
+        
+        <div id="qr-scan-label">Scan to Donate</div>
+    </div>
+
     <script src="JavaScript/script.js"></script>
+    
+    <script>
+        function toggleDropdown(contentId, btnElement) {
+            btnElement.classList.toggle('active');
+            var content = document.getElementById(contentId);
+            if (content.style.maxHeight && content.style.maxHeight !== "0px") {
+                content.style.maxHeight = "0px";
+            } else {
+                content.style.maxHeight = content.scrollHeight + "px";
+            }
+        }
+
+        function closeDonationBox() {
+            // Removes the 'show' class to hide it smoothly
+            document.getElementById('donation-qr-box').classList.remove('show');
+        }
+
+        // Show the box after a 1.5-second delay so it pops up naturally
+        setTimeout(function() {
+            document.getElementById('donation-qr-box').classList.add('show');
+        }, 1500);
+    </script>
 </body>
 </html>
