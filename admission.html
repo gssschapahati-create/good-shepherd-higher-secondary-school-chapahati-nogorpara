@@ -3,30 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admission - Good Shepherd Higher Secondary School</title>
-    <link rel="icon" type="images/png" href="images/favico.png">
-    <link rel="stylesheet" href="css/style.css">
+    <title>Admission Management Portal | Good Shepherd Higher Secondary School</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
-        /* CSS styling for the Automated Hero Banner Slideshow */
-        .slider-container {
-            position: relative;
-            width: 100%;
-            height: 450px;
-            overflow: hidden;
-            background-color: #000;
-        }
-        .slides-wrapper {
-            display: flex;
-            width: 300%;
-            height: 100%;
-            animation: schoolSlideshow 15s infinite ease-in-out;
-        }
-        .slide-img {
-            width: 33.333%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-        }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght=300;400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; margin: 0; }
+
+        /* School Custom CSS */
+        .header { background: #1e1e1e; color: #fff; padding: 8px 0; font-size: 14px; text-align: center; }
+        .motto-marquee { width: 80%; display: inline-block; vertical-align: middle; margin-left: 10px; }
+        
+        .nav-wrapper { background: #fff; box-shadow: 0 2px 10px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 40; }
+        .nav-container { display: flex; justify-content: space-between; align-items: center; padding: 10px 20px; max-width: 1200px; margin: 0 auto; }
+        .logo { height: 60px; width: auto; }
+        #nav-menu { display: flex; gap: 20px; }
+        #nav-menu a { text-decoration: none; color: #333; font-weight: 600; font-size: 15px; transition: color 0.3s; }
+        #nav-menu a:hover, #nav-menu a.active { color: #2e7d32; border-bottom: 2px solid #2e7d32; }
+        .menu-toggle { display: none; background: none; border: none; font-size: 24px; cursor: pointer; }
+
+        .slider-container { position: relative; width: 100%; height: 450px; overflow: hidden; background-color: #000; }
+        .slides-wrapper { display: flex; width: 300%; height: 100%; animation: schoolSlideshow 15s infinite ease-in-out; }
+        .slide-img { width: 33.333%; height: 100%; object-fit: cover; display: block; }
         @keyframes schoolSlideshow {
             0%, 28% { transform: translateX(0%); }
             33%, 61% { transform: translateX(-33.333%); }
@@ -34,140 +34,74 @@
             100% { transform: translateX(0%); }
         }
         .slider-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.45);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            color: #ffffff;
-            padding: 20px;
-            box-sizing: border-box;
-            z-index: 5;
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.55); display: flex; flex-direction: column;
+            justify-content: center; align-items: center; text-align: center; color: #ffffff; z-index: 5;
         }
         .animate-school-name {
-            font-size: 2.5rem;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin: 0;
-            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
+            font-size: 2.5rem; font-weight: 800; text-transform: uppercase; letter-spacing: 2px;
+            margin: 0; text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
             animation: textFadeTracking 2.5s ease-out infinite alternate;
         }
-        @keyframes textFadeTracking {
-            0% { letter-spacing: 1px; opacity: 0.8; transform: scale(0.98); }
-            100% { letter-spacing: 4px; opacity: 1; transform: scale(1.02); }
-        }
+        @keyframes textFadeTracking { 0% { letter-spacing: 1px; transform: scale(0.98); } 100% { letter-spacing: 4px; transform: scale(1.02); } }
 
-        /* Side-by-Side Dual Box Grid Layout */
-        .contact-row-grid {
-            display: flex;
-            gap: 30px;
-            max-width: 1100px;
-            margin: 0 auto;
-            justify-content: center;
-            align-items: stretch;
-        }
-        .contact-card-box {
-            flex: 1;
-            background: #ffffff;
-            border: 1px solid #e0e0e0;
-            border-top: 4px solid #2e7d32;
-            border-radius: 6px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-            padding: 30px;
-            box-sizing: border-box;
-            text-align: left;
-        }
-        .contact-box-title {
-            margin-top: 0;
-            margin-bottom: 25px;
-            color: #222;
-            border-bottom: 2px solid #2e7d32;
-            padding-bottom: 10px;
-            font-size: 20px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        .contact-item {
-            display: flex;
-            margin-bottom: 18px;
-            font-size: 15px;
-            line-height: 1.5;
-            color: #333333;
-        }
-        .contact-item:last-of-type {
-            margin-bottom: 0;
-        }
-        .contact-label {
-            font-weight: 600;
-            width: 35%;
-            color: #555555;
-        }
-        .contact-value {
-            width: 65%;
-        }
-        .contact-value a {
-            color: #1565c0;
-            text-decoration: none;
-        }
-        .contact-value a:hover {
-            text-decoration: underline;
-        }
-        
-        /* Interactive Small Links and Buttons */
-        .whatsapp-link {
-            color: #25D366 !important;
-            font-weight: bold;
-            margin-left: 8px;
-            font-size: 14px;
-        }
-        .social-btn {
-            display: inline-block;
-            padding: 6px 12px;
-            font-size: 13px;
-            font-weight: bold;
-            text-decoration: none;
-            border-radius: 4px;
-            margin-right: 10px;
-            margin-top: 5px;
-            color: #fff !important;
-        }
-        .btn-youtube { background-color: #d32f2f; }
-        .btn-facebook { background-color: #3b5998; }
+        .site-footer { background-color: #1e1e1e; color: #bbbbbb; padding: 30px 0; font-size: 14px; text-align: center; border-top: 3px solid #2e7d32; }
 
-        /* Centered Bottom-Middle Footer Styling Block */
-        .site-footer {
-            background-color: #222222;
-            color: #bbbbbb;
-            padding: 30px 0;
-            font-size: 14px;
-            text-align: center;
-            border-top: 3px solid #2e7d32;
-            margin-top: 40px;
-            width: 100%;
+        /* Floating Donation Box */
+        #donation-qr-box {
+            position: fixed; bottom: 30px; right: 30px; width: 220px; background-color: #ffffff;
+            border-radius: 12px; box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.15); padding: 20px; text-align: center;
+            z-index: 9999; opacity: 0; pointer-events: none; transform: translateY(20px); transition: all 0.5s ease;
         }
-        .site-footer .container { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
-        .site-footer p { margin: 5px 0; }
+        #donation-qr-box.show { opacity: 1; pointer-events: auto; animation: floatHover 4s ease-in-out infinite; }
+        @keyframes floatHover { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-8px); } }
+        #close-donation-box { position: absolute; top: 10px; right: 15px; background: transparent; border: none; font-size: 24px; color: #888; cursor: pointer; }
+        #close-donation-box:hover { color: #ff0000; }
 
         @media (max-width: 900px) {
-            .contact-row-grid { flex-direction: column; gap: 25px; padding: 0 15px; }
             .slider-container { height: 250px; }
             .animate-school-name { font-size: 1.5rem; }
+            #nav-menu { display: none; flex-direction: column; position: absolute; top: 100%; left: 0; width: 100%; background: white; padding: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+            #nav-menu.show { display: flex; }
+            .menu-toggle { display: block; }
         }
-        @media (max-width: 600px) {
-            .contact-item { flex-direction: column; margin-bottom: 15px; }
-            .contact-label { width: 100%; margin-bottom: 3px; }
-            .contact-value { width: 100%; }
+
+        /* Admission Portal CSS */
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        
+        /* Updated Print Configuration for A4 Accuracy */
+        @page { size: A4 portrait; margin: 10mm; }
+        @media print {
+            body * { visibility: hidden; }
+            #acknowledgementModal, #acknowledgementModal * { visibility: visible; }
+            #acknowledgementModal { 
+                background: white !important; 
+                position: absolute !important; 
+                left: 0 !important; 
+                top: 0 !important; 
+                width: 100% !important; 
+                height: 100% !important; 
+                display: block !important; 
+                z-index: 99999 !important; 
+                overflow: visible !important; 
+                padding: 0 !important;
+                margin: 0 !important;
+            }
+            #acknowledgementModal > div { 
+                max-height: none !important; 
+                overflow: visible !important; 
+                box-shadow: none !important; 
+                border: none !important; 
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+            .no-print { display: none !important; }
+            .header, .nav-wrapper, .slider-container, main, footer, #donation-qr-box { display: none !important; }
         }
     </style>
 </head>
-<body>
+<body class="flex flex-col min-h-screen">
 
     <div class="header">
         <div class="container flex-header"><b>Our School Motto:</b> <marquee class="motto-marquee">"To Learn, To Lead"</marquee></div>
@@ -212,143 +146,1133 @@
         </div>
     </div>
         
-    <div class="main-section" style="padding: 40px 0;">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="admission-main-heading">Student Admission Portal</h2>
-            <p class="admission-description">Follow the official registration data link below to submit applications online.</p
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 py-12 sm:px-6 lg:px-8">
+        
+        <div class="text-center mb-8">
+            <h2 class="text-3xl font-bold text-slate-800">Student Admission Portal</h2>
+            <p class="text-slate-500 mt-2">Select a tab below to submit a new application or access the administration desk.</p>
         </div>
+
+        <div class="flex flex-wrap justify-center mb-8 gap-2">
+            <button onclick="switchTab('new-admission')" id="btn-new-admission" class="tab-btn bg-indigo-600 text-white px-6 py-2.5 font-medium rounded-md shadow-md transition-all">
+                <i class="fa-solid fa-user-plus mr-2"></i> New Admission Application
+            </button>
+            <button onclick="switchTab('admin-dashboard')" id="btn-admin-dashboard" class="tab-btn bg-white border border-slate-300 text-slate-600 hover:bg-slate-50 px-6 py-2.5 font-medium rounded-md shadow-sm transition-all">
+                <i class="fa-solid fa-shield-halved mr-2"></i> Admin Dashboard
+            </button>
+        </div>
+
+        <section id="new-admission" class="tab-content active">
+            <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+                <div class="p-6 bg-gradient-to-r from-indigo-800 to-indigo-700 text-white">
+                    <h2 class="text-xl font-semibold">Application Form for New Admission</h2>
+                    <p class="text-indigo-100 text-xs mt-1">Please ensure all required fields are accurately filled prior to moving to the submission phase.</p>
+                </div>
+
+                <form id="newAdmissionForm" class="p-6 space-y-8" onsubmit="handleNewAdmission(event)">
+                    <div>
+                        <h3 class="text-lg font-medium text-slate-900 border-b border-slate-200 pb-2 mb-4">
+                            <span class="inline-flex items-center justify-center bg-indigo-100 text-indigo-800 rounded-full w-6 h-6 text-sm font-bold mr-2">1</span>
+                            General Profile
+                        </h3>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Student's Full Name <span class="text-rose-500">*</span></label>
+                                <input type="text" id="new_student_name" required class="w-full rounded-md border-slate-300 border p-2.5 shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-colors" placeholder="First Middle Last">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Date of Birth (DOB) <span class="text-rose-500">*</span></label>
+                                <input type="date" id="new_dob" required class="w-full rounded-md border-slate-300 border p-2.5 shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-colors">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Gender <span class="text-rose-500">*</span></label>
+                                <select id="new_gender" required class="w-full rounded-md border-slate-300 border p-2.5 shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-colors">
+                                    <option value="">-- Select Gender --</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Aadhaar Card Number <span class="text-rose-500">*</span></label>
+                                <input type="text" id="new_aadhaar" required pattern="\d{12}" maxlength="12" class="w-full rounded-md border-slate-300 border p-2.5 shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-colors" placeholder="12-digit numeric value">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Social Category <span class="text-rose-500">*</span></label>
+                                <select id="new_social_category" required class="w-full rounded-md border-slate-300 border p-2.5 shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-colors">
+                                    <option value="">-- Select Category --</option>
+                                    <option value="General">General</option>
+                                    <option value="ST">ST (Scheduled Tribe)</option>
+                                    <option value="SC">SC (Scheduled Caste)</option>
+                                    <option value="OBC">OBC</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Minority Status <span class="text-rose-500">*</span></label>
+                                <select id="new_minority" required class="w-full rounded-md border-slate-300 border p-2.5 shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-colors">
+                                    <option value="">-- Select Status --</option>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Religion Status <span class="text-rose-500">*</span></label>
+                                <select id="new_religion" required onchange="toggleChristianFields(this.value)" class="w-full rounded-md border-slate-300 border p-2.5 shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-colors">
+                                    <option value="">-- Select Religion --</option>
+                                    <option value="Christian">Christian</option>
+                                    <option value="Hindu">Hindu</option>
+                                    <option value="Muslim">Muslim</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+
+                            <div id="denom_container" class="hidden">
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Christian Denomination <span class="text-rose-500">*</span></label>
+                                <select id="new_denomination" onchange="toggleCatholicFields(this.value)" class="w-full rounded-md border-slate-300 border p-2.5 shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-colors">
+                                    <option value="">-- Select Denomination --</option>
+                                    <option value="Catholic">Catholic</option>
+                                    <option value="Baptist">Baptist</option>
+                                    <option value="Presbyterian">Presbyterian</option>
+                                    <option value="Church of God">Church of God</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+
+                            <div id="catholic_parish_container" class="hidden">
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Is this candidate from another Parish? <span class="text-rose-500">*</span></label>
+                                <select id="new_other_parish" onchange="toggleParishLetter(this.value)" class="w-full rounded-md border-slate-300 border p-2.5 shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-colors">
+                                    <option value="No">No (Home Parish)</option>
+                                    <option value="Yes">Yes (Other Parish)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div id="parish_letter_alert" class="hidden mt-4 p-4 bg-amber-50 border border-amber-200 text-amber-900 rounded-md text-sm flex items-start gap-2">
+                            <i class="fa-solid fa-triangle-exclamation mt-0.5 text-amber-600"></i>
+                            <div>
+                                <strong>Parish Priest Recommendation Mandatory:</strong> Because the candidate belongs to an outside parish, a physical signed recommendation letter from your Parish Priest must be provided.
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
+                            <div class="md:col-span-2">
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Permanent Address <span class="text-rose-500">*</span></label>
+                                <input type="text" id="new_address" required class="w-full rounded-md border-slate-300 border p-2.5 shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-colors" placeholder="House, Village, PO, Block Details">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Pincode <span class="text-rose-500">*</span></label>
+                                <input type="text" id="new_pincode" required pattern="\d{6}" maxlength="6" class="w-full rounded-md border-slate-300 border p-2.5 shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-colors" placeholder="794103">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1">State <span class="text-rose-500">*</span></label>
+                                <select id="new_state" required class="w-full rounded-md border-slate-300 border p-2.5 shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-colors">
+                                    <option value="">-- Select State --</option>
+                                    <option value="Meghalaya" selected>Meghalaya</option>
+                                    <option value="Assam">Assam</option>
+                                    <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+                                    <option value="Nagaland">Nagaland</option>
+                                    <option value="Manipur">Manipur</option>
+                                    <option value="Mizoram">Mizoram</option>
+                                    <option value="Tripura">Tripura</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Mobile Number <span class="text-rose-500">*</span></label>
+                                <input type="tel" id="new_mobile" required pattern="[6-9]\d{9}" maxlength="10" class="w-full rounded-md border-slate-300 border p-2.5 shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-colors" placeholder="10-digit mobile number">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Email Address <span class="text-rose-500">*</span></label>
+                                <input type="email" id="new_email" required class="w-full rounded-md border-slate-300 border p-2.5 shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-colors" placeholder="username@domain.com">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Blood Group <span class="text-rose-500">*</span></label>
+                                <select id="new_blood_group" required class="w-full rounded-md border-slate-300 border p-2.5 shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-colors">
+                                    <option value="">-- Select Blood Group --</option>
+                                    <option value="A+">A+</option><option value="A-">A-</option><option value="B+">B+</option><option value="B-">B-</option>
+                                    <option value="O+">O+</option><option value="O-">O-</option><option value="AB+">AB+</option><option value="AB-">AB-</option>
+                                    <option value="Unknown">Unknown/Not Tested</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg font-medium text-slate-900 border-b border-slate-200 pb-2 mb-4">
+                            <span class="inline-flex items-center justify-center bg-indigo-100 text-indigo-800 rounded-full w-6 h-6 text-sm font-bold mr-2">2</span>
+                            Parents Details
+                        </h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Father's Name <span class="text-rose-500">*</span></label>
+                                <input type="text" id="father_name" required class="w-full rounded-md border-slate-300 border p-2.5 shadow-sm">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Mother's Name <span class="text-rose-500">*</span></label>
+                                <input type="text" id="mother_name" required class="w-full rounded-md border-slate-300 border p-2.5 shadow-sm">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Father's Aadhaar Card Number <span class="text-rose-500">*</span></label>
+                                <input type="text" id="father_aadhaar" required pattern="\d{12}" maxlength="12" class="w-full rounded-md border-slate-300 border p-2.5 shadow-sm" placeholder="12-digit numeric value">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Mother's Aadhaar Card Number <span class="text-rose-500">*</span></label>
+                                <input type="text" id="mother_aadhaar" required pattern="\d{12}" maxlength="12" class="w-full rounded-md border-slate-300 border p-2.5 shadow-sm" placeholder="12-digit numeric value">
+                            </div>
+                            <div class="md:col-span-2">
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Parents' Primary Mobile Number <span class="text-rose-500">*</span></label>
+                                <input type="tel" id="parents_mobile" required pattern="[6-9]\d{9}" maxlength="10" class="w-full rounded-md border-slate-300 border p-2.5 shadow-sm" placeholder="Alternative contact number">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg font-medium text-slate-900 border-b border-slate-200 pb-2 mb-4">
+                            <span class="inline-flex items-center justify-center bg-indigo-100 text-indigo-800 rounded-full w-6 h-6 text-sm font-bold mr-2">3</span>
+                            Admission Sought & Academic Background
+                        </h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Class for Which Admission is Requested <span class="text-rose-500">*</span></label>
+                                <select id="admission_class" required onchange="evaluateSchoolingRequirement(this.value)" class="w-full rounded-md border-slate-300 border p-2.5 shadow-sm">
+                                    <option value="">-- Select Class --</option>
+                                    <option value="Nursery">Nursery</option><option value="LKG">LKG</option><option value="UKG">UKG</option>
+                                    <option value="Class I">Class I</option><option value="Class II">Class II</option><option value="Class III">Class III</option>
+                                    <option value="Class IV">Class IV</option><option value="Class V">Class V</option><option value="Class VI">Class VI</option>
+                                    <option value="Class VII">Class VII</option><option value="Class VIII">Class VIII</option>
+                                    <option value="Class XI">Class XI (Higher Secondary)</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Why do you choose Good Shepherd School? <span class="text-rose-500">*</span></label>
+                                <select id="why_choose" required class="w-full rounded-md border-slate-300 border p-2.5 shadow-sm">
+                                    <option value="">-- Select a Reason --</option>
+                                    <option value="The school excels in providing quality education with strong values.">The school excels in providing quality education with strong values.</option>
+                                    <option value="It offers excellent infrastructure and institutional co-curricular support.">It offers excellent infrastructure and institutional co-curricular support.</option>
+                                    <option value="Highly qualified teaching faculty and outstanding discipline standards.">Highly qualified teaching faculty and outstanding discipline standards.</option>
+                                    <option value="Proximity to home and trusted historical reputation in the community.">Proximity to home and trusted historical reputation in the community.</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div id="previous_schooling_section" class="bg-slate-50 border border-slate-200 rounded-lg p-5 space-y-4 hidden">
+                            <h4 class="text-sm font-semibold text-slate-800 uppercase tracking-wider flex items-center gap-1.5">
+                                <i class="fa-solid fa-graduation-cap text-indigo-600"></i> Previous Schooling Information
+                            </h4>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                <div class="md:col-span-2">
+                                    <label class="block text-xs font-medium text-slate-600 mb-1">Last School Name <span class="school-req text-rose-500">*</span></label>
+                                    <input type="text" id="prev_school_name" class="w-full rounded-md border-slate-300 border p-2 text-sm">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-medium text-slate-600 mb-1">School Address <span class="school-req text-rose-500">*</span></label>
+                                    <input type="text" id="prev_school_address" class="w-full rounded-md border-slate-300 border p-2 text-sm">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-medium text-slate-600 mb-1">Pincode <span class="school-req text-rose-500">*</span></label>
+                                    <input type="text" id="prev_school_pincode" pattern="\d{6}" maxlength="6" class="w-full rounded-md border-slate-300 border p-2 text-sm" placeholder="6-digit pin">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-medium text-slate-600 mb-1">State <span class="school-req text-rose-500">*</span></label>
+                                    <select id="prev_school_state" class="w-full rounded-md border-slate-300 border p-2 text-sm">
+                                        <option value="">-- Select --</option>
+                                        <option value="Meghalaya">Meghalaya</option>
+                                        <option value="Assam">Assam</option>
+                                        <option value="Other">Other</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-medium text-slate-600 mb-1">Studied From Year <span class="school-req text-rose-500">*</span></label>
+                                    <select id="prev_from_year" class="w-full rounded-md border-slate-300 border p-2 text-sm">
+                                        <option value="">-- From --</option>
+                                        <script>for(let y=2018; y<=2026; y++) document.write(`<option value="${y}">${y}</option>`);</script>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-medium text-slate-600 mb-1">Studied Till Year <span class="school-req text-rose-500">*</span></label>
+                                    <select id="prev_to_year" class="w-full rounded-md border-slate-300 border p-2 text-sm">
+                                        <option value="">-- Till --</option>
+                                        <script>for(let y=2018; y<=2026; y++) document.write(`<option value="${y}">${y}</option>`);</script>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-medium text-slate-600 mb-1">Result Status <span class="school-req text-rose-500">*</span></label>
+                                    <select id="prev_result" class="w-full rounded-md border-slate-300 border p-2 text-sm">
+                                        <option value="">-- Select Status --</option>
+                                        <option value="Passed">Passed</option>
+                                        <option value="Failed">Failed</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-medium text-slate-600 mb-1">Total Marks Obtained <span class="school-req text-rose-500">*</span></label>
+                                    <input type="number" id="prev_total_marks" class="w-full rounded-md border-slate-300 border p-2 text-sm" placeholder="e.g. 420">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-medium text-slate-600 mb-1">Percentage (%) <span class="school-req text-rose-500">*</span></label>
+                                    <input type="text" id="prev_percentage" class="w-full rounded-md border-slate-300 border p-2 text-sm" placeholder="e.g. 84.2%">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pt-4 text-right">
+                        <button type="button" onclick="showUndertakingSection()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-medium px-6 py-3 rounded-lg shadow-sm transition-colors">
+                            Proceed to Undertaking & Policy Verification <i class="fa-solid fa-arrow-right ml-1"></i>
+                        </button>
+                    </div>
+
+                    <div id="new_undertaking_panel" class="hidden border border-slate-200 bg-slate-50 rounded-xl p-6 space-y-6">
+                        <div class="bg-white p-6 border border-slate-200 rounded-lg max-h-96 overflow-y-scroll text-sm space-y-4 shadow-inner">
+                            <h3 class="text-base font-bold text-center border-b pb-3 text-indigo-900 uppercase">Code of Ethics and Behavior</h3>
+                            <ol class="list-decimal pl-5 space-y-2 text-slate-600 text-justify">
+                                <li>Students are to come to the school neatly dressed in the prescribed uniform only.</li>
+                                <li>Use of Mobile phones by students within the school premises is strictly forbidden.</li>
+                                <li>Smoking, pan, alcoholic drinks, and drugs are strictly forbidden inside and outside the campus.</li>
+                                <li>No disrespect should be shown to articles or images of religion and worship.</li>
+                            </ol>
+                        </div>
+
+                        <div class="flex items-start gap-3 bg-white p-4 border border-indigo-100 rounded-lg">
+                            <input type="checkbox" id="new_ethics_agree" required class="mt-1 w-4 h-4 rounded text-indigo-600 border-slate-300 focus:ring-indigo-500">
+                            <label for="new_ethics_agree" class="text-sm text-slate-700">
+                                <strong>Declaration Agreement:</strong> I hereby declare that the information provided is correct. We agree to follow the discipline and academic requirements of the school.
+                            </label>
+                        </div>
+
+                        <div class="bg-white border border-slate-200 rounded-lg p-5 space-y-4">
+                            <h4 class="font-semibold text-slate-900 text-sm border-b pb-2"><i class="fa-solid fa-paperclip text-indigo-600 mr-1"></i> Digital Document Upload Panel</h4>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+                                <div class="p-3 bg-slate-50 border rounded space-y-1"><label class="font-medium text-slate-700 block">Recent Passport Size Photo <span class="text-rose-500">*</span></label><input type="file" id="file_photo" accept="image/*" required class="w-full"></div>
+                                <div class="p-3 bg-slate-50 border rounded space-y-1"><label class="font-medium text-slate-700 block">Birth Certificate <span class="text-rose-500">*</span></label><input type="file" id="file_birth" accept="image/*,.pdf" required class="w-full"></div>
+                                <div class="p-3 bg-slate-50 border rounded space-y-1"><label class="font-medium text-slate-700 block">Candidate Aadhaar Card <span class="text-rose-500">*</span></label><input type="file" id="file_aadhaar" accept="image/*,.pdf" required class="w-full"></div>
+                                <div class="p-3 bg-slate-50 border rounded space-y-1"><label class="font-medium text-slate-700 block">Parents Aadhaar / EPIC Card <span class="text-rose-500">*</span></label><input type="file" id="file_parents_aadhaar" accept="image/*,.pdf" required class="w-full"></div>
+                                <div id="file_conditional_marksheet" class="p-3 bg-slate-50 border rounded space-y-1 hidden"><label class="font-medium text-slate-700 block">Last School Marksheet <span class="text-rose-500">*</span></label><input type="file" id="input_file_marksheet" accept="image/*,.pdf" class="w-full"></div>
+                                <div id="file_conditional_mbose" class="p-3 bg-slate-50 border rounded space-y-1 hidden md:col-span-2 grid grid-cols-1 sm:grid-cols-3 gap-2">
+                                    <div><label class="font-medium text-slate-700 block mb-1">SSLC Marksheet <span class="text-rose-500">*</span></label><input type="file" id="input_file_sslc" accept="image/*,.pdf" class="w-full"></div>
+                                    <div><label class="font-medium text-slate-700 block mb-1">SSLC Admit Card <span class="text-rose-500">*</span></label><input type="file" id="input_file_admit" accept="image/*,.pdf" class="w-full"></div>
+                                    <div><label class="font-medium text-slate-700 block mb-1">MBOSE Registration Card <span class="text-rose-500">*</span></label><input type="file" id="input_file_mbose" accept="image/*,.pdf" class="w-full"></div>
+                                </div>
+                                <div id="file_conditional_priest" class="p-3 bg-amber-50 border border-amber-200 rounded space-y-1 hidden md:col-span-2"><label class="font-medium text-amber-900 block">Parish Priest Recommendation Letter <span class="text-rose-500">*</span></label><input type="file" id="input_file_priest" accept="image/*,.pdf" class="w-full"></div>
+                            </div>
+                        </div>
+
+                        <div class="bg-indigo-50 border border-indigo-200 rounded-lg p-5">
+                            <h4 class="font-semibold text-indigo-950 text-sm border-b border-indigo-200 pb-2 mb-4">
+                                <i class="fa-solid fa-qrcode mr-1"></i> Form Submission Payment Gateway Portal
+                            </h4>
+                            <div class="flex flex-col md:flex-row gap-6 items-center">
+                                <div class="bg-white p-4 border border-indigo-300 rounded-lg shadow-sm text-center w-48 shrink-0">
+                                    <div class="w-40 h-40 bg-slate-100 rounded flex items-center justify-center mx-auto mb-2 border border-slate-300 overflow-hidden">
+                                        <img src="https://i.postimg.cc/Yqrxh2S0/Whats-App-Image-2026-06-11-at-8-45-01-PM.jpg" alt="Scan QR Code" class="w-full h-full object-contain">
+                                    </div>
+                                    <p class="text-xs font-bold text-slate-700">Scan to Remit Fees</p>
+                                </div>
+                                
+                                <div class="flex-grow grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                    <div class="sm:col-span-2">
+                                        <label class="block text-xs font-medium text-slate-700 mb-1">Upload Successful Payment Screenshot <span class="text-rose-500">*</span></label>
+                                        <input type="file" id="file_payment_screenshot" accept="image/*" required class="w-full bg-white border p-2 rounded text-xs">
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-medium text-slate-700 mb-1">Transaction Reference Number <span class="text-rose-500">*</span></label>
+                                        <input type="text" id="new_pay_ref" required class="w-full bg-white border p-2.5 rounded text-sm placeholder-slate-400" placeholder="UTR / Ref ID">
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-medium text-slate-700 mb-1">Payment Remittance Date <span class="text-rose-500">*</span></label>
+                                        <input type="date" id="new_pay_date" required class="w-full bg-white border p-2.5 rounded text-sm">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="pt-4 border-t border-slate-200 flex justify-end">
+                            <button type="submit" id="submitBtn" class="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold px-8 py-3.5 rounded-lg shadow transition-colors flex items-center gap-2">
+                                <i class="fa-solid fa-cloud-arrow-up"></i> Register & Submit Form Data
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <section id="admin-dashboard" class="tab-content">
+            
+            <div id="admin-auth-wall" class="max-w-md mx-auto my-12 bg-white rounded-xl border p-6 shadow-sm">
+                <div class="text-center mb-6">
+                    <div class="inline-flex items-center justify-center bg-indigo-50 text-indigo-600 rounded-full w-12 h-12 text-xl mb-2">
+                        <i class="fa-solid fa-lock"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-slate-900">Administrative Login Required</h3>
+                    <p class="text-xs text-slate-400 mt-1">Please provide credential keys to open dashboard tracking ledgers.</p>
+                </div>
+                <form onsubmit="handleAdminLogin(event)" class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 mb-1">User ID</label>
+                        <input type="text" id="auth_userid" required class="w-full border rounded p-2.5 text-sm bg-white font-medium text-slate-800" placeholder="User ID">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 mb-1">Password</label>
+                        <input type="password" id="auth_password" required class="w-full border rounded p-2.5 text-sm focus:ring-indigo-500 focus:border-indigo-500" placeholder="••••••••">
+                    </div>
+                    <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold py-2.5 rounded shadow-sm transition-colors">
+                        Authenticate Access Session
+                    </button>
+                </form>
+            </div>
+
+            <div id="admin-force-reset-wall" class="hidden max-w-md mx-auto my-12 bg-white rounded-xl border border-amber-200 p-6 shadow-sm">
+                <div class="text-center mb-4">
+                    <div class="inline-flex items-center justify-center bg-amber-50 text-amber-600 rounded-full w-12 h-12 text-xl mb-2">
+                        <i class="fa-solid fa-shield-halved"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-slate-900">Security Update Required</h3>
+                    <p class="text-xs text-slate-500 mt-1">You are accessing the portal via the default configuration profile key. You must update your password to maintain entry rights.</p>
+                </div>
+                <form onsubmit="handleForcePasswordUpdate(event)" class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 mb-1">New Complex Password</label>
+                        <input type="password" id="new_secure_pass" required class="w-full border rounded p-2.5 text-sm placeholder-slate-300" placeholder="Enter exactly 6 alphanumeric values">
+                        <p class="text-[11px] text-indigo-600 font-medium mt-1"><i class="fa-solid fa-circle-info"></i> Security policy constraint: Rule requirement asks for exactly 6 digits mixed with characters and numbers.</p>
+                    </div>
+                    <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold py-2.5 rounded shadow transition-colors">
+                        Save Changes & Launch Dashboard
+                    </button>
+                </form>
+            </div>
+
+            <div id="admin-secure-content" class="hidden space-y-6">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-slate-100 p-4 rounded-xl border border-slate-200">
+                    <div>
+                        <h3 class="text-base font-bold text-slate-900">Welcome back, Portal Staff Account</h3>
+                        <p class="text-xs text-slate-500">Logged session active for registry operations.</p>
+                    </div>
+                    <div class="flex gap-2 w-full sm:w-auto">
+                        <button onclick="handleAdminLogout()" class="bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 text-xs font-semibold px-4 py-2 rounded-lg transition-colors">
+                            <i class="fa-solid fa-power-off mr-1"></i> Kill Active Session
+                        </button>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <div class="bg-white p-5 rounded-xl border shadow-sm flex items-center justify-between">
+                        <div>
+                            <p class="text-xs font-medium text-slate-500 uppercase tracking-wider">Total Submissions</p>
+                            <h3 id="stat-total" class="text-3xl font-bold text-slate-900 mt-1">0</h3>
+                        </div>
+                        <div class="text-indigo-600 bg-indigo-50 p-3 rounded-lg text-2xl"><i class="fa-solid fa-folder-open"></i></div>
+                    </div>
+                    <div class="bg-white p-5 rounded-xl border shadow-sm flex items-center justify-between">
+                        <div>
+                            <p class="text-xs font-medium text-slate-500 uppercase tracking-wider">Confirmed/Approved</p>
+                            <h3 id="stat-confirmed" class="text-3xl font-bold text-emerald-600 mt-1">0</h3>
+                        </div>
+                        <div class="text-emerald-600 bg-emerald-50 p-3 rounded-lg text-2xl"><i class="fa-solid fa-circle-check"></i></div>
+                    </div>
+                    <div class="bg-white p-5 rounded-xl border shadow-sm flex items-center justify-between">
+                        <div>
+                            <p class="text-xs font-medium text-slate-500 uppercase tracking-wider">Pending Audit</p>
+                            <h3 id="stat-pending" class="text-3xl font-bold text-amber-600 mt-1">0</h3>
+                        </div>
+                        <div class="text-amber-600 bg-amber-50 p-3 rounded-lg text-2xl"><i class="fa-solid fa-clock-rotate-left"></i></div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl border shadow-sm p-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+                    <div class="w-full sm:w-96 relative">
+                        <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </span>
+                        <input type="text" id="adminSearch" oninput="renderDashboardTable()" class="w-full pl-9 pr-4 py-2 text-sm border rounded-lg focus:outline-none focus:ring-1 focus:ring-indigo-500" placeholder="Filter roster by student's Name...">
+                    </div>
+                    <div class="flex items-center gap-2 w-full sm:w-auto justify-end">
+                        <button onclick="exportToExcelFile()" class="bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-semibold px-4 py-2 rounded-lg flex items-center gap-1.5 transition-colors">
+                            <i class="fa-solid fa-file-excel"></i> Download Excel (.CSV)
+                        </button>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl border shadow-sm overflow-hidden">
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse">
+                            <thead>
+                                <tr class="bg-slate-100 border-b border-slate-200 text-slate-700 text-xs uppercase font-semibold tracking-wider">
+                                    <th class="p-4">Ref ID</th>
+                                    <th class="p-4">Student Details</th>
+                                    <th class="p-4">Target Class</th>
+                                    <th class="p-4">Payment Parameters</th>
+                                    <th class="p-4 text-center">Status</th>
+                                    <th class="p-4 text-right">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="dashboardTableBody" class="text-sm divide-y divide-slate-100 text-slate-600"></tbody>
+                        </table>
+                    </div>
+                    <div id="emptyStateContainer" class="hidden p-12 text-center text-slate-400">
+                        <i class="fa-solid fa-box-archive text-4xl mb-2 block"></i>
+                        No student submission logs detected inside database indices.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <div id="acknowledgementModal" class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm hidden flex items-center justify-center p-4 z-50 overflow-y-auto">
+        <div class="bg-white shadow-2xl max-w-4xl w-full my-8 relative border border-slate-200 flex flex-col max-h-[90vh] overflow-y-auto">
+            <div class="no-print bg-slate-100 border-b p-4 flex justify-between items-center shrink-0 sticky top-0 z-10">
+                <span class="text-sm font-bold text-slate-800 uppercase tracking-wider"><i class="fa-solid fa-envelope-circle-check text-indigo-600 mr-1"></i> Admission Application E-Receipt</span>
+                <div class="flex items-center gap-2">
+                    <button id="modal-print-btn" onclick="window.print()" class="bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold px-5 py-2.5 rounded shadow-sm flex items-center gap-1.5">
+                        <i class="fa-solid fa-print"></i> Print / Download PDF
+                    </button>
+                    <button onclick="document.getElementById('acknowledgementModal').classList.add('hidden')" class="bg-white border text-slate-700 text-sm font-medium px-4 py-2.5 rounded hover:bg-slate-50">
+                        Dismiss
+                    </button>
+                </div>
+            </div>
+
+            <div id="print-area" class="p-8 space-y-6 relative flex-grow bg-white text-black">
+                <div class="flex items-center justify-between border-b-2 border-slate-800 pb-6 mb-6">
+                    <div class="flex items-center gap-4">
+                        <img src="https://i.postimg.cc/mk1q6QPw/School-Logo-new.jpg" alt="Receipt Logo" class="w-20 h-20 object-contain">
+                        <div>
+                            <h2 class="text-2xl font-bold uppercase tracking-tight">Good Shepherd Higher Secondary School</h2>
+                            <p class="text-sm font-medium">Nogorpara, Meghalaya, India</p>
+                            <p class="text-xs font-mono mt-1">Official Admission Application Receipt</p>
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <span class="font-bold text-lg font-mono" id="print-id">---</span><br>
+                        <span class="text-xs">Date: <span id="print-time"></span></span>
+                    </div>
+                </div>
+
+                <h3 class="font-bold text-sm uppercase border-b border-slate-300 pb-1 mt-6 mb-3">1. General Profile</h3>
+                <div class="grid grid-cols-2 gap-x-8 gap-y-3 text-sm">
+                    <div><strong>Student Full Name:</strong> <span id="print-name"></span></div>
+                    <div><strong>Date of Birth:</strong> <span id="print-dob"></span></div>
+                    <div><strong>Gender:</strong> <span id="print-gender"></span></div>
+                    <div><strong>Aadhaar Number:</strong> <span id="print-aadhaar"></span></div>
+                    <div><strong>Social Category:</strong> <span id="print-category"></span></div>
+                    <div><strong>Minority Status:</strong> <span id="print-minority"></span></div>
+                    <div><strong>Religion:</strong> <span id="print-religion"></span></div>
+                    <div><strong>Denomination:</strong> <span id="print-denomination"></span></div>
+                    <div><strong>Blood Group:</strong> <span id="print-blood"></span></div>
+                    <div class="col-span-2"><strong>Permanent Address:</strong> <span id="print-address"></span>, <span id="print-pincode"></span>, <span id="print-state"></span></div>
+                    <div><strong>Mobile Number:</strong> <span id="print-mobile"></span></div>
+                    <div><strong>Email Address:</strong> <span id="print-email"></span></div>
+                </div>
+
+                <h3 class="font-bold text-sm uppercase border-b border-slate-300 pb-1 mt-6 mb-3">2. Parents Details</h3>
+                <div class="grid grid-cols-2 gap-x-8 gap-y-3 text-sm">
+                    <div><strong>Father's Name:</strong> <span id="print-father-name"></span></div>
+                    <div><strong>Father's Aadhaar:</strong> <span id="print-father-aadhaar"></span></div>
+                    <div><strong>Mother's Name:</strong> <span id="print-mother-name"></span></div>
+                    <div><strong>Mother's Aadhaar:</strong> <span id="print-mother-aadhaar"></span></div>
+                    <div class="col-span-2"><strong>Parents' Primary Mobile:</strong> <span id="print-parents-mobile"></span></div>
+                </div>
+
+                <h3 class="font-bold text-sm uppercase border-b border-slate-300 pb-1 mt-6 mb-3">3. Academic Details</h3>
+                <div class="grid grid-cols-2 gap-x-8 gap-y-3 text-sm mb-4">
+                    <div><strong>Target Class:</strong> <span id="print-class"></span></div>
+                    <div class="col-span-2"><strong>Reason for Choosing School:</strong> <span id="print-reason"></span></div>
+                </div>
+
+                <div id="print-prev-school-section">
+                    <h3 class="font-bold text-sm uppercase border-b border-slate-300 pb-1 mt-2 mb-3">Previous Schooling Details</h3>
+                    <div class="grid grid-cols-2 gap-x-8 gap-y-3 text-sm">
+                        <div class="col-span-2"><strong>Previous School Name:</strong> <span id="print-prev-school"></span></div>
+                        <div class="col-span-2"><strong>Previous School Address:</strong> <span id="print-prev-address"></span></div>
+                        <div><strong>Previous Result:</strong> <span id="print-prev-result"></span></div>
+                        <div><strong>Previous Percentage:</strong> <span id="print-prev-perc"></span></div>
+                    </div>
+                </div>
+
+                <h3 class="font-bold text-sm uppercase border-b border-slate-300 pb-1 mt-6 mb-3">4. Payment Reference</h3>
+                <div class="grid grid-cols-2 gap-x-8 gap-y-3 text-sm">
+                    <div><strong>Transaction UTR / Ref ID:</strong> <span id="print-pay-ref" class="font-mono"></span></div>
+                    <div><strong>Payment Remittance Date:</strong> <span id="print-pay-date"></span></div>
+                </div>
+
+                <div class="mt-12 pt-4 border-t border-slate-300 text-xs text-center flex justify-between">
+                    <span>Authorized System Signature</span>
+                    <span>Student/Parent Signature</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="adminEditModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden flex items-center justify-center p-4 z-50 overflow-y-auto">
+        <div class="bg-white rounded-xl shadow-2xl max-w-lg w-full p-6 relative">
+            <h3 class="text-lg font-bold border-b pb-2 mb-4 text-slate-800">Edit Candidate Data</h3>
+            <form id="editRecordForm" onsubmit="saveEditedRecord(event)" class="space-y-4">
+                <input type="hidden" id="edit_record_id">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">Student Name</label>
+                    <input type="text" id="edit_student_name" required class="w-full border rounded p-2 text-sm">
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 mb-1">Date of Birth</label>
+                        <input type="date" id="edit_dob" required class="w-full border rounded p-2 text-sm">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 mb-1">Target Class</label>
+                        <input type="text" id="edit_class" required class="w-full border rounded p-2 text-sm">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">Phone Number</label>
+                    <input type="tel" id="edit_mobile" required class="w-full border rounded p-2 text-sm">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">Status</label>
+                    <select id="edit_status" required class="w-full border rounded p-2 text-sm">
+                        <option value="Pending Review">Pending Review</option>
+                        <option value="Confirmed">Confirmed</option>
+                        <option value="Rejected">Rejected</option>
+                    </select>
+                </div>
+                <div class="flex justify-end gap-2 pt-4 border-t">
+                    <button type="button" onclick="document.getElementById('adminEditModal').classList.add('hidden')" class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-4 py-2 rounded text-sm font-medium">Cancel</button>
+                    <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded text-sm font-semibold">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="documentViewModal" class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm hidden flex items-center justify-center p-4 z-50 overflow-y-auto">
+        <div class="bg-white rounded-xl shadow-2xl max-w-4xl w-full p-6 relative max-h-[90vh] flex flex-col">
+            <div class="flex justify-between items-center border-b pb-4 mb-4 shrink-0">
+                <h3 class="text-lg font-bold text-slate-800"><i class="fa-solid fa-folder-open text-indigo-600 mr-2"></i>Uploaded Documents</h3>
+                <button onclick="document.getElementById('documentViewModal').classList.add('hidden')" class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-1.5 rounded text-sm font-medium">&times; Close</button>
+            </div>
+            <div id="document-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6 overflow-y-auto pr-2 pb-4">
+                </div>
+        </div>
+    </div>
+
+    <div id="donation-qr-box">
+        <button id="close-donation-box" onclick="closeDonationBox()">&times;</button>
+        <div id="donation-qr-title">Support Good Shepherd</div>
+        <div id="qr-code-placeholder">
+            <img src="https://i.postimg.cc/t42Rp5Mq/ba025f5a-46f7-4f4c-b0fd-fe8be4d93747.jpg" alt="Donation QR Code">
+        </div>
+        <div id="qr-scan-label">Scan to Donate</div>
     </div>
 
     <footer class="site-footer">
         <div class="container">
-            <p>&copy; 2026 Good Shepherd Higher Secondary School, Chapahati. All Rights Reserved.</p>
-            <p style="font-size: 12px; color: #888;">Managed by Good Shepherd Church Chapahati | Powered by Local Administration Desk</p>
+            <p>&copy; 2026 Good Shepherd Higher Secondary School. All Rights Reserved.</p>
+            <p style="font-size: 12px; color: #888;">Managed by Good Shepherd Church | Powered by Local Administration Desk</p>
         </div>
     </footer>
 
-    <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
-    <style>
-        /* CSS to make the box float at the bottom right corner */
-        #donation-qr-box {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 220px;
-            background-color: #ffffff;
-            border-radius: 12px;
-            box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.15); /* Gives it a floating shadow */
-            padding: 20px;
-            text-align: center;
-            z-index: 9999; /* Keeps it on top of other dashboard elements */
-            
-            /* Hidden by default before the JS triggers */
-            opacity: 0;
-            pointer-events: none;
-            transform: translateY(20px);
-            transition: opacity 0.5s ease, transform 0.5s ease;
-        }
-
-        /* The class added by JavaScript to show the box */
-        #donation-qr-box.show {
-            opacity: 1;
-            pointer-events: auto;
-            /* Adds a subtle continuous floating animation */
-            animation: floatHover 4s ease-in-out infinite; 
-        }
-
-        /* Animation for the gentle floating effect */
-        @keyframes floatHover {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-8px); }
-            100% { transform: translateY(0px); }
-        }
-
-        /* Styling the close button */
-        #close-donation-box {
-            position: absolute;
-            top: 10px;
-            right: 15px;
-            background: transparent;
-            border: none;
-            font-size: 24px;
-            color: #888;
-            cursor: pointer;
-            transition: color 0.2s;
-        }
-
-        #close-donation-box:hover {
-            color: #ff0000;
-        }
-
-        /* Title styling */
-        #donation-qr-title {
-            font-weight: bold;
-            font-size: 1.1rem;
-            color: #333;
-            margin-bottom: 12px;
-            margin-top: 5px;
-        }
-
-        /* Ensuring the image stays strictly inside the box */
-        #qr-code-placeholder img {
-            width: 100%; /* Fills the container safely */
-            max-width: 160px;
-            height: auto;
-            border-radius: 8px;
-            border: 2px solid #f0f0f0;
-        }
-
-        /* Label at the bottom */
-        #qr-scan-label {
-            margin-top: 10px;
-            font-size: 0.9rem;
-            color: #666;
-            font-weight: 500;
-        }
-    </style>
-</head>
-<body>
-
-    <!-- Donation QR Code Box -->
-    <div id="donation-qr-box">
-        <button id="close-donation-box" onclick="closeDonationBox()">&times;</button>
-        <div id="donation-qr-title">Support Good Shepherd</div>
-        
-        <div id="qr-code-placeholder">
-            <img src="https://i.postimg.cc/t42Rp5Mq/ba025f5a-46f7-4f4c-b0fd-fe8be4d93747.jpg" alt="Donation QR Code">
-        </div>
-        
-        <div id="qr-scan-label">Scan to Donate</div>
-    </div>
-
-    <script src="JavaScript/script.js"></script>
-    
     <script>
-        function toggleDropdown(contentId, btnElement) {
-            btnElement.classList.toggle('active');
-            var content = document.getElementById(contentId);
-            if (content.style.maxHeight && content.style.maxHeight !== "0px") {
-                content.style.maxHeight = "0px";
+        // Floating Donation Box & Mobile Menu
+        function closeDonationBox() { document.getElementById('donation-qr-box').classList.remove('show'); }
+        setTimeout(() => document.getElementById('donation-qr-box').classList.add('show'), 1500);
+        document.getElementById('mobile-menu-btn').addEventListener('click', function() {
+            document.getElementById('nav-menu').classList.toggle('show');
+        });
+
+        // System Variables & Auth
+        const ADMIN_UID = "Admin";
+        const DEFAULT_PASSWORD = "asd-123";
+        let appDatabase = JSON.parse(localStorage.getItem('gshss_db')) || [];
+        let sessionAuthenticated = JSON.parse(sessionStorage.getItem('gshss_auth')) || false;
+        
+        if (!localStorage.getItem('gshss_admin_password')) {
+            localStorage.setItem('gshss_admin_password', DEFAULT_PASSWORD);
+            localStorage.setItem('gshss_is_first_login', 'true');
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            const todayStr = new Date().toISOString().split('T')[0];
+            if(document.getElementById('new_pay_date')) document.getElementById('new_pay_date').value = todayStr;
+            evaluateAuthViewStates();
+        });
+
+        // Form Logic
+        function toggleChristianFields(val) {
+            const el = document.getElementById('denom_container');
+            if(val === 'Christian') { el.classList.remove('hidden'); document.getElementById('new_denomination').setAttribute('required','required'); }
+            else { el.classList.add('hidden'); document.getElementById('new_denomination').removeAttribute('required'); toggleCatholicFields(''); }
+        }
+        function toggleCatholicFields(val) {
+            const el = document.getElementById('catholic_parish_container');
+            if(val === 'Catholic') el.classList.remove('hidden');
+            else { el.classList.add('hidden'); toggleParishLetter('No'); document.getElementById('new_other_parish').value='No'; }
+            evaluateUploadRequirements();
+        }
+        function toggleParishLetter(val) {
+            const alertBox = document.getElementById('parish_letter_alert');
+            if(val === 'Yes') alertBox.classList.remove('hidden');
+            else alertBox.classList.add('hidden');
+            evaluateUploadRequirements();
+        }
+        
+        function evaluateSchoolingRequirement(cl) {
+            const sec = document.getElementById('previous_schooling_section');
+            const inputs = sec.querySelectorAll('input, select');
+            if(['Nursery', 'LKG', 'UKG', ''].includes(cl)) {
+                sec.classList.add('hidden');
+                inputs.forEach(i => {
+                    i.removeAttribute('required');
+                    i.value = ''; // clears any pre-existing text
+                });
             } else {
-                content.style.maxHeight = content.scrollHeight + "px";
+                sec.classList.remove('hidden');
+                inputs.forEach(i => i.setAttribute('required','required'));
+            }
+            evaluateUploadRequirements();
+        }
+        
+        function evaluateUploadRequirements() {
+            const targetClass = document.getElementById('admission_class').value;
+            const denom = document.getElementById('new_denomination').value;
+            const otherParish = document.getElementById('new_other_parish').value; 
+
+            const marksheetBox = document.getElementById('file_conditional_marksheet');
+            const mboseBox = document.getElementById('file_conditional_mbose');
+            const priestBox = document.getElementById('file_conditional_priest');
+
+            if(['LKG','UKG','Class I','Class II','Class III','Class IV','Class V','Class VI','Class VII','Class VIII'].includes(targetClass)) {
+                marksheetBox.classList.remove('hidden'); document.getElementById('input_file_marksheet').setAttribute('required','required');
+                mboseBox.classList.add('hidden'); toggleMboseFields(false);
+            } else if(targetClass === 'Class XI') {
+                marksheetBox.classList.add('hidden'); document.getElementById('input_file_marksheet').removeAttribute('required');
+                mboseBox.classList.remove('hidden'); toggleMboseFields(true);
+            } else {
+                marksheetBox.classList.add('hidden'); document.getElementById('input_file_marksheet').removeAttribute('required');
+                mboseBox.classList.add('hidden'); toggleMboseFields(false);
+            }
+            
+            if(denom === 'Catholic' && otherParish === 'Yes') {
+                priestBox.classList.remove('hidden'); document.getElementById('input_file_priest').setAttribute('required','required');
+            } else {
+                priestBox.classList.add('hidden'); document.getElementById('input_file_priest').removeAttribute('required');
             }
         }
 
-        function closeDonationBox() {
-            // Removes the 'show' class to hide it smoothly
-            document.getElementById('donation-qr-box').classList.remove('show');
+        function toggleMboseFields(req) {
+            const f1=document.getElementById('input_file_sslc'), f2=document.getElementById('input_file_admit'), f3=document.getElementById('input_file_mbose');
+            if(req){ f1.setAttribute('required','required'); f2.setAttribute('required','required'); f3.setAttribute('required','required'); }
+            else { f1.removeAttribute('required'); f2.removeAttribute('required'); f3.removeAttribute('required'); }
+        }
+        
+        function showUndertakingSection() {
+            document.getElementById('new_undertaking_panel').classList.remove('hidden');
+            document.getElementById('new_undertaking_panel').scrollIntoView({ behavior: 'smooth' });
         }
 
-        // Show the box after a 1.5-second delay so it pops up naturally
-        setTimeout(function() {
-            document.getElementById('donation-qr-box').classList.add('show');
-        }, 1500);
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('bg-indigo-600', 'text-white', 'shadow-md');
+                btn.classList.add('bg-white', 'text-slate-600', 'border', 'border-slate-300');
+            });
+            document.getElementById(tabId).classList.add('active');
+            let activeBtn = document.getElementById('btn-' + tabId);
+            activeBtn.classList.remove('bg-white', 'text-slate-600', 'border', 'border-slate-300');
+            activeBtn.classList.add('bg-indigo-600', 'text-white', 'shadow-md');
+            
+            if(tabId === 'admin-dashboard') {
+                evaluateAuthViewStates();
+            }
+        }
+
+        function getBase64(file) {
+            return new Promise((resolve, reject) => {
+                if (!file) { resolve(null); return; }
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = error => reject(error);
+            });
+        }
+
+        async function handleNewAdmission(e) {
+            e.preventDefault();
+            
+            const submitBtn = document.getElementById('submitBtn');
+            const originalBtnText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Processing Application...';
+            submitBtn.disabled = true;
+
+            try {
+                const docPhoto = await getBase64(document.getElementById('file_photo').files[0]);
+                const docBirth = await getBase64(document.getElementById('file_birth').files[0]);
+                const docAadhaar = await getBase64(document.getElementById('file_aadhaar').files[0]);
+                const docParentsAadhaar = await getBase64(document.getElementById('file_parents_aadhaar').files[0]);
+                const docPayment = await getBase64(document.getElementById('file_payment_screenshot').files[0]);
+                
+                const docMarksheet = await getBase64(document.getElementById('input_file_marksheet').files[0]);
+                const docSslc = await getBase64(document.getElementById('input_file_sslc').files[0]);
+                const docAdmit = await getBase64(document.getElementById('input_file_admit').files[0]);
+                const docMbose = await getBase64(document.getElementById('input_file_mbose').files[0]);
+                const docPriest = await getBase64(document.getElementById('input_file_priest').files[0]);
+
+                const payload = {
+                    id: "GSHSS-" + Math.floor(100000 + Math.random() * 900000),
+                    timestamp: new Date().toLocaleString(),
+                    studentName: document.getElementById('new_student_name').value.trim(),
+                    dob: document.getElementById('new_dob').value,
+                    gender: document.getElementById('new_gender').value,
+                    aadhaar: document.getElementById('new_aadhaar').value,
+                    category: document.getElementById('new_social_category').value,
+                    minority: document.getElementById('new_minority').value,
+                    religion: document.getElementById('new_religion').value,
+                    denomination: document.getElementById('new_denomination').value || 'N/A',
+                    bloodGroup: document.getElementById('new_blood_group').value,
+                    address: document.getElementById('new_address').value,
+                    pincode: document.getElementById('new_pincode').value,
+                    state: document.getElementById('new_state').value,
+                    mobile: document.getElementById('new_mobile').value,
+                    email: document.getElementById('new_email').value,
+                    fatherName: document.getElementById('father_name').value,
+                    motherName: document.getElementById('mother_name').value,
+                    fatherAadhaar: document.getElementById('father_aadhaar').value,
+                    motherAadhaar: document.getElementById('mother_aadhaar').value,
+                    parentsMobile: document.getElementById('parents_mobile').value,
+                    targetClass: document.getElementById('admission_class').value,
+                    whyChoose: document.getElementById('why_choose').value,
+                    prevSchool: document.getElementById('prev_school_name').value || 'N/A',
+                    prevAddress: document.getElementById('prev_school_address').value || 'N/A',
+                    prevResult: document.getElementById('prev_result').value || 'N/A',
+                    prevPercentage: document.getElementById('prev_percentage').value || 'N/A',
+                    payRef: document.getElementById('new_pay_ref').value,
+                    payDate: document.getElementById('new_pay_date').value,
+                    status: "Pending Review",
+                    
+                    documents: {
+                        photo: docPhoto,
+                        birthCert: docBirth,
+                        aadhaar: docAadhaar,
+                        parentsAadhaar: docParentsAadhaar,
+                        paymentProof: docPayment,
+                        marksheet: docMarksheet,
+                        sslc: docSslc,
+                        admitCard: docAdmit,
+                        mboseReq: docMbose,
+                        priestLetter: docPriest
+                    }
+                };
+
+                appDatabase.push(payload);
+                
+                try {
+                    localStorage.setItem('gshss_db', JSON.stringify(appDatabase));
+                } catch (storageError) {
+                    console.warn("Local storage capacity reached. Skipping high-volume base64 strings.");
+                    payload.documents = {}; 
+                    localStorage.setItem('gshss_db', JSON.stringify(appDatabase));
+                    alert("Submission processed successfully! Note: Your image attachments were skipped because they exceeded the browser's 5MB memory capacity, but your candidate data is safely registered in the Dashboard.");
+                }
+                
+                document.getElementById('newAdmissionForm').reset();
+                document.getElementById('new_pay_date').value = new Date().toISOString().split('T')[0];
+                document.getElementById('new_undertaking_panel').classList.add('hidden');
+                
+                compileAcknowledgementSlip(payload);
+
+            } catch (error) {
+                console.error("General Code Error:", error);
+                alert("An error occurred. Please refresh the page and try once more.");
+            } finally {
+                submitBtn.innerHTML = originalBtnText;
+                submitBtn.disabled = false;
+            }
+        }
+
+        function compileAcknowledgementSlip(payload) {
+            document.getElementById('print-id').innerText = payload.id;
+            document.getElementById('print-time').innerText = payload.timestamp;
+            document.getElementById('print-name').innerText = payload.studentName;
+            document.getElementById('print-dob').innerText = payload.dob;
+            document.getElementById('print-gender').innerText = payload.gender;
+            document.getElementById('print-aadhaar').innerText = payload.aadhaar;
+            document.getElementById('print-category').innerText = payload.category;
+            document.getElementById('print-minority').innerText = payload.minority;
+            document.getElementById('print-religion').innerText = payload.religion;
+            document.getElementById('print-denomination').innerText = payload.denomination;
+            document.getElementById('print-blood').innerText = payload.bloodGroup;
+            document.getElementById('print-address').innerText = payload.address;
+            document.getElementById('print-pincode').innerText = payload.pincode;
+            document.getElementById('print-state').innerText = payload.state;
+            document.getElementById('print-mobile').innerText = payload.mobile;
+            document.getElementById('print-email').innerText = payload.email;
+            document.getElementById('print-father-name').innerText = payload.fatherName;
+            document.getElementById('print-father-aadhaar').innerText = payload.fatherAadhaar;
+            document.getElementById('print-mother-name').innerText = payload.motherName;
+            document.getElementById('print-mother-aadhaar').innerText = payload.motherAadhaar;
+            document.getElementById('print-parents-mobile').innerText = payload.parentsMobile;
+            document.getElementById('print-class').innerText = payload.targetClass;
+            document.getElementById('print-reason').innerText = payload.whyChoose;
+            
+            const prevSchoolSection = document.getElementById('print-prev-school-section');
+            if (['Nursery', 'LKG', 'UKG'].includes(payload.targetClass)) {
+                prevSchoolSection.style.display = 'none';
+            } else {
+                prevSchoolSection.style.display = 'block';
+                document.getElementById('print-prev-school').innerText = payload.prevSchool;
+                document.getElementById('print-prev-address').innerText = payload.prevAddress;
+                document.getElementById('print-prev-result').innerText = payload.prevResult;
+                document.getElementById('print-prev-perc').innerText = payload.prevPercentage;
+            }
+
+            document.getElementById('print-pay-ref').innerText = payload.payRef;
+            document.getElementById('print-pay-date').innerText = payload.payDate;
+
+            document.getElementById('acknowledgementModal').classList.remove('hidden');
+        }
+
+        // Admin Auth & Dashboard Logic
+        function validateMixedPasswordPolicy(passwordStr) {
+            const standardLengthCheck = passwordStr.length === 6;
+            const containsLetters = /[A-Za-z]/.test(passwordStr);
+            const containsNumbers = /\d/.test(passwordStr);
+            return standardLengthCheck && containsLetters && containsNumbers;
+        }
+
+        function handleAdminLogin(event) {
+            event.preventDefault();
+            const inputUID = document.getElementById('auth_userid').value.trim();
+            const inputPass = document.getElementById('auth_password').value;
+            const realPassword = localStorage.getItem('gshss_admin_password');
+            const isFirstLogin = localStorage.getItem('gshss_is_first_login') === 'true';
+
+            if (inputUID === ADMIN_UID && inputPass === realPassword) {
+                if (isFirstLogin && inputPass === DEFAULT_PASSWORD) {
+                    document.getElementById('admin-auth-wall').classList.add('hidden');
+                    document.getElementById('admin-force-reset-wall').classList.remove('hidden');
+                } else {
+                    sessionAuthenticated = true;
+                    sessionStorage.setItem('gshss_auth', JSON.stringify(true));
+                    evaluateAuthViewStates();
+                }
+            } else {
+                alert("Security Authorization Rejected: Invalid Authentication Match.");
+            }
+        }
+
+        function handleForcePasswordUpdate(event) {
+            event.preventDefault();
+            const newPasswordValue = document.getElementById('new_secure_pass').value.trim();
+
+            if (!validateMixedPasswordPolicy(newPasswordValue)) {
+                alert("Constraint Violation: Password must be exactly 6 characters long and combine a mix of characters and numeric numbers.");
+                return;
+            }
+
+            localStorage.setItem('gshss_admin_password', newPasswordValue);
+            localStorage.setItem('gshss_is_first_login', 'false');
+            sessionAuthenticated = true;
+            sessionStorage.setItem('gshss_auth', JSON.stringify(true));
+            
+            document.getElementById('admin-force-reset-wall').classList.add('hidden');
+            document.getElementById('new_secure_pass').value = '';
+            alert("Security Log Matrix Updated: Password successfully changed.");
+            evaluateAuthViewStates();
+        }
+
+        function handleAdminLogout() {
+            sessionAuthenticated = false;
+            sessionStorage.removeItem('gshss_auth');
+            evaluateAuthViewStates();
+            switchTab('new-admission');
+        }
+
+        function evaluateAuthViewStates() {
+            const authWall = document.getElementById('admin-auth-wall');
+            const forceWall = document.getElementById('admin-force-reset-wall');
+            const coreContent = document.getElementById('admin-secure-content');
+            document.getElementById('auth_password').value = '';
+
+            if (sessionAuthenticated) {
+                authWall.classList.add('hidden');
+                forceWall.classList.add('hidden');
+                coreContent.classList.remove('hidden');
+                renderDashboardTable();
+            } else {
+                authWall.classList.remove('hidden');
+                forceWall.classList.add('hidden');
+                coreContent.classList.add('hidden');
+            }
+        }
+
+        function triggerTestingReset() {
+            if(confirm("Are you sure you want to restore the portal account back to factory default strings? This deletes ALL student data.")) {
+                localStorage.clear();
+                sessionStorage.clear();
+                location.reload();
+            }
+        }
+
+        function renderDashboardTable() {
+            if(!sessionAuthenticated) return;
+            const searchInput = document.getElementById('adminSearch').value.toLowerCase();
+            const tableBody = document.getElementById('dashboardTableBody');
+            const emptyState = document.getElementById('emptyStateContainer');
+            
+            tableBody.innerHTML = '';
+
+            const filtered = appDatabase.filter(r => r.studentName.toLowerCase().includes(searchInput));
+
+            document.getElementById('stat-total').innerText = appDatabase.length;
+            document.getElementById('stat-confirmed').innerText = appDatabase.filter(r => r.status === 'Confirmed').length;
+            document.getElementById('stat-pending').innerText = appDatabase.filter(r => r.status === 'Pending Review').length;
+
+            if(filtered.length === 0) { emptyState.classList.remove('hidden'); return; } 
+            else { emptyState.classList.add('hidden'); }
+
+            filtered.forEach(record => {
+                const tr = document.createElement('tr');
+                tr.className = "hover:bg-slate-50 border-b transition-colors";
+                let badge = record.status === 'Confirmed' ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800';
+
+                tr.innerHTML = `
+                    <td class="p-4 font-mono text-xs text-slate-900 font-semibold">${record.id}</td>
+                    <td class="p-4">
+                        <div class="font-medium text-slate-900">${record.studentName}</div>
+                        <div class="text-xs text-slate-400">DOB: ${record.dob}</div>
+                    </td>
+                    <td class="p-4 font-medium text-slate-800">${record.targetClass}</td>
+                    <td class="p-4 text-xs">
+                        <div class="font-medium text-slate-700">${record.payRef}</div>
+                        <div class="text-slate-400">${record.payDate}</div>
+                    </td>
+                    <td class="p-4 text-center"><span class="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-semibold ${badge}">${record.status}</span></td>
+                    <td class="p-4 text-right flex items-center justify-end gap-2 flex-wrap">
+                        <button onclick="viewDocs('${record.id}')" class="bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200 text-xs font-medium px-2 py-1 rounded"><i class="fa-solid fa-folder-open"></i> Docs</button>
+                        <button onclick="viewRecord('${record.id}')" class="bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border border-indigo-200 text-xs font-medium px-2 py-1 rounded"><i class="fa-solid fa-print"></i> View</button>
+                        <button onclick="openEditModal('${record.id}')" class="bg-amber-50 hover:bg-amber-100 text-amber-700 border border-amber-200 text-xs font-medium px-2 py-1 rounded"><i class="fa-solid fa-pen"></i> Edit</button>
+                        ${record.status !== 'Confirmed' ? `
+                            <button onclick="approveStudentAdmission('${record.id}')" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-medium px-3 py-1 rounded shadow-sm">Approve</button>
+                        ` : ''}
+                    </td>
+                `;
+                tableBody.appendChild(tr);
+            });
+        }
+
+        function viewDocs(id) {
+            const record = appDatabase.find(item => item.id === id);
+            if(!record || !record.documents || Object.keys(record.documents).length === 0) return alert("Notice: Attachment data was dropped to prevent LocalStorage crashing, or no documents were submitted.");
+            
+            const grid = document.getElementById('document-grid');
+            grid.innerHTML = ''; 
+
+            const docs = [
+                { label: "Passport Photo", data: record.documents.photo },
+                { label: "Payment Proof", data: record.documents.paymentProof },
+                { label: "Birth Certificate", data: record.documents.birthCert },
+                { label: "Candidate Aadhaar", data: record.documents.aadhaar },
+                { label: "Parents Aadhaar", data: record.documents.parentsAadhaar },
+                { label: "Marksheet", data: record.documents.marksheet },
+                { label: "SSLC", data: record.documents.sslc },
+                { label: "Admit Card", data: record.documents.admitCard },
+                { label: "MBOSE Doc", data: record.documents.mboseReq },
+                { label: "Priest Letter", data: record.documents.priestLetter }
+            ];
+
+            docs.forEach(doc => {
+                if(doc.data) {
+                    const el = document.createElement('div');
+                    el.className = "border rounded p-3 bg-slate-50 flex flex-col";
+                    el.innerHTML = `
+                        <h4 class="text-sm font-bold text-slate-700 mb-2 border-b pb-1">${doc.label}</h4>
+                        ${doc.data.includes('application/pdf') 
+                            ? `<iframe src="${doc.data}" class="w-full h-64 border rounded" title="${doc.label}"></iframe>` 
+                            : `<img src="${doc.data}" alt="${doc.label}" class="w-full h-auto max-h-64 object-contain rounded">`
+                        }
+                    `;
+                    grid.appendChild(el);
+                }
+            });
+
+            if(grid.innerHTML === '') grid.innerHTML = '<p class="text-sm text-slate-500">No documents were uploaded or supported in storage.</p>';
+            
+            document.getElementById('documentViewModal').classList.remove('hidden');
+        }
+
+        function viewRecord(id) {
+            const r = appDatabase.find(item => item.id === id);
+            if(r) compileAcknowledgementSlip(r);
+        }
+
+        function approveStudentAdmission(id) {
+            const idx = appDatabase.findIndex(r => r.id === id);
+            if (idx != -1) {
+                appDatabase[idx].status = "Confirmed";
+                localStorage.setItem('gshss_db', JSON.stringify(appDatabase));
+                renderDashboardTable();
+            }
+        }
+
+        function openEditModal(id) {
+            const record = appDatabase.find(r => r.id === id);
+            if(!record) return;
+            
+            document.getElementById('edit_record_id').value = record.id;
+            document.getElementById('edit_student_name').value = record.studentName;
+            document.getElementById('edit_dob').value = record.dob;
+            document.getElementById('edit_class').value = record.targetClass;
+            document.getElementById('edit_mobile').value = record.mobile;
+            document.getElementById('edit_status').value = record.status;
+            
+            document.getElementById('adminEditModal').classList.remove('hidden');
+        }
+
+        function saveEditedRecord(e) {
+            e.preventDefault();
+            const id = document.getElementById('edit_record_id').value;
+            const idx = appDatabase.findIndex(r => r.id === id);
+            
+            if(idx !== -1) {
+                appDatabase[idx].studentName = document.getElementById('edit_student_name').value;
+                appDatabase[idx].dob = document.getElementById('edit_dob').value;
+                appDatabase[idx].targetClass = document.getElementById('edit_class').value;
+                appDatabase[idx].mobile = document.getElementById('edit_mobile').value;
+                appDatabase[idx].status = document.getElementById('edit_status').value;
+                
+                localStorage.setItem('gshss_db', JSON.stringify(appDatabase));
+                document.getElementById('adminEditModal').classList.add('hidden');
+                renderDashboardTable();
+            }
+        }
+
+        function exportToExcelFile() {
+            if (appDatabase.length === 0) return alert("Export Notice: No candidate records located inside database.");
+            
+            let csvRows = [[
+                "Registration ID", "Timestamp", "Status",
+                "Student Name", "Date of Birth", "Gender", "Aadhaar", "Category", "Minority", "Religion", "Denomination", "Blood Group",
+                "Address", "Pincode", "State", "Mobile", "Email",
+                "Father Name", "Mother Name", "Father Aadhaar", "Mother Aadhaar", "Parents Mobile",
+                "Target Class", "Why Choose Us", "Previous School", "Prev Address", "Prev Result", "Prev Percentage",
+                "Payment Ref", "Payment Date"
+            ]];
+            
+            appDatabase.forEach(item => {
+                csvRows.push([
+                    item.id, `"${item.timestamp}"`, item.status,
+                    `"${item.studentName}"`, item.dob, item.gender, `"${item.aadhaar}"`, item.category, item.minority, item.religion, item.denomination, item.bloodGroup,
+                    `"${item.address}"`, item.pincode, item.state, item.mobile, item.email,
+                    `"${item.fatherName}"`, `"${item.motherName}"`, `"${item.fatherAadhaar}"`, `"${item.motherAadhaar}"`, item.parentsMobile,
+                    `"${item.targetClass}"`, `"${item.whyChoose}"`, `"${item.prevSchool}"`, `"${item.prevAddress}"`, item.prevResult, item.prevPercentage,
+                    `"${item.payRef}"`, item.payDate
+                ]);
+            });
+
+            let csvContent = "data:text/csv;charset=utf-8," + csvRows.map(e => e.join(",")).join("\n");
+            let link = document.createElement("a");
+            link.setAttribute("href", encodeURI(csvContent));
+            link.setAttribute("download", "GSHSS_Full_Admissions_Registry.csv");
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
     </script>
 </body>
 </html>
-            
