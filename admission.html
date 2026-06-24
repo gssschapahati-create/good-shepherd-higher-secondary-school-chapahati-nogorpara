@@ -13,8 +13,12 @@
         body { font-family: 'Inter', sans-serif; background-color: #f8fafc; margin: 0; }
 
         /* School Custom CSS */
-        .header { background: #1e1e1e; color: #fff; padding: 8px 0; font-size: 14px; text-align: center; }
-        .motto-marquee { width: 80%; display: inline-block; vertical-align: middle; margin-left: 10px; }
+        /* Changed header background to match the screenshot */
+        .header { background: #42b9b9; color: #fff; padding: 8px 0; font-size: 14px; text-align: center; }
+        
+        /* Added specific style for the motto label to match screenshot */
+        .motto-label { background-color: #ffffff; color: #e53935; padding: 2px 8px; border-radius: 2px; font-weight: bold; display: inline-block; vertical-align: middle; }
+        .motto-marquee { width: 75%; display: inline-block; vertical-align: middle; margin-left: 10px; font-weight: 500; }
         
         .nav-wrapper { background: #fff; box-shadow: 0 2px 10px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 40; }
         .nav-container { display: flex; justify-content: space-between; align-items: center; padding: 10px 20px; max-width: 1200px; margin: 0 auto; }
@@ -35,7 +39,9 @@
         }
         .slider-overlay {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.55); display: flex; flex-direction: column;
+            /* Lightened the overlay to make the background more visible like the screenshot */
+            background: rgba(0, 0, 0, 0.2); 
+            display: flex; flex-direction: column;
             justify-content: center; align-items: center; text-align: center; color: #ffffff; z-index: 5;
         }
         .animate-school-name {
@@ -104,7 +110,10 @@
 <body class="flex flex-col min-h-screen">
 
     <div class="header">
-        <div class="container flex-header"><b>Our School Motto:</b> <marquee class="motto-marquee">"To Learn, To Lead"</marquee></div>
+        <div class="container flex-header">
+            <span class="motto-label">Our School Motto:</span> 
+            <marquee class="motto-marquee">"To Learn, To Lead"</marquee>
+        </div>
     </div>
 
     <div class="nav-wrapper">
@@ -140,7 +149,7 @@
             <img src="images/10.jpg" alt="School Campus View" class="slide-img">
         </div>
         <div class="slider-overlay">
-            <h1 class="animate-school-name">Admission Portal</h1>
+            <h1 class="animate-school-name">ADMISSION PORTAL</h1>
         </div>
     </div>
         
@@ -168,6 +177,7 @@
                 </div>
 
                 <form id="newAdmissionForm" class="p-6 space-y-8" onsubmit="handleNewAdmission(event)">
+                    <!-- ALL ORIGINAL FORM FIELDS REMAIN COMPLETELY UNCHANGED BELOW -->
                     <div>
                         <h3 class="text-lg font-medium text-slate-900 border-b border-slate-200 pb-2 mb-4">
                             <span class="inline-flex items-center justify-center bg-indigo-100 text-indigo-800 rounded-full w-6 h-6 text-sm font-bold mr-2">1</span>
