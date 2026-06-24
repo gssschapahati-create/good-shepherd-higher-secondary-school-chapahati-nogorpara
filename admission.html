@@ -9,14 +9,12 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght=300;400;500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
         body { font-family: 'Inter', sans-serif; background-color: #f8fafc; margin: 0; }
 
         /* School Custom CSS */
-        /* Changed header background to match the screenshot */
         .header { background: #42b9b9; color: #fff; padding: 8px 0; font-size: 14px; text-align: center; }
         
-        /* Added specific style for the motto label to match screenshot */
         .motto-label { background-color: #ffffff; color: #e53935; padding: 2px 8px; border-radius: 2px; font-weight: bold; display: inline-block; vertical-align: middle; }
         .motto-marquee { width: 75%; display: inline-block; vertical-align: middle; margin-left: 10px; font-weight: 500; }
         
@@ -28,9 +26,26 @@
         #nav-menu a:hover, #nav-menu a.active { color: #2e7d32; border-bottom: 2px solid #2e7d32; }
         .menu-toggle { display: none; background: none; border: none; font-size: 24px; cursor: pointer; }
 
-        .slider-container { position: relative; width: 100%; height: 450px; overflow: hidden; background-color: #000; }
-        .slides-wrapper { display: flex; width: 300%; height: 100%; animation: schoolSlideshow 15s infinite ease-in-out; }
-        .slide-img { width: 33.333%; height: 100%; object-fit: cover; display: block; }
+        /* Automated Hero Banner Slideshow (Scaled up to exactly 450px height as shown in reference) */
+        .slider-container {
+            position: relative;
+            width: 100%;
+            height: 450px;
+            overflow: hidden;
+            background-color: #000;
+        }
+        .slides-wrapper {
+            display: flex;
+            width: 300%;
+            height: 100%;
+            animation: schoolSlideshow 15s infinite ease-in-out;
+        }
+        .slide-img {
+            width: 33.333%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
         @keyframes schoolSlideshow {
             0%, 28% { transform: translateX(0%); }
             33%, 61% { transform: translateX(-33.333%); }
@@ -38,18 +53,35 @@
             100% { transform: translateX(0%); }
         }
         .slider-overlay {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            /* Lightened the overlay to make the background more visible like the screenshot */
-            background: rgba(0, 0, 0, 0.2); 
-            display: flex; flex-direction: column;
-            justify-content: center; align-items: center; text-align: center; color: #ffffff; z-index: 5;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.45);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: #ffffff;
+            padding: 20px;
+            box-sizing: border-box;
+            z-index: 5;
         }
         .animate-school-name {
-            font-size: 2.5rem; font-weight: 800; text-transform: uppercase; letter-spacing: 2px;
-            margin: 0; text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
+            font-size: 2.5rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin: 0;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
             animation: textFadeTracking 2.5s ease-out infinite alternate;
         }
-        @keyframes textFadeTracking { 0% { letter-spacing: 1px; transform: scale(0.98); } 100% { letter-spacing: 4px; transform: scale(1.02); } }
+        @keyframes textFadeTracking {
+            0% { letter-spacing: 1px; opacity: 0.8; transform: scale(0.98); }
+            100% { letter-spacing: 4px; opacity: 1; transform: scale(1.02); }
+        }
 
         .site-footer { background-color: #1e1e1e; color: #bbbbbb; padding: 30px 0; font-size: 14px; text-align: center; border-top: 3px solid #2e7d32; }
 
@@ -118,7 +150,7 @@
 
     <div class="nav-wrapper">
         <div class="container nav-container">
-            <img src="https://i.postimg.cc/mk1q6QPw/School-Logo-new.jpg" alt="School Logo" class="logo">
+            <img src="https://logo.png" alt="School Logo" class="logo">
             <button class="menu-toggle" id="mobile-menu-btn">☰</button>
             <nav id="nav-menu">
                 <a href="index.html">Home</a>
@@ -149,7 +181,7 @@
             <img src="images/10.jpg" alt="School Campus View" class="slide-img">
         </div>
         <div class="slider-overlay">
-            <h1 class="animate-school-name">ADMISSION PORTAL</h1>
+            <h1 class="animate-school-name">GOOD SHEPHERD HIGHER SECONDARY SCHOOL</h1>
         </div>
     </div>
         
@@ -177,7 +209,6 @@
                 </div>
 
                 <form id="newAdmissionForm" class="p-6 space-y-8" onsubmit="handleNewAdmission(event)">
-                    <!-- ALL ORIGINAL FORM FIELDS REMAIN COMPLETELY UNCHANGED BELOW -->
                     <div>
                         <h3 class="text-lg font-medium text-slate-900 border-b border-slate-200 pb-2 mb-4">
                             <span class="inline-flex items-center justify-center bg-indigo-100 text-indigo-800 rounded-full w-6 h-6 text-sm font-bold mr-2">1</span>
@@ -527,7 +558,7 @@
                     </button>
                 </form>
                 <div class="text-center mt-6 pt-4 border-t border-dashed">
-                    <button onclick="triggerTestingReset()" class="text-xs text-slate-400 hover:text-indigo-600 transition-colors underline font-medium">       
+                    <button onclick="triggerTestingReset()" class="text-xs text-slate-400 hover:text-indigo-600 transition-colors underline font-medium">Reset Factory Configurations</button>       
                 </div>
             </div>                           
             <div id="admin-force-reset-wall" class="hidden max-w-md mx-auto my-12 bg-white rounded-xl border border-amber-200 p-6 shadow-sm">
@@ -757,17 +788,18 @@
                 <h3 class="text-lg font-bold text-slate-800"><i class="fa-solid fa-folder-open text-indigo-600 mr-2"></i>Uploaded Documents</h3>
                 <button onclick="document.getElementById('documentViewModal').classList.add('hidden')" class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-1.5 rounded text-sm font-medium">&times; Close</button>
             </div>
-            <div id="document-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6 overflow-y-auto pr-2 pb-4">
-                </div>
+            <div id="document-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6 overflow-y-auto pr-2 pb-4"></div>
         </div>
     </div>
 
     <div id="donation-qr-box">
         <button id="close-donation-box" onclick="closeDonationBox()">&times;</button>
         <div id="donation-qr-title">Support Good Shepherd</div>
+        
         <div id="qr-code-placeholder">
             <img src="https://i.postimg.cc/t42Rp5Mq/ba025f5a-46f7-4f4c-b0fd-fe8be4d93747.jpg" alt="Donation QR Code">
         </div>
+        
         <div id="qr-scan-label">Scan to Donate</div>
     </div>
 
@@ -829,7 +861,7 @@
                 sec.classList.add('hidden');
                 inputs.forEach(i => {
                     i.removeAttribute('required');
-                    i.value = ''; // clears any pre-existing text
+                    i.value = '';
                 });
             } else {
                 sec.classList.remove('hidden');
