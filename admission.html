@@ -3,133 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admission Management Portal</title>
+    <title>Admission Management Portal | Good Shepherd Higher Secondary School</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        /* =========================================
-           1. BASE STYLES & TOP BAR
-           ========================================= */
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background-color: #f8f9fa;
-        }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght=300;400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; margin: 0; }
 
-        .top-bar {
-            background-color: #4db6ac; 
-            color: white;
-            text-align: center;
-            padding: 10px;
-            font-size: 14px;
-        }
+        /* School Custom CSS */
+        .header { background: #42b9b9; color: #fff; padding: 8px 0; font-size: 14px; text-align: center; }
         
-        .motto-box {
-            background-color: white;
-            color: #d32f2f;
-            font-weight: bold;
-            padding: 2px 5px;
-            margin-right: 10px;
-        }
-
-        /* =========================================
-           2. NAVIGATION BAR SETUP
-           ========================================= */
-        .nav-container {
-            display: flex;
-            align-items: center;
-            justify-content: flex-start;
-            position: relative;
-            padding: 10px 20px;
-            background-color: #ffffff;
-            border-bottom: 1px solid #ddd;
-        }
-
-        .logo {
-            height: 50px;
-            margin-right: auto;
-            margin-left: 20px;
-        }
-
-        /* The Hamburger Menu Button */
-        .menu-toggle {
-            display: none;
-            font-size: 28px;
-            background: transparent;
-            border: none;
-            cursor: pointer;
-            color: #4db6ac; /* Matches the theme color */
-        }
-
-        /* Desktop Nav Links */
-        #nav-menu {
-            display: flex;
-            gap: 15px;
-            list-style: none;
-            margin: 0;
-            padding: 0;
-        }
-
-        #nav-menu a {
-            text-decoration: none;
-            color: #333;
-            font-size: 14px;
-            font-weight: bold;
-            padding: 5px;
-            transition: color 0.3s;
-        }
+        .motto-label { background-color: #ffffff; color: #e53935; padding: 2px 8px; border-radius: 2px; font-weight: bold; display: inline-block; vertical-align: middle; }
+        .motto-marquee { width: 75%; display: inline-block; vertical-align: middle; margin-left: 10px; font-weight: 500; }
         
-        #nav-menu a.active {
-            color: #2e7d32;
-            border-bottom: 2px solid #2e7d32;
-        }
+        .nav-wrapper { background: #fff; box-shadow: 0 2px 10px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 40; }
+        
+        /* Revised Nav Container for proper mobile menu placement */
+        .nav-container { display: flex; justify-content: space-between; align-items: center; padding: 10px 20px; max-width: 1200px; margin: 0 auto; position: relative; }
+        .logo { height: 60px; width: auto; transition: margin 0.3s; }
+        
+        /* Mobile Menu Setup (Standard View) */
+        #nav-menu { display: flex; gap: 20px; transition: all 0.3s ease; }
+        #nav-menu a { text-decoration: none; color: #333; font-weight: 600; font-size: 15px; transition: color 0.3s; white-space: nowrap; }
+        #nav-menu a:hover, #nav-menu a.active { color: #2e7d32; border-bottom: 2px solid #2e7d32; }
+        
+        /* The Three-Line Menu Toggle Icon (Hidden on Desktop) */
+        .menu-toggle { display: none; background: none; border: none; font-size: 28px; cursor: pointer; color: #333; outline: none; }
 
-        /* Mobile View Responsive Rules (Fixes the overlapping issue) */
-        @media (max-width: 1024px) {
-            .menu-toggle {
-                display: block; 
-                order: -1; /* Forces hamburger to the far-left corner */
-            }
-
-            .logo {
-                margin-left: 15px;
-                margin-right: auto; /* Keeps logo on the left, next to the button */
-            }
-
-            #nav-menu {
-                display: none; /* Hides menu by default */
-                width: 100%;
-                flex-direction: column;
-                background-color: #ffffff;
-                position: absolute;
-                top: 100%; /* Pushes menu directly under the white bar */
-                left: 0;
-                box-shadow: 0px 8px 16px rgba(0,0,0,0.1);
-                z-index: 100;
-                padding: 0;
-            }
-
-            /* JavaScript toggles this class */
-            #nav-menu.show-mobile-menu {
-                display: flex; 
-            }
-
-            #nav-menu a {
-                padding: 15px 20px;
-                text-align: left;
-                border-bottom: 1px solid #eee;
-                width: 100%;
-                display: block;
-                box-sizing: border-box;
-            }
-        }
-
-        /* =========================================
-           3. SLIDER STYLES
-           ========================================= */
+        /* The Updated Slider from previous correction */
         .slider-container { 
             position: relative; 
             width: 100%; 
-            height: 450px; /* Matches the About page height */
+            height: 450px; 
             overflow: hidden; 
             background-color: #000; 
         }
@@ -156,100 +63,455 @@
             background: rgba(0, 0, 0, 0.45); 
             display: flex; flex-direction: column;
             justify-content: center; align-items: center; text-align: center; color: #ffffff; z-index: 5;
+            pointer-events: none;
         }
         .animate-school-name {
             font-size: 2.5rem; font-weight: 800; text-transform: uppercase; letter-spacing: 2px;
             margin: 0; text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
             animation: textFadeTracking 2.5s ease-out infinite alternate;
-            padding: 0 20px;
         }
-        @keyframes textFadeTracking { 
-            0% { letter-spacing: 1px; opacity: 0.8; transform: scale(0.98); } 
-            100% { letter-spacing: 4px; opacity: 1; transform: scale(1.02); } 
+        @keyframes textFadeTracking { 0% { letter-spacing: 1px; opacity: 0.8; transform: scale(0.98); } 100% { letter-spacing: 4px; opacity: 1; transform: scale(1.02); } }
+
+        .site-footer { background-color: #1e1e1e; color: #bbbbbb; padding: 30px 0; font-size: 14px; text-align: center; border-top: 3px solid #2e7d32; }
+
+        /* Floating Donation Box */
+        #donation-qr-box {
+            position: fixed; bottom: 30px; right: 30px; width: 220px; background-color: #ffffff;
+            border-radius: 12px; box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.15); padding: 20px; text-align: center;
+            z-index: 9999; opacity: 0; pointer-events: none; transform: translateY(20px); transition: all 0.5s ease;
         }
-        
-        /* Responsive adjustments for the slider */
+        #donation-qr-box.show { opacity: 1; pointer-events: auto; animation: floatHover 4s ease-in-out infinite; }
+        @keyframes floatHover { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-8px); } }
+        #close-donation-box { position: absolute; top: 10px; right: 15px; background: transparent; border: none; font-size: 24px; color: #888; cursor: pointer; }
+        #close-donation-box:hover { color: #ff0000; }
+
+        /* =========================================
+           4. MOBILE NAVIGATION FIXES
+           ========================================= */
+        @media (max-width: 1024px) {
+            .slider-container { height: 250px; }
+            .animate-school-name { font-size: 1.5rem; }
+            
+            /* Hide the standard nav menu */
+            #nav-menu { 
+                display: none; 
+                flex-direction: column; 
+                position: absolute; 
+                top: 100%; 
+                left: 0; 
+                width: 100%; 
+                background: white; 
+                padding: 20px; 
+                box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+                border-top: 1px solid #f0f0f0;
+                gap: 10px;
+                z-index: 100;
+            }
+            
+            /* This class is toggled by JavaScript to show/hide the mobile menu */
+            #nav-menu.show-mobile { display: flex; }
+            
+            /* Mobile menu link styles */
+            #nav-menu a {
+                padding: 12px 0;
+                width: 100%;
+                display: block;
+                border-bottom: 1px solid #f5f5f5;
+                font-size: 16px;
+            }
+            #nav-menu a:hover, #nav-menu a.active { border-bottom: 1px solid #f0f0f0; border-left: 3px solid #2e7d32; padding-left: 10px; }
+
+            /* Show the three-line (hamburger) icon and place it far left */
+            .menu-toggle { display: block; order: -1; margin-right: 15px; }
+            
+            /* Ensure logo stays next to the icon, on the left */
+            .logo { margin-left: 0; margin-right: auto; height: 50px; }
+        }
+
+        /* Standard responsive adjustments for form sections */
         @media (max-width: 768px) {
-            .animate-school-name {
-                font-size: 1.5rem;
-            }
-            .slider-container {
-                height: 250px; /* Adjust height for mobile screens */
-            }
+            .tab-btn { width: 100%; }
+        }
+        @media (min-width: 900px) {
+            .school-conditional-priest, .school-conditional-mbose { grid-column: span 2; }
         }
     </style>
 </head>
-<body>
+<body class="flex flex-col min-h-screen">
 
-    <!-- Top Bar with Motto -->
-    <div class="top-bar">
-        <span class="motto-box">Our School Motto:</span> "To Learn, To Lead"
+    <div class="header">
+        <div class="container flex-header">
+            <span class="motto-label">Our School Motto:</span> 
+            <marquee class="motto-marquee">"To Learn, To Lead"</marquee>
+        </div>
     </div>
 
-    <!-- Header & Navigation Bar -->
-    <nav class="nav-container">
-        <!-- Hamburger Menu Button (Left Side) -->
-        <button class="menu-toggle" id="mobile-menu" aria-label="Open Mobile Menu">
-            &#9776; <!-- This represents the 3-line icon -->
-        </button>
+    <div class="nav-wrapper">
+        <div class="container nav-container">
+            <img src="https://i.postimg.cc/mk1q6QPw/School-Logo-new.jpg" alt="School Logo" class="logo">
+            
+            <button class="menu-toggle" id="mobile-menu-btn" aria-label="Open Mobile Menu">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+            
+            <nav id="nav-menu">
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="admission.html" class="active">Admission</a>
+                <a href="events.html">Events</a>
+                <a href="faculty.html">Faculty</a>
+                <a href="gallery.html">Gallery</a>
+                <a href="result.html">Result</a>
+                <a href="notice.html">Notice</a>
+                <a href="contact.html">Contact Us</a>
+                <a href="blog.html">Blog</a>
+            </nav>
+        </div>
+    </div>
 
-        <!-- Logo -->
-        <img src="YOUR_LOGO_URL.jpg" alt="School Logo" class="logo"> <!-- Add your actual logo URL here -->
-
-        <!-- Navigation Links -->
-        <ul id="nav-menu">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="about.html">About</a></li>
-            <li><a href="admission.html" class="active">Admission</a></li>
-            <li><a href="events.html">Events</a></li>
-            <li><a href="faculty.html">Faculty</a></li>
-            <li><a href="gallery.html">Gallery</a></li>
-            <li><a href="result.html">Result</a></li>
-            <li><a href="notice.html">Notice</a></li>
-            <li><a href="contact.html">Contact Us</a></li>
-            <li><a href="blog.html">Blog</a></li>
-        </ul>
-    </nav>
-
-    <!-- Image Slider -->
     <div class="slider-container">
-        <div class="slider-overlay">
-            <h1 class="animate-school-name">Good Shepherd Higher Secondary School</h1>
-        </div>
         <div class="slides-wrapper">
-            <!-- Ensure you add your actual image URLs below -->
-            <img src="slide1.jpg" class="slide-img" alt="Slide 1">
-            <img src="slide2.jpg" class="slide-img" alt="Slide 2">
-            <img src="slide3.jpg" class="slide-img" alt="Slide 3">
+            <img src="images/1.jpg" alt="School Campus View" class="slide-img">
+            <img src="images/2.jpg" alt="School Campus View" class="slide-img">
+            <img src="images/3.jpg" alt="School Campus View" class="slide-img">
+            <img src="images/4.jpg" alt="School Campus View" class="slide-img">
+            <img src="images/5.jpg" alt="School Campus View" class="slide-img">
+            <img src="images/6.jpg" alt="School Campus View" class="slide-img">
+            <img src="images/7.jpg" alt="School Campus View" class="slide-img">
+            <img src="images/8.jpg" alt="School Campus View" class="slide-img">
+            <img src="images/9.jpg" alt="School Campus View" class="slide-img">
+            <img src="images/10.jpg" alt="School Campus View" class="slide-img">
+        </div>
+        <div class="slider-overlay">
+            <h1 class="animate-school-name">GOOD SHEPHERD HIGHER SECONDARY SCHOOL</h1>
+        </div>
+    </div>
+        
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 py-12 sm:px-6 lg:px-8">
+        
+        <div class="text-center mb-8">
+            <h2 class="text-3xl font-bold text-slate-800">Student Admission Portal</h2>
+            <p class="text-slate-500 mt-2">Select a tab below to submit a new application or access the administration desk.</p>
+        </div>
+
+        <div class="flex flex-wrap justify-center mb-8 gap-2">
+            <button onclick="switchTab('new-admission')" id="btn-new-admission" class="tab-btn bg-indigo-600 text-white px-6 py-2.5 font-medium rounded-md shadow-md transition-all">
+                <i class="fa-solid fa-user-plus mr-2"></i> New Admission Application
+            </button>
+            <button onclick="switchTab('admin-dashboard')" id="btn-admin-dashboard" class="tab-btn bg-white border border-slate-300 text-slate-600 hover:bg-slate-50 px-6 py-2.5 font-medium rounded-md shadow-sm transition-all">
+                <i class="fa-solid fa-shield-halved mr-2"></i> Admin Dashboard
+            </button>
+        </div>
+
+        <section id="new-admission" class="tab-content active">
+            <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+                <div class="p-6 bg-gradient-to-r from-indigo-800 to-indigo-700 text-white">
+                    <h2 class="text-xl font-semibold">Application Form for New Admission</h2>
+                    <p class="text-indigo-100 text-xs mt-1">Please ensure all required fields are accurately filled prior to moving to the submission phase.</p>
+                </div>
+
+                <form id="newAdmissionForm" class="p-6 space-y-8" onsubmit="handleNewAdmission(event)">
+                    <div>
+                        <h3 class="text-lg font-medium text-slate-900 border-b border-slate-200 pb-2 mb-4">
+                            <span class="inline-flex items-center justify-center bg-indigo-100 text-indigo-800 rounded-full w-6 h-6 text-sm font-bold mr-2">1</span>
+                            General Profile
+                        </h3>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Student's Full Name <span class="text-rose-500">*</span></label>
+                                <input type="text" id="new_student_name" required class="w-full rounded-md border-slate-300 border p-2.5 shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-colors" placeholder="First Middle Last">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Date of Birth (DOB) <span class="text-rose-500">*</span></label>
+                                <input type="date" id="new_dob" required class="w-full rounded-md border-slate-300 border p-2.5 shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-colors">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Gender <span class="text-rose-500">*</span></label>
+                                <select id="new_gender" required class="w-full rounded-md border-slate-300 border p-2.5 shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-colors">
+                                    <option value="">-- Select Gender --</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Aadhaar Card Number <span class="text-rose-500">*</span></label>
+                                <input type="text" id="new_aadhaar" required pattern="\d{12}" maxlength="12" class="w-full rounded-md border-slate-300 border p-2.5 shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-colors" placeholder="12-digit numeric value">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Social Category <span class="text-rose-500">*</span></label>
+                                <select id="new_social_category" required class="w-full rounded-md border-slate-300 border p-2.5 shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-colors">
+                                    <option value="">-- Select Category --</option>
+                                    <option value="General">General</option>
+                                    <option value="ST">ST (Scheduled Tribe)</option>
+                                    <option value="SC">SC (Scheduled Caste)</option>
+                                    <option value="OBC">OBC</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Minority Status <span class="text-rose-500">*</span></label>
+                                <select id="new_minority" required class="w-full rounded-md border-slate-300 border p-2.5 shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-colors">
+                                    <option value="">-- Select Status --</option>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Religion Status <span class="text-rose-500">*</span></label>
+                                <select id="new_religion" required onchange="toggleChristianFields(this.value)" class="w-full rounded-md border-slate-300 border p-2.5 shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-colors">
+                                    <option value="">-- Select Religion --</option>
+                                    <option value="Christian">Christian</option>
+                                    <option value="Hindu">Hindu</option>
+                                    <option value="Muslim">Muslim</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+
+                            <div id="denom_container" class="hidden">
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Christian Denomination <span class="text-rose-500">*</span></label>
+                                <select id="new_denomination" onchange="toggleCatholicFields(this.value)" class="w-full rounded-md border-slate-300 border p-2.5 shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-colors">
+                                    <option value="">-- Select Denomination --</option>
+                                    <option value="Catholic">Catholic</option>
+                                    <option value="Baptist">Baptist</option>
+                                    <option value="Presbyterian">Presbyterian</option>
+                                    <option value="Church of God">Church of God</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+
+                            <div id="catholic_parish_container" class="hidden">
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Is this candidate from another Parish? <span class="text-rose-500">*</span></label>
+                                <select id="new_other_parish" onchange="toggleParishLetter(this.value)" class="w-full rounded-md border-slate-300 border p-2.5 shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-colors">
+                                    <option value="No">No (Home Parish)</option>
+                                    <option value="Yes">Yes (Other Parish)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div id="parish_letter_alert" class="hidden mt-4 p-4 bg-amber-50 border border-amber-200 text-amber-900 rounded-md text-sm flex items-start gap-2">
+                            <i class="fa-solid fa-triangle-exclamation mt-0.5 text-amber-600"></i>
+                            <div>
+                                <strong>Parish Priest Recommendation Mandatory:</strong> Because the candidate belongs to an outside parish, a physical signed recommendation letter from your Parish Priest must be provided.
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
+                            <div class="md:col-span-2">
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Permanent Address <span class="text-rose-500">*</span></label>
+                                <input type="text" id="new_address" required class="w-full rounded-md border-slate-300 border p-2.5 shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-colors" placeholder="House, Village, PO, Block Details">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Pincode <span class="text-rose-500">*</span></label>
+                                <input type="text" id="new_pincode" required pattern="\d{6}" maxlength="6" class="w-full rounded-md border-slate-300 border p-2.5 shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-colors" placeholder="794103">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1">State <span class="text-rose-500">*</span></label>
+                                <select id="new_state" required class="w-full rounded-md border-slate-300 border p-2.5 shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-colors">
+                                    <option value="">-- Select State --</option>
+                                    <option value="Meghalaya" selected>Meghalaya</option>
+                                    <option value="Assam">Assam</option>
+                                    <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+                                    <option value="Nagaland">Nagaland</option>
+                                    <option value="Manipur">Manipur</option>
+                                    <option value="Mizoram">Mizoram</option>
+                                    <option value="Tripura">Tripura</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Mobile Number <span class="text-rose-500">*</span></label>```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admission Management Portal | Good Shepherd Higher Secondary School</title>
+    
+    <script src="[https://cdn.tailwindcss.com](https://cdn.tailwindcss.com)"></script>
+    <link rel="stylesheet" href="[https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css](https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css)">
+    
+    <style>
+        @import url('[https://fonts.googleapis.com/css2?family=Inter:wght=300;400;500;600;700&display=swap](https://fonts.googleapis.com/css2?family=Inter:wght=300;400;500;600;700&display=swap)');
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; margin: 0; }
+
+        /* School Custom CSS */
+        .header { background: #42b9b9; color: #fff; padding: 8px 0; font-size: 14px; text-align: center; }
+        
+        .motto-label { background-color: #ffffff; color: #e53935; padding: 2px 8px; border-radius: 2px; font-weight: bold; display: inline-block; vertical-align: middle; }
+        .motto-marquee { width: 75%; display: inline-block; vertical-align: middle; margin-left: 10px; font-weight: 500; }
+        
+        .nav-wrapper { background: #fff; box-shadow: 0 2px 10px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 40; }
+        
+        /* Revised Nav Container for proper mobile menu placement */
+        .nav-container { display: flex; justify-content: space-between; align-items: center; padding: 10px 20px; max-width: 1200px; margin: 0 auto; position: relative; }
+        .logo { height: 60px; width: auto; transition: margin 0.3s; }
+        
+        /* Mobile Menu Setup (Standard View) */
+        #nav-menu { display: flex; gap: 20px; transition: all 0.3s ease; }
+        #nav-menu a { text-decoration: none; color: #333; font-weight: 600; font-size: 15px; transition: color 0.3s; white-space: nowrap; }
+        #nav-menu a:hover, #nav-menu a.active { color: #2e7d32; border-bottom: 2px solid #2e7d32; }
+        
+        /* The Three-Line Menu Toggle Icon (Hidden on Desktop) */
+        .menu-toggle { display: none; background: none; border: none; font-size: 28px; cursor: pointer; color: #333; outline: none; }
+
+        /* The Updated Slider from previous correction */
+        .slider-container { 
+            position: relative; 
+            width: 100%; 
+            height: 450px; 
+            overflow: hidden; 
+            background-color: #000; 
+        }
+        .slides-wrapper { 
+            display: flex; 
+            width: 300%; 
+            height: 100%; 
+            animation: schoolSlideshow 15s infinite ease-in-out; 
+        }
+        .slide-img { 
+            width: 33.333%; 
+            height: 100%; 
+            object-fit: cover; 
+            display: block; 
+        }
+        @keyframes schoolSlideshow {
+            0%, 28% { transform: translateX(0%); }
+            33%, 61% { transform: translateX(-33.333%); }
+            66%, 94% { transform: translateX(-66.666%); }
+            100% { transform: translateX(0%); }
+        }
+        .slider-overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.45); 
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center; text-align: center; color: #ffffff; z-index: 5;
+            pointer-events: none;
+        }
+        .animate-school-name {
+            font-size: 2.5rem; font-weight: 800; text-transform: uppercase; letter-spacing: 2px;
+            margin: 0; text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
+            animation: textFadeTracking 2.5s ease-out infinite alternate;
+        }
+        @keyframes textFadeTracking { 0% { letter-spacing: 1px; opacity: 0.8; transform: scale(0.98); } 100% { letter-spacing: 4px; opacity: 1; transform: scale(1.02); } }
+
+        .site-footer { background-color: #1e1e1e; color: #bbbbbb; padding: 30px 0; font-size: 14px; text-align: center; border-top: 3px solid #2e7d32; }
+
+        /* Floating Donation Box */
+        #donation-qr-box {
+            position: fixed; bottom: 30px; right: 30px; width: 220px; background-color: #ffffff;
+            border-radius: 12px; box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.15); padding: 20px; text-align: center;
+            z-index: 9999; opacity: 0; pointer-events: none; transform: translateY(20px); transition: all 0.5s ease;
+        }
+        #donation-qr-box.show { opacity: 1; pointer-events: auto; animation: floatHover 4s ease-in-out infinite; }
+        @keyframes floatHover { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-8px); } }
+        #close-donation-box { position: absolute; top: 10px; right: 15px; background: transparent; border: none; font-size: 24px; color: #888; cursor: pointer; }
+        #close-donation-box:hover { color: #ff0000; }
+
+        /* =========================================
+           4. MOBILE NAVIGATION FIXES
+           ========================================= */
+        @media (max-width: 1024px) {
+            .slider-container { height: 250px; }
+            .animate-school-name { font-size: 1.5rem; }
+            
+            /* Hide the standard nav menu */
+            #nav-menu { 
+                display: none; 
+                flex-direction: column; 
+                position: absolute; 
+                top: 100%; 
+                left: 0; 
+                width: 100%; 
+                background: white; 
+                padding: 20px; 
+                box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+                border-top: 1px solid #f0f0f0;
+                gap: 10px;
+                z-index: 100;
+            }
+            
+            /* This class is toggled by JavaScript to show/hide the mobile menu */
+            #nav-menu.show-mobile { display: flex; }
+            
+            /* Mobile menu link styles */
+            #nav-menu a {
+                padding: 12px 0;
+                width: 100%;
+                display: block;
+                border-bottom: 1px solid #f5f5f5;
+                font-size: 16px;
+            }
+            #nav-menu a:hover, #nav-menu a.active { border-bottom: 1px solid #f0f0f0; border-left: 3px solid #2e7d32; padding-left: 10px; }
+
+            /* Show the three-line (hamburger) icon and place it far left */
+            .menu-toggle { display: block; order: -1; margin-right: 15px; }
+            
+            /* Ensure logo stays next to the icon, on the left */
+            .logo { margin-left: 0; margin-right: auto; height: 50px; }
+        }
+
+        /* Standard responsive adjustments for form sections */
+        @media (max-width: 768px) {
+            .tab-btn { width: 100%; }
+        }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen">
+
+    <div class="header">
+        <div class="container flex-header">
+            <span class="motto-label">Our School Motto:</span> 
+            <marquee class="motto-marquee">"To Learn, To Lead"</marquee>
         </div>
     </div>
 
-    <!-- MAIN ADMISSION FORM CONTENT STARTS HERE -->
-    <div style="padding: 40px 20px; text-align: center;">
-        <h2>Student Admission Portal</h2>
-        <p>Select a tab below to submit a new application or access the administration desk.</p>
-        
-        <!-- ============================================== -->
-        <!-- PASTE THE REST OF YOUR FORM/BUTTONS HTML HERE  -->
-        <!-- ============================================== -->
-
+    <div class="nav-wrapper">
+        <div class="container nav-container">
+            <img src="[https://i.postimg.cc/mk1q6QPw/School-Logo-new.jpg](https://i.postimg.cc/mk1q6QPw/School-Logo-new.jpg)" alt="School Logo" class="logo">
+            
+            <button class="menu-toggle" id="mobile-menu-btn" aria-label="Open Mobile Menu">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+            
+            <nav id="nav-menu">
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="admission.html" class="active">Admission</a>
+                <a href="events.html">Events</a>
+                <a href="faculty.html">Faculty</a>
+                <a href="gallery.html">Gallery</a>
+                <a href="result.html">Result</a>
+                <a href="notice.html">Notice</a>
+                <a href="contact.html">Contact Us</a>
+                <a href="blog.html">Blog</a>
+            </nav>
+        </div>
     </div>
 
-    <!-- JavaScript for Mobile Menu Functionality -->
-    <script>
-        const mobileMenuBtn = document.getElementById('mobile-menu');
-        const navMenu = document.getElementById('nav-menu');
-
-        // Listens for a click on the 3-line button to drop the menu down
-        if (mobileMenuBtn && navMenu) {
-            mobileMenuBtn.addEventListener('click', function() {
-                navMenu.classList.toggle('show-mobile-menu');
-            });
-        }
-    </script>
-
-</body>
-</html>
+    <div class="slider-container">
+        <div class="slides-wrapper">
+            <img src="images/1.jpg" alt="School Campus View" class="slide-img">
+            <img src="images/2.jpg" alt="School Campus View" class="slide-img">
+            <img src="images/3.jpg" alt="School Campus View" class="slide-img">
+            <img src="images/4.jpg" alt="School Campus View" class="slide-img">
+            <img src="images/5.jpg" alt="School Campus View" class="slide-img">
+            <img src="images/6.jpg" alt="School Campus View" class="slide-img">
+            <img src="images/7.jpg" alt="School Campus View" class="slide-img">
+            <img src="images/8.jpg" alt="School Campus View" class="slide-img">
+            <img src="images/9.jpg" alt="School Campus View" class="slide-img">
+            <img src="images/10.jpg" alt="School Campus View" class="slide-img">
+        </div>
+        <div class="slider-overlay">
+            <h1 class="animate-school-name">GOOD SHEPHERD HIGHER SECONDARY SCHOOL</h1>
+        </div>
+    </div>
+        
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 py-12 sm:px-6 lg:px-8">
+        
+        <div class="text-center mb-8">
+            <h2 class="text-3xl font-bold text-slate-800">Student Admission Portal</h2>
+            <p class="text-slate-500 mt-2">Select a tab below to submit a new application or access the administration desk.</p>
+        </div>
 
         <div class="flex flex-wrap justify-center mb-8 gap-2">
             <button onclick="switchTab('new-admission')" id="btn-new-admission" class="tab-btn bg-indigo-600 text-white px-6 py-2.5 font-medium rounded-md shadow-md transition-all">
@@ -561,7 +823,7 @@
                             <div class="flex flex-col md:flex-row gap-6 items-center">
                                 <div class="bg-white p-4 border border-indigo-300 rounded-lg shadow-sm text-center w-48 shrink-0">
                                     <div class="w-40 h-40 bg-slate-100 rounded flex items-center justify-center mx-auto mb-2 border border-slate-300 overflow-hidden">
-                                        <img src="https://i.postimg.cc/Yqrxh2S0/Whats-App-Image-2026-06-11-at-8-45-01-PM.jpg" alt="Scan QR Code" class="w-full h-full object-contain">
+                                        <img src="[https://i.postimg.cc/Yqrxh2S0/Whats-App-Image-2026-06-11-at-8-45-01-PM.jpg](https://i.postimg.cc/Yqrxh2S0/Whats-App-Image-2026-06-11-at-8-45-01-PM.jpg)" alt="Scan QR Code" class="w-full h-full object-contain">
                                     </div>
                                     <p class="text-xs font-bold text-slate-700">Scan to Remit Fees</p>
                                 </div>
@@ -734,7 +996,7 @@
             <div id="print-area" class="p-8 space-y-6 relative flex-grow bg-white text-black">
                 <div class="flex items-center justify-between border-b-2 border-slate-800 pb-6 mb-6">
                     <div class="flex items-center gap-4">
-                        <img src="https://i.postimg.cc/mk1q6QPw/School-Logo-new.jpg" alt="Receipt Logo" class="w-20 h-20 object-contain">
+                        <img src="[https://i.postimg.cc/mk1q6QPw/School-Logo-new.jpg](https://i.postimg.cc/mk1q6QPw/School-Logo-new.jpg)" alt="Receipt Logo" class="w-20 h-20 object-contain">
                         <div>
                             <h2 class="text-2xl font-bold uppercase tracking-tight">Good Shepherd Higher Secondary School</h2>
                             <p class="text-sm font-medium">Nogorpara, Meghalaya, India</p>
@@ -856,7 +1118,7 @@
         <div id="donation-qr-title">Support Good Shepherd</div>
         
         <div id="qr-code-placeholder">
-            <img src="https://i.postimg.cc/t42Rp5Mq/ba025f5a-46f7-4f4c-b0fd-fe8be4d93747.jpg" alt="Donation QR Code">
+            <img src="[https://i.postimg.cc/t42Rp5Mq/ba025f5a-46f7-4f4c-b0fd-fe8be4d93747.jpg](https://i.postimg.cc/t42Rp5Mq/ba025f5a-46f7-4f4c-b0fd-fe8be4d93747.jpg)" alt="Donation QR Code">
         </div>
         
         <div id="qr-scan-label">Scan to Donate</div>
