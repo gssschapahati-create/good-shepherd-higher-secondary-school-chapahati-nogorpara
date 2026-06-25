@@ -276,7 +276,7 @@
     <div class="container hidden" id="public-layout">
         <div class="sidebar">
             <h2 id="nav_header">Good Shepherd Higher Secondary School Register </h2>
-            <button class="nav-btn" onclick="window.location.href='index.html'">🏠 Go to Home Page</button>
+            <button class="nav-btn" onclick="window.location.reload()">🏠 Go to Home Page</button>
             <button class="nav-btn" id="nav_login" onclick="togglePublicView('login')">🔒 Staff Login</button>
             <button class="nav-btn active" id="nav_reg" onclick="togglePublicView('form')">📝 Admission Register</button>
             <button class="nav-btn" id="nav_records" onclick="togglePublicView('records')">👁️ Students Port View</button>
@@ -520,7 +520,7 @@ Managed by Good Shepherd Church | Powered by Portal Admin and developed by Sengk
         //  DATABASE CONFIGURATION
         // ==========================================
         // PASTE YOUR DEPLOYED GOOGLE APPS SCRIPT WEB APP URL HERE:
-        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbynR8C0_NJjP9YEe6Wt8a3mK8ESimegrAgI2uvXTA4exMnVj6XVPDhTU7l1uw63dAZC/exec"; 
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxHumahSyWpcrqyetbA-8JYJhkBP7_JkJb3sYItn3w0cukLlTY1inAFdi-8mmgmhPeP/exec"; 
         
         // --- TRANSLATION DICTIONARY ---
         const translations = {
@@ -643,17 +643,27 @@ Managed by Good Shepherd Church | Powered by Portal Admin and developed by Sengk
             }
         };
 
+        // --- UPDATED SECURE SAVING FUNCTION ---
         async function syncDatabase() {
-            if(SCRIPT_URL === "https://script.google.com/macros/s/AKfycbxmekVo5ch3VoBtX3KVyi_AiJpw6JAAFK0xnhxdSsL6iilyXGFqRne3wAvD5KD1hlxK/exec") return; // skip if not connected
-            const params = new URLSearchParams();
-            params.append('action', 'SYNC');
-            params.append('data', JSON.stringify(studentDb));
+            if(SCRIPT_URL === "YOUR_WEB_APP_URL_HERE") {
+                console.error("Google Script URL is missing!");
+                return; 
+            }
             
             try {
-                await fetch(SCRIPT_URL, { method: 'POST', body: params });
+                await fetch(SCRIPT_URL, { 
+                    method: 'POST', 
+                    mode: 'no-cors', 
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: `action=SYNC&data=${encodeURIComponent(JSON.stringify(studentDb))}`
+                });
+                
+                console.log("Data successfully synced to Google Sheets.");
             } catch (err) {
                 console.error("Save to database failed", err);
-                alert("Network error: Data saved locally but could not reach server.");
+                alert("Network error: Could not reach Google Sheets. Check your internet or Script URL.");
             }
         }
 
