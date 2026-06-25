@@ -7,63 +7,9 @@
     <link rel="icon" type="images/png" href="images/favico.png">
     <link rel="stylesheet" href="css/style.css">
     <style>
-        /* CSS styling for the Automated Hero Banner Slideshow */
-        .slider-container {
-            position: relative;
-            width: 100%;
-            height: 450px;
-            overflow: hidden;
-            background-color: #000;
-        }
-        .slides-wrapper {
-            display: flex;
-            width: 300%;
-            height: 100%;
-            animation: schoolSlideshow 15s infinite ease-in-out;
-        }
-        .slide-img {
-            width: 33.333%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-        }
-        @keyframes schoolSlideshow {
-            0%, 28% { transform: translateX(0%); }
-            33%, 61% { transform: translateX(-33.333%); }
-            66%, 94% { transform: translateX(-66.666%); }
-            100% { transform: translateX(0%); }
-        }
-        .slider-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.45);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            color: #ffffff;
-            padding: 20px;
-            box-sizing: border-box;
-            z-index: 5;
-        }
-        .animate-school-name {
-            font-size: 2.5rem;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin: 0;
-            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
-            animation: textFadeTracking 2.5s ease-out infinite alternate;
-        }
-        @keyframes textFadeTracking {
-            0% { letter-spacing: 1px; opacity: 0.8; transform: scale(0.98); }
-            100% { letter-spacing: 4px; opacity: 1; transform: scale(1.02); }
-        }
-
+        /* Base Global Styles Needed for Layout */
+        body { margin: 0; font-family: 'Segoe UI', system-ui, sans-serif; background-color: #f8f9fa; }
+        
         /* Centered Bottom-Middle Footer Styling Block */
         .site-footer {
             background-color: #222222;
@@ -78,10 +24,200 @@
         .site-footer .container { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
         .site-footer p { margin: 5px 0; }
 
-        @media (max-width: 768px) {
-            .slider-container { height: 250px; }
-            .animate-school-name { font-size: 1.5rem; }
+        /* --- NEW STYLES MATCHING THE UPLOADED SCREENSHOT --- */
+        
+        /* Gradient Page Banner */
+        .page-banner {
+            background: linear-gradient(to right, #24c2b9, #097b97);
+            color: #ffffff;
+            text-align: center;
+            padding: 60px 20px;
+            width: 100%;
+            box-sizing: border-box;
         }
+        .page-banner h1 {
+            margin: 0 0 10px 0;
+            font-size: 2.2rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+        .breadcrumbs {
+            font-size: 0.9rem;
+            color: #e0f7f8;
+        }
+        .breadcrumbs a {
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .breadcrumbs a:hover {
+            text-decoration: underline;
+        }
+
+        /* Layout Container */
+        .content-container {
+            display: flex;
+            max-width: 1200px;
+            margin: 40px auto;
+            gap: 25px;
+            padding: 0 20px;
+            align-items: flex-start;
+        }
+
+        /* Left Sidebar Menu */
+        .sidebar-menu {
+            width: 260px;
+            background: #ffffff;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            border: 1px solid #eef2f5;
+        }
+        .sidebar-menu ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .sidebar-menu li {
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .sidebar-menu li:last-child {
+            border-bottom: none;
+        }
+        .sidebar-menu a {
+            display: block;
+            padding: 16px 20px;
+            color: #333333;
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        .sidebar-menu a:hover {
+            background-color: #f8f9fa;
+            color: #02c388;
+        }
+        .sidebar-menu a.active {
+            background-color: #00d285; /* Bright Green from screenshot */
+            color: #ffffff;
+            position: relative;
+        }
+        .sidebar-menu a.active::after {
+            content: "";
+            position: absolute;
+            right: -8px;
+            top: 50%;
+            transform: translateY(-50%);
+            border-top: 8px solid transparent;
+            border-bottom: 8px solid transparent;
+            border-left: 8px solid #00d285;
+        }
+
+        /* Right Content Area & Table */
+        .main-content {
+            flex-grow: 1;
+            background: #ffffff;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            border: 1px solid #eef2f5;
+            padding: 25px;
+            overflow-x: auto;
+        }
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .data-table th {
+            background-color: #19466e; /* Dark blue header from screenshot */
+            color: #ffffff;
+            padding: 14px 15px;
+            text-align: left;
+            font-size: 0.9rem;
+            font-weight: 600;
+            border: 1px solid #19466e;
+        }
+        .data-table td {
+            padding: 14px 15px;
+            border: 1px solid #e2e8f0;
+            color: #4a5568;
+            font-size: 0.9rem;
+            vertical-align: middle;
+        }
+        .data-table tr:hover {
+            background-color: #fcfcfc;
+        }
+
+        /* Action Buttons */
+        .btn-action {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            background-color: #0088cc;
+            color: #ffffff;
+            padding: 8px 14px;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: background-color 0.2s;
+            margin-bottom: 4px;
+        }
+        .btn-action:hover {
+            background-color: #006da3;
+        }
+        .btn-link {
+            background-color: #6c757d;
+        }
+        .btn-link:hover {
+            background-color: #5a6268;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .content-container { flex-direction: column; }
+            .sidebar-menu { width: 100%; }
+        }
+
+        /* Original QR Code Styles (Untouched) */
+        #donation-qr-box {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 220px;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.15);
+            padding: 20px;
+            text-align: center;
+            z-index: 9999;
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+        #donation-qr-box.show {
+            opacity: 1;
+            pointer-events: auto;
+            animation: floatHover 4s ease-in-out infinite; 
+        }
+        @keyframes floatHover {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+            100% { transform: translateY(0px); }
+        }
+        #close-donation-box {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            background: transparent;
+            border: none;
+            font-size: 24px;
+            color: #888;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        #close-donation-box:hover { color: #ff0000; }
+        #donation-qr-title { font-weight: bold; font-size: 1.1rem; color: #333; margin-bottom: 12px; margin-top: 5px; }
+        #qr-code-placeholder img { width: 100%; max-width: 160px; height: auto; border-radius: 8px; border: 2px solid #f0f0f0; }
+        #qr-scan-label { margin-top: 10px; font-size: 0.9rem; color: #666; font-weight: 500; }
     </style>
 </head>
 <body>
@@ -95,341 +231,102 @@
             <img src="images/logo.png" alt="School Logo" class="logo">
             <button class="menu-toggle" id="mobile-menu">☰</button>
             <nav id="nav-menu">
-               <a href="index.html">Home</a>
-      <a href="about.html">About</a>
-      <a href="admission.html">Admission</a>
-      <a href="events.html">Events</a>
-      <a href="faculty.html">Faculty</a>
-      <a href="gallery.html">Gallery</a>
-      <a href="result.html">Result</a>
-      <a href="notice.html" class="active">Notice</a>
-      <a href="contact.html">Contact</a>
-      <a href="blog.html">Blog</a>
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="admission.html">Admission</a>
+                <a href="events.html">Events</a>
+                <a href="faculty.html">Faculty</a>
+                <a href="gallery.html">Gallery</a>
+                <a href="result.html">Result</a>
+                <a href="notice.html" class="active">Notice</a>
+                <a href="contact.html">Contact</a>
+                <a href="blog.html">Blog</a>
             </nav>
         </div>
     </div>
-     <div class="slider-container">
-        <div class="slides-wrapper">
-            <img src="images/1.jpg" alt="School Campus View" class="slide-img">
-            <img src="images/2.jpg" alt="School Campus View" class="slide-img">
-            <img src="images/3.jpg" alt="School Campus View" class="slide-img">
-            <img src="images/4.jpg" alt="School Campus View" class="slide-img">
-            <img src="images/5.jpg" alt="School Campus View" class="slide-img">
-            <img src="images/6.jpg" alt="School Campus View" class="slide-img">
-            <img src="images/7.jpg" alt="School Campus View" class="slide-img">
-            <img src="images/8.jpg" alt="School Campus View" class="slide-img">
-            <img src="images/9.jpg" alt="School Campus View" class="slide-img">
-            <img src="images/10.jpg" alt="School Campus View" class="slide-img">
-        </div>
-        <div class="slider-overlay">
-            <h1 class="animate-school-name">NOTICE BOARD</h1>
-            <p style="font-size: 1.2rem; margin-top: 10px; font-weight: 300; text-shadow: 1px 1px 4px rgba(0,0,0,0.6);">TRY TO BE SOMEONE IN THE FUTURE</p>
-        </div>
-    </div>
 
-<div class="modern-notice-card">
-  <div class="notice-card-header">
-    <div class="header-title">
-      <span class="header-icon">📢</span> Official Notices & Announcements
-    </div>
-  </div>
-
-  <div class="notice-list-wrapper">
+    <!-- NEW SCREENSHOT LAYOUT STARTS HERE -->
     
-    <details class="modern-notice-item" style="border-left: 4px solid #248c98;" open>
-      <summary style="cursor: pointer; font-weight: 600; color: #32325d; list-style: none; display: flex; align-items: center; justify-content: space-between;">
-        <span style="display: flex; align-items: center; gap: 8px;">
-          <span class="badge-new">NEW</span>
-          <span>📅 Cleaning During Exam Days - 2026 Schedule</span>
-        </span>
-        <span style="font-size: 0.8rem; color: #8898aa; background: #e8f7f9; padding: 2px 8px; border-radius: 4px;">Click to toggle</span>
-      </summary>
-      
-      <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid #eef2f5; font-size: 0.9rem; color: #4a5568; line-height: 1.6;">
+    <!-- Gradient Header Area -->
+    <div class="page-banner">
+        <h1>Notification</h1>
+        <div class="breadcrumbs">
+            <a href="index.html">⌂ Home</a> / Notification
+        </div>
+    </div>
+
+    <!-- Main Flexbox Layout for Sidebar and Table -->
+    <div class="content-container">
         
-        <h4 style="margin: 0 0 8px 0; color: #248c98; border-bottom: 1px dashed #ced4da; padding-bottom: 4px;">Hall, Ground floor Veranda</h4>
-        <ul style="padding-left: 20px; margin: 0 0 15px 0; list-style-type: square;">
-          <li><strong>Wednesday 17-6-26:</strong> Cl.VII - Blue & Red — Sir Jekush & Sir Tangseng</li>
-          <li><strong>Thursday 18-6-26:</strong> Cl.VII - Green & Yellow — Sir Jekush & Sir Tangseng</li>
-          <li><strong>Friday 19-6-26:</strong> Cl.VIII - Blue & Yellow — Sir Ratan, Ms. Kalkame</li>
-          <li><strong>Monday 22-6-26:</strong> Cl.VIII - Green & Red — Sir Ratan, Ms. Kalkame</li>
-          <li><strong>Tuesday 23-6-26:</strong> Cl.VI A - Green & Red — Ms Precilia, Ms. Rikginchi</li>
-          <li><strong>Wednesday 24-6-26:</strong> Cl.VI A - Yellow & Blue — Ms Pricilia, Ms. Rikginchi</li>
-          <li><strong>Thursday 25-6-26:</strong> Cl.VI B - Yellow & Blue — Sir Nishit, Sir Jenybar</li>
-          <li><strong>Friday 26-6-26:</strong> Cl.VI B - Red & Green — Sir Nishit, Sir Jenybar</li>
-        </ul>
+        <!-- Left Sidebar Navigation -->
+        <aside class="sidebar-menu">
+            <ul>
+                <li><a href="notice.html" class="active">Notice</a></li>
+                <li><a href="latest-news.html">Latest News</a></li>
+                <li><a href="events.html">Events</a></li>
+                <li><a href="blog.html">Blogs</a></li>
+                <li><a href="tender.html">Tender</a></li>
+            </ul>
+        </aside>
 
-        <h4 style="margin: 15px 0 8px 0; color: #248c98; border-bottom: 1px dashed #ced4da; padding-bottom: 4px;">1st and 2nd floor Verandas and steps</h4>
-        <ul style="padding-left: 20px; margin: 0 0 15px 0; list-style-type: square;">
-          <li><strong>Wednesday 17-6-26:</strong> Class IX - Yellow House — Ms Salne, Md. Monica</li>
-          <li><strong>Thursday 18-6-26:</strong> Class IX - Green House — Ms Salne, Md. Monica</li>
-          <li><strong>Friday 19-6-26:</strong> Class IX - Red House — Sir Silgrak, Sir Sengbath</li>
-          <li><strong>Monday 22-6-26:</strong> Class IX - Blue House — Sir Silgrak, Sir Sengbath</li>
-          <li><strong>Tuesday 23-6-26:</strong> Class X - Yellow House — Ms Krinsbelsa, Md Pinali</li>
-          <li><strong>Wednesday 24-6-26:</strong> Class X - Green house — Ms Krinsbelsa, Md Pinali</li>
-          <li><strong>Thursday 25-6-26:</strong> Class X - Red House — Sir Lenus, Md Silmikchi</li>
-          <li><strong>Friday 26-6-26:</strong> Class X - Blue House — Sir Lenus, Md Silmikchi</li>
-        </ul>
+        <!-- Right Notice Table Area -->
+        <main class="main-content">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th width="8%">Sl. No.</th>
+                        <th width="15%">Date</th>
+                        <th width="57%">Notice Details</th>
+                        <th width="20%">Attachment</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>23-06-2026</td>
+                        <td>Notice for Students/Parents</td>
+                        <td>
+                            <a href="images/Notice for S_P_01.pdf" class="btn-action" download>
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg> Download
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>22-06-2026</td>
+                        <td>Udise + Students Check List 2026-2027 for Parents/Students</td>
+                        <td>
+                            <a href="https://script.google.com/macros/s/AKfycbxT0ttcvV8F39MSjY3liwe-f1ddfrYE4WLKMykx8iVTXIqNgQ0XkOjG5MdnGMG3KQqf/exec" class="btn-action btn-link" target="_blank">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg> Open Link
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>17-06-2026</td>
+                        <td>Cleaning During Exam Days - 2026 Schedule (Classes VI to X)</td>
+                        <td>
+                            <a href="85eb5d41-68ec-440f-a6d5-d525c3ecfd33.jfif" class="btn-action" download style="display:block;">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg> Download Part 1
+                            </a>
+                            <a href="WhatsApp Image 2026-06-17 at 1.54.50 PM.jpeg" class="btn-action" download style="display:block;">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg> Download Part 2
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </main>
+    </div>
+    
+    <!-- NEW SCREENSHOT LAYOUT ENDS HERE -->
 
-        <p style="background: #fff3cd; color: #856404; padding: 10px; border-radius: 6px; margin: 15px 0; border-left: 4px solid #ffc107;">
-          <strong>Thursday (26.06.26) - General Cleaning:</strong> (Kindly bring your Tiffin and all the requirements for cleaning)
-        </p>
-
-        <h4 style="margin: 15px 0 8px 0; color: #248c98; border-bottom: 1px dashed #ced4da; padding-bottom: 4px;">Classes VI A, VIB, VII, IX Rooms</h4>
-        <ul style="padding-left: 20px; margin: 0 0 15px 0; list-style-type: square;">
-          <li><strong>17-6-26 to 22-6-26:</strong> Class V A (Yellow / Green / Red / Blue) — Cl. VII & IX Rooms — (Sir Bounty, Miss Chimikta)</li>
-          <li><strong>23-6-26 to 26-6-26:</strong> Class IVA (Yellow / Green / Red / Blue) — Cl. VII & IX Rooms — (Sir Bounty, Miss Chimikta)</li>
-          <li><strong>17-6-26 to 22-6-26:</strong> Class V B (Yellow / Green / Red / Blue) — VI A & VI B Rooms — (Md Salne, Miss Krinsbelsa)</li>
-          <li><strong>23-6-26 to 26-6-26:</strong> Class IV B (Yellow / Green / Red / Blue) — VI A & VI B Rooms — (Md Monica, Md Sengbina)</li>
-        </ul>
-
-        <h4 style="margin: 15px 0 8px 0; color: #248c98; border-bottom: 1px dashed #ced4da; padding-bottom: 4px;">Cleaning - Playground (till the gate)</h4>
-        <ul style="padding-left: 20px; margin: 0 0 15px 0; list-style-type: square;">
-          <li><strong>17-6-26 to 22-6-26:</strong> Class III A (Blue / Yellow / Green / Red) — Sir Growefield, Ms. Arnikha</li>
-          <li><strong>23-6-26 to 26-6-26:</strong> Class III B (Blue / Yellow / Green / Red) — Ms. Pangrangchi, Miss Ritu</li>
-        </ul>
-
-        <div style="background: #edf2f7; padding: 12px; border-radius: 6px; font-size: 0.85rem; border-left: 4px solid #718096; margin-top: 15px;">
-          <p style="margin: 0 0 6px 0;"><strong>N.B:</strong> For the smaller classes i.e. class I- II, Class teachers kindly see to the daily Cleaning of their class rooms.</p>
-          <p style="margin: 0 0 6px 0;"><strong>Monday 29.06.26 - General Cleaning:</strong> (Kindly bring your Tiffin and all the requirements for cleaning)</p>
-          <p style="margin: 0;"><strong>N.B:</strong> Sir Nishit, Sr. Crecencia and Miss Rikginchi - Overall in-charge for cleaning.</p>
-        </div>
-
-        <div style="margin-top: 20px; padding-top: 15px; border-top: 1px solid #eef2f5; display: flex; gap: 12px; flex-wrap: wrap; width: 100%;">
-          <a href="85eb5d41-68ec-440f-a6d5-d525c3ecfd33.jfif" class="notice-btn btn-dl" style="flex: 1; min-width: 220px; justify-content: center; text-align: center; box-sizing: border-box; padding: 10px 16px;" download>
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 6px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg> Download Schedule Part 1
-          </a>
-          <a href="WhatsApp Image 2026-06-17 at 1.54.50 PM.jpeg" class="notice-btn btn-dl" style="flex: 1; min-width: 220px; justify-content: center; text-align: center; box-sizing: border-box; padding: 10px 16px;" download>
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 6px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg> Download Schedule Part 2
-          </a>
-        </div>
-      </div>
-    </details>
-    <div class="modern-notice-item">
-      <div class="notice-meta">
-        <span class="notice-date">22-June-2026</span>
-        <span class="badge-new">NEW</span>
-    </div>
-      <div class="notice-body">
-        <p class="notice-text">Udise + Students Check List 2026-2027 for Parents/Students</p>
-        <a href="https://script.google.com/macros/s/AKfycbxT0ttcvV8F39MSjY3liwe-f1ddfrYE4WLKMykx8iVTXIqNgQ0XkOjG5MdnGMG3KQqf/exec" class="notice-btn btn-ln">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg> Click the Link
-        </a>
-      </div>
-    </div>
-
-    </div>
-      <div class="modern-notice-item">
-      <div class="notice-meta">
-        <span class="notice-date">23-06-2026</span>
-        <span class="badge-new">NEW</span>
-    </div>
-      <div class="notice-body">
-        <p class="notice-text">Notice for Students/Parents</p>
-        <a href="images/Notice for S_P_01.pdf" class="notice-btn btn-dl">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg> Download File
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
-
- <style>
-  .modern-notice-card {
-    width: 100%;
-    max-width: 850px;
-    margin: 40px auto;
-    background: #ffffff;
-    border-radius: 12px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-    border: 1px solid #eef2f5;
-    font-family: 'Segoe UI', system-ui, sans-serif;
-    overflow: hidden;
-  }
-  .notice-card-header {
-    background: linear-gradient(135deg, #31aab7, #248c98);
-    padding: 18px 24px;
-    color: #ffffff;
-  }
-  .header-title {
-    font-size: 1.2rem;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    letter-spacing: 0.5px;
-  }
-  .notice-list-wrapper {
-    padding: 10px 24px;
-    background: #fafbfc;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-  }
-  .modern-notice-item {
-    background: #ffffff;
-    padding: 16px 20px;
-    border-radius: 8px;
-    border-left: 4px solid #31aab7;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-  }
-  .modern-notice-item:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-  }
-  .notice-meta {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 6px;
-  }
-  .notice-date {
-    font-size: 0.85rem;
-    color: #8898aa;
-    font-weight: 600;
-  }
-  .badge-new {
-    background: #ffe2e2;
-    color: #ff4d4d;
-    font-size: 0.7rem;
-    font-weight: 700;
-    padding: 2px 8px;
-    border-radius: 20px;
-    letter-spacing: 0.5px;
-  }
-  .notice-body {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 20px;
-  }
-  .notice-text {
-    font-size: 1rem;
-    color: #32325d;
-    font-weight: 500;
-    margin: 0;
-    line-height: 1.4;
-  }
-  .notice-btn {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    padding: 8px 16px;
-    font-size: 0.85rem;
-    font-weight: 600;
-    border-radius: 6px;
-    text-decoration: none;
-    white-space: nowrap;
-    transition: all 0.2s;
-  }
-  .btn-dl { background: #e8f7f9; color: #248c98; }
-  .btn-dl:hover { background: #31aab7; color: #ffffff; }
-  .btn-ln { background: #e6f0ff; color: #0061ff; }
-  .btn-ln:hover { background: #0061ff; color: #ffffff; }
-</style>
-             </div>
-          </div>
-      </div>
-    </div>
-    </div>
-    </div>
-    </div>
-    </div>
     <footer class="site-footer">
         <div class="container">
             <p>&copy; 2026 Good Shepherd Higher Secondary School, Chapahati. All Rights Reserved.</p>
             <p style="font-size: 12px; color: #888;">Managed by Good Shepherd Church Chapahati | Powered by Local Administration Desk</p>
         </div>
     </footer>
-
-    <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
-    <style>
-        /* CSS to make the box float at the bottom right corner */
-        #donation-qr-box {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 220px;
-            background-color: #ffffff;
-            border-radius: 12px;
-            box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.15); /* Gives it a floating shadow */
-            padding: 20px;
-            text-align: center;
-            z-index: 9999; /* Keeps it on top of other dashboard elements */
-            
-            /* Hidden by default before the JS triggers */
-            opacity: 0;
-            pointer-events: none;
-            transform: translateY(20px);
-            transition: opacity 0.5s ease, transform 0.5s ease;
-        }
-
-        /* The class added by JavaScript to show the box */
-        #donation-qr-box.show {
-            opacity: 1;
-            pointer-events: auto;
-            /* Adds a subtle continuous floating animation */
-            animation: floatHover 4s ease-in-out infinite; 
-        }
-
-        /* Animation for the gentle floating effect */
-        @keyframes floatHover {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-8px); }
-            100% { transform: translateY(0px); }
-        }
-
-        /* Styling the close button */
-        #close-donation-box {
-            position: absolute;
-            top: 10px;
-            right: 15px;
-            background: transparent;
-            border: none;
-            font-size: 24px;
-            color: #888;
-            cursor: pointer;
-            transition: color 0.2s;
-        }
-
-        #close-donation-box:hover {
-            color: #ff0000;
-        }
-
-        /* Title styling */
-        #donation-qr-title {
-            font-weight: bold;
-            font-size: 1.1rem;
-            color: #333;
-            margin-bottom: 12px;
-            margin-top: 5px;
-        }
-
-        /* Ensuring the image stays strictly inside the box */
-        #qr-code-placeholder img {
-            width: 100%; /* Fills the container safely */
-            max-width: 160px;
-            height: auto;
-            border-radius: 8px;
-            border: 2px solid #f0f0f0;
-        }
-
-        /* Label at the bottom */
-        #qr-scan-label {
-            margin-top: 10px;
-            font-size: 0.9rem;
-            color: #666;
-            font-weight: 500;
-        }
-    </style>
-</head>
-<body>
 
     <!-- Donation QR Code Box -->
     <div id="donation-qr-box">
@@ -457,11 +354,9 @@
         }
 
         function closeDonationBox() {
-            // Removes the 'show' class to hide it smoothly
             document.getElementById('donation-qr-box').classList.remove('show');
         }
 
-        // Show the box after a 1.5-second delay so it pops up naturally
         setTimeout(function() {
             document.getElementById('donation-qr-box').classList.add('show');
         }, 1500);
