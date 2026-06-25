@@ -263,7 +263,7 @@
     <div id="view-lang-select" class="intro-screen">
         <h2>Select Your Language<br><span style="font-size:18px; color:#555;">अपनी भाषा चुनें | Nang·ni Ku·sikko Seokbo</span></h2>
         <button class="lang-btn" onclick="selectLanguage('en')">English</button>
-        <button class="lang-btn" onclick="selectLanguage('hi')">हिन्दी (Hindi)</button>
+        <button class="lang-btn" onclick="selectLanguage('hi')">हिंदी (Hindi)</button>
         <button class="lang-btn" onclick="selectLanguage('gr')">A·chik (Garo)</button>
     </div>
 
@@ -276,9 +276,9 @@
     <div class="container hidden" id="public-layout">
         <div class="sidebar">
             <h2 id="nav_header">Good Shepherd Higher Secondary School Register </h2>
-            <button class="nav-btn" onclick="window.location.href='index.html'">🏠 Go to Home Page</button>
+            <button class="nav-btn" onclick="window.location.reload()">🏠 Go to Home Page</button>
             <button class="nav-btn" id="nav_login" onclick="togglePublicView('login')">🔒 Staff Login</button>
-            <button class="nav-btn active" id="nav_reg" onclick="togglePublicView('form')">📄 Admission Register</button>
+            <button class="nav-btn active" id="nav_reg" onclick="togglePublicView('form')">📝 Admission Register</button>
             <button class="nav-btn" id="nav_records" onclick="togglePublicView('records')">👁️ Students Port View</button>
         </div>
 
@@ -393,7 +393,7 @@
                             <input type="text" id="parish" placeholder="Enter Parish Name">
                         </div>
                     </div>
-                    <button type="submit" class="btn-primary" id="btn_submit" style="margin-top: 10px;">Submit Registration</button>
+                    <button type="submit" class="btn-primary" id="btn_submit" style="margin-top: 10px;">Submit Student Record</button>
                 </form>
             </div>
 
@@ -445,14 +445,14 @@
                 <div class="dash-header">
                     <h2>Admin Control Dashboard</h2>
                     <div>
-                        <button class="btn-logout" style="background:#f1c40f; color:#000; margin-right: 10px;" onclick="window.location.href='index.html'">🏠 Home Page</button>
+                        <button class="btn-logout" style="background:#f1c40f; color:#000; margin-right: 10px;" onclick="window.location.reload()">🏠 Home Page</button>
                         <button class="btn-logout" style="background:#3498db; margin-right: 10px;" onclick="openManageUsersBox()">Manage Users</button>
                         <button class="btn-logout" onclick="triggerSecureLogout()">Logout</button>
                     </div>
                 </div>
                 <div class="action-bar">
                     <h3>Master Student Register</h3>
-                    <button class="btn-export" onclick="exportExcel('admin')">⬇ Download Full Excel</button>
+                    <button class="btn-export" onclick="exportExcel('admin')">📥 Download Full Excel</button>
                 </div>
                 <div style="overflow-x:auto;">
                     <table>
@@ -481,13 +481,13 @@
                 <div class="dash-header">
                     <h2>LDA Office Assistant Dashboard</h2>
                     <div>
-                        <button class="btn-logout" style="background:#f1c40f; color:#000; margin-right: 10px;" onclick="window.location.href='index.html'">🏠 Home Page</button>
+                        <button class="btn-logout" style="background:#f1c40f; color:#000; margin-right: 10px;" onclick="window.location.reload()">🏠 Home Page</button>
                         <button class="btn-logout" onclick="triggerSecureLogout()">Logout</button>
                     </div>
                 </div>
                 <div class="action-bar">
                     <h3>Form Collection Register</h3>
-                    <button class="btn-export" onclick="exportExcel('lda')">⬇ Download Forms Excel</button>
+                    <button class="btn-export" onclick="exportExcel('lda')">📥 Download Forms Excel</button>
                 </div>
                 <div style="overflow-x:auto;">
                     <table>
@@ -516,6 +516,12 @@ Managed by Good Shepherd Church | Powered by Portal Admin and developed by Sengk
     </div>
 
     <script>
+        // ==========================================
+        //  DATABASE CONFIGURATION
+        // ==========================================
+        // PASTE YOUR DEPLOYED GOOGLE APPS SCRIPT WEB APP URL HERE:
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbynR8C0_NJjP9YEe6Wt8a3mK8ESimegrAgI2uvXTA4exMnVj6XVPDhTU7l1uw63dAZC/exec"; 
+        
         // --- TRANSLATION DICTIONARY ---
         const translations = {
             en: {
@@ -523,7 +529,7 @@ Managed by Good Shepherd Church | Powered by Portal Admin and developed by Sengk
                 inst_text: "This portal is to collect all the previous Students Records from the year of begining of the school that is 2005 onwards till now. You dont need to put exact date only if you remember the year you join the school and you correct names and Parents Details correct adress correct has to be given also your Mobile Number if you have personal if not Parents or Guirden.",
                 btn_proceed: "I Understand & Proceed",
                 nav_header: "Good Shepherd Higher Secondary School Admission Portal",
-                nav_reg: "📄 Admission Register",
+                nav_reg: "📝 Admission Register",
                 nav_login: "🔒 Staff Login",
                 form_title: "Student Record Collection Form",
                 lbl_regno: "Registration / Sl. No",
@@ -546,36 +552,36 @@ Managed by Good Shepherd Church | Powered by Portal Admin and developed by Sengk
             },
             hi: {
                 inst_title: "निर्देश",
-                inst_text: "यह पोर्टल स्कूल की शुरुआत यानी 2005 से लेकर अब तक के सभी पिछले छात्रों के रिकॉर्ड एकत्र करने के लिए है। आपको सही तारीख डालने की जरूरत नहीं है, केवल वह साल जब आप स्कूल में शामिल हुए थे। आपके सही नाम और माता-पिता का विवरण, सही पता देना होगा, साथ ही आपका मोबाइल नंबर (यदि आपका व्यक्तिगत है, अन्यथा माता-पिता या अभिभावक का)।",
-                btn_proceed: "मैं समझता हूँ और आगे बढ़ें",
-                nav_header: "स्कूल पोर्टल",
-                nav_reg: "📄 प्रवेश रजिस्टर",
+                inst_text: "यह पोर्टल स्कूल की शुरुआत यानी 2005 से लेकर अब तक के सभी पिछले छात्रों के रिकॉर्ड एकत्र करने के लिए है। आपको सटीक तारीख डालने की आवश्यकता नहीं है, यदि आपको केवल वह वर्ष याद है जब आप स्कूल में शामिल हुए थे, तो बस वही डालें। आपको अपना सही नाम, माता-पिता का विवरण और सही पता देना होगा। यदि आपके पास अपना व्यक्तिगत मोबाइल नंबर है तो वह दें, अन्यथा माता-पिता या अभिभावक का नंबर दें।",
+                btn_proceed: "समझें और आगे बढ़ें",
+                nav_header: "गुड शेफर्ड हायर सेकेंडरी स्कूल प्रवेश पोर्टल",
+                nav_reg: "📝 प्रवेश रजिस्टर",
                 nav_login: "🔒 स्टाफ लॉगिन",
                 form_title: "छात्र रिकॉर्ड संग्रह फॉर्म",
                 lbl_regno: "पंजीकरण / क्रम संख्या",
-                lbl_regdate: "तिथि (या शामिल होने का वर्ष)",
+                lbl_regdate: "तिथि (या शामिल होने का अनुमानित वर्ष)",
                 lbl_name: "छात्र का पूरा नाम",
-                lbl_dob: "जन्म तिथि (DOB)",
-                lbl_class: "कक्षा",
+                lbl_dob: "जन्म तिथि",
+                lbl_class: "पंजीकृत कक्षा",
                 lbl_father: "पिता का नाम",
                 lbl_mother: "माता का नाम",
-                lbl_mobile: "मोबाइल नंबर",
+                lbl_mobile: "मोबाइल नंबर (स्वयं या अभिभावक)",
                 lbl_address: "पूरा पता",
                 lbl_category: "सामाजिक श्रेणी",
-                lbl_minority: "क्या अल्पसंख्यक है?",
+                lbl_minority: "क्या अल्पसंख्यक हैं?",
                 lbl_religion: "धर्म",
                 lbl_denomination: "ईसाई संप्रदाय",
                 lbl_parish: "पैरिश का नाम",
                 btn_submit: "छात्र रिकॉर्ड जमा करें",
                 login_title: "अधिकृत स्टाफ एक्सेस",
-                msg_success: "छात्र रजिस्टर जमा करने के लिए धन्यवाद, आप एलडीए पोर्टल के साथ-साथ व्यवस्थापक (Admin) में भी जांच कर सकते हैं।"
+                msg_success: "छात्र रजिस्टर जमा करने के लिए धन्यवाद। आप इसे जांचने के लिए एलडीए पोर्टल के साथ-साथ एडमिन में भी देख सकते हैं।"
             },
             gr: {
                 inst_title: "Ge·etanirang",
                 inst_text: "Ian a·bachenggipa 2005 bilsirangoni da·o dipet pilak skangni chatrorangni record-ko toktimna gita taria portal ong·a. Tarik tik ong·e on·na nangja, indiba school-o napgipa bilsikosan on·bo. Nang·ni tik biming, maa-paani biming, aro tik address-ko on·na nanga. Nang·ni personal mobile number donggenchimode on·bo, ong·jaode maa-paani ba guardian-ni number-ko on·bo.",
                 btn_proceed: "Ninga & Re·mikkangbo",
                 nav_header: "Good Shepherd Higher Secondary School Admission Portal",
-                nav_reg: "📄 Admission Register",
+                nav_reg: "📝 Admission Register",
                 nav_login: "🔒 Staff Login",
                 form_title: "Chatrorangni Record Collection Form",
                 lbl_regno: "Registration / Sl. No",
@@ -598,23 +604,69 @@ Managed by Good Shepherd Church | Powered by Portal Admin and developed by Sengk
             }
         };
 
-        let currentLang = 'en'; // Default
+        let currentLang = 'en'; 
         let studentDb = [];
         let currentCallback = null;
-        let editingIndex = -1; // Global tracker for edits
+        let editingIndex = -1; 
+
+        // --- DATABASE FETCH (LIFETIME SAVE) ---
+        window.onload = async function() {
+            if(SCRIPT_URL !== "YOUR_WEB_APP_URL_HERE") {
+                try {
+                    const response = await fetch(SCRIPT_URL);
+                    const data = await response.json();
+                    
+                    if(data.length > 0) {
+                        studentDb = data.map(item => ({
+                            id: item['ID'],
+                            slNo: item['Sl No'],
+                            regNumber: item['Reg Number'],
+                            regDate: item['Reg Date'],
+                            name: item['Name'],
+                            dob: item['DOB'],
+                            classReg: item['Class'],
+                            father: item['Father'],
+                            mother: item['Mother'],
+                            mobile: item['Mobile'],
+                            address: item['Address'],
+                            socialCategory: item['Category'],
+                            minority: item['Minority'],
+                            religion: item['Religion'],
+                            denomParish: item['Denom/Parish'],
+                            status: item['Status']
+                        }));
+                        renderTables();
+                    }
+                } catch (error) {
+                    console.error("Database connection error:", error);
+                }
+            }
+        };
+
+        async function syncDatabase() {
+            if(SCRIPT_URL === "https://script.google.com/macros/s/AKfycbxmekVo5ch3VoBtX3KVyi_AiJpw6JAAFK0xnhxdSsL6iilyXGFqRne3wAvD5KD1hlxK/exec") return; // skip if not connected
+            const params = new URLSearchParams();
+            params.append('action', 'SYNC');
+            params.append('data', JSON.stringify(studentDb));
+            
+            try {
+                await fetch(SCRIPT_URL, { method: 'POST', body: params });
+            } catch (err) {
+                console.error("Save to database failed", err);
+                alert("Network error: Data saved locally but could not reach server.");
+            }
+        }
 
         // --- LANGUAGE & SCREEN NAVIGATION ---
         function selectLanguage(langCode) {
             currentLang = langCode;
             const dict = translations[langCode];
 
-            // Apply translations to UI elements
             Object.keys(dict).forEach(key => {
                 const element = document.getElementById(key);
                 if(element) element.innerText = dict[key];
             });
 
-            // Transition Screens
             document.getElementById('view-lang-select').classList.add('hidden');
             document.getElementById('view-instructions').classList.remove('hidden');
         }
@@ -622,27 +674,22 @@ Managed by Good Shepherd Church | Powered by Portal Admin and developed by Sengk
         function enterPortal() {
             document.getElementById('view-instructions').classList.add('hidden');
             document.getElementById('public-layout').classList.remove('hidden');
-            document.getElementById('regDate').valueAsDate = new Date(); // Reset date
-            renderTables(); // Initialize public table view
+            document.getElementById('regDate').valueAsDate = new Date(); 
+            renderTables(); 
         }
 
         // --- DYNAMIC MINORITY / RELIGION LOGIC ---
         function handleMinorityChange() {
             const isMinority = document.getElementById('minority').value;
             const religionSelect = document.getElementById('religion');
-            
             religionSelect.innerHTML = '<option value="">-- Select Religion --</option>';
 
             if (isMinority === 'Yes') {
-                ['Christian', 'Muslim', 'Sikh', 'Buddhist', 'Parsi', 'Jain'].forEach(r => {
-                    religionSelect.innerHTML += `<option value="${r}">${r}</option>`;
-                });
+                ['Christian', 'Muslim', 'Sikh', 'Buddhist', 'Parsi', 'Jain'].forEach(r => { religionSelect.innerHTML += `<option value="${r}">${r}</option>`; });
             } else if (isMinority === 'No') {
-                ['Hindu', 'General / Non-Minority Other'].forEach(r => {
-                    religionSelect.innerHTML += `<option value="${r}">${r}</option>`;
-                });
+                ['Hindu', 'General / Non-Minority Other'].forEach(r => { religionSelect.innerHTML += `<option value="${r}">${r}</option>`; });
             }
-            handleReligionChange(); // Reset downstream fields
+            handleReligionChange(); 
         }
 
         function handleReligionChange() {
@@ -655,7 +702,7 @@ Managed by Good Shepherd Church | Powered by Portal Admin and developed by Sengk
                 denomGroup.style.display = 'none';
                 document.getElementById('denomination').value = '';
             }
-            handleDenominationChange(); // Reset parish field
+            handleDenominationChange(); 
         }
 
         function handleDenominationChange() {
@@ -759,15 +806,18 @@ Managed by Good Shepherd Church | Powered by Portal Admin and developed by Sengk
             });
         }
 
-        function submitRegistration(e) {
+        async function submitRegistration(e) {
             e.preventDefault();
             
+            // Show processing alert
+            openCustomAlert("Saving to secure database... Please wait.", "Processing");
+            document.getElementById('btn_submit').disabled = true;
+
             const recordDate = document.getElementById('regDate').value;
             const rel = document.getElementById('religion').value;
             const denom = document.getElementById('denomination').value;
             const parish = document.getElementById('parish').value;
 
-            // Combine denom/parish for easy table viewing
             let denomParishStr = "N/A";
             if(rel === 'Christian') {
                 if(denom === 'Catholic') denomParishStr = `Catholic (${parish})`;
@@ -775,6 +825,7 @@ Managed by Good Shepherd Church | Powered by Portal Admin and developed by Sengk
             }
 
             const record = {
+                id: Date.now().toString(), // unique identifier for permanent tracking
                 regDate: recordDate,
                 name: document.getElementById('studentName').value,
                 dob: document.getElementById('dob').value,
@@ -792,14 +843,17 @@ Managed by Good Shepherd Church | Powered by Portal Admin and developed by Sengk
 
             studentDb.push(record);
             sortAndAssignRegNumbers(); 
-            renderTables(); // Update all registers including the Public Port View instantly
-
-            // Translated success message
+            
+            // Sync to permanent database
+            await syncDatabase();
+            
+            renderTables(); 
+            
+            document.getElementById('btn_submit').disabled = false;
             openCustomAlert(translations[currentLang].msg_success, "Submission Complete");
             
-            // Reset form
             document.getElementById('admissionForm').reset();
-            handleMinorityChange(); // reset dynamically hidden fields
+            handleMinorityChange(); 
             document.getElementById('regDate').valueAsDate = new Date(); 
         }
 
@@ -813,9 +867,7 @@ Managed by Good Shepherd Church | Powered by Portal Admin and developed by Sengk
             if(publicTbody) publicTbody.innerHTML = '';
 
             if (studentDb.length === 0) {
-                if(publicTbody) {
-                    publicTbody.innerHTML = `<tr><td colspan="5" style="text-align: center; color: #777;">No records submitted yet.</td></tr>`;
-                }
+                if(publicTbody) publicTbody.innerHTML = `<tr><td colspan="5" style="text-align: center; color: #777;">No records submitted yet.</td></tr>`;
                 return;
             }
 
@@ -900,9 +952,11 @@ Managed by Good Shepherd Church | Powered by Portal Admin and developed by Sengk
             editingIndex = -1;
         }
 
-        function saveEditDetails() {
+        async function saveEditDetails() {
             if (editingIndex === -1) return;
 
+            openCustomAlert("Updating secure database... Please wait.", "Processing");
+            
             studentDb[editingIndex].name = document.getElementById('edit_name').value;
             studentDb[editingIndex].regDate = document.getElementById('edit_regDate').value;
             studentDb[editingIndex].dob = document.getElementById('edit_dob').value;
@@ -917,21 +971,31 @@ Managed by Good Shepherd Church | Powered by Portal Admin and developed by Sengk
             studentDb[editingIndex].denomParish = document.getElementById('edit_denomParish').value;
 
             sortAndAssignRegNumbers();
+            
+            await syncDatabase();
+            
             renderTables();
             closeEditModal();
+            closeCustomAlert();
         }
 
         // --- ADMIN / LDA ACTIONS ---
-        function markChecked(index) {
+        async function markChecked(index) {
+            openCustomAlert("Marking as verified...", "Processing");
             studentDb[index].status = 'checked';
+            await syncDatabase();
             renderTables();
+            closeCustomAlert();
         }
 
-        function deleteRecord(index) {
-            if(confirm("Delete this admission record?")) {
+        async function deleteRecord(index) {
+            if(confirm("Delete this admission record? This action is permanent in the database.")) {
+                openCustomAlert("Deleting from database...", "Processing");
                 studentDb.splice(index, 1);
                 sortAndAssignRegNumbers(); 
+                await syncDatabase();
                 renderTables();
+                closeCustomAlert();
             }
         }
 
