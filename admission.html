@@ -3,48 +3,147 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admission Management Portal | Good Shepherd Higher Secondary School</title>
-    
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Admission Management Portal</title>
     
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; margin: 0; }
-
-        /* School Custom CSS */
-        .header { background: #42b9b9; color: #fff; padding: 8px 0; font-size: 35px; text-align: center; }
-        
-        .motto-label { background-color: #ffffff; color: #e53935; padding: 2px 8px; border-radius: 8px; font-weight: bold; display: inline-block; vertical-align: middle; }
-        .motto-marquee { width: 75%; display: inline-block; vertical-align: middle; margin-left: 10px; font-weight: 500; }
-        
-        .nav-wrapper { background: #fff; box-shadow: 0 4px 10px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 40; }
-        .nav-container { display: flex; justify-content: space-between; align-items: center; padding: 10px 20px; max-width: 1200px; margin: 0 auto; }
-        .logo { height: 60px; width: auto; }
-        #nav-menu { display: flex; gap: 20px; }
-        #nav-menu a { text-decoration: none; color: #333; font-weight: 600; font-size: 15px; transition: color 0.3s; }
-        #nav-menu a:hover, #nav-menu a.active { color: #2e7d32; border-bottom: 2px solid #2e7d32; }
-        .menu-toggle { display: none; background: none; border: none; font-size: 24px; cursor: pointer; }
-
-        /* Automated Hero Banner Slideshow (Scaled up to exactly 450px height as shown in reference) */
-        .slider-container {
-            position: relative;
-            width: 100%;
-            height: 450px;
-            overflow: hidden;
-            background-color: #000;
+        /* =========================================
+           1. BASE STYLES & TOP BAR
+           ========================================= */
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
         }
-        .slides-wrapper {
+
+        .top-bar {
+            background-color: #4db6ac; 
+            color: white;
+            text-align: center;
+            padding: 10px;
+            font-size: 14px;
+        }
+        
+        .motto-box {
+            background-color: white;
+            color: #d32f2f;
+            font-weight: bold;
+            padding: 2px 5px;
+            margin-right: 10px;
+        }
+
+        /* =========================================
+           2. NAVIGATION BAR SETUP
+           ========================================= */
+        .nav-container {
             display: flex;
-            width: 300%;
-            height: 100%;
-            animation: schoolSlideshow 15s infinite ease-in-out;
+            align-items: center;
+            justify-content: flex-start;
+            position: relative;
+            padding: 10px 20px;
+            background-color: #ffffff;
+            border-bottom: 1px solid #ddd;
         }
-        .slide-img {
-            width: 33.333%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
+
+        .logo {
+            height: 50px;
+            margin-right: auto;
+            margin-left: 20px;
+        }
+
+        /* The Hamburger Menu Button */
+        .menu-toggle {
+            display: none;
+            font-size: 28px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            color: #4db6ac; /* Matches the theme color */
+        }
+
+        /* Desktop Nav Links */
+        #nav-menu {
+            display: flex;
+            gap: 15px;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        #nav-menu a {
+            text-decoration: none;
+            color: #333;
+            font-size: 14px;
+            font-weight: bold;
+            padding: 5px;
+            transition: color 0.3s;
+        }
+        
+        #nav-menu a.active {
+            color: #2e7d32;
+            border-bottom: 2px solid #2e7d32;
+        }
+
+        /* Mobile View Responsive Rules (Fixes the overlapping issue) */
+        @media (max-width: 1024px) {
+            .menu-toggle {
+                display: block; 
+                order: -1; /* Forces hamburger to the far-left corner */
+            }
+
+            .logo {
+                margin-left: 15px;
+                margin-right: auto; /* Keeps logo on the left, next to the button */
+            }
+
+            #nav-menu {
+                display: none; /* Hides menu by default */
+                width: 100%;
+                flex-direction: column;
+                background-color: #ffffff;
+                position: absolute;
+                top: 100%; /* Pushes menu directly under the white bar */
+                left: 0;
+                box-shadow: 0px 8px 16px rgba(0,0,0,0.1);
+                z-index: 100;
+                padding: 0;
+            }
+
+            /* JavaScript toggles this class */
+            #nav-menu.show-mobile-menu {
+                display: flex; 
+            }
+
+            #nav-menu a {
+                padding: 15px 20px;
+                text-align: left;
+                border-bottom: 1px solid #eee;
+                width: 100%;
+                display: block;
+                box-sizing: border-box;
+            }
+        }
+
+        /* =========================================
+           3. SLIDER STYLES
+           ========================================= */
+        .slider-container { 
+            position: relative; 
+            width: 100%; 
+            height: 450px; /* Matches the About page height */
+            overflow: hidden; 
+            background-color: #000; 
+        }
+        .slides-wrapper { 
+            display: flex; 
+            width: 300%; 
+            height: 100%; 
+            animation: schoolSlideshow 15s infinite ease-in-out; 
+        }
+        .slide-img { 
+            width: 33.333%; 
+            height: 100%; 
+            object-fit: cover; 
+            display: block; 
         }
         @keyframes schoolSlideshow {
             0%, 28% { transform: translateX(0%); }
@@ -53,144 +152,104 @@
             100% { transform: translateX(0%); }
         }
         .slider-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.45);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            color: #ffffff;
-            padding: 20px;
-            box-sizing: border-box;
-            z-index: 5;
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.45); 
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center; text-align: center; color: #ffffff; z-index: 5;
         }
         .animate-school-name {
-            font-size: 2.5rem;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin: 0;
-            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
+            font-size: 2.5rem; font-weight: 800; text-transform: uppercase; letter-spacing: 2px;
+            margin: 0; text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
             animation: textFadeTracking 2.5s ease-out infinite alternate;
+            padding: 0 20px;
         }
-        @keyframes textFadeTracking {
-            0% { letter-spacing: 1px; opacity: 0.8; transform: scale(0.98); }
-            100% { letter-spacing: 4px; opacity: 1; transform: scale(1.02); }
+        @keyframes textFadeTracking { 
+            0% { letter-spacing: 1px; opacity: 0.8; transform: scale(0.98); } 
+            100% { letter-spacing: 4px; opacity: 1; transform: scale(1.02); } 
         }
-
-        .site-footer { background-color: #1e1e1e; color: #bbbbbb; padding: 30px 0; font-size: 14px; text-align: center; border-top: 3px solid #2e7d32; }
-
-        /* Floating Donation Box */
-        #donation-qr-box {
-            position: fixed; bottom: 30px; right: 30px; width: 220px; background-color: #ffffff;
-            border-radius: 12px; box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.15); padding: 20px; text-align: center;
-            z-index: 9999; opacity: 0; pointer-events: none; transform: translateY(20px); transition: all 0.5s ease;
-        }
-        #donation-qr-box.show { opacity: 1; pointer-events: auto; animation: floatHover 4s ease-in-out infinite; }
-        @keyframes floatHover { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-8px); } }
-        #close-donation-box { position: absolute; top: 10px; right: 15px; background: transparent; border: none; font-size: 24px; color: #888; cursor: pointer; }
-        #close-donation-box:hover { color: #ff0000; }
-
-        @media (max-width: 900px) {
-            .slider-container { height: 250px; }
-            .animate-school-name { font-size: 1.5rem; }
-            #nav-menu { display: none; flex-direction: column; position: absolute; top: 100%; left: 0; width: 100%; background: white; padding: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-            #nav-menu.show { display: flex; }
-            .menu-toggle { display: block; }
-        }
-
-        /* Admission Portal CSS */
-        .tab-content { display: none; }
-        .tab-content.active { display: block; }
         
-        /* Updated Print Configuration for A4 Accuracy */
-        @page { size: A4 portrait; margin: 10mm; }
-        @media print {
-            body * { visibility: hidden; }
-            #acknowledgementModal, #acknowledgementModal * { visibility: visible; }
-            #acknowledgementModal { 
-                background: white !important; 
-                position: absolute !important; 
-                left: 0 !important; 
-                top: 0 !important; 
-                width: 100% !important; 
-                height: 100% !important; 
-                display: block !important; 
-                z-index: 99999 !important; 
-                overflow: visible !important; 
-                padding: 0 !important;
-                margin: 0 !important;
+        /* Responsive adjustments for the slider */
+        @media (max-width: 768px) {
+            .animate-school-name {
+                font-size: 1.5rem;
             }
-            #acknowledgementModal > div { 
-                max-height: none !important; 
-                overflow: visible !important; 
-                box-shadow: none !important; 
-                border: none !important; 
-                margin: 0 !important;
-                padding: 0 !important;
+            .slider-container {
+                height: 250px; /* Adjust height for mobile screens */
             }
-            .no-print { display: none !important; }
-            .header, .nav-wrapper, .slider-container, main, footer, #donation-qr-box { display: none !important; }
         }
     </style>
 </head>
-<body class="flex flex-col min-h-screen">
+<body>
 
-    <div class="header">
-        <div class="container flex-header">
-            <span class="motto-label">Our School Motto:</span> 
-            <marquee class="motto-marquee">"To Learn, To Lead"</marquee>
-        </div>
+    <!-- Top Bar with Motto -->
+    <div class="top-bar">
+        <span class="motto-box">Our School Motto:</span> "To Learn, To Lead"
     </div>
 
-    <div class="nav-wrapper">
-        <div class="container nav-container">
-            <img src="images/logo.png" alt="School Logo" class="logo">
-            <button class="menu-toggle" id="mobile-menu">☰</button>
-            <nav id="nav-menu">
-                <a href="index.html">Home</a>
-                <a href="about.html">About</a>
-                <a href="admission.html" class="active">Admission</a>
-                <a href="events.html">Events</a>
-                <a href="faculty.html">Faculty</a>
-                <a href="gallery.html">Gallery</a>
-                <a href="result.html">Result</a>
-                <a href="notice.html">Notice</a>
-                <a href="contact.html">Contact Us</a>
-                <a href="blog.html">Blog</a>
-            </nav>
-        </div>
-    </div>
+    <!-- Header & Navigation Bar -->
+    <nav class="nav-container">
+        <!-- Hamburger Menu Button (Left Side) -->
+        <button class="menu-toggle" id="mobile-menu" aria-label="Open Mobile Menu">
+            &#9776; <!-- This represents the 3-line icon -->
+        </button>
 
+        <!-- Logo -->
+        <img src="YOUR_LOGO_URL.jpg" alt="School Logo" class="logo"> <!-- Add your actual logo URL here -->
+
+        <!-- Navigation Links -->
+        <ul id="nav-menu">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="admission.html" class="active">Admission</a></li>
+            <li><a href="events.html">Events</a></li>
+            <li><a href="faculty.html">Faculty</a></li>
+            <li><a href="gallery.html">Gallery</a></li>
+            <li><a href="result.html">Result</a></li>
+            <li><a href="notice.html">Notice</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+            <li><a href="blog.html">Blog</a></li>
+        </ul>
+    </nav>
+
+    <!-- Image Slider -->
     <div class="slider-container">
-        <div class="slides-wrapper">
-            <img src="images/1.jpg" alt="School Campus View" class="slide-img">
-            <img src="images/2.jpg" alt="School Campus View" class="slide-img">
-            <img src="images/3.jpg" alt="School Campus View" class="slide-img">
-            <img src="images/4.jpg" alt="School Campus View" class="slide-img">
-            <img src="images/5.jpg" alt="School Campus View" class="slide-img">
-            <img src="images/6.jpg" alt="School Campus View" class="slide-img">
-            <img src="images/7.jpg" alt="School Campus View" class="slide-img">
-            <img src="images/8.jpg" alt="School Campus View" class="slide-img">
-            <img src="images/9.jpg" alt="School Campus View" class="slide-img">
-            <img src="images/10.jpg" alt="School Campus View" class="slide-img">
-        </div>
         <div class="slider-overlay">
-            <h1 class="animate-school-name">GOOD SHEPHERD HIGHER SECONDARY SCHOOL</h1>
+            <h1 class="animate-school-name">Good Shepherd Higher Secondary School</h1>
+        </div>
+        <div class="slides-wrapper">
+            <!-- Ensure you add your actual image URLs below -->
+            <img src="slide1.jpg" class="slide-img" alt="Slide 1">
+            <img src="slide2.jpg" class="slide-img" alt="Slide 2">
+            <img src="slide3.jpg" class="slide-img" alt="Slide 3">
         </div>
     </div>
+
+    <!-- MAIN ADMISSION FORM CONTENT STARTS HERE -->
+    <div style="padding: 40px 20px; text-align: center;">
+        <h2>Student Admission Portal</h2>
+        <p>Select a tab below to submit a new application or access the administration desk.</p>
         
-    <main class="flex-grow max-w-7xl w-full mx-auto px-4 py-12 sm:px-6 lg:px-8">
-        
-        <div class="text-center mb-8">
-            <h2 class="text-3xl font-bold text-slate-800">Student Admission Portal</h2>
-            <p class="text-slate-500 mt-2">Select a tab below to submit a new application or access the administration desk.</p>
-        </div>
+        <!-- ============================================== -->
+        <!-- PASTE THE REST OF YOUR FORM/BUTTONS HTML HERE  -->
+        <!-- ============================================== -->
+
+    </div>
+
+    <!-- JavaScript for Mobile Menu Functionality -->
+    <script>
+        const mobileMenuBtn = document.getElementById('mobile-menu');
+        const navMenu = document.getElementById('nav-menu');
+
+        // Listens for a click on the 3-line button to drop the menu down
+        if (mobileMenuBtn && navMenu) {
+            mobileMenuBtn.addEventListener('click', function() {
+                navMenu.classList.toggle('show-mobile-menu');
+            });
+        }
+    </script>
+
+</body>
+</html>
 
         <div class="flex flex-wrap justify-center mb-8 gap-2">
             <button onclick="switchTab('new-admission')" id="btn-new-admission" class="tab-btn bg-indigo-600 text-white px-6 py-2.5 font-medium rounded-md shadow-md transition-all">
