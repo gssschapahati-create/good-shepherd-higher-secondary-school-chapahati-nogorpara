@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Good Shepherd Higher Secondary School Admission Portal</title>
+    <style>
+        /* --- Global & Attractive Theme --- */
+        :root {
+            --primary: #1e3c72;
+            --secondary: #2a5298;
+            --accent: #e74c3c;
+            --success: #2ecc71;
+            --warning: #f1c40f;
+            --bg-light: #f4f7f6;
+            --text-dark: #2c3e50;
+            --white: #ffffff;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: var(--text-dark);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            position: relative;
+            padding-bottom: 40px;
+        }
+
+        .container {
+            width: 95%;
+            max-width: 1300px;
+            background: var(--white);
+            border-radius: 12px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            overflow: hidden;
+            min-height: 750px;
+            display: flex;
+            margin-top: 20px;
+            animation: fadeIn 0.4s;
+        }
+
+        .hidden { display: none !important; }
+
+        /* --- Language & Instruction Screens --- */
+        .intro-screen {
+            background: var(--white);
+            padding: 50px;
+            border-radius: 12px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            text-align: center;
+            max-width: 600px;
+            width: 90%;
+            animation: scaleUp 0.3s ease;
+        }
+        .intro-screen h2 { color: var(--primary); margin-bottom: 30px; font-size: 28px; }
+        .lang-btn {
+            display: block; width: 100%; margin: 15px 0; padding: 15px;
+            font-size: 18px; font-weight: bold; background: var(--bg-light);
+            border: 2px solid var(--primary); border-radius: 8px; color: var(--primary);
+            cursor: pointer; transition: all 0.3s;
+        }
+        .lang-btn:hover { background: var(--primary); color: var(--white); }
+        
+        .instruction-text {
+            font-size: 18px; line-height: 1.8; color: var(--text-dark);
+            text-align: justify; margin-bottom: 30px; font-weight: 500;
+        }
+
+        /* --- Public Split Layout --- */
+        .sidebar {
+            width: 280px;
+            background: #112240;
+            color: var(--white);
+            padding: 30px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .sidebar h2 { margin-top: 0; border-bottom: 2px solid var(--secondary); padding-bottom: 10px; font-size: 20px; }
+
+        .nav-btn {
+            background: rgba(255,255,255,0.1);
+            color: var(--white);
+            border: none;
+            padding: 15px;
+            border-radius: 6px;
+            text-align: left;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .nav-btn:hover, .nav-btn.active { background: var(--secondary); padding-left: 25px; }
+
+        .main-content {
+            flex-grow: 1; background: var(--bg-light); position: relative;
+            overflow-y: auto; max-height: 85vh;
+        }
+
+        .view-section { padding: 40px; animation: fadeIn 0.4s; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes scaleUp { from { transform: scale(0.85); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+        /* --- Login Box Specifics --- */
+        .login-wrapper { display: flex; justify-content: center; align-items: center; height: 100%; }
+        .login-box { background: var(--white); padding: 40px; border-radius: 8px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); width: 100%; max-width: 400px; }
+        .login-box h3 { text-align: center; color: var(--primary); margin-bottom: 30px; font-size: 24px; }
+        .error-msg { color: var(--accent); text-align: center; margin-top: 10px; display: none; font-weight: bold; }
+
+        /* --- Forms & Inputs --- */
+        .input-group { margin-bottom: 20px; }
+        .input-group label { display: block; margin-bottom: 6px; font-weight: 600; font-size: 14px; }
+        .input-group input, .input-group select {
+            width: 100%; padding: 10px 15px; border: 1px solid #ccc; border-radius: 5px;
+            font-size: 14px; box-sizing: border-box; outline: none;
+        }
+        .input-group input:focus, .input-group select:focus { border-color: var(--primary); }
+        .input-group input[readonly] { background-color: #e9ecef; color: #6c757d; cursor: not-allowed; }
+
+        .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+
+        .btn-primary {
+            background: var(--primary); color: var(--white); border: none;
+            padding: 12px 20px; border-radius: 5px; cursor: pointer;
+            font-weight: bold; font-size: 15px; width: 100%; transition: background 0.3s;
+        }
+        .btn-primary:hover { background: var(--secondary); }
+
+        /* --- Dashboard Headers & Tables --- */
+        .dash-header {
+            background: var(--primary); color: var(--white);
+            padding: 20px 30px; display: flex; justify-content: space-between; align-items: center;
+            margin: -40px -40px 30px -40px;
+        }
+        .dash-header h2 { margin: 0; }
+        .btn-logout { background: var(--accent); color: var(--white); padding: 8px 15px; border: none; border-radius: 4px; cursor: pointer; }
+        
+        .action-bar { display: flex; justify-content: space-between; margin-bottom: 20px; }
+        .btn-export { background: var(--success); color: white; padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; }
+
+        table { width: 100%; border-collapse: collapse; background: var(--white); box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        th, td { padding: 12px 15px; text-align: left; border-bottom: 1px solid #eee; font-size: 14px; }
+        th { background-color: var(--primary); color: var(--white); }
+        tr:hover { background-color: #f1f2f6; }
+
+        .badge { padding: 5px 10px; border-radius: 20px; font-size: 12px; font-weight: bold; color: white; }
+        .badge.submitted { background: var(--warning); color: #000; }
+        .badge.checked { background: var(--success); }
+
+        .btn-sm { padding: 5px 10px; border: none; border-radius: 3px; color: white; cursor: pointer; font-size: 12px; margin-right: 5px; }
+        .btn-edit { background: #3498db; }
+        .btn-delete { background: var(--accent); }
+        .btn-check { background: var(--success); }
+
+        /* --- Custom Modern Modal Popup Box --- */
+        .custom-modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.65); display: flex; align-items: center;
+            justify-content: center; z-index: 10000;
+        }
+        .custom-modal-box {
+            background: var(--white); padding: 30px; border-radius: 10px;
+            max-width: 480px; width: 90%; text-align: center;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3); animation: scaleUp 0.3s ease;
+        }
+        .custom-modal-box.large {
+            max-width: 800px; max-height: 90vh; overflow-y: auto; text-align: left;
+        }
+        .custom-modal-box h3 { margin-top: 0; color: var(--primary); font-size: 22px; }
+        .custom-modal-box p { font-size: 15px; line-height: 1.6; color: var(--text-dark); margin: 15px 0 25px 0; font-weight: 500; }
+        .custom-modal-btn {
+            background: var(--primary); color: var(--white); border: none;
+            padding: 10px 30px; font-size: 15px; font-weight: bold; border-radius: 5px;
+            cursor: pointer; transition: background 0.2s; min-width: 80px;
+        }
+        .custom-modal-btn.danger { background: var(--accent); }
+        .custom-modal-btn:hover { opacity: 0.9; }
+
+        /* --- Footer --- */
+        .dev-footer {
+            position: absolute; bottom: 10px; width: 100%; text-align: center;
+            color: rgba(255, 255, 255, 0.8); font-size: 14px; font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="appAlertModal" class="custom-modal-overlay hidden">
+        <div class="custom-modal-box">
+            <h3 id="appAlertTitle">Notification</h3>
+            <p id="appAlertMessage">Message text goes here.</p>
+            <button class="custom-modal-btn" onclick="closeCustomAlert()">OK</button>
+        </div>
+    </div>
+
+    <div id="editRecordModal" class="custom-modal-overlay hidden">
+        <div class="custom-modal-box large">
+            <h3>Edit Student Full Details</h3>
+            <div class="form-grid" style="margin-bottom: 20px;">
+                <div class="input-group">
+                    <label>Student's Full Name</label>
+                    <input type="text" id="edit_name">
+                </div>
+                <div class="input-group">
+                    <label>Date of Registration / Year Joined</label>
+                    <input type="date" id="edit_regDate">
+                </div>
+                <div class="input-group">
+                    <label>Date of Birth</label>
+                    <input type="date" id="edit_dob">
+                </div>
+                <div class="input-group">
+                    <label>Class Registered</label>
+                    <input type="text" id="edit_classReg">
+                </div>
+                <div class="input-group">
+                    <label>Father's Name</label>
+                    <input type="text" id="edit_father">
+                </div>
+                <div class="input-group">
+                    <label>Mother's Name</label>
+                    <input type="text" id="edit_mother">
+                </div>
+                <div class="input-group">
+                    <label>Mobile Number</label>
+                    <input type="tel" id="edit_mobile">
+                </div>
+                <div class="input-group">
+                    <label>Address</label>
+                    <input type="text" id="edit_address">
+                </div>
+                <div class="input-group">
+                    <label>Social Category</label>
+                    <input type="text" id="edit_category">
+                </div>
+                <div class="input-group">
+                    <label>Minority Status</label>
+                    <input type="text" id="edit_minority">
+                </div>
+                <div class="input-group">
+                    <label>Religion</label>
+                    <input type="text" id="edit_religion">
+                </div>
+                <div class="input-group">
+                    <label>Denomination / Parish (If applicable)</label>
+                    <input type="text" id="edit_denomParish">
+                </div>
+            </div>
+            <div style="text-align: right; display: flex; gap: 10px; justify-content: flex-end;">
+                <button class="custom-modal-btn danger" onclick="closeEditModal()">Cancel</button>
+                <button class="custom-modal-btn" onclick="saveEditDetails()">Save Changes</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="view-lang-select" class="intro-screen">
+        <h2>Select Your Language<br><span style="font-size:18px; color:#555;">अपनी भाषा चुनें | Nang·ni Ku·sikko Seokbo</span></h2>
+        <button class="lang-btn" onclick="selectLanguage('en')">English</button>
+        <button class="lang-btn" onclick="selectLanguage('hi')">हिन्दी (Hindi)</button>
+        <button class="lang-btn" onclick="selectLanguage('gr')">A·chik (Garo)</button>
+    </div>
+
+    <div id="view-instructions" class="intro-screen hidden">
+        <h2 id="inst_title">Instructions</h2>
+        <div class="instruction-text" id="inst_text"></div>
+        <button class="btn-primary" id="btn_proceed" style="font-size:18px; padding:15px;" onclick="enterPortal()">Proceed / आगे बढ़ें / Re·mikkangbo</button>
+    </div>
+
+    <div class="container hidden" id="public-layout">
+        <div class="sidebar">
+            <h2 id="nav_header">Good Shepherd Higher Secondary School Register </h2>
+            <button class="nav-btn" onclick="window.location.href='index.html'">🏠 Go to Home Page</button>
+            <button class="nav-btn" id="nav_login" onclick="togglePublicView('login')">🔒 Staff Login</button>
+            <button class="nav-btn active" id="nav_reg" onclick="togglePublicView('form')">📄 Admission Register</button>
+            <button class="nav-btn" id="nav_records" onclick="togglePublicView('records')">👁️ Students Port View</button>
+        </div>
+
+        <div class="main-content">
+            
+            <div id="view-form" class="view-section">
+                <h2 id="form_title" style="color: var(--primary); border-bottom: 2px solid #ccc; padding-bottom: 10px;">New Student Admission Form</h2>
+                <form id="admissionForm" onsubmit="submitRegistration(event)">
+                    <div class="form-grid">
+                        <div class="input-group">
+                            <label id="lbl_regno">Admission Registration / Sl. No</label>
+                            <input type="text" readonly value="Auto-generated based on Date">
+                        </div>
+                        <div class="input-group">
+                            <label id="lbl_regdate">Date of Registration / Year Joined</label>
+                            <input type="date" id="regDate" required>
+                        </div>
+                        <div class="input-group">
+                            <label id="lbl_name">Student's Full Name</label>
+                            <input type="text" id="studentName" required>
+                        </div>
+                        <div class="input-group">
+                            <label id="lbl_dob">Date of Birth (DOB)</label>
+                            <input type="date" id="dob" required>
+                        </div>
+                        <div class="input-group">
+                            <label id="lbl_class">Class Registered</label>
+                            <select id="classReg" required>
+                                <option value="">-- Select Class --</option>
+                                <optgroup label="With Sections">
+                                    <option value="Nursery (A)">Nursery (A)</option>
+                                    <option value="Nursery (B)">Nursery (B)</option>
+                                    <option value="LKG (A)">LKG (A)</option>
+                                    <option value="LKG (B)">LKG (B)</option>
+                                    <option value="UKG (A)">UKG (A)</option>
+                                    <option value="UKG (B)">UKG (B)</option>
+                                    <option value="Class I (A)">Class I (A)</option>
+                                    <option value="Class I (B)">Class I (B)</option>
+                                    <option value="Class II (A)">Class II (A)</option>
+                                    <option value="Class II (B)">Class II (B)</option>
+                                    <option value="Class III (A)">Class III (A)</option>
+                                    <option value="Class III (B)">Class III (B)</option>
+                                    <option value="Class IV (A)">Class IV (A)</option>
+                                    <option value="Class IV (B)">Class IV (B)</option>
+                                    <option value="Class V (A)">Class V (A)</option>
+                                    <option value="Class V (B)">Class V (B)</option>
+                                    <option value="Class VI (A)">Class VI (A)</option>
+                                    <option value="Class VI (B)">Class VI (B)</option>
+                                </optgroup>
+                                <optgroup label="Without Sections">
+                                    <option value="Class VII">Class VII</option>
+                                    <option value="Class VIII">Class VIII</option>
+                                    <option value="Class IX">Class IX</option>
+                                    <option value="Class X">Class X</option>
+                                    <option value="Class XI">Class XI</option>
+                                </optgroup>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <label id="lbl_father">Father's Name</label>
+                            <input type="text" id="fatherName" required>
+                        </div>
+                        <div class="input-group">
+                            <label id="lbl_mother">Mother's Name</label>
+                            <input type="text" id="motherName" required>
+                        </div>
+                        <div class="input-group">
+                            <label id="lbl_mobile">Mobile Number</label>
+                            <input type="tel" id="mobile" required>
+                        </div>
+                        <div class="input-group">
+                            <label id="lbl_address">Address</label>
+                            <input type="text" id="address" required>
+                        </div>
+                        <div class="input-group">
+                            <label id="lbl_category">Social Category</label>
+                            <select id="socialCategory" required>
+                                <option value="General">General</option>
+                                <option value="OBC">OBC</option>
+                                <option value="SC">SC</option>
+                                <option value="ST">ST</option>
+                            </select>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label id="lbl_minority">Is Minority?</label>
+                            <select id="minority" required onchange="handleMinorityChange()">
+                                <option value="">-- Select --</option>
+                                <option value="Yes">Yes</option>
+                                <option value="No">No</option>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <label id="lbl_religion">Religion</label>
+                            <select id="religion" required onchange="handleReligionChange()">
+                                <option value="">-- Select Religion --</option>
+                                </select>
+                        </div>
+                        <div class="input-group" id="denominationGroup" style="display: none;">
+                            <label id="lbl_denomination">Christian Denomination</label>
+                            <select id="denomination" onchange="handleDenominationChange()">
+                                <option value="">-- Select Denomination --</option>
+                                <option value="Catholic">Catholic</option>
+                                <option value="Baptist">Baptist</option>
+                                <option value="Presbyterian">Presbyterian</option>
+                                <option value="Church of North India (CNI)">Church of North India (CNI)</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                        <div class="input-group" id="parishGroup" style="display: none;">
+                            <label id="lbl_parish">Catholic Parish</label>
+                            <input type="text" id="parish" placeholder="Enter Parish Name">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn-primary" id="btn_submit" style="margin-top: 10px;">Submit Registration</button>
+                </form>
+            </div>
+
+            <div id="view-records" class="view-section hidden">
+                <h2 style="color: var(--primary); border-bottom: 2px solid #ccc; padding-bottom: 10px; margin-top:0;">Students Port View Page</h2>
+                <p>Public record of successfully submitted student admission forms.</p>
+                <div style="overflow-x:auto;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Sl. No / Reg No</th>
+                                <th>Date Joined</th>
+                                <th>Student Name</th>
+                                <th>Class</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="public-tbody">
+                            <tr>
+                                <td colspan="5" style="text-align: center; color: #777;">No records submitted yet.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="view-login" class="view-section hidden login-wrapper">
+                <div class="login-box">
+                    <h3 id="login_title">Authorized Staff Access</h3>
+                    <div class="input-group">
+                        <label>User ID</label>
+                        <input type="text" id="loginId" autocomplete="off" placeholder="USER ID">
+                    </div>
+                    <div class="input-group">
+                        <label>Password</label>
+                        <input type="password" id="loginPass" placeholder="......">
+                    </div>
+                    <button class="btn-primary" onclick="attemptLogin()">Secure Login</button>
+                    <div id="loginError" class="error-msg">Invalid Credentials!</div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="container hidden" id="admin-layout" style="flex-direction: column;">
+        <div class="main-content" style="width: 100%; max-height: 100vh;">
+            <div class="view-section">
+                <div class="dash-header">
+                    <h2>Admin Control Dashboard</h2>
+                    <div>
+                        <button class="btn-logout" style="background:#f1c40f; color:#000; margin-right: 10px;" onclick="window.location.href='index.html'">🏠 Home Page</button>
+                        <button class="btn-logout" style="background:#3498db; margin-right: 10px;" onclick="openManageUsersBox()">Manage Users</button>
+                        <button class="btn-logout" onclick="triggerSecureLogout()">Logout</button>
+                    </div>
+                </div>
+                <div class="action-bar">
+                    <h3>Master Student Register</h3>
+                    <button class="btn-export" onclick="exportExcel('admin')">⬇ Download Full Excel</button>
+                </div>
+                <div style="overflow-x:auto;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Sl. No / Reg No</th>
+                                <th>Date</th>
+                                <th>Student Name</th>
+                                <th>Class</th>
+                                <th>Father's Name</th>
+                                <th>Contact</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="admin-tbody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container hidden" id="lda-layout" style="flex-direction: column;">
+        <div class="main-content" style="width: 100%; max-height: 100vh;">
+            <div class="view-section">
+                <div class="dash-header">
+                    <h2>LDA Office Assistant Dashboard</h2>
+                    <div>
+                        <button class="btn-logout" style="background:#f1c40f; color:#000; margin-right: 10px;" onclick="window.location.href='index.html'">🏠 Home Page</button>
+                        <button class="btn-logout" onclick="triggerSecureLogout()">Logout</button>
+                    </div>
+                </div>
+                <div class="action-bar">
+                    <h3>Form Collection Register</h3>
+                    <button class="btn-export" onclick="exportExcel('lda')">⬇ Download Forms Excel</button>
+                </div>
+                <div style="overflow-x:auto;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Sl. No / Reg No</th>
+                                <th>Date</th>
+                                <th>Student Name</th>
+                                <th>Class</th>
+                                <th>Religion</th>
+                                <th>Denomination / Parish</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="lda-tbody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="dev-footer">
+       © 2026 Good Shepherd Higher Secondary School. All Rights Reserved.
+Managed by Good Shepherd Church | Powered by Portal Admin and developed by Sengkan M Sangma
+    </div>
+
+    <script>
+        // --- TRANSLATION DICTIONARY ---
+        const translations = {
+            en: {
+                inst_title: "Instructions",
+                inst_text: "This portal is to collect all the previous Students Records from the year of begining of the school that is 2005 onwards till now. You dont need to put exact date only if you remember the year you join the school and you correct names and Parents Details correct adress correct has to be given also your Mobile Number if you have personal if not Parents or Guirden.",
+                btn_proceed: "I Understand & Proceed",
+                nav_header: "Good Shepherd Higher Secondary School Admission Portal",
+                nav_reg: "📄 Admission Register",
+                nav_login: "🔒 Staff Login",
+                form_title: "Student Record Collection Form",
+                lbl_regno: "Registration / Sl. No",
+                lbl_regdate: "Date (Or Approx Year of Joining)",
+                lbl_name: "Student's Full Name",
+                lbl_dob: "Date of Birth (DOB)",
+                lbl_class: "Class Registered",
+                lbl_father: "Father's Name",
+                lbl_mother: "Mother's Name",
+                lbl_mobile: "Mobile Number (Self or Guardian)",
+                lbl_address: "Full Address",
+                lbl_category: "Social Category",
+                lbl_minority: "Is Minority?",
+                lbl_religion: "Religion",
+                lbl_denomination: "Christian Denomination",
+                lbl_parish: "Parish Name",
+                btn_submit: "Submit Student Record",
+                login_title: "Authorized Staff Access",
+                msg_success: "Thank you for Submitting Students Register you can check in the LDA portal as well as in Admin to check"
+            },
+            hi: {
+                inst_title: "निर्देश",
+                inst_text: "यह पोर्टल स्कूल की शुरुआत यानी 2005 से लेकर अब तक के सभी पिछले छात्रों के रिकॉर्ड एकत्र करने के लिए है। आपको सही तारीख डालने की जरूरत नहीं है, केवल वह साल जब आप स्कूल में शामिल हुए थे। आपके सही नाम और माता-पिता का विवरण, सही पता देना होगा, साथ ही आपका मोबाइल नंबर (यदि आपका व्यक्तिगत है, अन्यथा माता-पिता या अभिभावक का)।",
+                btn_proceed: "मैं समझता हूँ और आगे बढ़ें",
+                nav_header: "स्कूल पोर्टल",
+                nav_reg: "📄 प्रवेश रजिस्टर",
+                nav_login: "🔒 स्टाफ लॉगिन",
+                form_title: "छात्र रिकॉर्ड संग्रह फॉर्म",
+                lbl_regno: "पंजीकरण / क्रम संख्या",
+                lbl_regdate: "तिथि (या शामिल होने का वर्ष)",
+                lbl_name: "छात्र का पूरा नाम",
+                lbl_dob: "जन्म तिथि (DOB)",
+                lbl_class: "कक्षा",
+                lbl_father: "पिता का नाम",
+                lbl_mother: "माता का नाम",
+                lbl_mobile: "मोबाइल नंबर",
+                lbl_address: "पूरा पता",
+                lbl_category: "सामाजिक श्रेणी",
+                lbl_minority: "क्या अल्पसंख्यक है?",
+                lbl_religion: "धर्म",
+                lbl_denomination: "ईसाई संप्रदाय",
+                lbl_parish: "पैरिश का नाम",
+                btn_submit: "छात्र रिकॉर्ड जमा करें",
+                login_title: "अधिकृत स्टाफ एक्सेस",
+                msg_success: "छात्र रजिस्टर जमा करने के लिए धन्यवाद, आप एलडीए पोर्टल के साथ-साथ व्यवस्थापक (Admin) में भी जांच कर सकते हैं।"
+            },
+            gr: {
+                inst_title: "Ge·etanirang",
+                inst_text: "Ian a·bachenggipa 2005 bilsirangoni da·o dipet pilak skangni chatrorangni record-ko toktimna gita taria portal ong·a. Tarik tik ong·e on·na nangja, indiba school-o napgipa bilsikosan on·bo. Nang·ni tik biming, maa-paani biming, aro tik address-ko on·na nanga. Nang·ni personal mobile number donggenchimode on·bo, ong·jaode maa-paani ba guardian-ni number-ko on·bo.",
+                btn_proceed: "Ninga & Re·mikkangbo",
+                nav_header: "Good Shepherd Higher Secondary School Admission Portal",
+                nav_reg: "📄 Admission Register",
+                nav_login: "🔒 Staff Login",
+                form_title: "Chatrorangni Record Collection Form",
+                lbl_regno: "Registration / Sl. No",
+                lbl_regdate: "Tarik (Ba Skulo Napani Bilsi)",
+                lbl_name: "Chatroni Chu·gimik Biming",
+                lbl_dob: "Atchiani Tarik Ba Sal (DOB)",
+                lbl_Class: "Klas",
+                lbl_father: "Paani Biming",
+                lbl_mother: "Maani Biming",
+                lbl_mobile: "Mobile Number",
+                lbl_address: "Tik Address",
+                lbl_category: "Social Category",
+                lbl_minority: "Minority Ong·ama?",
+                lbl_religion: "Torom",
+                lbl_denomination: "Christian Denomination",
+                lbl_parish: "Parish Biming",
+                btn_submit: "Record On·bo",
+                login_title: "Staff Login",
+                msg_success: "Chatrorangni Register-ko on·anina mitela, na·a LDA portal aro Admin-o nina man·gen."
+            }
+        };
+
+        let currentLang = 'en'; // Default
+        let studentDb = [];
+        let currentCallback = null;
+        let editingIndex = -1; // Global tracker for edits
+
+        // --- LANGUAGE & SCREEN NAVIGATION ---
+        function selectLanguage(langCode) {
+            currentLang = langCode;
+            const dict = translations[langCode];
+
+            // Apply translations to UI elements
+            Object.keys(dict).forEach(key => {
+                const element = document.getElementById(key);
+                if(element) element.innerText = dict[key];
+            });
+
+            // Transition Screens
+            document.getElementById('view-lang-select').classList.add('hidden');
+            document.getElementById('view-instructions').classList.remove('hidden');
+        }
+
+        function enterPortal() {
+            document.getElementById('view-instructions').classList.add('hidden');
+            document.getElementById('public-layout').classList.remove('hidden');
+            document.getElementById('regDate').valueAsDate = new Date(); // Reset date
+            renderTables(); // Initialize public table view
+        }
+
+        // --- DYNAMIC MINORITY / RELIGION LOGIC ---
+        function handleMinorityChange() {
+            const isMinority = document.getElementById('minority').value;
+            const religionSelect = document.getElementById('religion');
+            
+            religionSelect.innerHTML = '<option value="">-- Select Religion --</option>';
+
+            if (isMinority === 'Yes') {
+                ['Christian', 'Muslim', 'Sikh', 'Buddhist', 'Parsi', 'Jain'].forEach(r => {
+                    religionSelect.innerHTML += `<option value="${r}">${r}</option>`;
+                });
+            } else if (isMinority === 'No') {
+                ['Hindu', 'General / Non-Minority Other'].forEach(r => {
+                    religionSelect.innerHTML += `<option value="${r}">${r}</option>`;
+                });
+            }
+            handleReligionChange(); // Reset downstream fields
+        }
+
+        function handleReligionChange() {
+            const rel = document.getElementById('religion').value;
+            const denomGroup = document.getElementById('denominationGroup');
+            
+            if (rel === 'Christian') {
+                denomGroup.style.display = 'block';
+            } else {
+                denomGroup.style.display = 'none';
+                document.getElementById('denomination').value = '';
+            }
+            handleDenominationChange(); // Reset parish field
+        }
+
+        function handleDenominationChange() {
+            const denom = document.getElementById('denomination').value;
+            const parishGroup = document.getElementById('parishGroup');
+            
+            if (denom === 'Catholic') {
+                parishGroup.style.display = 'block';
+            } else {
+                parishGroup.style.display = 'none';
+                document.getElementById('parish').value = '';
+            }
+        }
+
+        // --- CUSTOM MODAL SYSTEM ---
+        function openCustomAlert(message, title = "System Notification", callback = null) {
+            document.getElementById('appAlertTitle').innerText = title;
+            document.getElementById('appAlertMessage').innerText = message;
+            document.getElementById('appAlertModal').classList.remove('hidden');
+            currentCallback = callback;
+        }
+
+        function closeCustomAlert() {
+            document.getElementById('appAlertModal').classList.add('hidden');
+            if (currentCallback) {
+                currentCallback();
+                currentCallback = null;
+            }
+        }
+
+        function openManageUsersBox() {
+            let infoText = "Manage Active Users:\n1. Admin Panel Access (ID: Admin123)\n2. Assistant Office LDA Access (ID: LDA321)";
+            openCustomAlert(infoText, "Portal Settings Control");
+        }
+
+        // --- UI TOGGLES ---
+        function togglePublicView(view) {
+            document.getElementById('view-form').classList.add('hidden');
+            document.getElementById('view-login').classList.add('hidden');
+            document.getElementById('view-records').classList.add('hidden');
+            
+            document.getElementById('nav_reg').classList.remove('active');
+            document.getElementById('nav_login').classList.remove('active');
+            document.getElementById('nav_records').classList.remove('active');
+
+            if(view === 'form') {
+                document.getElementById('view-form').classList.remove('hidden');
+                document.getElementById('nav_reg').classList.add('active');
+            } else if(view === 'records') {
+                document.getElementById('view-records').classList.remove('hidden');
+                document.getElementById('nav_records').classList.add('active');
+            } else {
+                document.getElementById('view-login').classList.remove('hidden');
+                document.getElementById('nav_login').classList.add('active');
+            }
+        }
+
+        // --- AUTHENTICATION ---
+        function attemptLogin() {
+            const id = document.getElementById('loginId').value;
+            const pass = document.getElementById('loginPass').value;
+            const err = document.getElementById('loginError');
+
+            if (id === 'Admin123' && pass === 'asd123') {
+                document.getElementById('public-layout').classList.add('hidden');
+                document.getElementById('admin-layout').classList.remove('hidden');
+                renderTables();
+                err.style.display = 'none';
+            } else if (id === 'LDA321' && pass === 'asd123') {
+                document.getElementById('public-layout').classList.add('hidden');
+                document.getElementById('lda-layout').classList.remove('hidden');
+                renderTables();
+                err.style.display = 'none';
+            } else {
+                err.style.display = 'block';
+            }
+        }
+
+        function triggerSecureLogout() {
+            openCustomAlert("Thank you please visit when you are needed", "Secure Exit Status", function() {
+                executeSystemLogout();
+            });
+        }
+
+        function executeSystemLogout() {
+            document.getElementById('loginId').value = '';
+            document.getElementById('loginPass').value = '';
+            document.getElementById('admin-layout').classList.add('hidden');
+            document.getElementById('lda-layout').classList.add('hidden');
+            document.getElementById('public-layout').classList.remove('hidden');
+            togglePublicView('login');
+        }
+
+        // --- DATA & AUTO CHRONOLOGICAL REGISTRATION ---
+        function sortAndAssignRegNumbers() {
+            studentDb.sort((a, b) => new Date(a.regDate) - new Date(b.regDate));
+            studentDb.forEach((student, index) => {
+                let sequentialNumber = index + 1;
+                student.slNo = sequentialNumber; 
+                student.regNumber = "REG-" + String(sequentialNumber).padStart(3, '0'); 
+            });
+        }
+
+        function submitRegistration(e) {
+            e.preventDefault();
+            
+            const recordDate = document.getElementById('regDate').value;
+            const rel = document.getElementById('religion').value;
+            const denom = document.getElementById('denomination').value;
+            const parish = document.getElementById('parish').value;
+
+            // Combine denom/parish for easy table viewing
+            let denomParishStr = "N/A";
+            if(rel === 'Christian') {
+                if(denom === 'Catholic') denomParishStr = `Catholic (${parish})`;
+                else denomParishStr = denom;
+            }
+
+            const record = {
+                regDate: recordDate,
+                name: document.getElementById('studentName').value,
+                dob: document.getElementById('dob').value,
+                classReg: document.getElementById('classReg').value,
+                father: document.getElementById('fatherName').value,
+                mother: document.getElementById('motherName').value,
+                mobile: document.getElementById('mobile').value,
+                address: document.getElementById('address').value,
+                socialCategory: document.getElementById('socialCategory').value,
+                minority: document.getElementById('minority').value,
+                religion: rel,
+                denomParish: denomParishStr,
+                status: 'submitted'
+            };
+
+            studentDb.push(record);
+            sortAndAssignRegNumbers(); 
+            renderTables(); // Update all registers including the Public Port View instantly
+
+            // Translated success message
+            openCustomAlert(translations[currentLang].msg_success, "Submission Complete");
+            
+            // Reset form
+            document.getElementById('admissionForm').reset();
+            handleMinorityChange(); // reset dynamically hidden fields
+            document.getElementById('regDate').valueAsDate = new Date(); 
+        }
+
+        function renderTables() {
+            const adminTbody = document.getElementById('admin-tbody');
+            const ldaTbody = document.getElementById('lda-tbody');
+            const publicTbody = document.getElementById('public-tbody');
+            
+            if(adminTbody) adminTbody.innerHTML = '';
+            if(ldaTbody) ldaTbody.innerHTML = '';
+            if(publicTbody) publicTbody.innerHTML = '';
+
+            if (studentDb.length === 0) {
+                if(publicTbody) {
+                    publicTbody.innerHTML = `<tr><td colspan="5" style="text-align: center; color: #777;">No records submitted yet.</td></tr>`;
+                }
+                return;
+            }
+
+            studentDb.forEach((student, index) => {
+                if(adminTbody) {
+                    adminTbody.innerHTML += `
+                        <tr>
+                            <td><strong>${student.slNo}</strong> / ${student.regNumber}</td>
+                            <td>${student.regDate}</td>
+                            <td>${student.name}</td>
+                            <td>${student.classReg}</td>
+                            <td>${student.father}</td>
+                            <td>${student.mobile}</td>
+                            <td><span class="badge ${student.status}">${student.status.toUpperCase()}</span></td>
+                            <td>
+                                <button class="btn-sm btn-edit" onclick="openEditModal(${index})">Edit</button>
+                                <button class="btn-sm btn-delete" onclick="deleteRecord(${index})">Del</button>
+                            </td>
+                        </tr>
+                    `;
+                }
+
+                if(ldaTbody) {
+                    let ldaActions = `<button class="btn-sm btn-edit" onclick="openEditModal(${index})">Edit</button> `;
+                    if(student.status === 'submitted') {
+                        ldaActions += `<button class="btn-sm btn-check" onclick="markChecked(${index})">Mark Checked</button>`;
+                    } else {
+                        ldaActions += `<span style="color: green; font-weight: bold; margin-left:5px;">Verified</span>`;
+                    }
+
+                    ldaTbody.innerHTML += `
+                        <tr>
+                            <td><strong>${student.slNo}</strong> / ${student.regNumber}</td>
+                            <td>${student.regDate}</td>
+                            <td>${student.name}</td>
+                            <td>${student.classReg}</td>
+                            <td>${student.religion}</td>
+                            <td>${student.denomParish}</td>
+                            <td><span class="badge ${student.status}">${student.status.toUpperCase()}</span></td>
+                            <td>${ldaActions}</td>
+                        </tr>
+                    `;
+                }
+
+                if(publicTbody) {
+                    publicTbody.innerHTML += `
+                        <tr>
+                            <td><strong>${student.slNo}</strong> / ${student.regNumber}</td>
+                            <td>${student.regDate}</td>
+                            <td>${student.name}</td>
+                            <td>${student.classReg}</td>
+                            <td><span class="badge ${student.status}">${student.status.toUpperCase()}</span></td>
+                        </tr>
+                    `;
+                }
+            });
+        }
+
+        // --- FULL EDIT FUNCTIONALITY FOR ADMIN & LDA ---
+        function openEditModal(index) {
+            editingIndex = index;
+            const student = studentDb[index];
+            
+            document.getElementById('edit_name').value = student.name;
+            document.getElementById('edit_regDate').value = student.regDate;
+            document.getElementById('edit_dob').value = student.dob;
+            document.getElementById('edit_classReg').value = student.classReg;
+            document.getElementById('edit_father').value = student.father;
+            document.getElementById('edit_mother').value = student.mother;
+            document.getElementById('edit_mobile').value = student.mobile;
+            document.getElementById('edit_address').value = student.address;
+            document.getElementById('edit_category').value = student.socialCategory;
+            document.getElementById('edit_minority').value = student.minority;
+            document.getElementById('edit_religion').value = student.religion;
+            document.getElementById('edit_denomParish').value = student.denomParish;
+
+            document.getElementById('editRecordModal').classList.remove('hidden');
+        }
+
+        function closeEditModal() {
+            document.getElementById('editRecordModal').classList.add('hidden');
+            editingIndex = -1;
+        }
+
+        function saveEditDetails() {
+            if (editingIndex === -1) return;
+
+            studentDb[editingIndex].name = document.getElementById('edit_name').value;
+            studentDb[editingIndex].regDate = document.getElementById('edit_regDate').value;
+            studentDb[editingIndex].dob = document.getElementById('edit_dob').value;
+            studentDb[editingIndex].classReg = document.getElementById('edit_classReg').value;
+            studentDb[editingIndex].father = document.getElementById('edit_father').value;
+            studentDb[editingIndex].mother = document.getElementById('edit_mother').value;
+            studentDb[editingIndex].mobile = document.getElementById('edit_mobile').value;
+            studentDb[editingIndex].address = document.getElementById('edit_address').value;
+            studentDb[editingIndex].socialCategory = document.getElementById('edit_category').value;
+            studentDb[editingIndex].minority = document.getElementById('edit_minority').value;
+            studentDb[editingIndex].religion = document.getElementById('edit_religion').value;
+            studentDb[editingIndex].denomParish = document.getElementById('edit_denomParish').value;
+
+            sortAndAssignRegNumbers();
+            renderTables();
+            closeEditModal();
+        }
+
+        // --- ADMIN / LDA ACTIONS ---
+        function markChecked(index) {
+            studentDb[index].status = 'checked';
+            renderTables();
+        }
+
+        function deleteRecord(index) {
+            if(confirm("Delete this admission record?")) {
+                studentDb.splice(index, 1);
+                sortAndAssignRegNumbers(); 
+                renderTables();
+            }
+        }
+
+        function exportExcel(role) {
+            if(studentDb.length === 0) {
+                openCustomAlert("No records to export!", "Action Alert");
+                return;
+            }
+
+            let csvContent = "data:text/csv;charset=utf-8,";
+            const headers = Object.keys(studentDb[0]).join(",");
+            csvContent += headers + "\r\n";
+
+            studentDb.forEach(row => {
+                let rowArray = Object.values(row).map(val => `"${val}"`);
+                csvContent += rowArray.join(",") + "\r\n";
+            });
+
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", `School_Register_${role}_Export.csv`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+    </script>
+</body>
+</html>
