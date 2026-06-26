@@ -38,9 +38,9 @@
             border-radius: 12px;
             box-shadow: 0 20px 40px rgba(0,0,0,0.4);
             overflow: hidden;
-            min-height: 750px;
+            min-height: 700px;
             display: flex;
-            margin-top: 20px;
+            margin-top: 10px;
             animation: fadeIn 0.4s;
         }
 
@@ -73,7 +73,7 @@
 
         /* --- Public Split Layout --- */
         .sidebar {
-            width: 280px;
+            width: 250px;
             background: #112240;
             color: var(--white);
             padding: 30px 20px;
@@ -82,7 +82,7 @@
             gap: 15px;
         }
 
-        .sidebar h2 { margin-top: 0; border-bottom: 2px solid var(--secondary); padding-bottom: 10px; font-size: 20px; }
+        .sidebar h2 { margin-top: 0; border-bottom: 2px solid var(--secondary); padding-bottom: 10px; font-size: 18px; }
 
         .nav-btn {
             background: rgba(255,255,255,0.1);
@@ -91,16 +91,16 @@
             padding: 15px;
             border-radius: 6px;
             text-align: left;
-            font-size: 16px;
+            font-size: 14px;
             cursor: pointer;
             transition: all 0.3s;
         }
 
-        .nav-btn:hover, .nav-btn.active { background: var(--secondary); padding-left: 25px; }
+        .nav-btn:hover, .nav-btn.active { background: var(--secondary); padding-left: 20px; }
 
         .main-content {
             flex-grow: 1; background: var(--bg-light); position: relative;
-            overflow-y: auto; max-height: 85vh;
+            overflow-y: auto; max-height: 90vh;
         }
 
         .view-section { padding: 40px; animation: fadeIn 0.4s; }
@@ -124,7 +124,7 @@
         .input-group input:focus, .input-group select:focus { border-color: var(--primary); }
         .input-group input[readonly] { background-color: #e9ecef; color: #6c757d; cursor: not-allowed; }
 
-        .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+        .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px; }
 
         .btn-primary {
             background: var(--primary); color: var(--white); border: none;
@@ -186,8 +186,8 @@
 
         /* --- Footer --- */
         .dev-footer {
-            position: absolute; bottom: 10px; width: 100%; text-align: center;
-            color: rgba(255, 255, 255, 0.8); font-size: 14px; font-weight: 500;
+            position: fixed; bottom: 5px; width: 100%; text-align: center;
+            color: rgba(255, 255, 255, 0.9); font-size: 12px; font-weight: 500; z-index: -1;
         }
     </style>
 </head>
@@ -250,7 +250,7 @@
                     <input type="text" id="edit_religion">
                 </div>
                 <div class="input-group">
-                    <label>Denomination / Parish (If applicable)</label>
+                    <label>Denomination / Parish</label>
                     <input type="text" id="edit_denomParish">
                 </div>
             </div>
@@ -276,8 +276,8 @@
 
     <div class="container hidden" id="public-layout">
         <div class="sidebar">
-            <h2 id="nav_header">Good Shepherd Higher Secondary School Register </h2>
-            <button class="nav-btn" onclick="window.location.href='index.html'">🏠 Go to Home Page</button>
+            <h2 id="nav_header">School Register Portal</h2>
+            <button class="nav-btn" onclick="google.script.host.close()">🏠 Close Portal</button>
             <button class="nav-btn" id="nav_login" onclick="togglePublicView('login')">🔒 Staff Login</button>
             <button class="nav-btn active" id="nav_reg" onclick="togglePublicView('form')">📄 Admission Register</button>
             <button class="nav-btn" id="nav_records" onclick="togglePublicView('records')">👁️ Students Port View</button>
@@ -363,7 +363,6 @@
                                 <option value="ST">ST</option>
                             </select>
                         </div>
-                        
                         <div class="input-group">
                             <label id="lbl_minority">Is Minority?</label>
                             <select id="minority" required onchange="handleMinorityChange()">
@@ -376,7 +375,7 @@
                             <label id="lbl_religion">Religion</label>
                             <select id="religion" required onchange="handleReligionChange()">
                                 <option value="">-- Select Religion --</option>
-                                </select>
+                            </select>
                         </div>
                         <div class="input-group" id="denominationGroup" style="display: none;">
                             <label id="lbl_denomination">Christian Denomination</label>
@@ -446,7 +445,7 @@
                 <div class="dash-header">
                     <h2>Admin Control Dashboard</h2>
                     <div>
-                        <button class="btn-logout" style="background:#f1c40f; color:#000; margin-right: 10px;" onclick="window.location.href='index.html'">🏠 Home Page</button>
+                        <button class="btn-logout" style="background:#f1c40f; color:#000; margin-right: 10px;" onclick="google.script.host.close()">🏠 Close Portal</button>
                         <button class="btn-logout" style="background:#3498db; margin-right: 10px;" onclick="openManageUsersBox()">Manage Users</button>
                         <button class="btn-logout" onclick="triggerSecureLogout()">Logout</button>
                     </div>
@@ -482,7 +481,7 @@
                 <div class="dash-header">
                     <h2>LDA Office Assistant Dashboard</h2>
                     <div>
-                        <button class="btn-logout" style="background:#f1c40f; color:#000; margin-right: 10px;" onclick="window.location.href='index.html'">🏠 Home Page</button>
+                        <button class="btn-logout" style="background:#f1c40f; color:#000; margin-right: 10px;" onclick="google.script.host.close()">🏠 Close Portal</button>
                         <button class="btn-logout" onclick="triggerSecureLogout()">Logout</button>
                     </div>
                 </div>
@@ -513,13 +512,9 @@
 
     <div class="dev-footer">
        © 2026 Good Shepherd Higher Secondary School. All Rights Reserved.
-Managed by Good Shepherd Church | Powered by Portal Admin and developed by Sengkan M Sangma
     </div>
 
     <script>
-        // --- IMPORTANT: ADD YOUR GOOGLE WEB APP URL HERE ---
-        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzGwkDQY4p9LaGg92yZqADJ2HTbdWtqGKeresKBBykP1sPY98y16oz9qcVTbrdCUiOc/exec';
-        
         // --- TRANSLATION DICTIONARY ---
         const translations = {
             en: {
@@ -602,91 +597,79 @@ Managed by Good Shepherd Church | Powered by Portal Admin and developed by Sengk
             }
         };
 
-        let currentLang = 'en'; // Default
+        let currentLang = 'en'; 
         let studentDb = [];
         let currentCallback = null;
-        let editingIndex = -1; // Global tracker for edits
+        let editingIndex = -1;
 
-        // --- GOOGLE SHEETS API & LOCAL STORAGE INTEGRATION ---
+        // --- GOOGLE SCRIPT HOST COMMUNICATION ---
         window.onload = function() {
             loadData();
         };
 
-        async function loadData() {
-            // NEW: Load from Local Storage first so records do not disappear on refresh
+        function loadData() {
+            // Check Local Storage Fallback First to prevent clearing on refresh
             const localData = localStorage.getItem('goodShepherdStudentsDB');
             if (localData) {
                 try {
                     studentDb = JSON.parse(localData);
                     renderTables();
-                } catch(e) {
-                    console.error("Local storage error:", e);
-                }
+                } catch(e) { console.error(e); }
             }
 
-            try {
-                if(!SCRIPT_URL || SCRIPT_URL === 'https://script.google.com/macros/s/AKfycbzGwkDQY4p9LaGg92yZqADJ2HTbdWtqGKeresKBBykP1sPY98y16oz9qcVTbrdCUiOc/exec') return;
-                const response = await fetch(SCRIPT_URL);
-                const data = await response.json();
-                
-                if(data && data.length > 0) {
-                    studentDb = data.map(row => {
-                        // Clean up timestamps if they exist
-                        let fmtReg = row["Reg Date"] || "";
-                        let fmtDob = row["DOB"] || "";
-                        if (fmtReg.includes('T')) fmtReg = fmtReg.split('T')[0];
-                        if (fmtDob.includes('T')) fmtDob = fmtDob.split('T')[0];
+            // Communicate directly with Code.gs to get latest sheet data
+            google.script.run
+                .withSuccessHandler(function(data) {
+                    if(data && data.length > 0) {
+                        studentDb = data.map(row => {
+                            let fmtReg = row["Reg Date"] || "";
+                            let fmtDob = row["DOB"] || "";
+                            if (fmtReg.includes('T')) fmtReg = fmtReg.split('T')[0];
+                            if (fmtDob.includes('T')) fmtDob = fmtDob.split('T')[0];
 
-                        return {
-                            id: row["ID"],
-                            slNo: row["Sl No"],
-                            regNumber: row["Reg Number"],
-                            regDate: fmtReg,
-                            name: row["Name"],
-                            dob: fmtDob,
-                            classReg: row["Class"],
-                            father: row["Father"],
-                            mother: row["Mother"],
-                            mobile: row["Mobile"],
-                            address: row["Address"],
-                            socialCategory: row["Category"],
-                            minority: row["Minority"],
-                            religion: row["Religion"],
-                            denomParish: row["Denom/Parish"],
-                            status: row["Status"]
-                        };
-                    });
-                    // Sync the fetched database to local storage
-                    localStorage.setItem('goodShepherdStudentsDB', JSON.stringify(studentDb));
-                }
-                renderTables();
-            } catch (e) {
-                console.error("Failed to load data from server", e);
-                renderTables(); // render local state
-            }
+                            return {
+                                id: row["ID"],
+                                slNo: row["Sl No"],
+                                regNumber: row["Reg Number"],
+                                regDate: fmtReg,
+                                name: row["Name"],
+                                dob: fmtDob,
+                                classReg: row["Class"],
+                                father: row["Father"],
+                                mother: row["Mother"],
+                                mobile: row["Mobile"],
+                                address: row["Address"],
+                                socialCategory: row["Category"],
+                                minority: row["Minority"],
+                                religion: row["Religion"],
+                                denomParish: row["Denom/Parish"],
+                                status: row["Status"]
+                            };
+                        });
+                        localStorage.setItem('goodShepherdStudentsDB', JSON.stringify(studentDb));
+                        renderTables();
+                    }
+                })
+                .withFailureHandler(function(err) {
+                    console.error("Failed to load data from server", err);
+                    renderTables();
+                })
+                .getData();
         }
 
-        async function syncData() {
-            // NEW: Save to Local Storage immediately for permanent portal persistence
+        function syncData() {
+            // Save to browser immediately
             localStorage.setItem('goodShepherdStudentsDB', JSON.stringify(studentDb));
 
-            if(!SCRIPT_URL || SCRIPT_URL === 'YOUR_GOOGLE_WEB_APP_URL_HERE') {
-                console.warn("Database not connected. Please add SCRIPT_URL.");
-                return;
-            }
-            try {
-                const formData = new URLSearchParams();
-                formData.append('action', 'SYNC');
-                formData.append('data', JSON.stringify(studentDb));
-
-                await fetch(SCRIPT_URL, {
-                    method: 'POST',
-                    body: formData,
-                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
-                });
-            } catch (e) {
-                console.error("Failed to sync data", e);
-            }
+            // Push to Google Sheet
+            google.script.run
+                .withSuccessHandler(function(res) {
+                    console.log("Database Sync Completed", res);
+                })
+                .withFailureHandler(function(err) {
+                    console.error("Failed to sync data", err);
+                })
+                .syncDataBackend(JSON.stringify(studentDb));
         }
 
         // --- LANGUAGE & SCREEN NAVIGATION ---
@@ -694,13 +677,11 @@ Managed by Good Shepherd Church | Powered by Portal Admin and developed by Sengk
             currentLang = langCode;
             const dict = translations[langCode];
 
-            // Apply translations to UI elements
             Object.keys(dict).forEach(key => {
                 const element = document.getElementById(key);
                 if(element) element.innerText = dict[key];
             });
 
-            // Transition Screens
             document.getElementById('view-lang-select').classList.add('hidden');
             document.getElementById('view-instructions').classList.remove('hidden');
         }
@@ -708,8 +689,8 @@ Managed by Good Shepherd Church | Powered by Portal Admin and developed by Sengk
         function enterPortal() {
             document.getElementById('view-instructions').classList.add('hidden');
             document.getElementById('public-layout').classList.remove('hidden');
-            document.getElementById('regDate').valueAsDate = new Date(); // Reset date
-            renderTables(); // Initialize public table view
+            document.getElementById('regDate').valueAsDate = new Date(); 
+            renderTables(); 
         }
 
         // --- DYNAMIC MINORITY / RELIGION LOGIC ---
@@ -728,7 +709,7 @@ Managed by Good Shepherd Church | Powered by Portal Admin and developed by Sengk
                     religionSelect.innerHTML += `<option value="${r}">${r}</option>`;
                 });
             }
-            handleReligionChange(); // Reset downstream fields
+            handleReligionChange(); 
         }
 
         function handleReligionChange() {
@@ -741,7 +722,7 @@ Managed by Good Shepherd Church | Powered by Portal Admin and developed by Sengk
                 denomGroup.style.display = 'none';
                 document.getElementById('denomination').value = '';
             }
-            handleDenominationChange(); // Reset parish field
+            handleDenominationChange(); 
         }
 
         function handleDenominationChange() {
@@ -835,7 +816,6 @@ Managed by Good Shepherd Church | Powered by Portal Admin and developed by Sengk
             togglePublicView('login');
         }
 
-        // --- DATA & AUTO CHRONOLOGICAL REGISTRATION ---
         function sortAndAssignRegNumbers() {
             studentDb.sort((a, b) => new Date(a.regDate) - new Date(b.regDate));
             studentDb.forEach((student, index) => {
@@ -845,12 +825,12 @@ Managed by Good Shepherd Church | Powered by Portal Admin and developed by Sengk
             });
         }
 
-        async function submitRegistration(e) {
+        function submitRegistration(e) {
             e.preventDefault();
             
             const btn = document.getElementById('btn_submit');
             const originalText = translations[currentLang].btn_submit || "Submit Student Record";
-            btn.innerText = "Saving to Portal & Syncing...";
+            btn.innerText = "Saving & Syncing...";
             btn.disabled = true;
 
             const recordDate = document.getElementById('regDate').value;
@@ -858,7 +838,6 @@ Managed by Good Shepherd Church | Powered by Portal Admin and developed by Sengk
             const denom = document.getElementById('denomination').value;
             const parish = document.getElementById('parish').value;
 
-            // Combine denom/parish for easy table viewing
             let denomParishStr = "N/A";
             if(rel === 'Christian') {
                 if(denom === 'Catholic') denomParishStr = `Catholic (${parish})`;
@@ -866,7 +845,7 @@ Managed by Good Shepherd Church | Powered by Portal Admin and developed by Sengk
             }
 
             const record = {
-                id: Date.now().toString() + Math.floor(Math.random() * 1000), // Secure Unique ID
+                id: Date.now().toString() + Math.floor(Math.random() * 1000), 
                 regDate: recordDate,
                 name: document.getElementById('studentName').value,
                 dob: document.getElementById('dob').value,
@@ -886,18 +865,15 @@ Managed by Good Shepherd Church | Powered by Portal Admin and developed by Sengk
             sortAndAssignRegNumbers(); 
             renderTables(); 
 
-            // Save to Local Storage & Google Sheets
-            await syncData();
+            syncData();
 
             btn.innerText = originalText;
             btn.disabled = false;
 
-            // Translated success message
             openCustomAlert(translations[currentLang].msg_success, "Submission Complete");
             
-            // Reset form
             document.getElementById('admissionForm').reset();
-            handleMinorityChange(); // reset dynamically hidden fields
+            handleMinorityChange(); 
             document.getElementById('regDate').valueAsDate = new Date(); 
         }
 
@@ -972,7 +948,6 @@ Managed by Good Shepherd Church | Powered by Portal Admin and developed by Sengk
             });
         }
 
-        // --- FULL EDIT FUNCTIONALITY FOR ADMIN & LDA ---
         function openEditModal(index) {
             editingIndex = index;
             const student = studentDb[index];
@@ -998,7 +973,7 @@ Managed by Good Shepherd Church | Powered by Portal Admin and developed by Sengk
             editingIndex = -1;
         }
 
-        async function saveEditDetails() {
+        function saveEditDetails() {
             if (editingIndex === -1) return;
             
             const btn = document.getElementById('btn_save_edit');
@@ -1020,27 +995,25 @@ Managed by Good Shepherd Church | Powered by Portal Admin and developed by Sengk
 
             sortAndAssignRegNumbers();
             renderTables();
-            
-            await syncData(); // Push to local storage and Google Sheets
+            syncData(); 
             
             btn.innerText = "Save Changes";
             btn.disabled = false;
             closeEditModal();
         }
 
-        // --- ADMIN / LDA ACTIONS ---
-        async function markChecked(index) {
+        function markChecked(index) {
             studentDb[index].status = 'checked';
             renderTables();
-            await syncData();
+            syncData();
         }
 
-        async function deleteRecord(index) {
+        function deleteRecord(index) {
             if(confirm("Delete this admission record? This will also remove it permanently from the Portal and Google Sheet.")) {
                 studentDb.splice(index, 1);
                 sortAndAssignRegNumbers(); 
                 renderTables();
-                await syncData();
+                syncData();
             }
         }
 
