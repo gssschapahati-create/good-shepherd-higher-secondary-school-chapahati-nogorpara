@@ -78,39 +78,244 @@
         .site-footer .container { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
         .site-footer p { margin: 5px 0; }
 
-        /* Style tweaks for links inside rows */
-        .event-link {
-            color: #0066cc;
-            text-decoration: none;
-            font-weight: bold;
-        }
-        .event-link:hover {
-            text-decoration: underline;
-        }
-        .download-btn-small {
-            display: inline-block;
-            margin-left: 10px;
-            padding: 2px 8px;
-            background-color: #2e7d32;
-            color: white;
-            text-decoration: none;
-            font-size: 12px;
-            border-radius: 4px;
-            font-weight: normal;
-        }
-        .download-btn-small:hover {
-            background-color: #1b5e20;
-            text-decoration: none;
-        }
-        .meta-text {
-            font-size: 13px;
-            color: #555;
-            margin-top: 4px;
-        }
-
         @media (max-width: 768px) {
             .slider-container { height: 250px; }
             .animate-school-name { font-size: 1.5rem; }
+        }
+
+        /* ==========================================================================
+           NEW MINIMALIST LAYOUT & SIDEBAR STYLES (Matching image_7d35c5.png)
+           ========================================================================== */
+        .main-section {
+            padding: 40px 0;
+            background-color: #f4f7f6;
+        }
+        
+        .dashboard-container {
+            display: flex;
+            gap: 30px;
+            align-items: flex-start;
+        }
+
+        /* Sidebar Navigation Lookalike */
+        .event-sidebar {
+            width: 240px;
+            background: #ffffff;
+            border-radius: 4px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .sidebar-title-block {
+            background-color: #00cc7a; /* Vibrant green accent header from reference image */
+            color: #ffffff;
+            padding: 16px 20px;
+            font-weight: bold;
+            font-size: 16px;
+            letter-spacing: 0.5px;
+        }
+
+        .sidebar-menu {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar-btn {
+            padding: 14px 20px;
+            color: #444444;
+            text-decoration: none;
+            font-size: 14.5px;
+            font-weight: 500;
+            border-bottom: 1px solid #f1f1f1;
+            background: none;
+            border-top: none;
+            border-left: none;
+            border-right: none;
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .sidebar-btn:last-child {
+            border-bottom: none;
+        }
+
+        .sidebar-btn:hover {
+            background-color: #f9f9f9;
+            color: #00cc7a;
+        }
+
+        .sidebar-btn.active {
+            background-color: #f2fbf7;
+            color: #00cc7a;
+            border-left: 4px solid #00cc7a;
+            font-weight: bold;
+            padding-left: 16px;
+        }
+
+        /* Minimalist Grid Content Area */
+        .event-display-box {
+            flex-grow: 1;
+            background: #ffffff;
+            border-radius: 4px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+            padding: 25px;
+        }
+
+        .custom-event-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-family: sans-serif;
+        }
+
+        /* Deep Navy Blue Row Header From Image */
+        .custom-event-table th {
+            background-color: #1d4e73;
+            color: #ffffff;
+            padding: 14px 16px;
+            font-size: 14px;
+            font-weight: 600;
+            text-align: left;
+        }
+
+        .custom-event-table td {
+            padding: 16px;
+            border-bottom: 1px solid #eef2f5;
+            color: #495057;
+            font-size: 14px;
+            vertical-align: middle;
+        }
+
+        .custom-event-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .custom-event-table tbody tr:hover {
+            background-color: #fcfdfe;
+        }
+
+        /* Inline Clean Meta Details */
+        .event-title-text {
+            color: #333333;
+            font-size: 14.5px;
+            font-weight: 500;
+            text-decoration: none;
+        }
+        
+        .event-title-text:hover {
+            color: #1d4e73;
+        }
+
+        .meta-text-inline {
+            font-size: 12.5px;
+            color: #777777;
+            margin-top: 5px;
+        }
+
+        /* Professional Action Buttons (Right-aligned layout) */
+        .action-cell {
+            text-align: right;
+            white-space: nowrap;
+        }
+
+        .btn-attachment {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            padding: 8px 16px;
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+            border-radius: 4px;
+            transition: background-color 0.2s ease;
+        }
+
+        .btn-link-style {
+            background-color: #778ca3; /* Slate grey button layout option */
+        }
+
+        .btn-link-style:hover {
+            background-color: #4b6584;
+        }
+
+        .btn-download-style {
+            background-color: #0288d1; /* Clean system blueprint blue action element */
+        }
+
+        .btn-download-style:hover {
+            background-color: #01579b;
+        }
+
+        /* Status Badge Indicators */
+        .status-pill {
+            display: inline-block;
+            font-size: 11px;
+            font-weight: bold;
+            padding: 3px 8px;
+            border-radius: 12px;
+            text-transform: uppercase;
+        }
+        .pill-process { background-color: #e8f5e9; color: #2e7d32; }
+        .pill-ongoing { background-color: #fff3e0; color: #f57c00; }
+        .pill-prospectus { background-color: #ffebee; color: #c62828; }
+        .pill-completed { background-color: #eceff1; color: #455a64; }
+
+        /* Donation Box Floating Panel Styles */
+        #donation-qr-box {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 220px;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.15);
+            padding: 20px;
+            text-align: center;
+            z-index: 9999;
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        #donation-qr-box.show {
+            opacity: 1;
+            pointer-events: auto;
+            animation: floatHover 4s ease-in-out infinite; 
+        }
+
+        @keyframes floatHover {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+            100% { transform: translateY(0px); }
+        }
+
+        #close-donation-box {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            background: transparent;
+            border: none;
+            font-size: 24px;
+            color: #888;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        #close-donation-box:hover { color: #ff0000; }
+        #donation-qr-title { font-weight: bold; font-size: 1.1rem; color: #333; margin-bottom: 12px; margin-top: 5px; }
+        #qr-code-placeholder img { width: 100%; max-width: 160px; height: auto; border-radius: 8px; border: 2px solid #f0f0f0; }
+        #qr-scan-label { margin-top: 10px; font-size: 0.9rem; color: #666; font-weight: 500; }
+
+        @media (max-width: 900px) {
+            .dashboard-container { flex-direction: column; }
+            .event-sidebar { width: 100%; }
+            .sidebar-menu { flex-direction: row; flex-wrap: wrap; }
+            .sidebar-btn { flex-grow: 1; text-align: center; }
+            .sidebar-btn.active { border-left: none; border-bottom: 4px solid #00cc7a; padding-left: 20px; }
         }
     </style>
 </head>
@@ -128,7 +333,7 @@
                 <a href="index.html">Home</a>
                 <a href="about.html">About</a>
                 <a href="admission.html">Admission</a>
-                <a href="events.html"  class="active">Events</a>
+                <a href="events.html" class="active">Events</a>
                 <a href="faculty.html">Faculty</a>
                 <a href="gallery.html">Gallery</a>
                 <a href="result.html">Result</a>
@@ -159,56 +364,92 @@
         </div>
     </div>
 
+    <!-- Refactored Minimalist Main Section Box Layout -->
     <div class="main-section">
-        <div class="container">
-            <h2 class="heading">School Event Calendar</h2>
-            <div class="notice-board-table">
-                <div class="table-row table-header">
-                    <div>Date</div>
-                    <div>Event Detail Headline</div>
-                    <div>Status</div>
-                </div>
-                <!-- 1. UDISE + STUDENTS CHECK LIST 2026-2027(TOP)) -->
-                <div class="table-row" style="background-color: #f9f9f9;">
-                    <div class="date-col">22-06-2026</div>
-                    <div class="title-col">
-                        <a href="">Update Your UDISE + Details</a>
-                    <a href="https://script.google.com/macros/s/AKfycbxT0ttcvV8F39MSjY3liwe-f1ddfrYE4WLKMykx8iVTXIqNgQ0XkOjG5MdnGMG3KQqf/exec" target="_blank" download class="download-btn-small">📥 Click the Link</a>
-                </div>
-                    <div style="color:green; font-weight:bold;">Under Process</div>
-                    </div>
-
-                <!-- 2. ONGOING EVENT (MIDDLE) -->
-                <div class="table-row" style="background-color: #fffaf4;">
-                    <div class="date-col">16-May-2026</div>
-                    <div class="title-col">
-                        <strong>Half Yearly Examination of 2026</strong>
-                        <div class="meta-text">🕒 <b>Date:</b> 17-06-2026 till 29-06-2026</div>
-                    </div>
-                    <div style="color:orange; font-weight:bold;">Ongoing</div>
-                </div>
-
-                <!-- 3. Prospectus/Articles (MIDDLE) -->
-                <div class="table-row" style="background-color: #f9f9f9;">
-                    <div class="date-col">11-May-2026</div>
-                    <div class="title-col">
-                        <a href="https://gshsschapahati.jo3.org/events.html" class="https://gshsschapahati.jo3.org/events.html">Prospectus for Class XI Pioneer Batch Higher Secondary Section (2026-27)</a>
-                        <a href="https://dawn-sea-485.linkyhost.com/" target="_blank" download class="download-btn-small">📥 Download Prospectus</a>
-                    </div> 
-                        <div style="color:red; font-weight:bold;">Prospectus</div>
-                    </div>
-
-                <!-- 4. COMPLETED EVENT (BOTTOM) -->
-                <div class="table-row" style="background-color: #f9f9f9;">
-                    <div class="date-col">11-May-2026</div>
-                    <div class="title-col">
-                        <a href="https://gshsschapahati.jo3.org/events.html" class="https://gshsschapahati.jo3.org/events.html">Inauguration of Higher Secondary Section for the Session of New Academic Term (2026-27)</a>
-                        <a href="https://goodshepherdsecondaryschool.blogspot.com/2026/05/inauguration-of-class-xi-higher.html" target="_blank" download class="download-btn-small">📥 Download Report</a>
-                    </div>
-                    <div style="color:green; font-weight:bold;">Completed</div>
-                </div>
+        <div class="container dashboard-container">
+            
+            <!-- Left Filtering Dynamic Navigation Panel Sidebar -->
+            <div class="event-sidebar">
+                <div class="sidebar-title-block">Events</div>
+                <div class="sidebar-menu">
+                    <button class="sidebar-btn active" onclick="applyEventFilter('all', this)">All Events</button>
+                    <button class="sidebar-btn" onclick="applyEventFilter('process', this)">Under Process</button>
+                    <button class="sidebar-btn" onclick="applyEventFilter('ongoing', this)">Ongoing</button>
+                    <button class="sidebar-btn" onclick="applyEventFilter('prospectus', this)">Prospectus</button>
+                    <button class="sidebar-btn" onclick="applyEventFilter('completed', this)">Completed</button>
                 </div>
             </div>
+
+            <!-- Right Structured Clean Sheet Data Grid Table View Box -->
+            <div class="event-display-box">
+                <table class="custom-event-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 8%;">Sl. No.</th>
+                            <th style="width: 15%;">Date</th>
+                            <th style="width: 57%;">Event Details</th>
+                            <th style="width: 20%; text-align: right;">Attachment</th>
+                        </tr>
+                    </thead>
+                    <tbody id="event-table-body">
+                        
+                        <!-- Event Row 1: Under Process -->
+                        <tr class="event-row-record" data-status="process">
+                            <td>1</td>
+                            <td>22-06-2026</td>
+                            <td>
+                                <span class="event-title-text">Update Your UDISE + Details</span>
+                                <span class="status-pill pill-process" style="margin-left: 8px;">Under Process</span>
+                            </td>
+                            <td class="action-cell">
+                                <a href="https://script.google.com/macros/s/AKfycbxT0ttcvV8F39MSjY3liwe-f1ddfrYE4WLKMykx8iVTXIqNgQ0XkOjG5MdnGMG3KQqf/exec" target="_blank" class="btn-attachment btn-link-style">🔗 Open Link</a>
+                            </td>
+                        </tr>
+
+                        <!-- Event Row 2: Ongoing -->
+                        <tr class="event-row-record" data-status="ongoing">
+                            <td>2</td>
+                            <td>16-May-2026</td>
+                            <td>
+                                <strong class="event-title-text" style="font-weight: 600;">Half Yearly Examination of 2026</strong>
+                                <span class="status-pill pill-ongoing" style="margin-left: 8px;">Ongoing</span>
+                                <div class="meta-text-inline">📅 <b>Date:</b> 17-06-2026 till 29-06-2026</div>
+                            </td>
+                            <td class="action-cell">
+                                <a href="#" class="btn-attachment btn-link-style">🔗 Open Link</a>
+                            </td>
+                        </tr>
+
+                        <!-- Event Row 3: Prospectus -->
+                        <tr class="event-row-record" data-status="prospectus">
+                            <td>3</td>
+                            <td>11-May-2026</td>
+                            <td>
+                                <a href="https://gshsschapahati.jo3.org/events.html" class="event-title-text">Prospectus for Class XI Pioneer Batch Higher Secondary Section (2026-27)</a>
+                                <span class="status-pill pill-prospectus" style="margin-left: 8px;">Prospectus</span>
+                            </td>
+                            <td class="action-cell">
+                                <a href="https://dawn-sea-485.linkyhost.com/" target="_blank" download class="btn-attachment btn-download-style">📥 Download</a>
+                            </td>
+                        </tr>
+
+                        <!-- Event Row 4: Completed -->
+                        <tr class="event-row-record" data-status="completed">
+                            <td>4</td>
+                            <td>11-May-2026</td>
+                            <td>
+                                <a href="https://gshsschapahati.jo3.org/events.html" class="event-title-text">Inauguration of Higher Secondary Section for the Session of New Academic Term (2026-27)</a>
+                                <span class="status-pill pill-completed" style="margin-left: 8px;">Completed</span>
+                            </td>
+                            <td class="action-cell">
+                                <a href="https://goodshepherdsecondaryschool.blogspot.com/2026/05/inauguration-of-class-xi-higher.html" target="_blank" download class="btn-attachment btn-download-style">📥 Download</a>
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+
         </div>
     </div>
 
@@ -219,125 +460,46 @@
         </div>
     </footer>
 
-   <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
-    <style>
-        /* CSS to make the box float at the bottom right corner */
-        #donation-qr-box {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 220px;
-            background-color: #ffffff;
-            border-radius: 12px;
-            box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.15); /* Gives it a floating shadow */
-            padding: 20px;
-            text-align: center;
-            z-index: 9999; /* Keeps it on top of other dashboard elements */
-            
-            /* Hidden by default before the JS triggers */
-            opacity: 0;
-            pointer-events: none;
-            transform: translateY(20px);
-            transition: opacity 0.5s ease, transform 0.5s ease;
-        }
-
-        /* The class added by JavaScript to show the box */
-        #donation-qr-box.show {
-            opacity: 1;
-            pointer-events: auto;
-            /* Adds a subtle continuous floating animation */
-            animation: floatHover 4s ease-in-out infinite; 
-        }
-
-        /* Animation for the gentle floating effect */
-        @keyframes floatHover {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-8px); }
-            100% { transform: translateY(0px); }
-        }
-
-        /* Styling the close button */
-        #close-donation-box {
-            position: absolute;
-            top: 10px;
-            right: 15px;
-            background: transparent;
-            border: none;
-            font-size: 24px;
-            color: #888;
-            cursor: pointer;
-            transition: color 0.2s;
-        }
-
-        #close-donation-box:hover {
-            color: #ff0000;
-        }
-
-        /* Title styling */
-        #donation-qr-title {
-            font-weight: bold;
-            font-size: 1.1rem;
-            color: #333;
-            margin-bottom: 12px;
-            margin-top: 5px;
-        }
-
-        /* Ensuring the image stays strictly inside the box */
-        #qr-code-placeholder img {
-            width: 100%; /* Fills the container safely */
-            max-width: 160px;
-            height: auto;
-            border-radius: 8px;
-            border: 2px solid #f0f0f0;
-        }
-
-        /* Label at the bottom */
-        #qr-scan-label {
-            margin-top: 10px;
-            font-size: 0.9rem;
-            color: #666;
-            font-weight: 500;
-        }
-    </style>
-</head>
-<body>
-
-    <!-- Donation QR Code Box -->
+    <!-- Donation QR Code Floating Box Panel Container -->
     <div id="donation-qr-box">
         <button id="close-donation-box" onclick="closeDonationBox()">&times;</button>
         <div id="donation-qr-title">Support Good Shepherd</div>
-        
         <div id="qr-code-placeholder">
             <img src="https://i.postimg.cc/t42Rp5Mq/ba025f5a-46f7-4f4c-b0fd-fe8be4d93747.jpg" alt="Donation QR Code">
         </div>
-        
         <div id="qr-scan-label">Scan to Donate</div>
     </div>
 
     <script src="JavaScript/script.js"></script>
-    
     <script>
-        function toggleDropdown(contentId, btnElement) {
-            btnElement.classList.toggle('active');
-            var content = document.getElementById(contentId);
-            if (content.style.maxHeight && content.style.maxHeight !== "0px") {
-                content.style.maxHeight = "0px";
-            } else {
-                content.style.maxHeight = content.scrollHeight + "px";
-            }
+        // Interactive Status Row Filter Mechanism
+        function applyEventFilter(statusCategory, buttonElement) {
+            // Remove active selector markers from all sidebar elements
+            var trackingButtons = document.querySelectorAll('.sidebar-btn');
+            trackingButtons.forEach(function(btn) {
+                btn.classList.remove('active');
+            });
+            
+            // Add active focus class tracking indicator to currently clicked option 
+            buttonElement.classList.add('active');
+
+            // Handle Row Grid Visibility Rendering
+            var targetedRows = document.querySelectorAll('.event-row-record');
+            targetedRows.forEach(function(row) {
+                var itemStatus = row.getAttribute('data-status');
+                if (statusCategory === 'all' || itemStatus === statusCategory) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
         }
 
+        // Floating Support Widget Actions
         function closeDonationBox() {
-            // Removes the 'show' class to hide it smoothly
             document.getElementById('donation-qr-box').classList.remove('show');
         }
 
-        // Show the box after a 1.5-second delay so it pops up naturally
         setTimeout(function() {
             document.getElementById('donation-qr-box').classList.add('show');
         }, 1500);
