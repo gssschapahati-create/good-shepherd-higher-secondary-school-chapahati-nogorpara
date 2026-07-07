@@ -452,28 +452,6 @@
                     <button onclick="triggerTestingReset()" class="text-xs text-slate-400 hover:text-rose-500 transition-colors font-semibold"></button>       
                 </div>
             </div>                           
-            
-            <div id="admin-force-reset-wall" class="hidden max-w-md mx-auto my-12 bg-white rounded-2xl border-2 border-amber-300 p-8 shadow-xl shadow-amber-100/50">
-                <div class="text-center mb-6">
-                    <div class="inline-flex items-center justify-center bg-amber-50 text-amber-600 rounded-2xl w-16 h-16 text-2xl mb-4 border border-amber-100">
-                        <i class="fa-solid fa-shield-halved"></i>
-                    </div>
-                    <h3 class="text-xl font-extrabold text-slate-900 tracking-tight">Update Security Key</h3>
-                    <p class="text-sm text-slate-600 mt-2 font-medium">You are using the default password. Update required.</p>
-                </div>
-                <form onsubmit="handleForcePasswordUpdate(event)" class="space-y-5">
-                    <div>
-                        <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">New Password</label>
-                        <input type="password" id="new_secure_pass" required class="w-full border border-slate-300 rounded-lg p-3 text-sm focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all" placeholder="e.g. Pass123">
-                        <p class="text-[11px] text-amber-700 font-medium mt-2 bg-amber-50 p-2.5 rounded-lg border border-amber-100 flex items-start gap-2">
-                            <i class="fa-solid fa-circle-info mt-0.5"></i> Must be exactly 6 characters mixing letters and numbers.
-                        </p>
-                    </div>
-                    <button type="submit" class="w-full bg-slate-800 hover:bg-slate-900 text-white text-sm font-bold py-3.5 rounded-lg shadow-md transition-all">
-                        Update & Continue
-                    </button>
-                </form>
-            </div>
 
             <div id="admin-secure-content" class="hidden space-y-6">
                 <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
@@ -727,16 +705,11 @@
         function closeDonationBox() { document.getElementById('donation-qr-box').classList.remove('show'); }
         setTimeout(() => document.getElementById('donation-qr-box').classList.add('show'), 2000);
 
-        const ADMIN_UID = "Admin";
-        const DEFAULT_PASSWORD = "asd-123";
+        const ADMIN_UID = "Sengkan123";
+        const PERMANENT_PASSWORD = "asd123";
         let appDatabase = JSON.parse(localStorage.getItem('gshss_db')) || [];
         let sessionAuthenticated = JSON.parse(sessionStorage.getItem('gshss_auth')) || false;
         
-        if (!localStorage.getItem('gshss_admin_password')) {
-            localStorage.setItem('gshss_admin_password', DEFAULT_PASSWORD);
-            localStorage.setItem('gshss_is_first_login', 'true');
-        }
-
         document.addEventListener("DOMContentLoaded", function() {
             const todayStr = new Date().toISOString().split('T')[0];
             if(document.getElementById('new_pay_date')) document.getElementById('new_pay_date').value = todayStr;
@@ -982,52 +955,18 @@
             document.getElementById('acknowledgementModal').classList.remove('hidden');
         }
 
-        function validateMixedPasswordPolicy(passwordStr) {
-            const standardLengthCheck = passwordStr.length === 6;
-            const containsLetters = /[A-Za-z]/.test(passwordStr);
-            const containsNumbers = /\d/.test(passwordStr);
-            return standardLengthCheck && containsLetters && containsNumbers;
-        }
-
         function handleAdminLogin(event) {
             event.preventDefault();
             const inputUID = document.getElementById('auth_userid').value.trim();
             const inputPass = document.getElementById('auth_password').value;
-            const realPassword = localStorage.getItem('gshss_admin_password');
-            const isFirstLogin = localStorage.getItem('gshss_is_first_login') === 'true';
 
-            if (inputUID === ADMIN_UID && inputPass === realPassword) {
-                if (isFirstLogin && inputPass === DEFAULT_PASSWORD) {
-                    document.getElementById('admin-auth-wall').classList.add('hidden');
-                    document.getElementById('admin-force-reset-wall').classList.remove('hidden');
-                } else {
-                    sessionAuthenticated = true;
-                    sessionStorage.setItem('gshss_auth', JSON.stringify(true));
-                    evaluateAuthViewStates();
-                }
+            if (inputUID === ADMIN_UID && inputPass === PERMANENT_PASSWORD) {
+                sessionAuthenticated = true;
+                sessionStorage.setItem('gshss_auth', JSON.stringify(true));
+                evaluateAuthViewStates();
             } else {
                 alert("Security Authorization Rejected: Invalid Authentication Match.");
             }
-        }
-
-        function handleForcePasswordUpdate(event) {
-            event.preventDefault();
-            const newPasswordValue = document.getElementById('new_secure_pass').value.trim();
-
-            if (!validateMixedPasswordPolicy(newPasswordValue)) {
-                alert("Constraint Violation: Password must be exactly 6 characters long and combine a mix of characters and numeric numbers.");
-                return;
-            }
-
-            localStorage.setItem('gshss_admin_password', newPasswordValue);
-            localStorage.setItem('gshss_is_first_login', 'false');
-            sessionAuthenticated = true;
-            sessionStorage.setItem('gshss_auth', JSON.stringify(true));
-            
-            document.getElementById('admin-force-reset-wall').classList.add('hidden');
-            document.getElementById('new_secure_pass').value = '';
-            alert("Security Log Matrix Updated: Password successfully changed.");
-            evaluateAuthViewStates();
         }
 
         function handleAdminLogout() {
@@ -1045,12 +984,12 @@
 
             if (sessionAuthenticated) {
                 authWall.classList.add('hidden');
-                forceWall.classList.add('hidden');
+                if (forceWall) forceWall.classList.add('hidden');
                 coreContent.classList.remove('hidden');
                 renderDashboardTable();
             } else {
                 authWall.classList.remove('hidden');
-                forceWall.classList.add('hidden');
+                if (forceWall) forceWall.classList.add('hidden');
                 coreContent.classList.add('hidden');
             }
         }
