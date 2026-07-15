@@ -179,6 +179,55 @@
         .btn-dl:hover { background: #31aab7; color: #ffffff; }
         .btn-ln { background: #e6f0ff; color: #0061ff; }
         .btn-ln:hover { background: #0061ff; color: #ffffff; }
+
+        /* Searchable Rank Holders Section Custom Styles */
+        .search-container {
+            padding: 20px 24px;
+            background: #ffffff;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .search-input {
+            width: 100%;
+            padding: 12px 16px;
+            font-size: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-sizing: border-box;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .search-input:focus {
+            border-color: #2e7d32;
+        }
+        .rank-table-wrapper {
+            overflow-x: auto;
+        }
+        .rank-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 0.95rem;
+        }
+        .rank-table th, .rank-table td {
+            padding: 12px 16px;
+            border-bottom: 1px solid #edf2f7;
+        }
+        .rank-table th {
+            background-color: #f7fafc;
+            color: #4a5568;
+            font-weight: 600;
+        }
+        .rank-table tr:hover {
+            background-color: #f8fafc;
+        }
+        .no-results {
+            text-align: center;
+            padding: 20px;
+            color: #718096;
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -223,7 +272,181 @@
             <img src="images/10.jpg" alt="School Campus View" class="slide-img">
         </div>
         <div class="slider-overlay">
-            <h1 class="animate-school-name">Good Shepherd School</h1>
+            <h1 class="animate-school-name">Good Shepherd Higher Secondary School</h1>
+        </div>
+    </div>
+
+    <!-- ==========================================
+         PORTAL 0: SEARCHABLE RANK HOLDERS PANEL 
+         (Shown only upon interaction per user logic)
+         ========================================== -->
+    <div class="modern-notice-card">
+        <div class="notice-card-header" style="background: linear-gradient(135deg, #2e7d32, #1b5e20);">
+            <div class="header-title"><span class="header-icon">🏆</span> Half Yearly Examination – 2026 Rank Holders</div>
+        </div>
+        <div class="search-container">
+            <input type="text" id="rankSearchInput" class="search-input" list="rankOptions" placeholder="Search by Class (e.g. Class X) or Rank (1st, 2nd, 3rd) from dropdown..." autocomplete="off">
+            <datalist id="rankOptions">
+                <option value="1st Rank">
+                <option value="2nd Rank">
+                <option value="3rd Rank">
+                <option value="Class X">
+                <option value="Class IX">
+                <option value="Class VIII">
+                <option value="Class VII">
+                <option value="Class V A">
+                <option value="Class V B">
+                <option value="Class IV A">
+                <option value="Class IV B">
+                <option value="Class III A">
+                <option value="Class III B">
+                <option value="Class II A">
+                <option value="Class II B">
+                <option value="Class I A">
+                <option value="Class I B">
+                <option value="Class UKG A">
+                <option value="Class UKG B">
+                <option value="Class LKG A">
+                <option value="Class LKG B">
+                <option value="Class Nursery A">
+                <option value="Class Nursery B">
+            </datalist>
+
+            <div id="rankTableWrapper" class="rank-table-wrapper" style="display: none;">
+                <table class="rank-table">
+                    <thead>
+                        <tr id="rankTableHeaderRow">
+                            <th>Class</th>
+                            <th>1st Rank (Percentage)</th>
+                            <th>2nd Rank (Percentage)</th>
+                            <th>3rd Rank (Percentage)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="rankTableBody">
+                        <tr>
+                            <td><b>Class X</b></td>
+                            <td>Lithiasa M Sangma (85.3%)</td>
+                            <td>Krimstone R Sangma (77.2%)</td>
+                            <td>Salnera D Marak (75.6%)</td>
+                        </tr>
+                        <tr>
+                            <td><b>Class IX</b></td>
+                            <td>Darsani Ch Marak (69.1%)</td>
+                            <td>Esaia M Marak (67.3%)</td>
+                            <td>Silan D Sangma (65.3%)</td>
+                        </tr>
+                        <tr>
+                            <td><b>Class VIII</b></td>
+                            <td>Isme Sanchi M Sangma (71.4%)</td>
+                            <td>Dimedora Ch Marak (69.7%)</td>
+                            <td>Githalina A Marak (68.8%)</td>
+                        </tr>
+                        <tr>
+                            <td><b>Class VII</b></td>
+                            <td>Elsamary A Sangma (78.9%)</td>
+                            <td>Manab Modak (77.6%)</td>
+                            <td>Dreari Hajong (74.3%)</td>
+                        </tr>
+                        <tr>
+                            <td><b>Class V A</b></td>
+                            <td>Cheripesa D Sangma (68%)</td>
+                            <td>Dean Azariah R Marak (67%)</td>
+                            <td>—</td>
+                        </tr>
+                        <tr>
+                            <td><b>Class V B</b></td>
+                            <td>Amme Atchesa M Marak (80.9%)</td>
+                            <td>—</td>
+                            <td>—</td>
+                        </tr>
+                        <tr>
+                            <td><b>Class IV A</b></td>
+                            <td>Driari Kadimesa A Sangma (82.2%)</td>
+                            <td>Onkamesa R Marak (67.9%)</td>
+                            <td>Chugame B Marak (61%)</td>
+                        </tr>
+                        <tr>
+                            <td><b>Class IV B</b></td>
+                            <td>Weano Demiksa Ch Marak (82.6%)</td>
+                            <td>Nanshi Hajong (80.5%)</td>
+                            <td>Sanreansa M Marak (78.9%)</td>
+                        </tr>
+                        <tr>
+                            <td><b>Class III A</b></td>
+                            <td>Safiya Islam (80.5%)</td>
+                            <td>Hasina Hajong (69.1%)</td>
+                            <td>Siraj D Sangma (66.5%)</td>
+                        </tr>
+                        <tr>
+                            <td><b>Class III B</b></td>
+                            <td>Kameya Hajong (81.9%)</td>
+                            <td>Diya Hajong (63%)</td>
+                            <td>—</td>
+                        </tr>
+                        <tr>
+                            <td><b>Class II A</b></td>
+                            <td>Kazi Ehaan (87.8%)</td>
+                            <td>Holystar M Marak (85.5%)</td>
+                            <td>Elsina D Marak (80.7%)</td>
+                        </tr>
+                        <tr>
+                            <td><b>Class II B</b></td>
+                            <td>Chuesa A Sangma (93.4%)</td>
+                            <td>Aniasa A Sangma (82.2%)</td>
+                            <td>Rya Gamchi M Marak (78.6%)</td>
+                        </tr>
+                        <tr>
+                            <td><b>Class I A</b></td>
+                            <td>Dejakra S Sangma (85.5%)</td>
+                            <td>Gamesal D Sangma (82.7%)</td>
+                            <td>Sufiyan Islam (81.6%)</td>
+                        </tr>
+                        <tr>
+                            <td><b>Class I B</b></td>
+                            <td>Hedean N Sangma (91.6%)</td>
+                            <td>Arpasha Bename A Sangma (84%)</td>
+                            <td>Minggame Jeansa Marak (83.4)</td>
+                        </tr>
+                        <tr>
+                            <td><b>Class UKG A</b></td>
+                            <td>Chukime B Marak (82.1%)</td>
+                            <td>Jerriamsa M Marak (82%)</td>
+                            <td>Ardi Jarlez B Sangma (80.5%)</td>
+                        </tr>
+                        <tr>
+                            <td><b>Class UKG B</b></td>
+                            <td>Dakchakrik M Sangma (81.4%)</td>
+                            <td>Mandeep Hajong (80.7%)</td>
+                            <td>Dipsika Hajong (79.7%)</td>
+                        </tr>
+                        <tr>
+                            <td><b>Class LKG A</b></td>
+                            <td>Nandini Biswas (90.1%)</td>
+                            <td>Ayra Marian Hussain (83.5%)</td>
+                            <td>Wesha K Sangma (77.1%)</td>
+                        </tr>
+                        <tr>
+                            <td><b>Class LKG B</b></td>
+                            <td>Amora A Sangma (85.6%)</td>
+                            <td>Kushbo Koch (84.3%)</td>
+                            <td>Riyan Hajong (84.1%)</td>
+                        </tr>
+                        <tr>
+                            <td><b>Class Nursery A</b></td>
+                            <td>Griksal K Sangma (76.1%)</td>
+                            <td>Himanshu Hajong (74.3%)</td>
+                            <td>Aeldora Emmaya N Marak (73.5%)</td>
+                        </tr>
+                        <tr>
+                            <td><b>Class Nursery B</b></td>
+                            <td>Imber M Marak (86%)</td>
+                            <td>Twinkle Hajong (84.6%)</td>
+                            <td>Nitoesa B Marak (80.1%)</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div id="noResultsMessage" class="no-results">No rank holders found matching your search term.</div>
+            </div>
         </div>
     </div>
 
@@ -232,7 +455,7 @@
          ========================================== -->
     <div class="modern-notice-card">
         <div class="notice-card-header">
-            <div class="header-title"><span class="header-icon">✏️</span> Lower Primary Section Portal (Class I - Class IV)</div>
+            <div class="header-title"><span class="header-icon">✏️</span> Lower Primary Section Portal (Class Nursery - Class V)</div>
         </div>
         <div class="notice-list-wrapper">
             <div class="modern-notice-item">
@@ -252,13 +475,13 @@
          ========================================== -->
     <div class="modern-notice-card">
         <div class="notice-card-header">
-            <div class="header-title"><span class="header-icon">📚</span> Upper Primary/Secondary Section Portal (Class V - Class X)</div>
+            <div class="header-title"><span class="header-icon">📚</span> Upper Primary/Secondary Section Portal (Class VI - Class X)</div>
         </div>
         <div class="notice-list-wrapper">
             <div class="modern-notice-item">
                 <div class="notice-meta"><span class="notice-date">May-2026</span><span class="badge-new">NEW</span></div>
                 <div class="notice-body">
-                    <p class="notice-text">Class V - Class X  Academic Report Portal</p>
+                    <p class="notice-text">Class VI - Class X  Academic Report Portal</p>
                     <a href="" class="notice-btn btn-ln">
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg> Check the Result link</a>
                 </div>
@@ -287,13 +510,6 @@
     </div>
 
     <!-- Centered Brand Footer Block -->
-    <footer class="site-footer">
-        <div class="container">
-            <p>&copy; 2026 Good Shepherd Higher Secondary School. All Rights Reserved.</p>
-              </div>
-            </div>
-        </div>
-    </div>
     <footer class="site-footer">
         <div class="container">
             <p>&copy; 2026 Good Shepherd Higher Secondary School, Chapahati. All Rights Reserved.</p>
@@ -423,7 +639,82 @@
         setTimeout(function() {
             document.getElementById('donation-qr-box').classList.add('show');
         }, 1500);
+
+        // Smart Dropdown / Search Filter Logic for Rank Holders
+        document.getElementById('rankSearchInput').addEventListener('input', function() {
+            var filter = this.value.trim().toLowerCase();
+            var tableWrapper = document.getElementById('rankTableWrapper');
+            var noResults = document.getElementById('noResultsMessage');
+            var rows = document.querySelectorAll('#rankTableBody tr');
+            var ths = document.querySelectorAll('#rankTableHeaderRow th');
+
+            // 1. Hide everything if input is empty
+            if (filter === "") {
+                tableWrapper.style.display = 'none';
+                noResults.style.display = 'none';
+                return;
+            }
+
+            tableWrapper.style.display = 'block';
+            noResults.style.display = 'none';
+            var anyVisible = false;
+
+            // 2. Reset all columns and rows to completely visible before applying filter
+            for (let i = 0; i <= 3; i++) {
+                ths[i].style.display = '';
+                rows.forEach(row => row.cells[i].style.display = '');
+            }
+
+            // 3. Intelligent rank column hiding
+            if (filter === '1st' || filter === '1st rank') {
+                ths[2].style.display = 'none'; // hide 2nd
+                ths[3].style.display = 'none'; // hide 3rd
+                rows.forEach(row => {
+                    row.cells[2].style.display = 'none';
+                    row.cells[3].style.display = 'none';
+                    row.style.display = ''; // Make sure row is visible
+                });
+                anyVisible = true;
+            }
+            else if (filter === '2nd' || filter === '2nd rank') {
+                ths[1].style.display = 'none'; // hide 1st
+                ths[3].style.display = 'none'; // hide 3rd
+                rows.forEach(row => {
+                    row.cells[1].style.display = 'none';
+                    row.cells[3].style.display = 'none';
+                    row.style.display = ''; 
+                });
+                anyVisible = true;
+            }
+            else if (filter === '3rd' || filter === '3rd rank') {
+                ths[1].style.display = 'none'; // hide 1st
+                ths[2].style.display = 'none'; // hide 2nd
+                rows.forEach(row => {
+                    row.cells[1].style.display = 'none';
+                    row.cells[2].style.display = 'none';
+                    row.style.display = '';
+                });
+                anyVisible = true;
+            } 
+            else {
+                // 4. Standard row filtering by Class or Name
+                rows.forEach(function(row) {
+                    var text = row.textContent.toLowerCase();
+                    if (text.includes(filter)) {
+                        row.style.display = '';
+                        anyVisible = true;
+                    } else {
+                        row.style.display = 'none';
+                    }
+                });
+            }
+
+            // 5. Handle empty state if typed gibberish
+            if (!anyVisible) {
+                noResults.style.display = 'block';
+                tableWrapper.style.display = 'none'; 
+            }
+        });
     </script>
 </body>
 </html>
-
