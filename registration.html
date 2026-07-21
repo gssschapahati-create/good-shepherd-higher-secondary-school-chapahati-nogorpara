@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Login - Good Shepherd Higher Secondary School</title>
+    <link rel="icon" type="images/png" href="images/favico.png">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* Base Global Styles Needed for Layout */
+        body { margin: 0; font-family: 'Segoe UI', system-ui, sans-serif; background-color: #f8f9fa; }
+        
+        /* Centered Bottom-Middle Footer Styling Block */
+        .site-footer {
+            background-color: #222222;
+            color: #bbbbbb;
+            padding: 30px 0;
+            font-size: 14px;
+            text-align: center;
+            border-top: 3px solid #2e7d32;
+            margin-top: 40px;
+            width: 100%;
+        }
+        .site-footer .container { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+        .site-footer p { margin: 5px 0; }
+
+        /* Gradient Page Banner */
+        .page-banner {
+            background: linear-gradient(to right, #24c2b9, #097b97);
+            color: #ffffff;
+            text-align: center;
+            padding: 60px 20px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .page-banner h1 {
+            margin: 0 0 10px 0;
+            font-size: 2.2rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+        .breadcrumbs {
+            font-size: 0.9rem;
+            color: #e0f7f8;
+        }
+        .breadcrumbs a {
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .breadcrumbs a:hover {
+            text-decoration: underline;
+        }
+
+        /* Layout Container */
+        .content-container {
+            display: flex;
+            max-width: 1200px;
+            margin: 40px auto;
+            gap: 25px;
+            padding: 0 20px;
+            align-items: flex-start;
+        }
+
+        /* Left Sidebar Menu */
+        .sidebar-menu {
+            width: 260px;
+            background: #ffffff;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            border: 1px solid #eef2f5;
+        }
+        .sidebar-menu ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .sidebar-menu li {
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .sidebar-menu li:last-child {
+            border-bottom: none;
+        }
+        .sidebar-menu a {
+            display: block;
+            padding: 16px 20px;
+            color: #333333;
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        .sidebar-menu a:hover {
+            background-color: #f8f9fa;
+            color: #02c388;
+        }
+        .sidebar-menu a.active {
+            background-color: #00d285;
+            color: #ffffff;
+            position: relative;
+        }
+        .sidebar-menu a.active::after {
+            content: "";
+            position: absolute;
+            right: -8px;
+            top: 50%;
+            transform: translateY(-50%);
+            border-top: 8px solid transparent;
+            border-bottom: 8px solid transparent;
+            border-left: 8px solid #00d285;
+        }
+
+        /* Right Content Area */
+        .main-content {
+            flex-grow: 1;
+            background: #ffffff;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            border: 1px solid #eef2f5;
+            padding: 35px;
+            overflow-x: auto;
+        }
+
+        /* Instructions Container */
+        .instructions-list {
+            margin-top: 15px;
+            padding-left: 20px;
+            color: #4a5568;
+            font-size: 0.95rem;
+            line-height: 1.8;
+        }
+        .instructions-list li {
+            margin-bottom: 12px;
+        }
+        
+        /* New Registration Buttons */
+        .registration-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+        .btn-reg-dark {
+            background-color: #2c4c7e;
+            color: #ffffff;
+            padding: 12px 20px;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+        }
+        .btn-reg-light {
+            background-color: #279be8;
+            color: #ffffff;
+            padding: 12px 20px;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+        }
+        .badge-new {
+            background-color: #6c757d;
+            color: white;
+            font-size: 0.7rem;
+            padding: 2px 6px;
+            border-radius: 3px;
+            margin-left: 8px;
+            font-weight: normal;
+        }
+        .badge-new-alt {
+            background-color: #8c76b9;
+        }
+        
+        .terms-link {
+            font-style: italic;
+            font-weight: bold;
+            color: #007bff;
+            text-decoration: underline;
+            font-size: 0.95rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .content-container { flex-direction: column; }
+            .sidebar-menu { width: 100%; }
+        }
+
+        /* Original QR Code Styles (Untouched) */
+        #donation-qr-box {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 220px;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.15);
+            padding: 20px;
+            text-align: center;
+            z-index: 9999;
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+        #donation-qr-box.show {
+            opacity: 1;
+            pointer-events: auto;
+            animation: floatHover 4s ease-in-out infinite; 
+        }
+        @keyframes floatHover {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+            100% { transform: translateY(0px); }
+        }
+        #close-donation-box {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            background: transparent;
+            border: none;
+            font-size: 24px;
+            color: #888;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        #close-donation-box:hover { color: #ff0000; }
+        #donation-qr-title { font-weight: bold; font-size: 1.1rem; color: #333; margin-bottom: 12px; margin-top: 5px; }
+        #qr-code-placeholder img { width: 100%; max-width: 160px; height: auto; border-radius: 8px; border: 2px solid #f0f0f0; }
+        #qr-scan-label { margin-top: 10px; font-size: 0.9rem; color: #666; font-weight: 500; }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <div class="container flex-header"><b>Our School Motto:</b> <marquee class="motto-marquee">"To Learn, To Lead"</marquee></div>
+    </div>
+
+    <div class="nav-wrapper">
+        <div class="container nav-container">
+            <img src="images/logo.png" alt="School Logo" class="logo">
+            <button class="menu-toggle" id="mobile-menu">☰</button>
+            <nav id="nav-menu">
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="admission.html">Admission</a>
+                <a href="events.html">Events</a>
+                <a href="faculty.html">Faculty</a>
+                <a href="gallery.html">Gallery</a>
+                <a href="result.html">Result</a>
+                <a href="notice.html" class="active">Registration</a>
+                <a href="contact.html">Contact</a>
+                <a href="blog.html">Blog</a>
+            </nav>
+        </div>
+    </div>
+    
+    <!-- Gradient Header Area -->
+    <div class="page-banner">
+        <h1>Registration Login</h1>
+        <div class="breadcrumbs">
+            <a href="index.html">⌂ Home</a> / Registration Login
+        </div>
+    </div>
+
+    <!-- Main Flexbox Layout for Sidebar and Registration Details -->
+    <div class="content-container">
+        
+        <!-- Left Sidebar Navigation -->
+        <aside class="sidebar-menu">
+            <ul>
+                <li><a href="notice.html" class="active">Registration</a></li>
+                <li><a href="notice.html">Latest News</a></li>
+                <li><a href="events.html">Events</a></li>
+                <li><a href="blog.html">Blogs</a></li>
+                <li><a href="notice.html">Tender</a></li>
+            </ul>
+        </aside>
+
+        <!-- Right Content Area -->
+        <main class="main-content">
+            <h3 style="margin-top: 0; font-size: 1.1rem; color: #222;">Follow the instructions carefully before filling the online registration form.</h3>
+            
+            <ol class="instructions-list">
+                <li>Candidates can pay the registration fees Directly to their class Teacher or to the office.</li>
+                <li>No online and direct Account Transfer will be accepted</li>
+                <li>For Guidelines for filling up the form please contact given number.</li>
+                <li>For any queries please contact Smt.Sengkan.M. Sangma, Technical Helpline: 8258813963</li>
+            </ol>
+            
+            <div class="registration-buttons">
+                <!-- Registration Portal Hyperlinks Only -->
+                <a href="https://script.google.com/macros/s/AKfycbz_ToQmo0Mf9Jl3ljv9iBAMcynYQZrjc_fvFALwuDX9RKAU8v2Fu8cFwQtQvLTAF3h7/exec" class="btn-reg-dark" target="_blank">
+                    Pass Pupil and Present Students Registration <span class="badge-new">New</span>
+                </a>
+                <a href="https://script.google.com/macros/s/AKfycbxuwx1EQWZ0d31Q9MJ5U2YcC_MvkVH_0p16_rTtjDYWgBiYt_WbDlYPjBSzH_UwzC5J_w/exec" class="btn-reg-dark" target="_blank">
+                    Class XI Registration - 2026 - 2027 <span class="badge-new">New</span>
+                </a>
+            </div>
+
+            <div>
+                <a href="#" class="terms-link">Terms and Conditions for Online Registration</a>
+            </div>
+        </main>
+    </div>
+
+    <footer class="site-footer">
+        <div class="container">
+            <p>&copy; 2026 Good Shepherd Higher Secondary School, Chapahati. All Rights Reserved.</p>
+            <p style="font-size: 12px; color: #888;">Managed by Good Shepherd Church Chapahati | Powered by Local Administration Desk</p>
+        </div>
+    </footer>
+
+    <!-- Donation QR Code Box -->
+    <div id="donation-qr-box">
+        <button id="close-donation-box" onclick="closeDonationBox()">&times;</button>
+        <div id="donation-qr-title">Support Good Shepherd</div>
+        
+        <div id="qr-code-placeholder">
+            <img src="https://i.postimg.cc/t42Rp5Mq/ba025f5a-46f7-4f4c-b0fd-fe8be4d93747.jpg" alt="Donation QR Code">
+        </div>
+        
+        <div id="qr-scan-label">Scan to Donate</div>
+    </div>
+
+    <script src="JavaScript/script.js"></script>
+    
+    <script>
+        function toggleDropdown(contentId, btnElement) {
+            btnElement.classList.toggle('active');
+            var content = document.getElementById(contentId);
+            if (content.style.maxHeight && content.style.maxHeight !== "0px") {
+                content.style.maxHeight = "0px";
+            } else {
+                content.style.maxHeight = content.scrollHeight + "px";
+            }
+        }
+
+        function closeDonationBox() {
+            document.getElementById('donation-qr-box').classList.remove('show');
+        }
+
+        setTimeout(function() {
+            document.getElementById('donation-qr-box').classList.add('show');
+        }, 1500);
+    </script>
+</body>
+</html>
