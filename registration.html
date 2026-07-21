@@ -149,30 +149,29 @@
             font-weight: 600;
             display: inline-flex;
             align-items: center;
-            transition: background-color 0.2s ease, color 0.2s ease;
         }
-
-        /* Click effect to change to light blue */
-        .btn-reg-dark:active {
-            background-color: #87CEFA; /* Light Blue */
-            color: #000000;
+        .btn-reg-light {
+            background-color: #279be8;
+            color: #ffffff;
+            padding: 12px 20px;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
         }
-        
-        /* Red Flickering New Badge */
         .badge-new {
-            background-color: #ff0000;
+            background-color: #6c757d;
             color: white;
             font-size: 0.7rem;
             padding: 2px 6px;
             border-radius: 3px;
             margin-left: 8px;
-            font-weight: bold;
-            animation: red-flicker 1s infinite;
+            font-weight: normal;
         }
-
-        @keyframes red-flicker {
-            0%, 100% { opacity: 1; box-shadow: 0 0 5px rgba(255, 0, 0, 0.8); }
-            50% { opacity: 0.3; box-shadow: 0 0 0px rgba(255, 0, 0, 0); }
+        .badge-new-alt {
+            background-color: #8c76b9;
         }
         
         .terms-link {
@@ -181,11 +180,6 @@
             color: #007bff;
             text-decoration: underline;
             font-size: 0.95rem;
-            display: inline-block;
-            margin-top: 10px;
-        }
-        .terms-link:hover {
-            color: #0056b3;
         }
 
         /* Responsive */
@@ -307,11 +301,8 @@
                 </a>
             </div>
 
-            <!-- PDF Link for Terms and Norms -->
             <div>
-                <a href="images/12345.pdf" class="terms-link" target="_blank" rel="noopener noreferrer">
-                    Terms and Norms for Online Registration (PDF)
-                </a>
+                <a href="images/1245.pdf" class="terms-link">Terms and Conditions for Online Registration</a>
             </div>
         </main>
     </div>
