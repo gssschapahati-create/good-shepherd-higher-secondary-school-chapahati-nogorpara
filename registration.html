@@ -174,13 +174,32 @@
             background-color: #8c76b9;
         }
         
-        .terms-link {
+        /* Embedded Terms & Conditions */
+        details.terms-details summary {
             font-style: italic;
             font-weight: bold;
             color: #007bff;
             text-decoration: underline;
             font-size: 0.95rem;
+            cursor: pointer;
+            outline: none;
+            margin-bottom: 15px;
         }
+        details.terms-details summary:hover {
+            color: #0056b3;
+        }
+        .terms-content {
+            padding: 20px;
+            background-color: #f8f9fa;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            color: #4a5568;
+        }
+        .terms-content h4 { margin-top: 0; color: #2c4c7e; font-size: 1.05rem;}
+        .terms-content h5 { margin: 15px 0 5px 0; color: #222; font-size: 0.95rem; }
+        .terms-content ol { padding-left: 20px; margin-top: 5px; margin-bottom: 15px; }
+        .terms-content ol li { margin-bottom: 8px; line-height: 1.5; }
 
         /* Responsive */
         @media (max-width: 768px) {
@@ -301,9 +320,40 @@
                 </a>
             </div>
 
-            <div>
-                <a href="images/1245.pdf" class="terms-link">Terms and Conditions for Online Registration</a>
-            </div>
+            <!-- Integrated Terms and Conditions -->
+            <details class="terms-details">
+                <summary>Terms and Conditions for Online Registration</summary>
+                <div class="terms-content">
+                    <h4>Terms & Conditions for Online Registration Portal of Good Shepherd Higher Secondary School</h4>
+                    
+                    <ol>
+                        <li><strong>Introduction:</strong> These terms govern the use of the online Registration portal for Class-XI of Good Shepherd Higher Secondary School.</li>
+                        <li><strong>Scope of Services:</strong> Good Shepherd Higher Secondary School provides online application.</li>
+                        <li><strong>Application & Fee Payment Process:</strong> Candidates must fill the form online, ensure eligibility.</li>
+                        <li><strong>Charges and Convenience Fees:</strong> All fees and transaction charges are payable by the Candidates as applicable.</li>
+                    </ol>
+                    
+                    <h5>Refund & Cancellation Policy:</h5>
+                    <ol start="5">
+                        <li>Registration Fee is non-refundable.</li>
+                        <li>In such case the Candidates can write an application to Good Shepherd Higher Secondary School or email us at gssschapahati@gmail.com.</li>
+                        <li><strong>Technical Support and Grievances:</strong> Candidates may contact gssschapahati@gmail.com for technical support within 48 hours of any issue.</li>
+                    </ol>
+                    
+                    <h5>Security & Data Privacy:</h5>
+                    <ol start="8">
+                        <li>Good Shepherd Higher Secondary School and Bill Desk do not store card data.</li>
+                        <li>Contact the helpline mobile number published in official notification Good Shepherd Higher Secondary School/ Ref No: GSSS/2026/Notice-1/MBOSE_RE/N0_1 Dated: July-04-2026<br>Or</li>
+                        <li>Email us at gssschapahati@gmail.com</li>
+                    </ol>
+
+                    <h5>Fee Structure:</h5>
+                    <ol start="11">
+                        <li>(kindly refer to Notification No. Good Shepherd Higher Secondary/Ref No: GSSS/2026/Notice-1/MBOSE_RE/N0_1 Dated: July-04-2026)</li>
+                        <li>Registration Fees, Rs.700/-</li>
+                    </ol>
+                </div>
+            </details>
         </main>
     </div>
 
