@@ -196,14 +196,13 @@
         }
         
         .terms-link {
-            font-style: italic;
             font-weight: bold;
             color: #007bff;
             text-decoration: underline;
-            font-size: 0.95rem;
+            font-size: 1.05rem;
             display: inline-block;
             margin-top: 10px;
-            margin-left: 10px;
+            margin-bottom: 5px;
         }
         .terms-link:hover {
             color: #0056b3;
@@ -354,14 +353,17 @@
                 </a>
             </div>
 
-            <!-- PDF Flip / View Action Buttons -->
-            <div>
-                <button class="terms-toggle-btn" id="terms-btn" onclick="toggleTermsBox()">
-                    📄 Click to View Terms and Norms (PDF) &#9660;
-                </button>
+            <!-- PDF Links and Flip Action -->
+            <div style="margin-top: 15px;">
+                <!-- Directly Opens PDF file in a new tab -->
                 <a href="images/12345.pdf" class="terms-link" target="_blank" rel="noopener noreferrer">
-                    Open PDF in New Tab ↗
+                    📄 Terms and Norms for Online Registration
                 </a>
+                <br>
+                <!-- Alternative: Flip/Expand to view on page -->
+                <button class="terms-toggle-btn" id="terms-btn" onclick="toggleTermsBox()">
+                    Or Click Here to Read Terms on Page &#9660;
+                </button>
             </div>
 
             <!-- Flip / Expanded PDF & Terms Container -->
@@ -377,34 +379,34 @@
                 </iframe>
 
                 <h4 style="margin-top: 20px; color: #222; border-bottom: 2px solid #00d285; padding-bottom: 10px;">
-                    Terms & Conditions for Online Registration Portal of Good Shepherd Higher Secondary School[cite: 2]
+                    Terms & Conditions for Online Registration Portal of Good Shepherd Higher Secondary School
                 </h4>
                 
                 <ol style="padding-left: 20px; color: #4a5568; font-size: 0.95rem; line-height: 1.8;">
-                    <li><strong>Introduction:</strong> These terms govern the use of the online Registration portal for Class-XI of Good Shepherd Higher Secondary School.[cite: 2]</li>
-                    <li><strong>Scope of Services:</strong> Good Shepherd Higher Secondary School provides online application.[cite: 2]</li>
-                    <li><strong>Application & Fee Payment Process:</strong> Candidates must fill the form online, ensure eligibility.[cite: 2]</li>
-                    <li><strong>Charges and Convenience Fees:</strong> All fees and transaction charges are payable by the Candidates as applicable.[cite: 2]</li>
+                    <li><strong>Introduction:</strong> These terms govern the use of the online Registration portal for Class-XI of Good Shepherd Higher Secondary School.</li>
+                    <li><strong>Scope of Services:</strong> Good Shepherd Higher Secondary School provides online application.</li>
+                    <li><strong>Application & Fee Payment Process:</strong> Candidates must fill the form online, ensure eligibility.</li>
+                    <li><strong>Charges and Convenience Fees:</strong> All fees and transaction charges are payable by the Candidates as applicable.</li>
                 </ol>
                 
-                <h5 style="margin-bottom: 5px; color: #222; font-size: 1rem;">Refund & Cancellation Policy:[cite: 2]</h5>
+                <h5 style="margin-bottom: 5px; color: #222; font-size: 1rem;">Refund & Cancellation Policy:</h5>
                 <ol start="5" style="padding-left: 20px; color: #4a5568; font-size: 0.95rem; line-height: 1.8;">
-                    <li>Registration Fee is non-refundable.[cite: 2]</li>
-                    <li>In such case the Candidates can write an application to Good Shepherd Higher Secondary School or email us at gssschapahati@gmail.com.[cite: 2]</li>
-                    <li><strong>Technical Support and Grievances:</strong> Candidates may contact gssschapahati@gmail.com for technical support within 48 hours of any issue.[cite: 2]</li>
+                    <li>Registration Fee is non-refundable.</li>
+                    <li>In such case the Candidates can write an application to Good Shepherd Higher Secondary School or email us at gssschapahati@gmail.com.</li>
+                    <li><strong>Technical Support and Grievances:</strong> Candidates may contact gssschapahati@gmail.com for technical support within 48 hours of any issue.</li>
                 </ol>
 
-                <h5 style="margin-bottom: 5px; color: #222; font-size: 1rem;">Security & Data Privacy:[cite: 2]</h5>
+                <h5 style="margin-bottom: 5px; color: #222; font-size: 1rem;">Security & Data Privacy:</h5>
                 <ol start="8" style="padding-left: 20px; color: #4a5568; font-size: 0.95rem; line-height: 1.8;">
-                    <li>Good Shepherd Higher Secondary School and Bill Desk do not store card data.[cite: 2]</li>
-                    <li>Contact the helpline mobile number published in official notification Good Shepherd Higher Secondary School/ Ref No: GSSS/2026/Notice-1/MBOSE_RE/N0_1 Dated: July-04-2026[cite: 2] Or[cite: 2]</li>
-                    <li>Email us at gssschapahati@gmail.com[cite: 2]</li>
+                    <li>Good Shepherd Higher Secondary School and Bill Desk do not store card data.</li>
+                    <li>Contact the helpline mobile number published in official notification Good Shepherd Higher Secondary School/ Ref No: GSSS/2026/Notice-1/MBOSE_RE/N0_1 Dated: July-04-2026 Or</li>
+                    <li>Email us at gssschapahati@gmail.com</li>
                 </ol>
 
-                <h5 style="margin-bottom: 5px; color: #222; font-size: 1rem;">Fee Structure:[cite: 2]</h5>
+                <h5 style="margin-bottom: 5px; color: #222; font-size: 1rem;">Fee Structure:</h5>
                 <ol start="11" style="padding-left: 20px; color: #4a5568; font-size: 0.95rem; line-height: 1.8;">
-                    <li>(kindly refer to Notification No. Good Shepherd Higher Secondary/Ref No: GSSS/2026/Notice-1/MBOSE_RE/N0_1 Dated: July-04-2026)[cite: 2]</li>
-                    <li>Registration Fees, Rs.700/-[cite: 2]</li>
+                    <li>(kindly refer to Notification No. Good Shepherd Higher Secondary/Ref No: GSSS/2026/Notice-1/MBOSE_RE/N0_1 Dated: July-04-2026)</li>
+                    <li>Registration Fees, Rs.700/-</li>
                 </ol>
             </div>
             
@@ -438,10 +440,10 @@
             var btn = document.getElementById('terms-btn');
             if (box.style.display === "block") {
                 box.style.display = "none";
-                btn.innerHTML = '📄 Click to View Terms and Norms (PDF) &#9660;';
+                btn.innerHTML = 'Or Click Here to Read Terms on Page &#9660;';
             } else {
                 box.style.display = "block";
-                btn.innerHTML = '📄 Hide Terms and Norms &#9650;';
+                btn.innerHTML = 'Hide Terms and Norms &#9650;';
             }
         }
 
