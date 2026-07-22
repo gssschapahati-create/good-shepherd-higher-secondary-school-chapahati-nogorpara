@@ -218,6 +218,42 @@
         #donation-qr-title { font-weight: bold; font-size: 1.1rem; color: #333; margin-bottom: 12px; margin-top: 5px; }
         #qr-code-placeholder img { width: 100%; max-width: 160px; height: auto; border-radius: 8px; border: 2px solid #f0f0f0; }
         #qr-scan-label { margin-top: 10px; font-size: 0.9rem; color: #666; font-weight: 500; }
+
+        /* --- NEW FEEDBACK MODAL STYLES --- */
+        /* Floating Trigger Button (Moved to left to prevent QR overlap) */
+        .feedback-trigger-btn { position: fixed; bottom: 30px; left: 30px; background: #3182ce; color: white; border: none; padding: 15px 25px; font-size: 16px; font-weight: bold; border-radius: 50px; cursor: pointer; box-shadow: 0 5px 15px rgba(49,130,206,0.4); z-index: 999; transition: transform 0.2s, background 0.2s; }
+        .feedback-trigger-btn:hover { background: #2b6cb0; transform: scale(1.05); }
+
+        /* Modal Overlay Screen */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.6); display: none; justify-content: center; align-items: center; z-index: 1000; backdrop-filter: blur(4px); }
+
+        /* Pop-Up Window Card */
+        .modal-card { background: white; width: 100%; max-width: 500px; max-height: 90vh; overflow-y: auto; padding: 30px; border-radius: 12px; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1); position: relative; animation: slideIn 0.3s ease-out; }
+        @keyframes slideIn { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+        /* Close Button (X) */
+        .close-modal-btn { position: absolute; top: 15px; right: 20px; font-size: 28px; color: #a0aec0; cursor: pointer; border: none; background: none; }
+        .close-modal-btn:hover { color: #4a5568; }
+
+        /* Form Styling */
+        .modal-card h2 { margin: 0 0 5px 0; color: #2d3748; font-size: 22px; }
+        .modal-card p.subtitle { margin: 0 0 20px 0; color: #718096; font-size: 14px; }
+        .modal-card .form-group { margin-bottom: 16px; }
+        .modal-card label { display: block; margin-bottom: 6px; font-weight: 600; color: #4a5568; font-size: 13px; }
+        .modal-card select, .modal-card textarea, .modal-card input { width: 100%; padding: 10px; border: 1px solid #e2e8f0; border-radius: 6px; box-sizing: border-box; font-size: 14px; background-color: #f8fafc; }
+        .modal-card select:focus, .modal-card textarea:focus, .modal-card input:focus { outline: none; border-color: #3182ce; background-color: #fff; }
+        
+        /* Star Rating CSS */
+        .rating-wrapper { display: flex; flex-direction: row-reverse; justify-content: flex-end; gap: 6px; }
+        .rating-wrapper input { display: none; }
+        .rating-wrapper label { font-size: 32px; color: #cbd5e0; cursor: pointer; transition: color 0.1s; margin: 0; }
+        .rating-wrapper label:hover, .rating-wrapper label:hover ~ label, .rating-wrapper input:checked ~ label { color: #ecc94b; }
+        
+        /* Submission Actions */
+        .submit-btn { width: 100%; background: #48bb78; color: white; border: none; padding: 12px; font-size: 16px; font-weight: bold; border-radius: 6px; cursor: pointer; margin-top: 10px; transition: background 0.2s; }
+        .submit-btn:hover { background: #38a169; }
+        .submit-btn:disabled { background: #a0aec0; cursor: not-allowed; }
+        #statusMsg { text-align: center; font-weight: bold; margin-top: 15px; display: none; padding: 10px; border-radius: 6px; font-size: 14px; }
     </style>
 </head>
 <body>
@@ -245,8 +281,6 @@
             </nav>
         </div>
     </div>
-
-    <!-- NEW SCREENSHOT LAYOUT STARTS HERE -->
     
     <!-- Gradient Header Area -->
     <div class="page-banner">
@@ -288,7 +322,7 @@
                         <td>Half Yearly </td>
                         <td>
                             <a href="https://script.google.com/macros/s/AKfycbzSCx3L_mGG8e60ASCgYBo02-bF8W2EJ43TdsWWcWIvVrC0waYeTEg1ouaVsTIbrp01/exec" class="btn-action btn-link" target="_blank">
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg> Class Nursery to V Open Link
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg> Class Nursery to V Open Link</a>
                             <a href="https://script.google.com/macros/s/AKfycbx5J9WWLxfcIZUQj6psnoAfoMPnARbG1VeL1UzYadcy7pXnZdBQLCPiC8GzgECNI_-H/exec" class="btn-action btn-link" target="_blank">
                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg> Class VI - X Open Link
                             </a>
@@ -354,14 +388,81 @@
                             </a>
                         </td>
                     </tr>
-                    <tr>
                 </tbody>
             </table>
         </main>
     </div>
-    
-    <!-- NEW SCREENSHOT LAYOUT ENDS HERE -->
 
+    <!-- NEW FEEDBACK COMPONENTS INTEGRATED BELOW -->
+
+    <!-- Floating Trigger Button -->
+    <button class="feedback-trigger-btn" id="openModalBtn">📝 Give Feedback</button>
+
+    <!-- Modal Pop-Up Structure -->
+    <div class="modal-overlay" id="feedbackModal">
+        <div class="modal-card">
+            <button class="close-modal-btn" id="closeModalBtn">&times;</button>
+            
+            <h2>Public Feedback & Ratings</h2>
+            <p class="subtitle">Your feedback directly updates our administration system records.</p>
+            
+            <form id="feedbackForm">
+                <!-- Custom Dynamic Target Dropdown -->
+                <div class="form-group">
+                    <label for="category">What would you like to give feedback on?</label>
+                    <select id="category" name="category" required>
+                        <option value="">-- Choose Custom Category --</option>
+                        <option value="School Website">🌐 School Website & Online Portal</option>
+                        <option value="Teaching Staff">👨‍🏫 Teachers & Classroom Teaching Quality</option>
+                        <option value="Student Conduct">🎒 Student Behaviour, Activities & Welfare</option>
+                        <option value="School Administration">🏢 School Management & Fees Office</option>
+                        <option value="Infrastructure">🏫 Classrooms, Labs & Sports Facilities</option>
+                        <option value="Transport & Security">🚌 Bus Services & Campus Security</option>
+                        <option value="Canteen/Mess">🍎 School Canteen & Food Hygiene</option>
+                    </select>
+                </div>
+
+                <!-- Interactive Rating Stars -->
+                <div class="form-group">
+                    <label>Your Overall Rating</label>
+                    <div class="rating-wrapper">
+                        <input type="radio" id="star5" name="rating" value="5" required/><label for="star5">★</label>
+                        <input type="radio" id="star4" name="rating" value="4" /><label for="star4">★</label>
+                        <input type="radio" id="star3" name="rating" value="3" /><label for="star3">★</label>
+                        <input type="radio" id="star2" name="rating" value="2" /><label for="star2">★</label>
+                        <input type="radio" id="star1" name="rating" value="1" /><label for="star1">★</label>
+                    </div>
+                </div>
+
+                <!-- Text Suggestions -->
+                <div class="form-group">
+                    <label for="suggestions">Your Detailed Suggestions or Feedback</label>
+                    <textarea id="suggestions" name="suggestions" rows="3" placeholder="Share your honest thoughts, ideas, or structural issues here..." required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="userName">Your Name (Optional)</label>
+                    <input type="text" id="userName" name="userName" placeholder="John Doe">
+                </div>
+
+                <div style="display: flex; gap: 10px;">
+                    <div class="form-group" style="flex: 1;">
+                        <label for="userEmail">Gmail Address</label>
+                        <input type="email" id="userEmail" name="userEmail" placeholder="name@gmail.com" required>
+                    </div>
+                    <div class="form-group" style="flex: 1;">
+                        <label for="userMobile">Mobile Number</label>
+                        <input type="tel" id="userMobile" name="userMobile" pattern="\d{10}" placeholder="10-digit mobile" required>
+                    </div>
+                </div>
+
+                <button type="submit" class="submit-btn" id="submitBtn">Submit Review</button>
+                <div id="statusMsg"></div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
     <footer class="site-footer">
         <div class="container">
             <p>&copy; 2026 Good Shepherd Higher Secondary School, Chapahati. All Rights Reserved.</p>
@@ -401,6 +502,52 @@
         setTimeout(function() {
             document.getElementById('donation-qr-box').classList.add('show');
         }, 1500);
+        
+        // --- FEEDBACK POP-UP LOGIC ---
+        // 1. Pop-Up Window Control Scripts
+        const modal = document.getElementById('feedbackModal');
+        const openBtn = document.getElementById('openModalBtn');
+        const closeBtn = document.getElementById('closeModalBtn');
+
+        openBtn.onclick = () => modal.style.display = 'flex';
+        closeBtn.onclick = () => modal.style.display = 'none';
+        window.onclick = (e) => { if (e.target === modal) modal.style.display = 'none'; }
+
+        // 2. Google Sheets Data Integration Scripts
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbyGdVJyh5pxQg5LxLdPv_l4Tly72TKl4cLKZcW1ieIAubalzILU7qyG4oxp2SnuIXdI/exec'; // <--- PASTE WEB APP URL HERE
+        const form = document.getElementById('feedbackForm');
+        const msg = document.getElementById('statusMsg');
+        const btn = document.getElementById('submitBtn');
+
+        form.addEventListener('submit', e => {
+            e.preventDefault();
+            btn.disabled = true;
+            btn.innerText = 'Sending...';
+            msg.style.display = 'block';
+            msg.style.background = '#ebf8ff';
+            msg.style.color = '#2b6cb0';
+            msg.innerText = 'Submitting entry data to database sheet...';
+
+            fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+                .then(response => {
+                    btn.disabled = false;
+                    btn.innerText = 'Submit Review';
+                    msg.style.background = '#f0fff4';
+                    msg.style.color = '#38a169';
+                    msg.innerText = 'Thank you! Your feedback has been logged directly.';
+                    form.reset();
+                    // Closes the window automatically 2 seconds after a successful submission
+                    setTimeout(() => { modal.style.display = 'none'; msg.style.display = 'none'; }, 2000);
+                })
+                .catch(error => {
+                    btn.disabled = false;
+                    btn.innerText = 'Submit Review';
+                    msg.style.background = '#fff5f5';
+                    msg.style.color = '#e53e3e';
+                    msg.innerText = 'Error submitting feedback. Connection dropped.';
+                    console.error('Error!', error.message);
+                });
+        });
     </script>
 </body>
 </html>
