@@ -351,7 +351,7 @@
             text-align: center;
         }
 
-        /* --- POP-UP MODAL & FLOATING BUTTONS CSS (Feedback & UDISE) --- */
+        /* --- POP-UP MODAL & FLOATING BUTTONS CSS (Feedback) --- */
         .action-btn-group {
             position: fixed;
             bottom: 30px;
@@ -367,8 +367,6 @@
             box-shadow: 0 5px 15px rgba(49,130,206,0.4); transition: transform 0.2s, background 0.2s; 
         }
         .floating-action-btn:hover { background: #2b6cb0; transform: scale(1.05); }
-        .udise-btn-style { background: #d69e2e; box-shadow: 0 5px 15px rgba(214,158,46,0.4); }
-        .udise-btn-style:hover { background: #b7791f; }
 
         .modal-overlay { 
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
@@ -418,15 +416,6 @@
         .submit-btn:hover { background: #38a169; }
         .submit-btn:disabled { background: #a0aec0; cursor: not-allowed; }
         .statusMsg { text-align: center; font-weight: bold; margin-top: 15px; display: none; padding: 10px; border-radius: 6px; font-size: 14px; }
-
-        /* UDISE Specific Additional CSS */
-        .section-title { font-weight: bold; color: #2b6cb0; text-transform: uppercase; margin-top: 20px; margin-bottom: 10px; font-size: 14px; background: #ebf8ff; padding: 5px 10px; border-left: 4px solid #3182ce; }
-        .radio-group { display: flex; gap: 15px; padding-top: 5px; }
-        .radio-group label { font-weight: normal; display: inline-flex; align-items: center; gap: 5px; margin: 0;}
-        .row { display: flex; gap: 15px; }
-        .col { flex: 1; }
-        .checkbox-group { display: flex; align-items: flex-start; gap: 10px; margin-top: 20px; }
-        .checkbox-group input { margin-top: 3px; }
     </style>
 </head>
 <body>
@@ -588,8 +577,7 @@
                 <div class="card-content">
                     <marquee direction="up" scrollamount="3" style="height:270px;" onmouseover="this.stop();" onmouseout="this.start();">
                         <ul class="notice-list">
-                            </li>
-                             <li style="margin-bottom: 20px;">
+                            <li style="margin-bottom: 20px;">
                                 <img src="images/iconpdf.gif" alt="pdf"> 
                                 <a href="https://script.google.com/macros/s/AKfycbxtVWhQzqD0SFMfgR7x2L53vd0LB-JYyDvZCMqL5wq-6EkAoYytwno-yyYLAhf4XoDkCg/exec" target="_blank">LINK fro XI Registration</a> 
                                 <img src="images/new (1).gif" alt="new">
@@ -733,7 +721,8 @@
                     </div>
                 </div>
 
-            </div> </div>
+            </div>
+        </div>
     </div>
 
     <div class="container">
@@ -751,7 +740,6 @@
 
     <!-- Floating Trigger Buttons -->
     <div class="action-btn-group">
-        <button class="floating-action-btn udise-btn-style" id="openUdiseBtn">🎓 UDISE+ Enrolment</button>
         <button class="floating-action-btn" id="openFeedbackBtn">📝 Give Feedback</button>
     </div>
 
@@ -816,120 +804,6 @@
         </div>
     </div>
 
-    <!-- UDISE+ Modal Pop-Up -->
-    <div class="modal-overlay" id="udiseModal">
-        <div class="modal-card">
-            <button class="close-modal-btn" id="closeUdiseBtn">&times;</button>
-            <h2>UDISE+ STUDENT ENROLMENT</h2>
-            <p class="subtitle">Academic Year: 2026–2027</p>
-            
-            <form id="udiseForm">
-                <!-- Section A -->
-                <div class="section-title">Section A: Student Demographics</div>
-                
-                <div class="form-group">
-                    <label for="studentName">Student Full Name (As per Aadhaar)</label>
-                    <input type="text" id="studentName" name="studentName" required placeholder="FIRST NAME MIDDLE NAME LAST NAME">
-                </div>
-
-                <div class="row">
-                    <div class="form-group col">
-                        <label>Gender</label>
-                        <div class="radio-group">
-                            <label><input type="radio" name="gender" value="Male" required> Male</label>
-                            <label><input type="radio" name="gender" value="Female"> Female</label>
-                            <label><input type="radio" name="gender" value="Transgender"> Other</label>
-                        </div>
-                    </div>
-                    <div class="form-group col">
-                        <label for="dob">Date of Birth</label>
-                        <input type="date" id="dob" name="dob" required>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="form-group col">
-                        <label for="motherName">Mother's Name</label>
-                        <input type="text" id="motherName" name="motherName" required>
-                    </div>
-                    <div class="form-group col">
-                        <label for="fatherName">Father's Name</label>
-                        <input type="text" id="fatherName" name="fatherName" required>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="form-group col">
-                        <label for="aadhaar">Student Aadhaar Number</label>
-                        <input type="text" id="aadhaar" name="aadhaar" pattern="\d{12}" placeholder="12-digit number" required>
-                    </div>
-                    <div class="form-group col">
-                        <label for="mobile">Mobile Number (Parent)</label>
-                        <input type="tel" id="mobile" name="mobile" pattern="\d{10}" placeholder="10-digit number" required>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="classCategory">Social Category</label>
-                    <select id="classCategory" name="category" required>
-                        <option value="">--Select Category--</option>
-                        <option value="General">General</option>
-                        <option value="SC">SC</option>
-                        <option value="ST">ST</option>
-                        <option value="OBC">OBC</option>
-                    </select>
-                </div>
-
-                <!-- Section B -->
-                <div class="section-title">Section B: Academic Allocation</div>
-                
-                <div class="row">
-                    <div class="form-group col">
-                        <label for="class">Admission Into Class</label>
-                        <select id="class" name="class" required>
-                            <option value="">--Select Class--</option>
-                            <option value="Class Nursery">Class Nursery</option>
-                            <option value="Class LKG">Class LKG</option>
-                            <option value="Class UKG">Class UKG</option>
-                            <option value="Class I">Class I</option>
-                            <option value="Class II">Class II</option>
-                            <option value="Class III">Class III</option>
-                            <option value="Class IV">Class IV</option>
-                            <option value="Class V">Class V</option>
-                            <option value="Class VI">Class VI</option>
-                            <option value="Class VII">Class VII</option>
-                            <option value="Class VIII">Class VIII</option>
-                            <option value="Class IX">Class IX</option>
-                            <option value="Class X">Class X</option>
-                            <option value="Class XI">Class XI</option>
-                        </select>
-                    </div>
-                    <div class="form-group col">
-                        <label for="section">Section</label>
-                        <input type="text" id="section" name="section" placeholder="A, B, C etc." required>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="stream">Academic Stream (Only for Class 11/12)</label>
-                    <select id="stream" name="stream">
-                        <option value="N/A">Not Applicable</option>
-                        <option value="Arts">Arts</option>
-                    </select>
-                </div>
-
-                <!-- Declaration -->
-                <div class="checkbox-group">
-                    <input type="checkbox" id="declaration" name="declaration" value="Agreed" required>
-                    <label for="declaration" style="display: inline; margin: 0; font-weight: normal;">I hereby declare that all submitted information matches official records.</label>
-                </div>
-
-                <button type="submit" class="submit-btn" id="submitUdiseBtn">Submit Enrolment</button>
-                <div class="statusMsg" id="udiseStatusMsg"></div>
-            </form>
-        </div>
-    </div>
-
     <!-- Donation QR Code Box -->
    <div id="donation-qr-box">
         <button id="close-donation-box" onclick="closeDonationBox()">&times;</button>
@@ -957,25 +831,18 @@
         
         // Modal Elements
         const feedbackModal = document.getElementById('feedbackModal');
-        const udiseModal = document.getElementById('udiseModal');
         
         // Button Elements
         const openFeedbackBtn = document.getElementById('openFeedbackBtn');
         const closeFeedbackBtn = document.getElementById('closeFeedbackBtn');
-        const openUdiseBtn = document.getElementById('openUdiseBtn');
-        const closeUdiseBtn = document.getElementById('closeUdiseBtn');
 
         // Open/Close logic
         openFeedbackBtn.onclick = () => feedbackModal.style.display = 'flex';
         closeFeedbackBtn.onclick = () => feedbackModal.style.display = 'none';
-        
-        openUdiseBtn.onclick = () => udiseModal.style.display = 'flex';
-        closeUdiseBtn.onclick = () => udiseModal.style.display = 'none';
 
         // Close when clicking outside of the modal card
         window.onclick = (e) => { 
             if (e.target === feedbackModal) feedbackModal.style.display = 'none'; 
-            if (e.target === udiseModal) udiseModal.style.display = 'none'; 
         }
 
         // ---------------- FORM SUBMISSION LOGIC ----------------
@@ -1011,41 +878,6 @@
                     feedbackMsg.style.background = '#fff5f5';
                     feedbackMsg.style.color = '#e53e3e';
                     feedbackMsg.innerText = 'Error submitting feedback. Connection dropped.';
-                    console.error('Error!', error.message);
-                });
-        });
-
-        // UDISE+ Form Submission
-        const udiseScriptURL = 'https://script.google.com/macros/s/AKfycbxzvSJBGwrFKGNZP7PZALktAuCqW616gtDkK4cRC0MK3LpKqRrsqllyVtHL1lYADP5p/exec';
-        const udiseForm = document.getElementById('udiseForm');
-        const udiseMsg = document.getElementById('udiseStatusMsg');
-        const udiseBtn = document.getElementById('submitUdiseBtn');
-
-        udiseForm.addEventListener('submit', e => {
-            e.preventDefault();
-            udiseBtn.disabled = true;
-            udiseBtn.innerText = 'Submitting...';
-            udiseMsg.style.display = 'block';
-            udiseMsg.style.background = '#ebf8ff';
-            udiseMsg.style.color = '#3182ce';
-            udiseMsg.innerText = 'Uploading to Google Sheets...';
-
-            fetch(udiseScriptURL, { method: 'POST', body: new FormData(udiseForm)})
-                .then(response => {
-                    udiseBtn.disabled = false;
-                    udiseBtn.innerText = 'Submit Enrolment';
-                    udiseMsg.style.background = '#f0fff4';
-                    udiseMsg.style.color = 'green';
-                    udiseMsg.innerText = 'Data successfully saved to UDISE database!';
-                    udiseForm.reset();
-                    setTimeout(() => { udiseModal.style.display = 'none'; udiseMsg.style.display = 'none'; }, 2500);
-                })
-                .catch(error => {
-                    udiseBtn.disabled = false;
-                    udiseBtn.innerText = 'Submit Enrolment';
-                    udiseMsg.style.background = '#fff5f5';
-                    udiseMsg.style.color = 'red';
-                    udiseMsg.innerText = 'Submission error. Please try again.';
                     console.error('Error!', error.message);
                 });
         });
