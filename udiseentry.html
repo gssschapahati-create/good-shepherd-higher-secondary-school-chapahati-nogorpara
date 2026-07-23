@@ -1,0 +1,1026 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Good Shepherd School</title>
+    <link rel="icon" type="images/png" href="images/favico.png">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* ==========================================
+           UDISE+ Form Styles
+           ========================================== */
+        body { font-family: Arial, sans-serif; background-color: #f4f7f6; margin: 0; }
+        .form-wrapper { max-width: 900px; background: #fff; padding: 30px; margin: 40px auto; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border-top: 5px solid #003366; }
+        .form-heading { text-align: center; color: #2e7d32; font-size: 2rem; margin-bottom: 30px; text-transform: uppercase; border-bottom: 2px solid #e8f5e9; padding-bottom: 10px; }
+        .form-header { text-align: center; border-bottom: 2px solid #003366; padding-bottom: 15px; margin-bottom: 20px; }
+        .form-header h1 { color: #003366; margin: 5px 0; font-size: 24px; }
+        .form-header p { margin: 3px 0; font-size: 14px; color: #555; }
+        .form-group { display: flex; flex-wrap: wrap; margin-bottom: 15px; }
+        .form-group label { flex: 1 0 35%; margin-right: 15px; font-weight: bold; font-size: 14px; align-self: center; }
+        .form-group input, .form-group select { flex: 1 0 60%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+        .input-group { flex: 1 0 60%; display: flex; align-items: center; }
+        .input-group input { width: 100%; }
+        .input-group span { padding-left: 10px; font-weight: bold; color: #555; }
+        .section-title { background: #003366; color: #fff; padding: 10px; margin: 20px 0 15px 0; border-radius: 4px; font-size: 16px; }
+        .instructions { background: #eef; padding: 15px; border-left: 4px solid #003366; margin-top: 20px; font-size: 13px; }
+        .multilingual-banner { background: #fff3cd; padding: 15px; border-left: 4px solid #ffc107; margin-bottom: 20px; font-size: 14px; line-height: 1.6; border-radius: 4px; }
+        button[type="submit"] { background: #003366; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; width: 100%; margin-top: 20px; }
+        button[type="submit"]:hover { background: #002244; }
+        #message { text-align: center; margin-top: 15px; font-weight: bold; color: green; }
+        .hidden { display: none !important; margin-top: 10px; }
+
+        /* ==========================================
+           Language Switcher Styles
+           ========================================== */
+        .lang-switch-container { display: flex; justify-content: center; gap: 10px; margin-bottom: 20px; }
+        .lang-btn { padding: 8px 15px; border: 1px solid #003366; background: #fff; color: #003366; border-radius: 4px; cursor: pointer; font-weight: bold; }
+        .lang-btn.active { background: #003366; color: #fff; }
+        
+        /* Language Visibility Rules */
+        .form-wrapper.en-active .lang:not(.en) { display: none !important; }
+        .form-wrapper.hi-active .lang:not(.hi) { display: none !important; }
+        .form-wrapper.garo-active .lang:not(.garo) { display: none !important; }
+
+        /* ==========================================
+           Dropdown Details Styles (Consent Form)
+           ========================================== */
+        details.consent-dropdown {
+            background: #fff;
+            border: 1px solid #b30000;
+            border-radius: 6px;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+        details.consent-dropdown summary {
+            font-weight: bold;
+            color: #b30000;
+            cursor: pointer;
+            padding: 5px;
+            font-size: 15px;
+        }
+        .consent-content {
+            margin-top: 15px;
+            padding: 15px;
+            background: #fdfdfd;
+            border-top: 1px solid #eee;
+            font-size: 14px;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        /* ==========================================
+           Footer Styles
+           ========================================== */
+        .site-footer {
+            background-color: #222222;
+            color: #bbbbbb;
+            padding: 30px 0;
+            font-size: 14px;
+            text-align: center;
+            border-top: 3px solid #2e7d32;
+            margin-top: 40px;
+            width: 100%;
+        }
+        .site-footer .container { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+        .site-footer p { margin: 5px 0; }
+
+        /* ==========================================
+           Donation Popup Styles
+           ========================================== */
+        #donation-qr-box {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 220px;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.15);
+            padding: 20px;
+            text-align: center;
+            z-index: 9999;
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+        #donation-qr-box.show {
+            opacity: 1;
+            pointer-events: auto;
+            animation: floatHover 4s ease-in-out infinite; 
+        }
+        @keyframes floatHover {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+            100% { transform: translateY(0px); }
+        }
+        #close-donation-box {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            background: transparent;
+            border: none;
+            font-size: 24px;
+            color: #888;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        #close-donation-box:hover { color: #ff0000; }
+        #donation-qr-title { font-weight: bold; font-size: 1.1rem; color: #333; margin-bottom: 12px; margin-top: 5px; }
+        #qr-code-placeholder img { width: 100%; max-width: 160px; height: auto; border-radius: 8px; border: 2px solid #f0f0f0; }
+        #qr-scan-label { margin-top: 10px; font-size: 0.9rem; color: #666; font-weight: 500; }
+    </style>
+</head>
+<body>
+
+    <!-- Back to Main Page Navigation -->
+    <div style="background: #003366; padding: 15px; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+        <a href="index.html" style="color: white; text-decoration: none; font-size: 16px; font-weight: bold;">&#8592; Back to Main Page</a>
+    </div>
+
+    <!-- STUDENTS UDISE + FORM - 2026-2027 Section -->
+    <div id="form-container" class="form-wrapper en-active">
+        
+        <!-- Language Switcher -->
+        <div class="lang-switch-container">
+            <button class="lang-btn active" onclick="setLanguage('en', this)">English</button>
+            <button class="lang-btn" onclick="setLanguage('hi', this)">हिंदी (Hindi)</button>
+            <button class="lang-btn" onclick="setLanguage('garo', this)">Garo</button>
+        </div>
+
+        <h2 class="form-heading">STUDENTS UDISE + FORM - 2026-2027</h2>
+        
+        <div class="form-header">
+            <h1>GOOD SHEPHERD HIGHER SECONDARY SCHOOL</h1>
+            <p>CHAPAHATI, NOGORPARA SOUTH WEST GARO HILLS MEGHALAYA - 794106</p>
+            <p>Affiliated to Meghalaya Board of School Education, Affiliation No. 10710</p>
+            <p>📞 +91 98631 06661 | ✉️ gssschapahati@gmail.com | 🌐 https://gshsschapahati.jo3.org</p>
+            <h3 style="margin-top: 15px; color: #b30000;">
+                <span class="lang en">Student Data (in sync with U-DISE)</span>
+                <span class="lang hi">छात्र डेटा (यू-डाइस के अनुरूप)</span>
+                <span class="lang garo">Chatroni Data (U-DISE gita)</span>
+            </h3>
+            <p>Academic Year – 2026-2027</p>
+        </div>
+
+        <div class="multilingual-banner">
+            <span class="lang en"><strong>Important Instruction:</strong> Only parents or legal guardians are authorized to submit this form on behalf of the student.</span>
+            <span class="lang hi"><strong>महत्वपूर्ण निर्देश:</strong> छात्र की ओर से केवल माता-पिता या कानूनी अभिभावक ही यह फॉर्म जमा करने के लिए अधिकृत हैं।</span>
+            <span class="lang garo"><strong>Mongsonggipa Ge·eta:</strong> Bi·sani ma·a-paa ba niam gita nirokgipasan (Legal Guardian) ia form-ko on·na ba submit ka·na man·gen.</span>
+        </div>
+
+        <form id="udiseForm">
+            
+            <!-- PEN Selection Section -->
+            <div class="section-title">
+                <span class="lang en">Permanent Education Number (PEN) Status</span>
+                <span class="lang hi">स्थायी शिक्षा संख्या (PEN) स्थिति</span>
+                <span class="lang garo">Permanent Education Number (PEN) Obosta</span>
+            </div>
+            <div class="form-group" style="background: #e3f2fd; padding: 15px; border-radius: 6px; border: 1px solid #bbdefb; width: 100%;">
+                <label style="flex: 1 0 100%; margin-bottom: 10px; font-size: 16px; color: #0277bd;">
+                    <span class="lang en">Does the student already have a Permanent Education Number (PEN) from a previous school? *</span>
+                    <span class="lang hi">क्या छात्र के पास पिछले स्कूल से पहले से ही स्थायी शिक्षा संख्या (PEN) है? *</span>
+                    <span class="lang garo">Chatri/Chatro-o batanggipa school-ni Permanent Education Number (PEN) da·o dongama? *</span>
+                </label>
+                <div style="flex: 1 0 100%;">
+                    <label style="margin-right: 20px; cursor: pointer;">
+                        <input type="radio" name="hasPen" value="Yes" required> 
+                        <span class="lang en">Yes</span><span class="lang hi">हाँ</span><span class="lang garo">Oe</span>
+                    </label>
+                    <label style="cursor: pointer;">
+                        <input type="radio" name="hasPen" value="No" required> 
+                        <span class="lang en">No</span><span class="lang hi">नहीं</span><span class="lang garo">Ih-ih</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Existing PEN Details (Shown if 'Yes') -->
+            <div id="existing-pen-section" class="hidden" style="background: #fff9c4; padding: 15px; border-radius: 6px; border: 1px solid #fbc02d; margin-bottom: 20px;">
+                <h4 style="color: #f57f17; margin-top: 0;">
+                    <span class="lang en">Provide Existing Details</span>
+                    <span class="lang hi">मौजूदा विवरण प्रदान करें</span>
+                    <span class="lang garo">Donggipa U·iatanirangko On·bo</span>
+                </h4>
+                <div class="form-group">
+                    <label>
+                        <span class="lang en">Student's PEN Number *</span>
+                        <span class="lang hi">छात्र का PEN नंबर *</span>
+                        <span class="lang garo">Chatroni PEN Number *</span>
+                    </label>
+                    <input type="text" name="existingPenNumber" class="pen-field" placeholder="Enter PEN" disabled required>
+                </div>
+                <div class="form-group">
+                    <label>
+                        <span class="lang en">Date of Birth (As recorded in previous school U-DISE) *</span>
+                        <span class="lang hi">जन्म तिथि (पिछले स्कूल U-DISE के अनुसार) *</span>
+                        <span class="lang garo">Atchigipa Sal (Batanggipa school-ni U-DISE gita) *</span>
+                    </label>
+                    <input type="date" name="existingPenDob" class="pen-field" disabled required>
+                </div>
+                <p style="color: #d32f2f; font-size: 14px; font-weight: bold; margin-bottom: 0;">
+                    <span class="lang en">Note: If details are not correct as per the previous school UDISE, it will not be accepted in the present school. You do not need to submit the rest of the form.</span>
+                    <span class="lang hi">नोट: यदि विवरण पिछले स्कूल UDISE के अनुसार सही नहीं हैं, तो इसे वर्तमान स्कूल में स्वीकार नहीं किया जाएगा। आपको बाकी फॉर्म जमा करने की आवश्यकता नहीं है।</span>
+                    <span class="lang garo">U·iatani: Batanggipa school-ni UDISE gita on·gipa data-rang tik ong·jaode, da·o school-o ra·chakjawa. Na·a gipin form-ko on·na nangjawa.</span>
+                </p>
+            </div>
+
+            <!-- APAAR Digital Consent Instructions (Shown if 'No') -->
+            <div id="apaar-section" class="hidden">
+                <details class="consent-dropdown" open>
+                    <summary>
+                        <span class="lang en">📄 Instructions & Parental Consent for APAAR ID</span>
+                        <span class="lang hi">📄 अपार (APAAR) आईडी के लिए निर्देश और माता-पिता की सहमति</span>
+                        <span class="lang garo">📄 APAAR ID-na U·iatani aro Ma-Pani Namnikani</span>
+                    </summary>
+                    <div class="consent-content">
+                        <!-- English Instructions -->
+                        <div class="lang en">
+                            <h4 style="text-align: center; margin-top: 0;">PARENTAL CONSENT INSTRUCTIONS FOR APAAR ID</h4>
+                            <p>Please read the instructions carefully. By selecting the <strong>Tick (✓)</strong> mark below, you voluntarily give your consent to share your ward's Aadhaar Number or Alternate Govt. Issued ID with the Ministry of Education for the sole purpose of creating an APAAR ID and opening a DigiLocker account.</p>
+                            <p>If you do not wish to generate an APAAR ID at this time, please select the <strong>Cross (✗)</strong> mark.</p>
+                        </div>
+
+                        <!-- Hindi Instructions -->
+                        <div class="lang hi">
+                            <h4 style="text-align: center; margin-top: 0;">अपार (APAAR) आईडी के लिए माता-पिता की सहमति निर्देश</h4>
+                            <p>कृपया निर्देशों को ध्यान से पढ़ें। नीचे दिए गए <strong>सही (✓) Tick</strong> के निशान का चयन करके, आप अपार आईडी बनाने और डिजिलॉकर खाता खोलने के उद्देश्य से शिक्षा मंत्रालय के साथ अपने बच्चे का आधार नंबर या वैकल्पिक सरकारी आईडी साझा करने के लिए स्वेच्छा से सहमति देते हैं।</p>
+                            <p>यदि आप इस समय अपार आईडी नहीं बनाना चाहते हैं, तो कृपया <strong>क्रॉस (✗) Cross</strong> का निशान चुनें.</p>
+                        </div>
+
+                        <!-- Garo Instructions -->
+                        <div class="lang garo">
+                            <h4 style="text-align: center; margin-top: 0;">APAAR ID-na Ma-Pani Namnikani U·iatani</h4>
+                            <p>Ka·sapae ge·etani-rangko name poraibo. Ka·mao on·gipa <strong>Tick (✓)</strong> mark-ko seoke, na·a nang·ni bi·sani Aadhaar Number ba sorkarini on·gipa gipin ID-ko Ministry of Education baksa APAAR ID tarina aro DigiLocker account odena on·na namnika.</p>
+                            <p>Na·a da·o APAAR ID tarina namnikja ong·ode, ka·sapae <strong>Cross (✗)</strong> mark-ko seokbo.</p>
+                        </div>
+
+                        <!-- Interactive Tick / Cross Options -->
+                        <div style="margin-top: 20px; padding: 15px; background: #e8f5e9; border: 1px solid #c8e6c9; border-radius: 6px;">
+                            <p style="margin-top: 0; font-weight: bold; color: #2e7d32;">
+                                <span class="lang en">Please provide your consent below: *</span>
+                                <span class="lang hi">कृपया नीचे अपनी सहमति दें: *</span>
+                                <span class="lang garo">Ka·sapae ka·mao nang'ni namnikani-ko on·bo: *</span>
+                            </p>
+                            <label style="display: flex; align-items: center; cursor: pointer; margin-bottom: 15px; font-size: 16px;">
+                                <input type="radio" name="apaarConsent" class="apaar-field" value="Consent Given (Tick)" disabled required style="width: 22px; height: 22px; margin-right: 12px;">
+                                <span class="lang en"><strong>✓ TICK:</strong> I CONSENT to generate APAAR ID</span>
+                                <span class="lang hi"><strong>✓ सही (TICK):</strong> मैं APAAR ID बनाने के लिए सहमत हूँ</span>
+                                <span class="lang garo"><strong>✓ TICK:</strong> Anga APAAR ID tarina namnika</span>
+                            </label>
+                            <label style="display: flex; align-items: center; cursor: pointer; font-size: 16px;">
+                                <input type="radio" name="apaarConsent" class="apaar-field" value="Consent Refused (Cross)" disabled required style="width: 22px; height: 22px; margin-right: 12px;">
+                                <span class="lang en"><strong>✗ CROSS:</strong> I DO NOT CONSENT (Opt-out)</span>
+                                <span class="lang hi"><strong>✗ क्रॉस (CROSS):</strong> मैं सहमत नहीं हूँ</span>
+                                <span class="lang garo"><strong>✗ CROSS:</strong> Anga namnikja</span>
+                            </label>
+                        </div>
+                    </div>
+                </details>
+            </div>
+
+            <!-- No Consent Warning Message -->
+            <div id="no-consent-message" class="hidden" style="color: #b71c1c; font-weight: bold; padding: 15px; background: #ffebee; border: 1px solid #ffcdd2; border-radius: 6px; margin-bottom: 20px; text-align: center;">
+                <span class="lang en">❌ You chose not to consent. The form will not be shown and the student will not be able to create a PEN Number in the school. The admission cannot proceed.</span>
+                <span class="lang hi">❌ आपने सहमति नहीं दी है। फॉर्म नहीं दिखाया जाएगा और छात्र स्कूल में PEN संख्या नहीं बना पाएगा।</span>
+                <span class="lang garo">❌ Na·a namnikjaha. Form-ko mesokjawa aro bi·sa school-o PEN Number tarina man·jawa.</span>
+            </div>
+
+            <!-- MAIN UDISE FORM WRAPPER -->
+            <div id="main-udise-form" class="hidden">
+                <div class="section-title">
+                    <span class="lang en">General Information</span>
+                    <span class="lang hi">सामान्य जानकारी</span>
+                    <span class="lang garo">Ramram U·iatani</span>
+                </div>
+                
+                <div class="form-group">
+                    <label>
+                        <span class="lang en">Student's Name (Full Name) *</span>
+                        <span class="lang hi">छात्र का पूरा नाम *</span>
+                        <span class="lang garo">Chatroni Bimung (Chu·gimik) *</span>
+                    </label>
+                    <input type="text" name="studentName" disabled required>
+                </div>
+                
+                <div class="form-group">
+                    <label>
+                        <span class="lang en">Class & Section *</span>
+                        <span class="lang hi">कक्षा और वर्ग *</span>
+                        <span class="lang garo">Class aro Section *</span>
+                    </label>
+                    <select name="classSec" disabled required>
+                        <option value="">Select Class & Section...</option>
+                        <optgroup label="Pre-Primary & Primary (Sections A & B)">
+                            <option value="Nursery A">Nursery A</option>
+                            <option value="Nursery B">Nursery B</option>
+                            <option value="LKG A">LKG A</option>
+                            <option value="LKG B">LKG B</option>
+                            <option value="UKG A">UKG A</option>
+                            <option value="UKG B">UKG B</option>
+                            <option value="Class I A">Class I A</option>
+                            <option value="Class I B">Class I B</option>
+                            <option value="Class II A">Class II A</option>
+                            <option value="Class II B">Class II B</option>
+                            <option value="Class III A">Class III A</option>
+                            <option value="Class III B">Class III B</option>
+                            <option value="Class IV A">Class IV A</option>
+                            <option value="Class IV B">Class IV B</option>
+                            <option value="Class V A">Class V A</option>
+                            <option value="Class V B">Class V B</option>
+                            <option value="Class VI A">Class VI A</option>
+                            <option value="Class VI B">Class VI B</option>
+                        </optgroup>
+                        <optgroup label="Upper Primary & Secondary">
+                            <option value="Class VII">Class VII</option>
+                            <option value="Class VIII">Class VIII</option>
+                            <option value="Class IX">Class IX</option>
+                            <option value="Class X">Class X</option>
+                            <option value="Class XI">Class XI</option>
+                            <option value="Class XII">Class XII</option>
+                        </optgroup>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>
+                        <span class="lang en">Student's AADHAAR Number *</span>
+                        <span class="lang hi">छात्र का आधार नंबर *</span>
+                        <span class="lang garo">Chatroni AADHAAR Number *</span>
+                    </label>
+                    <input type="text" name="aadhaar" pattern="\d{12}" maxlength="12" minlength="12" title="Please enter exactly 12 digits" placeholder="12-digit Aadhaar Number" disabled required>
+                </div>
+                
+                <div class="form-group">
+                    <label>
+                        <span class="lang en">Father’s Name (Full Name) *</span>
+                        <span class="lang hi">पिता का पूरा नाम *</span>
+                        <span class="lang garo">Paa-ni Bimung (Chu·gimik) *</span>
+                    </label>
+                    <input type="text" name="fatherName" disabled required>
+                </div>
+                
+                <div class="form-group">
+                    <label>
+                        <span class="lang en">Mother’s Name (Full Name) *</span>
+                        <span class="lang hi">माता का पूरा नाम *</span>
+                        <span class="lang garo">Maa-ni Bimung (Chu·gimik) *</span>
+                    </label>
+                    <input type="text" name="motherName" disabled required>
+                </div>
+                
+                <div class="form-group">
+                    <label>
+                        <span class="lang en">Date of Birth (DD/MM/YYYY) *</span>
+                        <span class="lang hi">जन्म तिथि (DD/MM/YYYY) *</span>
+                        <span class="lang garo">Atchigipa Sal (DD/MM/YYYY) *</span>
+                    </label>
+                    <input type="date" name="dob" max="2023-12-31" title="Birth year 2024 or later is not allowed" disabled required>
+                </div>
+                
+                <div class="form-group">
+                    <label>
+                        <span class="lang en">Gender *</span>
+                        <span class="lang hi">लिंग *</span>
+                        <span class="lang garo">Me·a/Me·chik *</span>
+                    </label>
+                    <select name="gender" disabled required>
+                        <option value="">Select...</option>
+                        <option value="1">Boy (1)</option>
+                        <option value="2">Girl (2)</option>
+                        <option value="3">Other (3)</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>
+                        <span class="lang en">Social Category *</span>
+                        <span class="lang hi">सामाजिक श्रेणी *</span>
+                        <span class="lang garo">Jat/Jatni Bak *</span>
+                    </label>
+                    <select name="socialCategory" disabled required>
+                        <option value="">Select...</option>
+                        <option value="1">General (1)</option>
+                        <option value="2">SC (2)</option>
+                        <option value="3">ST (3)</option>
+                        <option value="4">OBC (4)</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>
+                        <span class="lang en">Religion *</span>
+                        <span class="lang hi">धर्म *</span>
+                        <span class="lang garo">Torom *</span>
+                    </label>
+                    <select name="religion" disabled required>
+                        <option value="">Select Religion...</option>
+                        <option value="Christianity">Christianity</option>
+                        <option value="Hinduism">Hinduism</option>
+                        <option value="Islam">Islam</option>
+                        <option value="Buddhism">Buddhism</option>
+                        <option value="Sikhism">Sikhism</option>
+                        <option value="Jainism">Jainism</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>
+                        <span class="lang en">If Christian, mention denomination</span>
+                        <span class="lang hi">यदि ईसाई हैं, तो संप्रदाय का उल्लेख करें</span>
+                        <span class="lang garo">Christian ong·ode, Mondoli-ko janapbo</span>
+                    </label>
+                    <select name="denomination" disabled>
+                        <option value="">Select Denomination (If Applicable)...</option>
+                        <option value="Roman Catholic">Roman Catholic</option>
+                        <option value="Baptist">Baptist</option>
+                        <option value="Seventh-Day Adventist">Seventh-Day Adventist</option>
+                        <option value="Presbyterian">Presbyterian</option>
+                        <option value="Church of North India (CNI)">Church of North India (CNI)</option>
+                        <option value="Pentecostal">Pentecostal</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>
+                        <span class="lang en">Mother Tongue *</span>
+                        <span class="lang hi">मातृभाषा *</span>
+                        <span class="lang garo">Ma·a-ku *</span>
+                    </label>
+                    <select name="motherTongue" disabled required>
+                        <option value="">Select Mother Tongue...</option>
+                        <option value="Garo">Garo</option>
+                        <option value="Hajong">Hajong</option>
+                        <option value="Koch">Koch</option>
+                        <option value="Bengali">Bengali</option>
+                        <option value="Assamese">Assamese</option>
+                        <option value="Rabha">Rabha</option>
+                        <option value="Bodo">Bodo</option>
+                        <option value="Hindi">Hindi</option>
+                        <option value="English">English</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>
+                        <span class="lang en">Name of Habitation/Locality *</span>
+                        <span class="lang hi">बस्ती/मोहल्ले का नाम *</span>
+                        <span class="lang garo">Donggipa Biap/Song *</span>
+                    </label>
+                    <input type="text" name="locality" disabled required>
+                </div>
+                
+                <div class="form-group">
+                    <label>
+                        <span class="lang en">Mobile No (Student/Parent/Guardian) *</span>
+                        <span class="lang hi">मोबाइल नं. (छात्र/माता-पिता/अभिभावक) *</span>
+                        <span class="lang garo">Mobile No (Bi·sa/Ma-Pa/Nirokgipa) *</span>
+                    </label>
+                    <input type="tel" name="mobileNo" pattern="\d{10}" title="Enter a 10-digit mobile number" disabled required>
+                </div>
+
+                <div class="section-title">
+                    <span class="lang en">Enrollment Details</span>
+                    <span class="lang hi">नामांकन विवरण</span>
+                    <span class="lang garo">Bimung Segatani Bidingo</span>
+                </div>
+                
+                <div class="form-group">
+                    <label>
+                        <span class="lang en">Date of Admission *</span>
+                        <span class="lang hi">प्रवेश की तिथि *</span>
+                        <span class="lang garo">Bimung Segatgipa Sal *</span>
+                    </label>
+                    <input type="date" name="doa" disabled required>
+                </div>
+                
+                <div class="form-group">
+                    <label>
+                        <span class="lang en">Admission Number *</span>
+                        <span class="lang hi">प्रवेश संख्या *</span>
+                        <span class="lang garo">Admission Number *</span>
+                    </label>
+                    <input type="number" name="admissionNo" placeholder="Numbers only" disabled required>
+                </div>
+                
+                <div class="form-group">
+                    <label>
+                        <span class="lang en">Belong to BPL? *</span>
+                        <span class="lang hi">क्या BPL से संबंधित हैं? *</span>
+                        <span class="lang garo">BPL-o ga·aka ma? *</span>
+                    </label>
+                    <select name="bpl" disabled required>
+                        <option value="">Select...</option>
+                        <option value="1">Yes (1)</option>
+                        <option value="2">No (2)</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>
+                        <span class="lang en">Belong to Disadvantaged Group? *</span>
+                        <span class="lang hi">क्या वंचित समूह से संबंधित हैं? *</span>
+                        <span class="lang garo">Neng·nikgipa Dol-o ga·aka ma? *</span>
+                    </label>
+                    <select name="disadvantagedGroup" disabled required>
+                        <option value="">Select...</option>
+                        <option value="1">Yes (1)</option>
+                        <option value="2">No (2)</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>
+                        <span class="lang en">Getting free education as per RTE Act?</span>
+                        <span class="lang hi">क्या RTE अधिनियम के तहत मुफ्त शिक्षा मिल रही है?</span>
+                        <span class="lang garo">RTE Niam gita indin skie ra·enga ma?</span>
+                    </label>
+                    <select name="rte" disabled>
+                        <option value="">Select...</option>
+                        <option value="1">Yes (1)</option>
+                        <option value="2">No (2)</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>
+                        <span class="lang en">Studying in Class (Present) *</span>
+                        <span class="lang hi">कक्षा में अध्ययनरत (वर्तमान) *</span>
+                        <span class="lang garo">Da·o Poraienggipa Class *</span>
+                    </label>
+                    <select name="presentClass" disabled required>
+                        <option value="">Select Present Class...</option>
+                        <option value="Nursery">Nursery</option>
+                        <option value="LKG">LKG</option>
+                        <option value="UKG">UKG</option>
+                        <option value="1">Class 1</option>
+                        <option value="2">Class 2</option>
+                        <option value="3">Class 3</option>
+                        <option value="4">Class 4</option>
+                        <option value="5">Class 5</option>
+                        <option value="6">Class 6</option>
+                        <option value="7">Class 7</option>
+                        <option value="8">Class 8</option>
+                        <option value="9">Class 9</option>
+                        <option value="10">Class 10</option>
+                        <option value="11">Class 11</option>
+                        <option value="12">Class 12</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>
+                        <span class="lang en">Class studied in Previous Year *</span>
+                        <span class="lang hi">पिछले वर्ष किस कक्षा में अध्ययन किया *</span>
+                        <span class="lang garo">Batanggimin Bilsio Poraigipa Class *</span>
+                    </label>
+                    <select name="previousClass" disabled required>
+                        <option value="">Select Previous Class...</option>
+                        <option value="Not Applicable">Not Applicable (For Nursery)</option>
+                        <option value="LKG">LKG</option>
+                        <option value="UKG">UKG</option>
+                        <option value="1">Class 1</option>
+                        <option value="2">Class 2</option>
+                        <option value="3">Class 3</option>
+                        <option value="4">Class 4</option>
+                        <option value="5">Class 5</option>
+                        <option value="6">Class 6</option>
+                        <option value="7">Class 7</option>
+                        <option value="8">Class 8</option>
+                        <option value="9">Class 9</option>
+                        <option value="10">Class 10</option>
+                        <option value="11">Class 11</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>
+                        <span class="lang en">Days child attended school (Prev. year) *</span>
+                        <span class="lang hi">बच्चे ने स्कूल में कितने दिन उपस्थित रहा (पिछले वर्ष) *</span>
+                        <span class="lang garo">Batanggimin Bilsio School-chi re·gipa sal-rang *</span>
+                    </label>
+                    <input type="number" name="daysAttended" min="0" placeholder="Numbers only" disabled required>
+                </div>
+                
+                <div class="form-group">
+                    <label>
+                        <span class="lang en">Medium of Instruction *</span>
+                        <span class="lang hi">शिक्षा का माध्यम *</span>
+                        <span class="lang garo">Skigipa Ku·sik *</span>
+                    </label>
+                    <select name="medium" disabled required>
+                        <option value="">Select Medium...</option>
+                        <option value="English">English</option>
+                        <option value="Garo">Garo</option>
+                        <option value="Assamese">Assamese</option>
+                        <option value="Bengali">Bengali</option>
+                        <option value="Hindi">Hindi</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+
+                <div class="section-title">
+                    <span class="lang en">Health & Examination Details</span>
+                    <span class="lang hi">स्वास्थ्य और परीक्षा विवरण</span>
+                    <span class="lang garo">An·seng-Baljoani aro Porikka Bidingo</span>
+                </div>
+                
+                <div class="form-group">
+                    <label>
+                        <span class="lang en">Height (in cm) *</span>
+                        <span class="lang hi">ऊंचाई (सेमी में) *</span>
+                        <span class="lang garo">Chuang (cm-o) *</span>
+                    </label>
+                    <div class="input-group">
+                        <input type="number" name="height" step="0.1" min="0" disabled required>
+                        <span>cm</span>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>
+                        <span class="lang en">Weight (in kg) *</span>
+                        <span class="lang hi">वजन (किलो में) *</span>
+                        <span class="lang garo">Jrim (kg-o) *</span>
+                    </label>
+                    <div class="input-group">
+                        <input type="number" name="weight" step="0.1" min="0" disabled required>
+                        <span>kg</span>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>
+                        <span class="lang en">Type of Disability (if any)</span>
+                        <span class="lang hi">विकलांगता का प्रकार (यदि कोई हो)</span>
+                        <span class="lang garo">Neng·nikani/Disability (Donga ong·ode)</span>
+                    </label>
+                    <div style="flex: 1 0 60%;">
+                        <select name="disability" id="disabilitySelect" onchange="toggleDisabilityInput()" style="width: 100%;" disabled>
+                            <option value="None">None</option>
+                            <option value="Visual Impairment">Visual Impairment</option>
+                            <option value="Hearing Impairment">Hearing Impairment</option>
+                            <option value="Locomotor Disability">Locomotor Disability</option>
+                            <option value="Speech and Language Disability">Speech and Language Disability</option>
+                            <option value="Intellectual Disability">Intellectual Disability</option>
+                            <option value="Specific Learning Disabilities">Specific Learning Disabilities</option>
+                            <option value="Autism Spectrum Disorder">Autism Spectrum Disorder</option>
+                            <option value="Other">Other (Please Specify)</option>
+                        </select>
+                        <input type="text" name="customDisability" id="customDisability" class="hidden" placeholder="Type disability here (Mandatory)" style="width: 100%;" disabled>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>
+                        <span class="lang en">Facilities received by CWSN</span>
+                        <span class="lang hi">CWSN द्वारा प्राप्त सुविधाएं</span>
+                        <span class="lang garo">CWSN-na on·gimin chol-rang</span>
+                    </label>
+                    <input type="text" name="cwsnFacilities" disabled>
+                </div>
+                
+                <div class="form-group">
+                    <label>
+                        <span class="lang en">Last Exam: Appeared? *</span>
+                        <span class="lang hi">पिछली परीक्षा: उपस्थित हुए? *</span>
+                        <span class="lang garo">Batanggipa Porikka: Seaha ma? *</span>
+                    </label>
+                    <select name="examAppeared" disabled required>
+                        <option value="">Select...</option>
+                        <option value="1">Yes (1)</option>
+                        <option value="2">No (2)</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>
+                        <span class="lang en">Last Exam: Passed? *</span>
+                        <span class="lang hi">पिछली परीक्षा: उत्तीर्ण? *</span>
+                        <span class="lang garo">Batanggipa Porikka: Pass ka·aha ma? *</span>
+                    </label>
+                    <select name="examPassed" disabled required>
+                        <option value="">Select...</option>
+                        <option value="1">Yes (1)</option>
+                        <option value="2">No (2)</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>
+                        <span class="lang en">% of Marks obtained *</span>
+                        <span class="lang hi">प्राप्त अंकों का % *</span>
+                        <span class="lang garo">Man·gipa Marks-ni % *</span>
+                    </label>
+                    <input type="number" name="examMarks" step="0.01" min="0" max="100" disabled required>
+                </div>
+
+                <div class="section-title">
+                    <span class="lang en">Tablets Received</span>
+                    <span class="lang hi">प्राप्त टेबलेट्स</span>
+                    <span class="lang garo">Sam (Tablets) Man·gimin</span>
+                </div>
+                
+                <div class="form-group">
+                    <label>
+                        <span class="lang en">Iron & Folic acid *</span>
+                        <span class="lang hi">आयरन और फोलिक एसिड *</span>
+                        <span class="lang garo">Iron & Folic acid sam *</span>
+                    </label>
+                    <select name="ironFolic" disabled required>
+                        <option value="">Select...</option>
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>
+                        <span class="lang en">Deworming tablets *</span>
+                        <span class="lang hi">कृमिनाशक गोलियां *</span>
+                        <span class="lang garo">Jo·ongni Sam *</span>
+                    </label>
+                    <select name="deworming" disabled required>
+                        <option value="">Select...</option>
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>
+                        <span class="lang en">Vitamin-A supplement *</span>
+                        <span class="lang hi">विटामिन-ए सप्लीमेंट *</span>
+                        <span class="lang garo">Vitamin-A sam *</span>
+                    </label>
+                    <select name="vitaminA" disabled required>
+                        <option value="">Select...</option>
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                    </select>
+                </div>
+                
+                <div class="section-title">
+                    <span class="lang en">Other Details</span>
+                    <span class="lang hi">अन्य विवरण</span>
+                    <span class="lang garo">Gipin Bidingo</span>
+                </div>
+                
+                <div class="form-group">
+                    <label>
+                        <span class="lang en">Distance of residence to school *</span>
+                        <span class="lang hi">निवास से स्कूल की दूरी *</span>
+                        <span class="lang garo">Nokoni School-ona Chel·a *</span>
+                    </label>
+                    <div class="input-group">
+                        <input type="number" name="distance" step="0.1" min="0" disabled required>
+                        <span>km</span>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>
+                        <span class="lang en">Highest Education Level of Parent/Guardian *</span>
+                        <span class="lang hi">माता-पिता/अभिभावक का उच्चतम शिक्षा स्तर *</span>
+                        <span class="lang garo">Ma-Pa/Nirokgipani Poraiani Gadang *</span>
+                    </label>
+                    <input type="number" name="parentEducation" min="0" placeholder="Numbers only" disabled required>
+                </div>
+
+                <!-- Mandatory Document Uploads Section -->
+                <div class="section-title" style="background: #2e7d32;">
+                    <span class="lang en">Mandatory Document Uploads</span>
+                    <span class="lang hi">अनिवार्य दस्तावेज़ अपलोड</span>
+                    <span class="lang garo">Nangchongmotgipa Lekka Upload Ka·ani</span>
+                </div>
+
+                
+                    <div class="form-group">
+                    <label>
+                        <span class="lang en">1. Upload Student's Aadhaar Card (PDF/Image) *</span>
+                        <span class="lang hi">1. छात्र का आधार कार्ड अपलोड करें *</span>
+                        <span class="lang garo">1. Chatroni Aadhaar Card Upload Ka·bo *</span>
+                    </label>
+                    <input type="file" name="studentAadhaarFile" accept=".pdf,image/*" disabled required>
+                </div>
+                    <div class="form-group">
+                    <label>
+                        <span class="lang en">2. Upload Father's Aadhaar Card (PDF/Image) *</span>
+                        <span class="lang hi">2. आधार सेवा केंद्र / सक्षम अधिकारी *</span>
+                        <span class="lang garo">2. Pagipani Aadhaar Card Upload Ka·bo *</span>
+                    </label>
+                    <input type="file" name="studentAadhaarFile" accept=".pdf,image/*" disabled required>
+                </div>
+
+                <div class="form-group">
+                    <label>
+                        <span class="lang en">3. Mother's Aadhaar Card (PDF/Image) *</span>
+                        <span class="lang hi">3. आधार कार्ड अपलोड करें *</span>
+                        <span class="lang garo">3. Ma·ani Aadhaar Card Upload Ka·bo *</span>
+                    </label>
+                    <input type="file" name="parentAadhaarFile" accept=".pdf,image/*" disabled required>
+                </div>
+
+                <div class="instructions">
+                    <strong>
+                        <span class="lang en">Additional Instructions:</span>
+                        <span class="lang hi">अतिरिक्त निर्देश:</span>
+                        <span class="lang garo">Gipin U·iatani:</span>
+                    </strong><br>
+                    <span class="lang en">Please ensure all uploaded files are clear and readable. Failure to upload required documents will result in non-acceptance.</span>
+                    <span class="lang hi">कृपया सुनिश्चित करें कि सभी अपलोड की गई फ़ाइलें स्पष्ट हैं। आवश्यक दस्तावेज़ अपलोड करने में विफलता के परिणामस्वरूप फॉर्म अस्वीकार कर दिया जाएगा।</span>
+                    <span class="lang garo">Upload ka·gipa lekkarang rongtale nina man·gipa ong·na nanggen. Nangchongmotgipa lekkarangko upload ka·jaha ong·ode ra·chakjawa.</span>
+                    <br><br>
+                    <strong>Help Desk:</strong> 8258813963 / 8131813772
+                </div>
+            </div> <!-- End Main Form wrapper -->
+
+            <div id="submit-btn-wrapper" class="hidden">
+                <button type="submit">
+                    <span class="lang en">Submit Form</span>
+                    <span class="lang hi">फॉर्म जमा करें</span>
+                    <span class="lang garo">Form-ko Submit Ka·bo</span>
+                </button>
+            </div>
+            <p id="message"></p>
+        </form>
+    </div>
+
+    <!-- Footer Area -->
+    <footer class="site-footer">
+        <div class="container">
+            <p>&copy; 2026 Good Shepherd Higher Secondary School, Chapahati. All Rights Reserved.</p>
+            <p style="font-size: 12px; color: #888;">Managed by Good Shepherd Church Chapahati | Powered by Local Administration Desk</p>
+        </div>
+    </footer>
+
+    <!-- Donation QR Code Box -->
+    <div id="donation-qr-box">
+        <button id="close-donation-box" onclick="closeDonationBox()">&times;</button>
+        <div id="donation-qr-title">Support Good Shepherd</div>
+        <div id="qr-code-placeholder">
+            <img src="https://i.postimg.cc/t42Rp5Mq/ba025f5a-46f7-4f4c-b0fd-fe8be4d93747.jpg" alt="Donation QR Code">
+        </div>
+        <div id="qr-scan-label">Scan to Donate</div>
+    </div>
+
+    <script>
+        // Language Switcher Logic
+        function setLanguage(lang, btnElement) {
+            const wrapper = document.getElementById('form-container');
+            wrapper.className = 'form-wrapper ' + lang + '-active';
+            document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+            btnElement.classList.add('active');
+        }
+
+        // Field Enabling/Disabling Logic based on visibility
+        function toggleFields(containerSelector, enable) {
+            const fields = document.querySelectorAll(`${containerSelector} input:not([type="radio"]), ${containerSelector} select`);
+            fields.forEach(field => {
+                // Ensure internal toggle for custom disability is respected
+                if (field.id === 'customDisability') {
+                    if (enable) {
+                        toggleDisabilityInput(); 
+                    } else {
+                        field.setAttribute('disabled', 'true');
+                    }
+                    return;
+                }
+
+                if (enable) {
+                    field.removeAttribute('disabled');
+                } else {
+                    field.setAttribute('disabled', 'true');
+                }
+            });
+        }
+
+        // Radio elements
+        const hasPenRadios = document.querySelectorAll('input[name="hasPen"]');
+        const apaarRadios = document.querySelectorAll('input[name="apaarConsent"]');
+        
+        // Sections
+        const existingPenSection = document.getElementById('existing-pen-section');
+        const apaarSection = document.getElementById('apaar-section');
+        const mainForm = document.getElementById('main-udise-form');
+        const noConsentMsg = document.getElementById('no-consent-message');
+        const submitBtnWrapper = document.getElementById('submit-btn-wrapper');
+
+        // Logic for PEN status selection
+        hasPenRadios.forEach(radio => {
+            radio.addEventListener('change', (e) => {
+                if (e.target.value === 'Yes') {
+                    // Show PEN fields, hide the rest
+                    existingPenSection.classList.remove('hidden');
+                    apaarSection.classList.add('hidden');
+                    mainForm.classList.add('hidden');
+                    noConsentMsg.classList.add('hidden');
+                    submitBtnWrapper.classList.remove('hidden');
+                    
+                    // Uncheck APAAR if they navigate back and forth
+                    apaarRadios.forEach(r => r.checked = false);
+
+                    // Enable/Disable required validations
+                    toggleFields('#existing-pen-section', true);
+                    document.querySelectorAll('.apaar-field').forEach(f => f.setAttribute('disabled', 'true'));
+                    toggleFields('#main-udise-form', false);
+                } else {
+                    // Show APAAR consent, hide PEN fields
+                    existingPenSection.classList.add('hidden');
+                    apaarSection.classList.remove('hidden');
+                    mainForm.classList.add('hidden');
+                    noConsentMsg.classList.add('hidden');
+                    submitBtnWrapper.classList.add('hidden');
+                    
+                    // Uncheck APAAR if they navigate back and forth
+                    apaarRadios.forEach(r => r.checked = false);
+
+                    // Enable/Disable required validations
+                    toggleFields('#existing-pen-section', false);
+                    document.querySelectorAll('.apaar-field').forEach(f => f.removeAttribute('disabled'));
+                    toggleFields('#main-udise-form', false);
+                }
+            });
+        });
+
+        // Logic for APAAR Consent selection
+        apaarRadios.forEach(radio => {
+            radio.addEventListener('change', (e) => {
+                if (e.target.value === 'Consent Given (Tick)') {
+                    mainForm.classList.remove('hidden');
+                    noConsentMsg.classList.add('hidden');
+                    submitBtnWrapper.classList.remove('hidden');
+                    toggleFields('#main-udise-form', true);
+                } else {
+                    mainForm.classList.add('hidden');
+                    noConsentMsg.classList.remove('hidden');
+                    submitBtnWrapper.classList.add('hidden');
+                    toggleFields('#main-udise-form', false);
+                }
+            });
+        });
+
+        // Form Disability field toggler
+        function toggleDisabilityInput() {
+            const select = document.getElementById('disabilitySelect');
+            const customInput = document.getElementById('customDisability');
+            
+            if (select.value === 'Other') {
+                customInput.classList.remove('hidden');
+                customInput.required = true;
+                customInput.disabled = false;
+            } else {
+                customInput.classList.add('hidden');
+                customInput.required = false;
+                customInput.disabled = true;
+                customInput.value = ''; 
+            }
+        }
+
+        // Form submission logic
+        const form = document.getElementById('udiseForm');
+        const message = document.getElementById('message');
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbx3bxQtSf3fpky_lukk00bTbXteiSLUcOhtD1fPekYVb9Qh5DEXtXBm9eZfEO6kCb9e/exec'; 
+
+        form.addEventListener('submit', e => {
+            e.preventDefault();
+            message.innerText = "Submitting data and uploading files...";
+            
+            fetch(scriptURL, { method: 'POST', body: new FormData(form) })
+                .then(response => {
+                    message.innerText = "Data submitted successfully!";
+                    message.style.color = "green";
+                    form.reset();
+                    
+                    // Reset UI State
+                    existingPenSection.classList.add('hidden');
+                    apaarSection.classList.add('hidden');
+                    mainForm.classList.add('hidden');
+                    noConsentMsg.classList.add('hidden');
+                    submitBtnWrapper.classList.add('hidden');
+                    
+                    toggleFields('#existing-pen-section', false);
+                    document.querySelectorAll('.apaar-field').forEach(f => f.setAttribute('disabled', 'true'));
+                    toggleFields('#main-udise-form', false);
+                })
+                .catch(error => {
+                    message.innerText = "Error! Data not saved.";
+                    message.style.color = "red";
+                    console.error('Error!', error.message);
+                });
+        });
+
+        // Donation Box logic
+        function closeDonationBox() {
+            document.getElementById('donation-qr-box').classList.remove('show');
+        }
+
+        setTimeout(function() {
+            document.getElementById('donation-qr-box').classList.add('show');
+        }, 1500);
+    </script>
+</body>
+</html>
