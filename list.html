@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UDISE & APAAR Management Portal</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body { padding: 20px; background-color: #f8f9fa; }
+    .modal-header { background-color: #0d6efd; color: white; }
+    .readonly-field { background-color: #e9ecef; cursor: not-allowed; }
+    .consent-box { border: 1px solid #0d6efd; padding: 20px; border-radius: 5px; background: white;}
+  </style>
+</head>
+<body>
+
+<div class="container-fluid">
+  <h2 class="mb-4 text-center">School UDISE & APAAR Portal</h2>
+  
+  <!-- Search Box -->
+  <div class="card mb-4 p-3 shadow-sm">
+    <div class="row g-3">
+      <div class="col-md-4">
+        <input type="text" id="searchName" class="form-control" placeholder="Search by Student Name">
+      </div>
+      <div class="col-md-3">
+        <select id="searchClass" class="form-select" onchange="toggleSection()">
+          <option value="">Select Class</option>
+          <option value="Nursery/KG/PP3">Nursery/KG/PP3</option>
+          <option value="LKG/KG1/PP2">LKG/KG1/PP2</option>
+          <option value="UKG/KG2/PP1">UKG/KG2/PP1</option>
+          <option value="I">I</option>
+          <option value="II">II</option>
+          <option value="III">III</option>
+          <option value="IV">IV</option>
+          <option value="V">V</option>
+          <option value="VI">VI</option>
+          <option value="VII">VII</option>
+          <option value="VIII">VIII</option>
+          <option value="IX">IX</option>
+          <option value="X">X</option>
+          <option value="XI">XI</option>
+        </select>
+      </div>
+      <div class="col-md-3">
+        <select id="searchSection" class="form-select">
+          <option value="">Select Section</option>
+          <option value="A">A</option>
+          <option value="B">B</option>
+        </select>
+      </div>
+      <div class="col-md-2">
+        <button class="btn btn-primary w-100" onclick="performSearch()">Search</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Results Table -->
+  <div class="table-responsive bg-white shadow-sm p-3 rounded">
+    <div id="downloadHistory" class="alert alert-success d-none"></div>
+    <table class="table table-bordered table-hover align-middle">
+      <thead class="table-light">
+        <tr>
+          <th>Class</th>
+          <th>Sec</th>
+          <th>Student Name</th>
+          <th>PEN</th>
+          <th>Father Name</th>
+          <th>Mother Name</th>
+          <th>APAAR Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="resultsBody">
+        <tr><td colspan="8" class="text-center">Search to display records</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Edit Correction Modal -->
+<div class="modal fade" id="editModal" tabindex="-1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Correct Student Details</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <form id="editForm">
+          <p class="text-danger small">* Locked fields cannot be changed.</p>
+          <div class="row g-3">
+            <div class="col-md-6"><label>Student Name</label><input type="text" id="editName" class="form-control readonly-field" readonly></div>
+            <div class="col-md-6"><label>Student PEN</label><input type="text" id="editPen" class="form-control readonly-field" readonly></div>
+            <div class="col-md-4"><label>Class</label><input type="text" id="editClass" class="form-control readonly-field" readonly></div>
+            <div class="col-md-4"><label>DOB</label><input type="text" id="editDob" class="form-control readonly-field" readonly></div>
+            <div class="col-md-4"><label>AADHAAR No</label><input type="text" id="editAadhaar" class="form-control readonly-field" readonly></div>
+            
+            <hr>
+            <!-- Editable Correction Fields to match Google Sheet image -->
+            <div class="col-md-4"><label>Gender</label>
+              <select id="editGender" class="form-select">
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+              </select>
+            </div>
+            <div class="col-md-4"><label>Father Name</label><input type="text" id="editFather" class="form-control"></div>
+            <div class="col-md-4"><label>Mother Name</label><input type="text" id="editMother" class="form-control"></div>
+            
+            <div class="col-md-4"><label>Social Category</label><input type="text" id="editCategory" class="form-control" placeholder="e.g. 3-ST"></div>
+            <div class="col-md-4"><label>Minority Group</label><input type="text" id="editMinority" class="form-control" placeholder="e.g. Christian"></div>
+            <div class="col-md-2"><label>BPL</label>
+              <select id="editBpl" class="form-select">
+                <option value="No">No</option>
+                <option value="Yes">Yes</option>
+              </select>
+            </div>
+            <div class="col-md-2"><label>CWSN</label>
+              <select id="editCwsn" class="form-select">
+                <option value="No">No</option>
+                <option value="Yes">Yes</option>
+              </select>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" id="submitCorrectionBtn" class="btn btn-primary" onclick="submitCorrection()">Submit Correction</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Consent Form Modal -->
+<div class="modal fade" id="consentModal" tabindex="-1">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">CONSENT BY FATHER/MOTHER/LEGAL GUARDIAN FOR APAAR ID</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body consent-box m-3">
+        <form id="consentForm">
+          <div class="row align-items-center mb-3">
+            <div class="col-auto">I</div>
+            <div class="col-auto"><input type="text" id="cgName" class="form-control" placeholder="Guardian Name" required></div>
+            <div class="col-auto">as the</div>
+            <div class="col-auto">
+              <select id="cgRelation" class="form-select" required>
+                <option value="">SELECT</option>
+                <option value="Father">Father</option>
+                <option value="Mother">Mother</option>
+                <option value="Legal Guardian">Legal Guardian</option>
+              </select>
+            </div>
+            <div class="col-auto">of</div>
+            <div class="col-auto"><input type="text" id="cgStudentName" class="form-control readonly-field" readonly></div>
+          </div>
+          
+          <div class="row align-items-center mb-4">
+            <div class="col-auto">with my Identity Proof as</div>
+            <div class="col-auto">
+              <select id="cgIdType" class="form-select" required>
+                <option value="">SELECT</option>
+                <option value="Aadhaar">Aadhaar Card</option>
+                <option value="PAN">PAN Card</option>
+                <option value="VoterID">Voter ID</option>
+              </select>
+            </div>
+            <div class="col-auto">and Identity Proof Number</div>
+            <div class="col-auto"><input type="text" id="cgIdNumber" class="form-control" placeholder="ID Number" required></div>
+          </div>
+
+          <p class="text-muted" style="font-size: 14px; text-align: justify;">
+            voluntarily give my consent to share his/her AADHAAR Number and demographic information issued by UIDAI with Ministry of Education for the sole purpose of creation of APAAR ID and opening of DIGILOCKER account of my child...
+          </p>
+
+          <div class="row mt-4">
+            <div class="col-md-6 d-flex align-items-center">
+              <label class="me-2 fw-bold">Place of Physical Consent:</label>
+              <input type="text" id="cgPlace" class="form-control w-50" required>
+            </div>
+            <div class="col-md-6 d-flex align-items-center justify-content-end">
+              <label class="me-2 fw-bold">Date of Physical Consent:</label>
+              <input type="date" id="cgDate" class="form-control w-50" required>
+            </div>
+          </div>
+          <input type="hidden" id="cgPen">
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" id="submitConsentBtn" class="btn btn-success" onclick="submitConsent()">Submit Consent</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  // ==========================================
+  // IMPORTANT: PASTE YOUR DEPLOYED WEB APP URL HERE
+  // ==========================================
+  const API_URL = "https://script.google.com/macros/s/AKfycbzUdVuYl304Qm8QIB78OxC-fv0OtOqGz7djlhJ5K3vUVzichGEgj5TtZKLaflsjCwc/exec"; 
+  
+  function toggleSection() {
+    const cls = document.getElementById('searchClass').value;
+    const secSelect = document.getElementById('searchSection');
+    const seniorClasses = ['VII', 'VIII', 'IX', 'X', 'XI'];
+    
+    if (seniorClasses.includes(cls)) {
+      secSelect.value = "";
+      secSelect.disabled = true;
+    } else {
+      secSelect.disabled = false;
+    }
+  }
+
+  async function performSearch() {
+    const name = document.getElementById('searchName').value;
+    const cls = document.getElementById('searchClass').value;
+    const sec = document.getElementById('searchSection').value;
+    
+    document.getElementById('resultsBody').innerHTML = '<tr><td colspan="8" class="text-center">Searching...</td></tr>';
+    
+    try {
+      const response = await fetch(API_URL, {
+        method: 'POST',
+        body: JSON.stringify({ action: 'search', name: name, classQuery: cls, section: sec }),
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' }
+      });
+      
+      const result = await response.json();
+      if (result.status === 'success') {
+        displayResults(result.data);
+      } else {
+        document.getElementById('resultsBody').innerHTML = `<tr><td colspan="8" class="text-center text-danger">Error: ${result.message}</td></tr>`;
+      }
+    } catch (error) {
+      document.getElementById('resultsBody').innerHTML = '<tr><td colspan="8" class="text-center text-danger">Search failed. Check console for details.</td></tr>';
+      console.error(error);
+    }
+  }
+
+  function displayResults(students) {
+    const tbody = document.getElementById('resultsBody');
+    tbody.innerHTML = '';
+    
+    if (students.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="8" class="text-center">No students found.</td></tr>';
+      return;
+    }
+    
+    students.forEach(std => {
+      const tr = document.createElement('tr');
+      let apaarBtn = '';
+      if (std['APAAR Status'] === 'Generated') {
+        apaarBtn = `<a href="https://accounts.digilocker.gov.in/v3/999702e98847d257631be9acf1cb7713f3c20847e9b08daf96f4fb3a66ba3300--en" 
+                       target="_blank" class="btn btn-sm btn-success w-100" 
+                       onclick="logDownload('${std['Student Name']}')">Download from DigiLocker</a>`;
+      } else {
+        apaarBtn = `<button class="btn btn-sm btn-warning w-100" onclick='openConsent(${JSON.stringify(std)})'>Generate APAAR</button>`;
+      }
+
+      tr.innerHTML = `
+        <td>${std['Class'] || ''}</td>
+        <td>${std['Section'] || ''}</td>
+        <td>${std['Student Name'] || ''}</td>
+        <td>${std['Student PEN'] || ''}</td>
+        <td>${std['Father Name'] || ''}</td>
+        <td>${std['Mother Name'] || ''}</td>
+        <td><span class="badge ${std['APAAR Status'] === 'Generated' ? 'bg-success' : 'bg-warning text-dark'}">${std['APAAR Status'] || 'Pending'}</span></td>
+        <td>
+          <div class="d-flex gap-2 flex-column">
+            <button class="btn btn-sm btn-outline-primary" onclick='openEdit(${JSON.stringify(std)})'>Edit Details</button>
+            ${apaarBtn}
+          </div>
+        </td>
+      `;
+      tbody.appendChild(tr);
+    });
+  }
+
+  function logDownload(studentName) {
+    const hist = document.getElementById('downloadHistory');
+    hist.classList.remove('d-none');
+    hist.innerHTML = `<strong>Download History:</strong> APAAR ID for ${studentName} accessed via DigiLocker on ${new Date().toLocaleString()}`;
+  }
+
+  function openEdit(student) {
+    // Locked Fields
+    document.getElementById('editName').value = student['Student Name'];
+    document.getElementById('editPen').value = student['Student PEN'];
+    document.getElementById('editClass').value = student['Class'];
+    document.getElementById('editDob').value = student['DOB'] || 'N/A';
+    document.getElementById('editAadhaar').value = student['AADHAAR No'];
+    
+    // Editable Fields targeting the specific columns in image_467f2e.png
+    document.getElementById('editGender').value = student['Gender'] || 'Male';
+    document.getElementById('editFather').value = student['Father Name'] || '';
+    document.getElementById('editMother').value = student['Mother Name'] || '';
+    document.getElementById('editCategory').value = student['Social Category'] || '';
+    document.getElementById('editMinority').value = student['Minority Group'] || '';
+    document.getElementById('editBpl').value = student['BPL beneficiary'] || 'No';
+    document.getElementById('editCwsn').value = student['CWSN'] || 'No';
+    
+    new bootstrap.Modal(document.getElementById('editModal')).show();
+  }
+
+  async function submitCorrection() {
+    const btn = document.getElementById('submitCorrectionBtn');
+    btn.disabled = true;
+    btn.innerText = "Submitting...";
+
+    // Collect data to strictly match the 10 columns in the Google Sheet image
+    const data = {
+      originalName: document.getElementById('editName').value,
+      updatedName: document.getElementById('editName').value, // Names cannot be changed per previous rule
+      gender: document.getElementById('editGender').value,
+      fatherName: document.getElementById('editFather').value,
+      motherName: document.getElementById('editMother').value,
+      socialCategory: document.getElementById('editCategory').value,
+      minorityGroup: document.getElementById('editMinority').value,
+      bpl: document.getElementById('editBpl').value,
+      cwsn: document.getElementById('editCwsn').value
+    };
+    
+    try {
+      const response = await fetch(API_URL, {
+        method: 'POST',
+        body: JSON.stringify({ action: 'saveCorrection', data: data }),
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' }
+      });
+      const result = await response.json();
+      
+      alert(result.message);
+      if (result.status === 'success') {
+        bootstrap.Modal.getInstance(document.getElementById('editModal')).hide();
+      }
+    } catch (e) {
+      alert("Failed to connect to the server.");
+    } finally {
+      btn.disabled = false;
+      btn.innerText = "Submit Correction";
+    }
+  }
+
+  function openConsent(student) {
+    document.getElementById('consentForm').reset();
+    document.getElementById('cgStudentName').value = student['Student Name']; 
+    document.getElementById('cgPen').value = student['Student PEN'];
+    new bootstrap.Modal(document.getElementById('consentModal')).show();
+  }
+
+  async function submitConsent() {
+    const data = {
+      pen: document.getElementById('cgPen').value,
+      guardianName: document.getElementById('cgName').value,
+      relation: document.getElementById('cgRelation').value,
+      idType: document.getElementById('cgIdType').value,
+      idNumber: document.getElementById('cgIdNumber').value,
+      place: document.getElementById('cgPlace').value,
+      date: document.getElementById('cgDate').value
+    };
+    
+    if(!data.guardianName || !data.relation || !data.idType || !data.idNumber || !data.place || !data.date) {
+      alert("Please fill all fields in the consent form.");
+      return;
+    }
+
+    const btn = document.getElementById('submitConsentBtn');
+    btn.disabled = true;
+    btn.innerText = "Submitting...";
+
+    try {
+      const response = await fetch(API_URL, {
+        method: 'POST',
+        body: JSON.stringify({ action: 'saveConsent', data: data }),
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' }
+      });
+      const result = await response.json();
+      
+      alert(result.message);
+      if (result.status === 'success') {
+        bootstrap.Modal.getInstance(document.getElementById('consentModal')).hide();
+      }
+    } catch (e) {
+      alert("Failed to connect to the server.");
+    } finally {
+      btn.disabled = false;
+      btn.innerText = "Submit Consent";
+    }
+  }
+</script>
+</body>
+</html>
