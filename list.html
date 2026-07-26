@@ -197,6 +197,20 @@
   </div>
 </div>
 
+<!-- Custom Popup Notification Modal -->
+<div class="modal fade" id="popupModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-sm modal-dialog-centered">
+    <div class="modal-content text-center p-4 shadow">
+      <div id="popupContent">
+        <!-- Status content injected here -->
+      </div>
+      <div class="mt-4">
+        <button type="button" class="btn btn-primary px-4" data-bs-dismiss="modal">OK</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
   // ==========================================
@@ -214,6 +228,26 @@
       secSelect.disabled = true;
     } else {
       secSelect.disabled = false;
+    }
+  }
+
+  // Custom function to show Alert Popups (Success or Error)
+  function showPopup(type, message, onCloseCallback = null) {
+    const popupContent = document.getElementById('popupContent');
+    if (type === 'error') {
+      popupContent.innerHTML = `<div style="font-size: 50px;">❌</div><h5 class="mt-3 text-danger">Oops!</h5><p class="text-muted mb-0">${message}</p>`;
+    } else if (type === 'success') {
+      popupContent.innerHTML = `<div style="font-size: 50px;">✅</div><h5 class="mt-3 text-success">Success</h5><p class="text-muted mb-0">Successfully submitted. Thank you.</p>`;
+    }
+
+    const popupModal = new bootstrap.Modal(document.getElementById('popupModal'));
+    popupModal.show();
+
+    if (onCloseCallback) {
+      document.getElementById('popupModal').addEventListener('hidden.bs.modal', function handler() {
+        onCloseCallback();
+        document.getElementById('popupModal').removeEventListener('hidden.bs.modal', handler);
+      });
     }
   }
 
@@ -255,12 +289,18 @@
     students.forEach(std => {
       const tr = document.createElement('tr');
       let apaarBtn = '';
+      
+      // Determine APAAR status logic for buttons based on sheet status
       if (std['APAAR Status'] === 'Generated') {
-        apaarBtn = `<a href="https://accounts.digilocker.gov.in/v3/aadhaar" 
+        apaarBtn = `<a href="https://accounts.digilocker.gov.in/v3/999702e98847d257631be9acf1cb7713f3c20847e9b08daf96f4fb3a66ba3300--en" 
                        target="_blank" class="btn btn-sm btn-success w-100" 
                        onclick="logDownload('${std['Student Name']}')">Download from DigiLocker</a>`;
+      } else if (std['APAAR Status'] === 'Requested') {
+        // Show Requested in a box with a circle mark
+        apaarBtn = `<div class="btn btn-sm btn-light border text-secondary fw-bold w-100 disabled cursor-not-allowed">Requested 🟡</div>`;
       } else {
-        apaarBtn = `<button class="btn btn-sm btn-warning w-100" onclick='openConsent(${JSON.stringify(std)})'>Generate APAAR</button>`;
+        // Default: Show Generate Apaar ID with Blue and incomplete mark
+        apaarBtn = `<button id="btn-consent-${std['Student PEN']}" class="btn btn-sm btn-primary w-100" onclick='openConsent(${JSON.stringify(std)})'>🔵 Generate APAAR ID ⏳</button>`;
       }
 
       tr.innerHTML = `
@@ -270,10 +310,10 @@
         <td>${std['Student PEN'] || ''}</td>
         <td>${std['Father Name'] || ''}</td>
         <td>${std['Mother Name'] || ''}</td>
-        <td><span class="badge ${std['APAAR Status'] === 'Generated' ? 'bg-success' : 'bg-warning text-dark'}">${std['APAAR Status'] || 'Pending'}</span></td>
+        <td><span id="badge-${std['Student PEN']}" class="badge ${std['APAAR Status'] === 'Generated' ? 'bg-success' : 'bg-warning text-dark'}">${std['APAAR Status'] || 'Pending'}</span></td>
         <td>
           <div class="d-flex gap-2 flex-column">
-            <button class="btn btn-sm btn-outline-primary" onclick='openEdit(${JSON.stringify(std)})'>Edit Details</button>
+            <button class="btn btn-sm btn-outline-dark" onclick='openEdit(${JSON.stringify(std)})'>Edit Details</button>
             ${apaarBtn}
           </div>
         </td>
@@ -289,14 +329,12 @@
   }
 
   function openEdit(student) {
-    // Locked Fields
     document.getElementById('editName').value = student['Student Name'];
     document.getElementById('editPen').value = student['Student PEN'];
     document.getElementById('editClass').value = student['Class'];
     document.getElementById('editDob').value = student['DOB'] || 'N/A';
     document.getElementById('editAadhaar').value = student['AADHAAR No'];
     
-    // Editable Fields targeting the specific columns in image_467f2e.png
     document.getElementById('editGender').value = student['Gender'] || 'Male';
     document.getElementById('editFather').value = student['Father Name'] || '';
     document.getElementById('editMother').value = student['Mother Name'] || '';
@@ -310,13 +348,19 @@
 
   async function submitCorrection() {
     const btn = document.getElementById('submitCorrectionBtn');
+    
+    // Quick frontend validation example (prevents simple empty submissions)
+    if(document.getElementById('editFather').value.trim() === "" || document.getElementById('editMother').value.trim() === "") {
+        showPopup('error', 'Please make sure Father and Mother names are filled correctly.');
+        return;
+    }
+
     btn.disabled = true;
     btn.innerText = "Submitting...";
 
-    // Collect data to strictly match the 10 columns in the Google Sheet image
     const data = {
       originalName: document.getElementById('editName').value,
-      updatedName: document.getElementById('editName').value, // Names cannot be changed per previous rule
+      updatedName: document.getElementById('editName').value, 
       gender: document.getElementById('editGender').value,
       fatherName: document.getElementById('editFather').value,
       motherName: document.getElementById('editMother').value,
@@ -334,12 +378,14 @@
       });
       const result = await response.json();
       
-      alert(result.message);
       if (result.status === 'success') {
         bootstrap.Modal.getInstance(document.getElementById('editModal')).hide();
+        showPopup('success', result.message);
+      } else {
+        showPopup('error', 'Server error. Your correction could not be submitted.');
       }
     } catch (e) {
-      alert("Failed to connect to the server.");
+      showPopup('error', 'Failed to connect to the server. Please check your internet connection.');
     } finally {
       btn.disabled = false;
       btn.innerText = "Submit Correction";
@@ -365,7 +411,7 @@
     };
     
     if(!data.guardianName || !data.relation || !data.idType || !data.idNumber || !data.place || !data.date) {
-      alert("Please fill all fields in the consent form.");
+      showPopup('error', 'Incomplete details. Please ensure all consent fields are filled properly.');
       return;
     }
 
@@ -381,12 +427,25 @@
       });
       const result = await response.json();
       
-      alert(result.message);
       if (result.status === 'success') {
         bootstrap.Modal.getInstance(document.getElementById('consentModal')).hide();
+        
+        // Dynamically update the button on the UI to reflect the "Requested 🟡" status immediately
+        const consentBtn = document.getElementById(`btn-consent-${data.pen}`);
+        if(consentBtn) {
+            consentBtn.outerHTML = `<div class="btn btn-sm btn-light border text-secondary fw-bold w-100 disabled cursor-not-allowed">Requested 🟡</div>`;
+        }
+        const statusBadge = document.getElementById(`badge-${data.pen}`);
+        if(statusBadge) {
+            statusBadge.innerText = 'Requested';
+        }
+
+        showPopup('success', result.message);
+      } else {
+        showPopup('error', 'Server error. Your consent could not be submitted.');
       }
     } catch (e) {
-      alert("Failed to connect to the server.");
+      showPopup('error', 'Failed to connect to the server. Please check your internet connection.');
     } finally {
       btn.disabled = false;
       btn.innerText = "Submit Consent";
