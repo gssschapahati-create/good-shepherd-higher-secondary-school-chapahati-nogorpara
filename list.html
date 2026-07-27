@@ -97,7 +97,7 @@
             <div class="col-md-4"><label>AADHAAR No</label><input type="text" id="editAadhaar" class="form-control readonly-field" readonly></div>
             
             <hr>
-            <!-- Editable Correction Fields to match Google Sheet image -->
+            <!-- Editable Correction Fields -->
             <div class="col-md-4"><label>Gender</label>
               <select id="editGender" class="form-select">
                 <option value="Male">Male</option>
@@ -216,7 +216,7 @@
   // ==========================================
   // IMPORTANT: PASTE YOUR DEPLOYED WEB APP URL HERE
   // ==========================================
-  const API_URL = "https://script.google.com/macros/s/AKfycbzUdVuYl304Qm8QIB78OxC-fv0OtOqGz7djlhJ5K3vUVzichGEgj5TtZKLaflsjCwc/exec"; 
+  const API_URL = "https://script.google.com/macros/s/AKfycbydkfP3MWAgtB4AcU2XfQpPCxaMvsDA-eM8PZN9LKq5BP4M3Wtfft4CRRV6JAYLQzoz/exec"; 
   
   function toggleSection() {
     const cls = document.getElementById('searchClass').value;
@@ -231,13 +231,12 @@
     }
   }
 
-  // Custom function to show Alert Popups (Success or Error)
   function showPopup(type, message, onCloseCallback = null) {
     const popupContent = document.getElementById('popupContent');
     if (type === 'error') {
       popupContent.innerHTML = `<div style="font-size: 50px;">❌</div><h5 class="mt-3 text-danger">Oops!</h5><p class="text-muted mb-0">${message}</p>`;
     } else if (type === 'success') {
-      popupContent.innerHTML = `<div style="font-size: 50px;">✅</div><h5 class="mt-3 text-success">Success</h5><p class="text-muted mb-0">Successfully submitted. Thank you.</p>`;
+      popupContent.innerHTML = `<div style="font-size: 50px;">✅</div><h5 class="mt-3 text-success">Success</h5><p class="text-muted mb-0">${message}</p>`;
     }
 
     const popupModal = new bootstrap.Modal(document.getElementById('popupModal'));
@@ -290,18 +289,20 @@
       const tr = document.createElement('tr');
       let apaarBtn = '';
       
-      // Determine APAAR status logic for buttons based on sheet status
       if (std['APAAR Status'] === 'Generated') {
         apaarBtn = `<a href="https://accounts.digilocker.gov.in/v3/999702e98847d257631be9acf1cb7713f3c20847e9b08daf96f4fb3a66ba3300--en" 
                        target="_blank" class="btn btn-sm btn-success w-100" 
                        onclick="logDownload('${std['Student Name']}')">Download from DigiLocker</a>`;
       } else if (std['APAAR Status'] === 'Requested') {
-        // Show Requested in a box with a circle mark
-        apaarBtn = `<div class="btn btn-sm btn-light border text-secondary fw-bold w-100 disabled cursor-not-allowed">Requested 🟡</div>`;
+        apaarBtn = `<div class="btn btn-sm btn-light border text-secondary fw-bold w-100 disabled" style="cursor: not-allowed;">Requested 🟡</div>`;
       } else {
-        // Default: Show Generate Apaar ID with Blue and incomplete mark
         apaarBtn = `<button id="btn-consent-${std['Student PEN']}" class="btn btn-sm btn-primary w-100" onclick='openConsent(${JSON.stringify(std)})'>🔵 Generate APAAR ID ⏳</button>`;
       }
+
+      // Check if the student was already edited to disable the edit button
+      let editBtn = std['hasEdited'] 
+        ? `<button class="btn btn-sm btn-secondary disabled" style="cursor: not-allowed;">Cannot Edit Anymore</button>`
+        : `<button id="btn-edit-${std['Student PEN']}" class="btn btn-sm btn-outline-dark" onclick='openEdit(${JSON.stringify(std)})'>Edit Details</button>`;
 
       tr.innerHTML = `
         <td>${std['Class'] || ''}</td>
@@ -313,7 +314,7 @@
         <td><span id="badge-${std['Student PEN']}" class="badge ${std['APAAR Status'] === 'Generated' ? 'bg-success' : 'bg-warning text-dark'}">${std['APAAR Status'] || 'Pending'}</span></td>
         <td>
           <div class="d-flex gap-2 flex-column">
-            <button class="btn btn-sm btn-outline-dark" onclick='openEdit(${JSON.stringify(std)})'>Edit Details</button>
+            ${editBtn}
             ${apaarBtn}
           </div>
         </td>
@@ -349,7 +350,6 @@
   async function submitCorrection() {
     const btn = document.getElementById('submitCorrectionBtn');
     
-    // Quick frontend validation example (prevents simple empty submissions)
     if(document.getElementById('editFather').value.trim() === "" || document.getElementById('editMother').value.trim() === "") {
         showPopup('error', 'Please make sure Father and Mother names are filled correctly.');
         return;
@@ -380,9 +380,17 @@
       
       if (result.status === 'success') {
         bootstrap.Modal.getInstance(document.getElementById('editModal')).hide();
+        
+        // Disable the Edit button immediately in the UI on success
+        const pen = document.getElementById('editPen').value;
+        const editBtn = document.getElementById(`btn-edit-${pen}`);
+        if(editBtn) {
+            editBtn.outerHTML = `<button class="btn btn-sm btn-secondary disabled" style="cursor: not-allowed;">Cannot Edit Anymore</button>`;
+        }
+
         showPopup('success', result.message);
       } else {
-        showPopup('error', 'Server error. Your correction could not be submitted.');
+        showPopup('error', result.message || 'Server error. Your correction could not be submitted.');
       }
     } catch (e) {
       showPopup('error', 'Failed to connect to the server. Please check your internet connection.');
@@ -400,8 +408,10 @@
   }
 
   async function submitConsent() {
+    // Note: Passed studentName to match exact columns requested for the sheet.
     const data = {
       pen: document.getElementById('cgPen').value,
+      studentName: document.getElementById('cgStudentName').value,
       guardianName: document.getElementById('cgName').value,
       relation: document.getElementById('cgRelation').value,
       idType: document.getElementById('cgIdType').value,
@@ -430,10 +440,9 @@
       if (result.status === 'success') {
         bootstrap.Modal.getInstance(document.getElementById('consentModal')).hide();
         
-        // Dynamically update the button on the UI to reflect the "Requested 🟡" status immediately
         const consentBtn = document.getElementById(`btn-consent-${data.pen}`);
         if(consentBtn) {
-            consentBtn.outerHTML = `<div class="btn btn-sm btn-light border text-secondary fw-bold w-100 disabled cursor-not-allowed">Requested 🟡</div>`;
+            consentBtn.outerHTML = `<div class="btn btn-sm btn-light border text-secondary fw-bold w-100 disabled" style="cursor: not-allowed;">Requested 🟡</div>`;
         }
         const statusBadge = document.getElementById(`badge-${data.pen}`);
         if(statusBadge) {
@@ -442,7 +451,8 @@
 
         showPopup('success', result.message);
       } else {
-        showPopup('error', 'Server error. Your consent could not be submitted.');
+        // Updated to display actual error message to help debug "Server error" image you showed.
+        showPopup('error', result.message || 'Server error. Your consent could not be submitted.');
       }
     } catch (e) {
       showPopup('error', 'Failed to connect to the server. Please check your internet connection.');
