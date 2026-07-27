@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About Us - Good Shepherd School</title>
+    <title>Udise + - Good Shepherd Higher Secondary School</title>
     <link rel="icon" type="images/png" href="images/favico.png">
     <link rel="stylesheet" href="css/style.css">
     <style>
@@ -129,6 +129,16 @@
         #donation-qr-title { font-weight: bold; font-size: 1.1rem; color: #333; margin-bottom: 12px; margin-top: 5px; }
         #qr-code-placeholder img { width: 100%; max-width: 160px; height: auto; border-radius: 8px; border: 2px solid #f0f0f0; }
         #qr-scan-label { margin-top: 10px; font-size: 0.9rem; color: #666; font-weight: 500; }
+
+        /* ==========================================
+           Custom Alert Popup Styles (Black Box)
+           ========================================== */
+        #custom-popup { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 10000; justify-content: center; align-items: center; }
+        .popup-box { background: black; color: white; padding: 40px; border-radius: 12px; text-align: center; min-width: 300px; box-shadow: 0 4px 25px rgba(0,0,0,0.5); }
+        .popup-icon { font-size: 70px; margin-bottom: 15px; }
+        .popup-message { font-size: 20px; font-weight: bold; }
+        .popup-btn { margin-top: 25px; padding: 10px 30px; background: white; color: black; border: none; border-radius: 6px; cursor: pointer; font-size: 16px; font-weight: bold; }
+        .popup-btn:hover { background: #e0e0e0; }
     </style>
 </head>
 <body>
@@ -798,8 +808,7 @@
                     <span class="lang garo">Nangchongmotgipa Lekka Upload Ka·ani</span>
                 </div>
 
-                
-                    <div class="form-group">
+                <div class="form-group">
                     <label>
                         <span class="lang en">1. Upload Student's Aadhaar Card (PDF/Image) *</span>
                         <span class="lang hi">1. छात्र का आधार कार्ड अपलोड करें *</span>
@@ -807,13 +816,14 @@
                     </label>
                     <input type="file" name="studentAadhaarFile" accept=".pdf,image/*" disabled required>
                 </div>
-                    <div class="form-group">
+                
+                <div class="form-group">
                     <label>
                         <span class="lang en">2. Upload Father's Aadhaar Card (PDF/Image) *</span>
                         <span class="lang hi">2. आधार सेवा केंद्र / सक्षम अधिकारी *</span>
                         <span class="lang garo">2. Pagipani Aadhaar Card Upload Ka·bo *</span>
                     </label>
-                    <input type="file" name="studentAadhaarFile" accept=".pdf,image/*" disabled required>
+                    <input type="file" name="fatherAadhaarFile" accept=".pdf,image/*" disabled required>
                 </div>
 
                 <div class="form-group">
@@ -822,7 +832,7 @@
                         <span class="lang hi">3. आधार कार्ड अपलोड करें *</span>
                         <span class="lang garo">3. Ma·ani Aadhaar Card Upload Ka·bo *</span>
                     </label>
-                    <input type="file" name="parentAadhaarFile" accept=".pdf,image/*" disabled required>
+                    <input type="file" name="motherAadhaarFile" accept=".pdf,image/*" disabled required>
                 </div>
 
                 <div class="instructions">
@@ -868,6 +878,15 @@
         <div id="qr-scan-label">Scan to Donate</div>
     </div>
 
+    <!-- Custom Alert Popup -->
+    <div id="custom-popup">
+        <div class="popup-box">
+            <div id="popup-icon" class="popup-icon"></div>
+            <div id="popup-message" class="popup-message"></div>
+            <button class="popup-btn" onclick="closePopup()">OK</button>
+        </div>
+    </div>
+
     <script>
         // Language Switcher Logic
         function setLanguage(lang, btnElement) {
@@ -881,21 +900,13 @@
         function toggleFields(containerSelector, enable) {
             const fields = document.querySelectorAll(`${containerSelector} input:not([type="radio"]), ${containerSelector} select`);
             fields.forEach(field => {
-                // Ensure internal toggle for custom disability is respected
                 if (field.id === 'customDisability') {
-                    if (enable) {
-                        toggleDisabilityInput(); 
-                    } else {
-                        field.setAttribute('disabled', 'true');
-                    }
+                    if (enable) toggleDisabilityInput(); 
+                    else field.setAttribute('disabled', 'true');
                     return;
                 }
-
-                if (enable) {
-                    field.removeAttribute('disabled');
-                } else {
-                    field.setAttribute('disabled', 'true');
-                }
+                if (enable) field.removeAttribute('disabled');
+                else field.setAttribute('disabled', 'true');
             });
         }
 
@@ -914,32 +925,24 @@
         hasPenRadios.forEach(radio => {
             radio.addEventListener('change', (e) => {
                 if (e.target.value === 'Yes') {
-                    // Show PEN fields, hide the rest
                     existingPenSection.classList.remove('hidden');
                     apaarSection.classList.add('hidden');
                     mainForm.classList.add('hidden');
                     noConsentMsg.classList.add('hidden');
                     submitBtnWrapper.classList.remove('hidden');
                     
-                    // Uncheck APAAR if they navigate back and forth
                     apaarRadios.forEach(r => r.checked = false);
-
-                    // Enable/Disable required validations
                     toggleFields('#existing-pen-section', true);
                     document.querySelectorAll('.apaar-field').forEach(f => f.setAttribute('disabled', 'true'));
                     toggleFields('#main-udise-form', false);
                 } else {
-                    // Show APAAR consent, hide PEN fields
                     existingPenSection.classList.add('hidden');
                     apaarSection.classList.remove('hidden');
                     mainForm.classList.add('hidden');
                     noConsentMsg.classList.add('hidden');
                     submitBtnWrapper.classList.add('hidden');
                     
-                    // Uncheck APAAR if they navigate back and forth
                     apaarRadios.forEach(r => r.checked = false);
-
-                    // Enable/Disable required validations
                     toggleFields('#existing-pen-section', false);
                     document.querySelectorAll('.apaar-field').forEach(f => f.removeAttribute('disabled'));
                     toggleFields('#main-udise-form', false);
@@ -981,18 +984,78 @@
             }
         }
 
-        // Form submission logic
+        // Custom Popup Functions
+        function showPopup(type, msg) {
+            const popup = document.getElementById('custom-popup');
+            const icon = document.getElementById('popup-icon');
+            const messageEl = document.getElementById('popup-message');
+
+            if (type === 'success') {
+                icon.innerHTML = '✅'; 
+                messageEl.innerText = msg || 'Successfully Submited Thank you';
+            } else {
+                icon.innerHTML = '❌'; 
+                messageEl.innerText = msg || 'Submission Failed! Please check your details.';
+            }
+            popup.style.display = 'flex';
+        }
+
+        function closePopup() {
+            document.getElementById('custom-popup').style.display = 'none';
+        }
+
+        // --- NEW SUBMISSION AND FILE CONVERSION LOGIC ---
+        
+        // Helper function to read file as Base64 format
+        const toBase64 = file => new Promise((resolve, reject) => {
+            if (!file || file.size === 0) return resolve(null);
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = error => reject(error);
+        });
+
         const form = document.getElementById('udiseForm');
         const message = document.getElementById('message');
-        const scriptURL = 'https://script.google.com/macros/s/AKfycbx3bxQtSf3fpky_lukk00bTbXteiSLUcOhtD1fPekYVb9Qh5DEXtXBm9eZfEO6kCb9e/exec'; 
+        
+        // *** PUT YOUR GOOGLE APPS SCRIPT WEB APP URL HERE ***
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbxa4Y2ynh8pT61QGipmnVsQ4ecSbidIylID8UPn1-WueG08UVG7t6xJzNQd9vZigoFi/exec'; 
 
-        form.addEventListener('submit', e => {
+        form.addEventListener('submit', async e => {
             e.preventDefault();
-            message.innerText = "Submitting data and uploading files...";
+            message.innerText = "Submitting data and uploading files... Please wait.";
+            message.style.color = "blue";
             
-            fetch(scriptURL, { method: 'POST', body: new FormData(form) })
-                .then(response => {
-                    message.innerText = "Data submitted successfully!";
+            // Extract the form fields
+            const formData = new FormData(form);
+            const dataObj = Object.fromEntries(formData.entries());
+
+            try {
+                // Wait for file conversion
+                dataObj.studentFileBase = await toBase64(formData.get('studentAadhaarFile'));
+                dataObj.fatherFileBase = await toBase64(formData.get('fatherAadhaarFile'));
+                dataObj.motherFileBase = await toBase64(formData.get('motherAadhaarFile'));
+
+                // Remove un-stringifyable browser File objects from JSON payload
+                delete dataObj.studentAadhaarFile;
+                delete dataObj.fatherAadhaarFile;
+                delete dataObj.motherAadhaarFile;
+
+                // Fire POST fetch request via text/plain to circumvent preflight CORS issues
+                const response = await fetch(scriptURL, {
+                    method: 'POST',
+                    body: JSON.stringify(dataObj),
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' }
+                });
+                
+                const result = await response.json();
+                
+                if (result.status === "Success") {
+                    
+                    // --- CUSTOM POPUP CALLED HERE ---
+                    showPopup('success', 'Successfully Submited Thank you');
+
+                    message.innerText = "Data and files submitted successfully!";
                     message.style.color = "green";
                     form.reset();
                     
@@ -1006,12 +1069,17 @@
                     toggleFields('#existing-pen-section', false);
                     document.querySelectorAll('.apaar-field').forEach(f => f.setAttribute('disabled', 'true'));
                     toggleFields('#main-udise-form', false);
-                })
-                .catch(error => {
-                    message.innerText = "Error! Data not saved.";
-                    message.style.color = "red";
-                    console.error('Error!', error.message);
-                });
+                } else {
+                    throw new Error(result.message);
+                }
+            } catch (error) {
+                // --- CUSTOM ERROR POPUP CALLED HERE ---
+                showPopup('error', 'Error! Data not saved. ' + error.message);
+                
+                message.innerText = "Error! Data not saved. " + error.message;
+                message.style.color = "red";
+                console.error('Error!', error);
+            }
         });
 
         // Donation Box logic
