@@ -216,7 +216,7 @@
   // ==========================================
   // IMPORTANT: PASTE YOUR DEPLOYED WEB APP URL HERE
   // ==========================================
-  const API_URL = "https://script.google.com/macros/s/AKfycbydkfP3MWAgtB4AcU2XfQpPCxaMvsDA-eM8PZN9LKq5BP4M3Wtfft4CRRV6JAYLQzoz/exec"; 
+  const API_URL = "https://script.google.com/macros/s/AKfycbx91MoGtUYg3wPBTDL2ARdA2b8tBySDPRfLCp7jhIJHWPvLjPrkI5qbN_IyuqoXr8H0/exec"; 
   
   function toggleSection() {
     const cls = document.getElementById('searchClass').value;
@@ -408,7 +408,6 @@
   }
 
   async function submitConsent() {
-    // Note: Passed studentName to match exact columns requested for the sheet.
     const data = {
       pen: document.getElementById('cgPen').value,
       studentName: document.getElementById('cgStudentName').value,
@@ -440,18 +439,21 @@
       if (result.status === 'success') {
         bootstrap.Modal.getInstance(document.getElementById('consentModal')).hide();
         
+        // Update Action Button
         const consentBtn = document.getElementById(`btn-consent-${data.pen}`);
         if(consentBtn) {
             consentBtn.outerHTML = `<div class="btn btn-sm btn-light border text-secondary fw-bold w-100 disabled" style="cursor: not-allowed;">Requested 🟡</div>`;
         }
+        
+        // Update Status Badge visually
         const statusBadge = document.getElementById(`badge-${data.pen}`);
         if(statusBadge) {
             statusBadge.innerText = 'Requested';
+            statusBadge.className = 'badge bg-warning text-dark';
         }
 
         showPopup('success', result.message);
       } else {
-        // Updated to display actual error message to help debug "Server error" image you showed.
         showPopup('error', result.message || 'Server error. Your consent could not be submitted.');
       }
     } catch (e) {
