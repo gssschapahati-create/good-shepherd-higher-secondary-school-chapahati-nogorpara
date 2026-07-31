@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UDISE+ & ESIC Staff Management Portal</title>
+  
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  
+  <style>
+    :root { --primary-color: #1a4971; --secondary-color: #2b579a; --accent-color: #e9ecef; --text-main: #333333; }
+    body { font-family: 'Segoe UI', Roboto, Arial, sans-serif; background-color: #f0f2f5; margin: 0; font-size: 0.875rem; color: var(--text-main); display: flex; flex-direction: column; min-height: 100vh;}
+    .hidden { display: none !important; }
+    .udise-header-bg { background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); color: white; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+    .sidebar-nav { background: white; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); overflow: hidden; }
+    .nav-pills .nav-link { color: #555; font-weight: 500; padding: 12px 20px; border-radius: 0; border-left: 4px solid transparent; transition: all 0.3s ease; cursor: pointer;}
+    .nav-pills .nav-link:hover { background-color: var(--accent-color); color: var(--primary-color); }
+    .nav-pills .nav-link.active { background-color: #e3f2fd; color: var(--primary-color); font-weight: bold; border-left: 4px solid var(--primary-color); }
+    .login-card { max-width: 420px; margin: 10vh auto; padding: 40px; border-top: 6px solid var(--primary-color); border-radius: 12px; background: #fff; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+    .form-wrapper { background: #fff; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 30px; }
+    .form-heading { color: var(--primary-color); font-size: 1.5rem; margin-bottom: 25px; font-weight: 700; border-bottom: 2px solid var(--accent-color); padding-bottom: 10px; }
+    .section-title { background: #f8f9fa; color: var(--primary-color); padding: 10px 15px; margin: 25px 0 15px 0; border-left: 5px solid var(--primary-color); font-size: 15px; font-weight: 700; border-radius: 4px; }
+    .table thead th { background-color: var(--primary-color) !important; color: white; font-weight: 600; }
+    .dependent-block { background: #fafafa; padding: 20px; border: 1px solid #e0e0e0; border-radius: 8px; margin-bottom: 20px; position: relative; }
+    .remove-dep-btn { position: absolute; top: 15px; right: 15px; }
+    .site-footer { margin-top: auto; padding: 15px 0; text-align: center; background: #222; color: #aaa; font-size: 0.85rem; border-top: 3px solid var(--primary-color); }
+    .live-clock { font-size: 0.9rem; font-weight: bold; color: #ffeb3b; background: rgba(0,0,0,0.2); padding: 5px 15px; border-radius: 20px; margin-right: 15px;}
+  </style>
+</head>
+<body>
+
+<!-- AUTHENTICATION -->
+<div id="auth-container" class="container flex-grow-1 position-relative">
+  <!-- Back to Home Button (Visible ONLY on Login Page) -->
+  <a href="index.html" class="btn btn-outline-primary position-absolute top-0 end-0 mt-4 me-3 fw-bold shadow-sm bg-white" style="z-index: 10;">
+    <i class="fas fa-arrow-left me-1"></i> Back to Home
+  </a>
+
+  <div class="login-card mt-5">
+    <div class="text-center mb-4"><i class="fas fa-shield-alt fa-4x" style="color: var(--primary-color);"></i></div>
+    <h3 class="text-center mb-4" style="color:var(--primary-color); font-weight:bold;">Staff Portal Login</h3>
+    <div class="mb-3">
+      <label class="form-label fw-bold small">User ID</label>
+      <input type="text" id="login-uid" class="form-control" placeholder="Enter User ID">
+    </div>
+    <div class="mb-4">
+      <label class="form-label fw-bold small">Password</label>
+      <input type="password" id="login-pass" class="form-control" placeholder="Enter Password">
+    </div>
+    <button class="btn w-100 fw-bold text-white py-2" style="background-color: var(--primary-color);" onclick="login()">Secure Login <i class="fas fa-sign-in-alt ms-2"></i></button>
+  </div>
+</div>
+
+<!-- DASHBOARD -->
+<div id="app-container" class="hidden flex-grow-1 d-flex flex-column">
+  <nav class="navbar navbar-expand-lg udise-header-bg px-4 py-3">
+    <a class="navbar-brand fw-bold text-white" href="#"><i class="fas fa-graduation-cap me-2"></i> UDISE+ Management System</a>
+    
+    <div class="ms-auto d-flex align-items-center gap-3 text-white">
+      <div id="live-clock" class="live-clock"></div>
+      
+      <div class="d-flex flex-column text-end lh-1">
+        <span id="user-display-name" class="fw-semibold small"></span>
+        <span id="role-badge" class="badge mt-1 text-dark" style="width: fit-content; align-self: flex-end;"></span>
+      </div>
+      
+      <!-- Logout Button -->
+      <button class="btn btn-sm btn-light fw-bold text-danger ms-2 shadow-sm" onclick="logout()"><i class="fas fa-power-off me-1"></i> Logout</button>
+    </div>
+  </nav>
+
+  <div class="container-fluid mt-4 px-4 flex-grow-1">
+    <div class="row">
+      <!-- SIDEBAR -->
+      <div class="col-lg-2 col-md-3 mb-4">
+        <div class="sidebar-nav">
+          <div class="nav flex-column nav-pills" id="v-pills-tab">
+            <a class="nav-link active" onclick="switchTab('directory', event)"><i class="fas fa-users me-2"></i> Staff Directory</a>
+            <a class="nav-link" onclick="switchTab('esic-form', event)"><i class="fas fa-file-medical me-2"></i> ESIC Registration</a>
+            <a class="nav-link" onclick="switchTab('esic-records', event); fetchESICData();"><i class="fas fa-database me-2"></i> Submissions DB</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- WORKSPACE -->
+      <div class="col-lg-10 col-md-9">
+        
+        <!-- DIRECTORY TAB -->
+        <div id="tab-directory" class="tab-content form-wrapper">
+          <div class="d-flex justify-content-between align-items-center mb-4">
+            <h4 class="form-heading m-0 border-0 pb-0"><i class="fas fa-list-ul me-2"></i> Official Teaching Staff Directory</h4>
+            <div class="d-flex gap-2">
+              <input type="text" id="search-input" class="form-control" style="width: 250px;" placeholder="Search Name or Code..." onkeyup="filterDirectory()">
+              <button id="admin-add-btn" class="btn btn-success fw-bold hidden" onclick="openTeacherModal('add')"><i class="fas fa-user-plus me-1"></i> Add Teacher</button>
+              <button class="btn btn-primary" onclick="fetchTeachersData()"><i class="fas fa-sync-alt"></i></button>
+            </div>
+          </div>
+
+          <div class="table-responsive">
+            <table class="table align-middle mb-0">
+              <thead>
+                <tr>
+                  <th style="width: 30%">Staff Details</th>
+                  <th style="width: 25%">Qualifications</th>
+                  <th style="width: 20%">Appointment Info</th>
+                  <th style="width: 25%">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="directory-body">
+                <tr><td colspan="4" class="text-center text-muted py-5"><div class="spinner-border text-primary me-2"></div> Fetching Live Data from Google Sheets...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- ESIC FORM TAB -->
+        <div id="tab-esic-form" class="tab-content hidden form-wrapper">
+          <h3 class="form-heading text-center mb-4">Employee State Insurance Corporation (ESIC) Registration</h3>
+          
+          <!-- BILINGUAL INSTRUCTIONS BANNER -->
+          <div class="alert alert-warning mb-4 shadow-sm" style="border: 1px solid #ffecb5; border-radius: 8px;">
+            <h5 class="fw-bold text-dark border-bottom border-warning pb-2"><i class="fas fa-exclamation-circle me-2 text-danger"></i> Important Instructions / Niamrang (Read Before Filling)</h5>
+            <div class="row pt-2">
+                <div class="col-md-6 border-end border-warning">
+                    <p class="mb-2 text-dark fw-bold">English:</p>
+                    <ul class="small mb-0 text-dark">
+                        <li>Uploading documents and photos in this portal is <strong>optional</strong>. If you choose to upload, the file size MUST be between <strong>20 KB and 50 KB</strong>.</li>
+                        <li>However, <strong>all staff must submit HARD COPIES</strong> of the following to the School Office by <strong>Monday</strong>:
+                            <ul class="mt-1 mb-1 text-danger fw-bold">
+                                <li>Your Aadhaar Card, PAN Card, and Bank Passbook.</li>
+                                <li>Aadhaar Cards of all added Family Members.</li>
+                                <li>Passport Photos of yourself and all added Family Members.</li>
+                            </ul>
+                        </li>
+                        <li>Hard copies are mandatory even if you upload them here.</li>
+                    </ul>
+                </div>
+                <div class="col-md-6">
+                    <p class="mb-2 text-dark fw-bold">Garo:</p>
+                    <ul class="small mb-0 text-dark">
+                        <li>Ia portal-o document aro photo-rangko upload ka'aniara <strong>nangchongmota ong'ja (optional)</strong>. Upload ka'genchimode file size <strong>20 KB - 50 KB</strong> gisepo ong'na nanggen.</li>
+                        <li>Indiba, <strong>pilak staff-rangko HARD COPY-rangko</strong> School Office-o <strong>Sombar</strong> salo on'echina ge'eta:
+                            <ul class="mt-1 mb-1 text-danger fw-bold">
+                                <li>Na'ani Aadhaar Card, PAN Card, aro Bank Passbook.</li>
+                                <li>Nokdangni manderangni (Family Members) Aadhaar Card-rang.</li>
+                                <li>An'tangni aro pilak Nokdangni manderangni Passport Photo-rang.</li>
+                            </ul>
+                        </li>
+                        <li>Portal-o upload ka'oba ba ka'jaoba, hard copy-ko on'chongmotna nanggen.</li>
+                    </ul>
+                </div>
+            </div>
+          </div>
+          <!-- END BILINGUAL INSTRUCTIONS -->
+
+          <form id="esic-actual-form" onsubmit="submitESICForm(event)">
+            <div class="section-title">1. Employee Basic Profile</div>
+            <div class="row g-3 px-2">
+              <div class="col-md-3"><label class="form-label fw-bold small">Staff Code</label><input type="text" id="e_Code" class="form-control bg-light" required readonly></div>
+              <div class="col-md-6"><label class="form-label fw-bold small">Full Legal Name</label><input type="text" id="e_Name" class="form-control bg-light" required readonly></div>
+              <div class="col-md-3"><label class="form-label fw-bold small">Date of Birth</label><input type="text" id="e_DOB" class="form-control bg-light" required readonly></div>
+              <div class="col-md-4"><label class="form-label fw-bold small">PAN Number <span class="text-danger">*</span></label><input type="text" id="e_PAN" class="form-control text-uppercase" required></div>
+              <div class="col-md-4"><label class="form-label fw-bold small">Bank Account Number <span class="text-danger">*</span></label><input type="text" id="e_BankAcc" class="form-control" required></div>
+              <div class="col-md-4"><label class="form-label fw-bold small">Bank IFSC Code <span class="text-danger">*</span></label><input type="text" id="e_IFSC" class="form-control text-uppercase" required></div>
+              <div class="col-md-4"><label class="form-label fw-bold small">Marital Status <span class="text-danger">*</span></label>
+                <select id="e_Marital" class="form-select" onchange="updateDependentOptions()" required>
+                  <option value="">Select Status</option><option value="Married">Married</option><option value="Unmarried">Unmarried</option>
+                </select>
+              </div>
+              <div class="col-md-8">
+                <label class="form-label fw-bold small text-primary">Employee Aadhaar Number <span class="text-danger">*</span></label>
+                <input type="text" id="e_EmpAadhaar" class="form-control border-primary" maxlength="12" pattern="\d{12}" oninput="this.value = this.value.replace(/[^0-9]/g, '')" placeholder="12-Digit Number" required>
+              </div>
+              <div class="col-md-12">
+                <label class="form-label fw-bold small text-muted">Employee Passport Photograph (Optional / Nangchongmota ong'ja) [20KB - 50KB]</label>
+                <input type="file" id="e_StaffPhoto" class="form-control" accept="image/*" onchange="validateFileSize(this)">
+              </div>
+            </div>
+
+            <div class="section-title mt-5 d-flex justify-content-between align-items-center">
+                <span>2. Family Dependents Registration</span>
+                <button type="button" class="btn btn-outline-primary btn-sm fw-bold" onclick="addDependentBlock()"><i class="fas fa-plus"></i> Add Dependent</button>
+            </div>
+            
+            <div id="dependents-container" class="px-2">
+                <div class="text-muted small mb-2"><i class="fas fa-info-circle me-1"></i> Required dependents will automatically populate based on your Marital Status. You can click '+ Add Dependent' to add more manually.</div>
+            </div>
+
+            <hr class="mt-5 mb-4 text-muted">
+            <button type="submit" id="submit-esic-btn" class="btn btn-primary fw-bold py-3 fs-5 w-100 shadow-sm"><i class="fas fa-paper-plane me-2"></i> Submit Registration</button>
+          </form>
+        </div>
+
+        <!-- ESIC RECORDS TAB -->
+        <div id="tab-esic-records" class="tab-content hidden form-wrapper">
+          <div class="d-flex justify-content-between align-items-center mb-4">
+            <h4 class="form-heading m-0 border-0 pb-0"><i class="fas fa-server me-2"></i> Portal Submissions Database</h4>
+          </div>
+          <div class="table-responsive">
+            <table class="table align-middle mb-0 text-center">
+              <thead><tr><th>Reg ID</th><th>Staff Name</th><th>Nat. Code</th><th>Status</th></tr></thead>
+              <tbody id="esic-directory-body"></tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: ADD/EDIT TEACHER (ADMIN ONLY) -->
+<div class="modal fade" id="teacherModal" tabindex="-1">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header bg-success text-white" id="teacherModalHeader">
+        <h5 class="modal-title fw-bold" id="teacherModalTitle"><i class="fas fa-user-edit me-2"></i> Manage Teacher</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body bg-light">
+        <form id="teacher-form" onsubmit="submitTeacherData(event)">
+          <input type="hidden" id="n_ActionType">
+          
+          <h6 class="text-success fw-bold border-bottom pb-1">Basic Details</h6>
+          <div class="row g-3 mb-3">
+            <div class="col-md-4"><label class="form-label fw-bold small">Full Name</label><input type="text" id="n_Name" class="form-control" required></div>
+            <div class="col-md-4"><label class="form-label fw-bold small">National Code</label><input type="text" id="n_Code" class="form-control" required></div>
+            <div class="col-md-4"><label class="form-label fw-bold small">Gender</label>
+              <select id="n_Gender" class="form-select" required>
+                <option value="1-Male">1-Male</option>
+                <option value="2-Female">2-Female</option>
+                <option value="3-Transgender">3-Transgender</option>
+              </select>
+            </div>
+            <div class="col-md-4"><label class="form-label fw-bold small">Date of Birth</label>
+                <input type="date" id="n_DOB" class="form-control" required>
+            </div>
+            <div class="col-md-4"><label class="form-label fw-bold small">Social Category</label>
+              <select id="n_Social" class="form-select" required>
+                <option value="General">General</option><option value="SC">SC</option><option value="ST">ST</option><option value="OBC">OBC</option><option value="Others">Others</option>
+              </select>
+            </div>
+            <div class="col-md-4"><label class="form-label fw-bold small">Mobile</label><input type="text" id="n_Mobile" class="form-control" required></div>
+            <div class="col-md-6"><label class="form-label fw-bold small">Email</label><input type="email" id="n_Email" class="form-control" required></div>
+          </div>
+
+          <h6 class="text-success fw-bold border-bottom pb-1">Qualifications & Appointments</h6>
+          <div class="row g-3">
+            <div class="col-md-4"><label class="form-label fw-bold small">Academic Qualification</label>
+              <select id="n_Academic" class="form-select" required>
+                <option value="1-Below Secondary">1-Below Secondary</option>
+                <option value="2-Secondary">2-Secondary</option>
+                <option value="3-Higher Secondary">3-Higher Secondary</option>
+                <option value="4-Graduate">4-Graduate</option>
+                <option value="5-Post Graduate">5-Post Graduate</option>
+                <option value="6-M.Phil.">6-M.Phil.</option>
+                <option value="7-Ph.D.">7-Ph.D.</option>
+              </select>
+            </div>
+            <div class="col-md-4"><label class="form-label fw-bold small">Professional Qualification</label>
+              <select id="n_ProfQual" class="form-select" required>
+                <option value="1-Diploma/Cert in basic teachers training">1-Diploma/Cert</option>
+                <option value="2-B.Ed. or equivalent">2-B.Ed. or equivalent</option>
+                <option value="3-M.Ed. or equivalent">3-M.Ed. or equivalent</option>
+                <option value="6-None">6-None</option>
+                <option value="10-Diploma in Elementary Education (D.El.Ed)">10-D.El.Ed</option>
+                <option value="11-Others">11-Others</option>
+              </select>
+            </div>
+            <div class="col-md-4"><label class="form-label fw-bold small">Nature of Appointment</label>
+              <select id="n_Appt" class="form-select" required>
+                <option value="1-Regular">1-Regular</option>
+                <option value="2-Contract">2-Contract</option>
+                <option value="3-Guest Faculty/Part-Time">3-Guest Faculty/Part-Time</option>
+              </select>
+            </div>
+          </div>
+
+          <hr>
+          <button type="submit" id="submit-teacher-btn" class="btn btn-success fw-bold w-100"><i class="fas fa-save me-2"></i> Save to Google Sheets</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- COPYRIGHT FOOTER -->
+<footer class="site-footer">
+    <div class="container">
+        <p class="mb-0 fw-semibold">School Administrative Desk Developed by <span class="text-white">SangmaWebdeveloped</span></p>
+    </div>
+</footer>
+
+<script>
+  // =========================================================================
+  // REPLACE THIS LINK WITH YOUR GOOGLE APPS SCRIPT WEB APP URL
+  // =========================================================================
+  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw7V24tqOpy667YAUagKEXO10x3tNug_-riyQ9zujK2R9gxr8-WDYOWoiDahd_KBEuP/exec"; 
+  
+  let isAdmin = false;
+  let teachersData = []; 
+  let depCount = 0;
+
+  // Initialize Clock and Date Limits
+  window.onload = function() {
+    // Live Clock
+    setInterval(() => {
+        const now = new Date();
+        const options = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' };
+        document.getElementById('live-clock').innerText = now.toLocaleString('en-US', options);
+    }, 1000);
+
+    // Prevent Future Dates
+    const todayStr = new Date().toISOString().split('T')[0];
+    document.getElementById('n_DOB').max = todayStr;
+  };
+
+  function login() {
+    const uid = document.getElementById('login-uid').value.trim();
+    const pass = document.getElementById('login-pass').value.trim();
+    
+    if(uid === 'Admin123' && pass === 'asd123') { isAdmin = true; setupEnvironment("Administrator", "bg-danger"); } 
+    else if (uid === 'GSH123' && pass === 'dsa1332') { isAdmin = false; setupEnvironment("Staff Member", "bg-info"); } 
+    else { Swal.fire({ icon: 'error', title: 'Login Failed', text: 'Invalid Authentication Credentials.' }); }
+  }
+
+  function setupEnvironment(roleName, badgeClass) {
+    document.getElementById('user-display-name').innerText = `${roleName}`;
+    document.getElementById('role-badge').innerText = isAdmin ? 'Admin Privileges Active' : 'View Mode Only';
+    document.getElementById('role-badge').className = `badge ${badgeClass}`;
+    
+    if (isAdmin) {
+        document.getElementById('admin-add-btn').classList.remove('hidden');
+    } else {
+        document.getElementById('admin-add-btn').classList.add('hidden');
+    }
+
+    document.getElementById('auth-container').classList.add('hidden');
+    document.getElementById('app-container').classList.remove('hidden');
+    fetchTeachersData(); 
+  }
+
+  function logout() {
+    // Clear forms and UI states to prevent back-button access
+    document.getElementById('login-uid').value = '';
+    document.getElementById('login-pass').value = '';
+    document.getElementById('app-container').classList.add('hidden');
+    document.getElementById('auth-container').classList.remove('hidden');
+    isAdmin = false;
+    Swal.fire({ icon: 'success', title: 'Logged Out', text: 'You have been securely logged out.', timer: 1500, showConfirmButton: false });
+  }
+
+  function switchTab(tabId, evt) {
+    document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+    document.querySelectorAll('.nav-pills .nav-link').forEach(el => el.classList.remove('active'));
+    document.getElementById(`tab-${tabId}`).classList.remove('hidden');
+    if (evt) evt.target.classList.add('active');
+  }
+
+  // --- FETCH & RENDER TEACHERS ---
+  async function fetchTeachersData() {
+    const tbody = document.getElementById('directory-body');
+    tbody.innerHTML = `<tr><td colspan="4" class="text-center py-5"><div class="spinner-border text-primary me-2"></div> Syncing Database...</td></tr>`;
+    try {
+      const response = await fetch(`${SCRIPT_URL}?action=getTeachers`);
+      teachersData = await response.json();
+      renderDirectoryTable(teachersData);
+    } catch (error) {
+      tbody.innerHTML = `<tr><td colspan="4" class="text-danger py-4 text-center">Failed to fetch data. Verify SCRIPT_URL.</td></tr>`;
+    }
+  }
+
+  function renderDirectoryTable(data) {
+    const tbody = document.getElementById('directory-body');
+    if(data.length === 0) { tbody.innerHTML = `<tr><td colspan="4" class="text-center py-4">No records found.</td></tr>`; return; }
+
+    tbody.innerHTML = data.map((t, index) => {
+        let name = t['Staff_Name'] || t['Staff Name'] || 'Unknown';
+        let code = t['National_Code'] || t['National Code'] || 'N/A';
+        let acad = t['Academic_Qualification'] || 'N/A';
+        let appt = t['Nature_of_Appointment'] || 'N/A';
+
+        let adminControls = isAdmin ? `
+            <div class="d-flex gap-1 mt-1">
+                <button class="btn btn-sm btn-outline-secondary w-50 fw-bold" onclick="openTeacherModal('edit', ${index})"><i class="fas fa-edit"></i> Edit</button>
+                <button class="btn btn-sm btn-outline-danger w-50 fw-bold" onclick="deleteTeacher('${code}')"><i class="fas fa-trash"></i> Del</button>
+            </div>` : '';
+
+        return `
+        <tr>
+            <td>
+                <div class="fw-bold text-primary mb-1" style="font-size: 1.1rem;">${name}</div>
+                <div class="small text-muted"><i class="fas fa-id-card me-1"></i> ${code}</div>
+            </td>
+            <td><div class="small">${acad}</div></td>
+            <td><div class="small"><strong>Type:</strong> ${appt}</div></td>
+            <td>
+                <div class="d-grid gap-1">
+                    <button class="btn btn-sm btn-secondary fw-bold" onclick="printChecklist(${index})"><i class="fas fa-print me-1"></i> Full Profile (PDF)</button>
+                    <button class="btn btn-sm btn-primary fw-bold" onclick="applyESIC('${code}', '${name}', '${t['Date of Birth'] || ''}')">Apply ESIC <i class="fas fa-arrow-right ms-1"></i></button>
+                    ${adminControls}
+                </div>
+            </td>
+        </tr>`;
+    }).join('');
+  }
+
+  function filterDirectory() {
+    const q = document.getElementById('search-input').value.toLowerCase();
+    const filtered = teachersData.filter(t => {
+      let name = (t['Staff_Name'] || t['Staff Name'] || '').toLowerCase();
+      let code = (t['National_Code'] || t['National Code'] || '').toLowerCase();
+      return name.includes(q) || code.includes(q);
+    });
+    renderDirectoryTable(filtered);
+  }
+
+  // --- UDISE CHECKLIST PDF/PRINT LOGIC (HIGHLY PROFESSIONAL) ---
+  function printChecklist(index) {
+    const t = teachersData[index];
+    const name = t['Staff_Name'] || t['Staff Name'] || 'Unknown';
+    const code = t['National_Code'] || t['National Code'] || 'N/A';
+    
+    const today = new Date();
+    const printDate = today.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+
+    let group1_Basic = ''; let group2_Acad = ''; let group3_Appt = ''; let group4_Misc = '';
+    
+    const basicKeys = ["S.No", "Staff_Entry_Status", "Staff_Name", "State_Staff_Code", "National_Code", "Gender", "Date of Birth", "Social_Category", "Mobile", "Email", "AADHAAR_Verified", "Type_of_Disability"];
+    const acadKeys = ["Academic_Qualification", "Trade/Degree", "Professional_Qualification", "Special Educator", "Personal/Professional_CRR_No.", "Whether Teacher is CTET/STET qualified?", "Year_of_Qualifying"];
+    const apptKeys = ["Nature_of_Appointment", "Type_of_Teacher", "Date_of_Joining_in_Service", "Date_of_Joining_in_Present_School", "Appointed_for_Level", "Classes_Taught", "Appointed_for_Subject", "Main_Subject_Taught_1", "Main_Subject_Taught_2", "Teacher_is_on_Deputation?", "Teacher_is_teaching_at_other_School_as_Guest/Contractual?"];
+
+    for (const [key, value] of Object.entries(t)) {
+        if(!key || !value || key === 'Timestamp') continue;
+        
+        let rowHtml = `
+            <div style="display: flex; margin-bottom: 6px; font-size: 13px; border-bottom: 1px solid #eef2f5; padding-bottom: 5px;">
+                <div style="width: 45%; font-weight: 600; color: #495057;">${key.replace(/_/g, ' ')}</div>
+                <div style="width: 55%; color: #111;">${value}</div>
+            </div>`;
+
+        if(basicKeys.includes(key)) group1_Basic += rowHtml;
+        else if(acadKeys.includes(key)) group2_Acad += rowHtml;
+        else if(apptKeys.includes(key)) group3_Appt += rowHtml;
+        else group4_Misc += rowHtml; 
+    }
+
+    const printWindow = window.open('', '_blank');
+    printWindow.document.write(`
+      <html>
+        <head>
+          <title>Staff Profile Report - ${name}</title>
+          <style>
+            @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;600;700&display=swap');
+            body { font-family: 'Roboto', Arial, sans-serif; padding: 40px; color: #333; background: #fff; }
+            .header-banner { background: linear-gradient(135deg, #1a4971, #2b579a); color: white; padding: 25px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-bottom: 30px;}
+            .header-title { font-size: 26px; font-weight: 700; margin: 0; text-transform: uppercase; letter-spacing: 1px;}
+            .header-sub { font-size: 14px; opacity: 0.9; margin-top: 5px;}
+            .header-right { text-align: right; font-size: 13px; background: rgba(255,255,255,0.1); padding: 10px 15px; border-radius: 6px;}
+            
+            .category-box { border: 1px solid #d1d8e0; border-radius: 8px; margin-bottom: 25px; overflow: hidden; box-shadow: 0 2px 4px rgba(0,0,0,0.03);}
+            .category-title { background: #eef2f5; color: #1a4971; font-size: 15px; font-weight: 700; padding: 12px 15px; border-bottom: 2px solid #2b579a; display: flex; align-items: center;}
+            .category-body { padding: 15px; background: #fff; }
+            
+            .badge { background: #28a745; color: white; padding: 4px 8px; border-radius: 4px; font-size: 11px; font-weight: bold; }
+            .footer { margin-top: 40px; font-size: 12px; text-align: center; color: #777; border-top: 2px solid #eee; padding-top: 15px; }
+            .btn-print { background: #d32f2f; color: white; border: none; padding: 12px 25px; font-size: 14px; font-weight: bold; border-radius: 5px; cursor: pointer; float: right; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.2);}
+            @media print { .no-print { display: none; } body { padding: 0;} .header-banner{ box-shadow: none; border: 1px solid #1a4971;} .category-box{box-shadow:none;} }
+          </style>
+        </head>
+        <body>
+          <button class="no-print btn-print" onclick="window.print()">🖨️ Print / Download PDF</button>
+          
+          <div class="header-banner">
+            <div>
+              <h1 class="header-title">Staff Profile Report</h1>
+              <div class="header-sub">UDISE+ Comprehensive Data Summary &bull; ID: <strong>${code}</strong></div>
+            </div>
+            <div class="header-right">
+              <div><span style="opacity: 0.8;">Generated On:</span> <br><strong>${printDate}</strong></div>
+              <div style="margin-top: 8px;"><span class="badge">ACTIVE RECORD</span></div>
+            </div>
+          </div>
+
+          <div class="category-box">
+             <div class="category-title">1. BASIC PROFILE & IDENTITY</div>
+             <div class="category-body" style="display: grid; grid-template-columns: 1fr 1fr; gap: 0 30px;">${group1_Basic}</div>
+          </div>
+          
+          <div class="category-box">
+             <div class="category-title" style="border-bottom-color: #28a745; color: #1e7e34;">2. QUALIFICATIONS & CERTIFICATIONS</div>
+             <div class="category-body" style="display: grid; grid-template-columns: 1fr 1fr; gap: 0 30px;">${group2_Acad}</div>
+          </div>
+
+          <div class="category-box">
+             <div class="category-title" style="border-bottom-color: #e67e22; color: #d35400;">3. APPOINTMENT & SERVICE DETAILS</div>
+             <div class="category-body" style="display: grid; grid-template-columns: 1fr 1fr; gap: 0 30px;">${group3_Appt}</div>
+          </div>
+
+          <div class="category-box">
+             <div class="category-title" style="border-bottom-color: #8e44ad; color: #732d91;">4. TRAINING, LANGUAGE & MISCELLANEOUS</div>
+             <div class="category-body" style="display: grid; grid-template-columns: 1fr 1fr; gap: 0 30px;">${group4_Misc}</div>
+          </div>
+          
+          <div class="footer">
+            <strong>OFFICIAL DOCUMENT &bull; CONFIDENTIAL</strong><br>
+            This document is a compiled data summary prepared from UDISE+ staff records for internal management review.
+          </div>
+        </body>
+      </html>
+    `);
+    printWindow.document.close();
+  }
+
+  // --- ADMIN ACTIONS (ADD / EDIT / DELETE) ---
+  function openTeacherModal(action, index = null) {
+    document.getElementById('teacher-form').reset();
+    document.getElementById('n_ActionType').value = action;
+    
+    if(action === 'add') {
+      document.getElementById('teacherModalTitle').innerHTML = '<i class="fas fa-user-plus me-2"></i> Add New Teacher';
+      document.getElementById('n_Code').readOnly = false;
+    } else if (action === 'edit' && index !== null) {
+      document.getElementById('teacherModalTitle').innerHTML = '<i class="fas fa-user-edit me-2"></i> Edit Teacher Details';
+      const t = teachersData[index];
+      
+      document.getElementById('n_Name').value = t['Staff_Name'] || t['Staff Name'] || '';
+      document.getElementById('n_Code').value = t['National_Code'] || t['National Code'] || '';
+      document.getElementById('n_Code').readOnly = true; 
+      
+      let gender = t['Gender'] || '';
+      Array.from(document.getElementById('n_Gender').options).forEach(opt => { if(opt.value.includes(gender)) opt.selected = true; });
+
+      let dobStr = t['Date of Birth'] || '';
+      if(dobStr.includes('/')) {
+          let parts = dobStr.split('/');
+          if(parts.length === 3 && parts[0] !== '**') document.getElementById('n_DOB').value = `${parts[2]}-${parts[1]}-${parts[0]}`;
+      } else {
+          document.getElementById('n_DOB').value = dobStr;
+      }
+      
+      let social = t['Social_Category'] || '';
+      Array.from(document.getElementById('n_Social').options).forEach(opt => { if(opt.value === social) opt.selected = true; });
+
+      let acad = t['Academic_Qualification'] || '';
+      Array.from(document.getElementById('n_Academic').options).forEach(opt => { if(opt.value === acad) opt.selected = true; });
+
+      let prof = t['Professional_Qualification'] || '';
+      Array.from(document.getElementById('n_ProfQual').options).forEach(opt => { if(opt.value === prof) opt.selected = true; });
+
+      let appt = t['Nature_of_Appointment'] || '';
+      Array.from(document.getElementById('n_Appt').options).forEach(opt => { if(opt.value === appt) opt.selected = true; });
+
+      document.getElementById('n_Mobile').value = t['Mobile'] || '';
+      document.getElementById('n_Email').value = t['Email'] || '';
+    }
+    
+    new bootstrap.Modal(document.getElementById('teacherModal')).show();
+  }
+
+  async function submitTeacherData(e) {
+    e.preventDefault();
+    const action = document.getElementById('n_ActionType').value === 'edit' ? 'editTeacher' : 'addTeacher';
+    
+    let dobRaw = document.getElementById('n_DOB').value;
+    let dobFormatted = dobRaw.split('-').reverse().join('/');
+
+    Swal.fire({ title: 'Saving Data...', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); }});
+
+    const payload = {
+      action: action,
+      data: {
+        name: document.getElementById('n_Name').value, code: document.getElementById('n_Code').value,
+        gender: document.getElementById('n_Gender').value, dob: dobFormatted,
+        social: document.getElementById('n_Social').value, academic: document.getElementById('n_Academic').value,
+        profQual: document.getElementById('n_ProfQual').value, mobile: document.getElementById('n_Mobile').value, 
+        email: document.getElementById('n_Email').value, appt: document.getElementById('n_Appt').value
+      }
+    };
+
+    try {
+      await fetch(SCRIPT_URL, { method: 'POST', body: JSON.stringify(payload) });
+      bootstrap.Modal.getInstance(document.getElementById('teacherModal')).hide();
+      fetchTeachersData();
+      Swal.fire({ icon: 'success', title: 'Saved successfully!', showConfirmButton: false, timer: 1500 });
+    } catch(err) { Swal.fire({ icon: 'error', title: 'Failed to Save', text: 'Please check your connection and try again.' }); }
+  }
+
+  async function deleteTeacher(code) {
+    Swal.fire({
+      title: 'Are you sure?', text: `Remove teacher ${code}?`, icon: 'warning',
+      showCancelButton: true, confirmButtonColor: '#d33', cancelButtonColor: '#3085d6', confirmButtonText: 'Yes, delete it!'
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        Swal.fire({ title: 'Deleting...', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); }});
+        try {
+          await fetch(SCRIPT_URL, { method: 'POST', body: JSON.stringify({ action: "deleteTeacher", code: code }) });
+          fetchTeachersData();
+          Swal.fire({ icon: 'success', title: 'Deleted!', showConfirmButton: false, timer: 1500 });
+        } catch(err) { Swal.fire({ icon: 'error', title: 'Deletion Failed' }); }
+      }
+    });
+  }
+
+  // --- FILE SIZE VALIDATION ---
+  function validateFileSize(input) {
+    if (input.files && input.files.length > 0) {
+      const fileSize = input.files[0].size; 
+      const minSize = 20 * 1024; // 20 KB
+      const maxSize = 50 * 1024; // 50 KB
+      if (fileSize < minSize || fileSize > maxSize) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Invalid File Size',
+          text: 'The uploaded file must be between 20 KB and 50 KB. Please compress or resize your image.'
+        });
+        input.value = ''; 
+      }
+    }
+  }
+
+  // --- ESIC FORM LOGIC & DYNAMIC DROPDOWNS ---
+  function applyESIC(code, name, dob) {
+    document.getElementById('e_Code').value = code;
+    document.getElementById('e_Name').value = name;
+    document.getElementById('e_DOB').value = dob;
+    document.querySelector('.nav-pills .nav-link:nth-child(2)').click();
+  }
+
+  function updateDependentOptions() {
+    const maritalStatus = document.getElementById('e_Marital').value;
+    const container = document.getElementById('dependents-container');
+    
+    container.innerHTML = '<div class="text-muted small mb-3"><i class="fas fa-info-circle me-1"></i> Required dependents will automatically populate based on your Marital Status. You can click \'+ Add Dependent\' to add more manually.</div>';
+    depCount = 0;
+    
+    if (maritalStatus === 'Married') {
+      addDependentBlock('Spouse', true); 
+    } else if (maritalStatus === 'Unmarried') {
+      addDependentBlock('Father', true); 
+      addDependentBlock('Mother', true); 
+    }
+  }
+
+  function addDependentBlock(forcedRelation = '', isMandatory = false) {
+    const maritalStatus = document.getElementById('e_Marital').value;
+    if(!maritalStatus) {
+        Swal.fire({ icon: 'info', title: 'Action Required', text: 'Please select Marital Status in Section 1 first.' });
+        return;
+    }
+
+    depCount++;
+    const container = document.getElementById('dependents-container');
+    const block = document.createElement('div');
+    block.className = 'dependent-block row g-3';
+    block.id = `dep-block-${depCount}`;
+    
+    let options = '<option value="">Select Relationship...</option>';
+    if (maritalStatus === 'Married') options += '<option value="Son">Son</option><option value="Daughter">Daughter</option>';
+
+    let removeBtn = isMandatory ? `<div class="badge bg-danger position-absolute top-0 end-0 m-2" style="width: auto;">Required</div>` : `<button type="button" class="btn btn-danger remove-dep-btn btn-sm" onclick="document.getElementById('dep-block-${depCount}').remove()"><i class="fas fa-times"></i></button>`;
+    
+    let relationHtml = isMandatory ? 
+        `<input type="text" class="form-control dep-relation text-danger fw-bold" value="${forcedRelation}" readonly required>` : 
+        `<select class="form-select dep-relation" required>${options}</select>`;
+
+    block.innerHTML = `
+      ${removeBtn}
+      <div class="col-md-3"><label class="form-label fw-bold small">Relationship</label>${relationHtml}</div>
+      <div class="col-md-5"><label class="form-label fw-bold small">Full Name <span class="text-danger">*</span></label><input type="text" class="form-control dep-name" placeholder="Enter Full Name" required></div>
+      <div class="col-md-4">
+        <label class="form-label fw-bold small">Aadhaar Number <span class="text-danger">*</span></label>
+        <input type="text" class="form-control dep-aadhaar" maxlength="12" pattern="\\d{12}" oninput="this.value = this.value.replace(/[^0-9]/g, '')" placeholder="12-Digit Number" required>
+      </div>
+      <div class="col-md-6">
+        <label class="form-label fw-bold small text-muted">Upload Aadhaar Doc (Optional) [20KB-50KB]</label>
+        <input type="file" class="form-control dep-doc" accept="image/*,.pdf" onchange="validateFileSize(this)">
+      </div>
+      <div class="col-md-6">
+        <label class="form-label fw-bold small text-muted">Upload Passport Photo (Optional) [20KB-50KB]</label>
+        <input type="file" class="form-control dep-photo" accept="image/*" onchange="validateFileSize(this)">
+      </div>
+    `;
+    container.appendChild(block);
+  }
+
+  const toBase64 = file => new Promise((resolve, reject) => {
+    if(!file) return resolve("");
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = error => reject(error);
+  });
+
+  async function submitESICForm(e) {
+    e.preventDefault();
+    const btn = document.getElementById('submit-esic-btn');
+    btn.disabled = true;
+
+    Swal.fire({ title: 'Submitting Details...', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); }});
+
+    try {
+        const generatedRegNo = "ESIC-" + Date.now().toString().slice(-6);
+        const payload = {
+            action: "submitESIC",
+            data: {
+                regNo: generatedRegNo,
+                code: document.getElementById('e_Code').value, name: document.getElementById('e_Name').value,
+                pan: document.getElementById('e_PAN').value, bankAcc: document.getElementById('e_BankAcc').value,
+                ifsc: document.getElementById('e_IFSC').value, marital: document.getElementById('e_Marital').value,
+                empAadhaar: document.getElementById('e_EmpAadhaar').value, 
+                staffPhoto: document.getElementById('e_StaffPhoto').files.length > 0 ? await toBase64(document.getElementById('e_StaffPhoto').files[0]) : "",
+                dependents: []
+            }
+        };
+
+        const depBlocks = document.querySelectorAll('.dependent-block');
+        for (let block of depBlocks) {
+            let docFile = block.querySelector('.dep-doc').files.length > 0 ? await toBase64(block.querySelector('.dep-doc').files[0]) : "";
+            let photoFile = block.querySelector('.dep-photo').files.length > 0 ? await toBase64(block.querySelector('.dep-photo').files[0]) : "";
+            
+            payload.data.dependents.push({
+                relation: block.querySelector('.dep-relation').value, 
+                name: block.querySelector('.dep-name').value, 
+                aadhaar: block.querySelector('.dep-aadhaar').value,
+                doc: docFile,
+                photo: photoFile
+            });
+        }
+
+        await fetch(SCRIPT_URL, { method: 'POST', body: JSON.stringify(payload) });
+        
+        Swal.fire({
+          icon: 'success',
+          title: 'Successfully Submitted!',
+          html: `Thank you! Your Registration ID is <b>${generatedRegNo}</b>.<br><br>
+                 <span style="color: #d32f2f; font-weight: bold;">Submit Hard Copies by Monday / Sombar salo Hard Copy-rangko on'echina:</span><br>
+                 <ul style="text-align: left; font-size: 13px; margin-top: 10px;">
+                    <li>Your Aadhaar, PAN, & Bank Passbook</li>
+                    <li>Family Aadhaar Cards</li>
+                    <li>Passport Photos (Yours & Family)</li>
+                 </ul>`,
+          confirmButtonColor: '#2b579a'
+        }).then(() => {
+          document.getElementById('esic-actual-form').reset();
+          document.getElementById('dependents-container').innerHTML = '<div class="text-muted small mb-3"><i class="fas fa-info-circle me-1"></i> Required dependents will automatically populate based on your Marital Status. You can click \'+ Add Dependent\' to add more manually.</div>';
+          document.querySelector('.nav-pills .nav-link:nth-child(3)').click();
+          fetchESICData();
+        });
+        
+    } catch (error) { Swal.fire({ icon: 'error', title: 'Submission Failed', text: 'Network issue. Try again.' }); }
+    btn.disabled = false;
+  }
+
+  async function fetchESICData() {
+    const tbody = document.getElementById('esic-directory-body');
+    tbody.innerHTML = `<tr><td colspan="4" class="py-4"><div class="spinner-border text-primary"></div></td></tr>`;
+    try {
+        const res = await fetch(`${SCRIPT_URL}?action=getESIC`);
+        const records = await res.json();
+        tbody.innerHTML = records.map(app => `
+            <tr>
+                <td><span class="badge bg-primary">${app['Registration No']}</span></td>
+                <td class="fw-semibold">${app['Staff Name']}</td>
+                <td><code>${app['National Code']}</code></td>
+                <td><span class="text-success fw-bold"><i class="fas fa-check-circle"></i> Submitted</span></td>
+            </tr>`).join('');
+    } catch (error) { tbody.innerHTML = `<tr><td colspan="4" class="text-danger">Failed to fetch ESIC records.</td></tr>`; }
+  }
+</script>
+</body>
+</html>
