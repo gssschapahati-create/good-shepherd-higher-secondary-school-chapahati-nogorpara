@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Quiz</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #fdf6e3; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 20px;}
+        .container { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 100%; max-width: 700px; text-align: center; }
+        h1 { color: #d35400; }
+        input[type="text"] { padding: 10px; width: 80%; margin-bottom: 20px; border: 1px solid #ccc; border-radius: 5px; font-size: 16px; }
+        #timer { font-size: 24px; font-weight: bold; color: #c0392b; margin-bottom: 20px; }
+        #question { font-size: 20px; margin-bottom: 20px; font-weight: 500; }
+        .options { display: flex; flex-direction: column; gap: 10px; }
+        .option-btn, .start-btn { padding: 12px; font-size: 16px; border: 2px solid #e67e22; background: white; color: #e67e22; border-radius: 6px; cursor: pointer; transition: all 0.3s; }
+        .start-btn { background: #e67e22; color: white; }
+        .option-btn:hover:not(:disabled) { background: #e67e22; color: white; }
+        .option-btn:disabled { cursor: not-allowed; }
+        .correct { background: #27ae60 !important; color: white !important; border-color: #27ae60 !important; }
+        .wrong { background: #c0392b !important; color: white !important; border-color: #c0392b !important; }
+        #quiz-container, #result-container { display: none; }
+        
+        /* Marksheet specific styles for perfect PDF generation */
+        #marksheet { text-align: left; margin-bottom: 20px; padding: 30px; border: 1px solid #ddd; background: white;}
+        .qa-block { 
+            page-break-inside: avoid; /* Prevents questions from splitting across pages in PDF */
+            margin-bottom: 15px; 
+            padding: 15px; 
+            background: #f9f9f9; 
+            border-radius: 8px;
+            border-left: 5px solid #ccc;
+        }
+        .correct-block { border-left-color: #27ae60; }
+        .wrong-block { border-left-color: #c0392b; }
+        .download-btn { padding: 12px 24px; background: #e67e22; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 16px; margin-top: 10px; }
+    </style>
+</head>
+<body>
+
+<!-- Start Screen -->
+<div class="container" id="start-container">
+    <h1>Math Quiz</h1>
+    <p>Please enter your name to begin.</p>
+    <input type="text" id="student-name" placeholder="Your Name" required>
+    <br>
+    <button class="start-btn" onclick="startQuiz()">Start Quiz</button>
+</div>
+
+<!-- Quiz Screen -->
+<div class="container" id="quiz-container">
+    <h1>Math Quiz</h1>
+    <div id="quiz-header">Question <span id="q-num">1</span> of 25</div>
+    <div id="timer">00:30</div>
+    <div id="question">Loading...</div>
+    <div class="options" id="options"></div>
+</div>
+
+<!-- Results Screen -->
+<div class="container" id="result-container" style="max-width: 800px;">
+    <div id="saving-msg" style="color: #e67e22; font-weight: bold; margin-bottom: 15px;">Saving results to database...</div>
+    
+    <div id="marksheet">
+        <h1 style="text-align:center; margin-top: 0; color: #d35400;">Math Quiz - Final Report</h1>
+        <h3 style="text-align:center; color: #555;">Student Name: <span id="display-name" style="color: #d35400;"></span></h3>
+        <h2 style="text-align:center; background: #fae5d3; padding: 10px; border-radius: 8px; color: #d35400;">Total Score: <span id="final-score">0</span> / 25</h2>
+        <hr style="margin: 20px 0;">
+        <h3 style="text-align: center; color: #333;">Detailed Submission Review</h3>
+        <div id="detailed-results"></div>
+    </div>
+    
+    <button class="download-btn" onclick="downloadPDF()">Download Full PDF Report</button>
+</div>
+
+<script>
+    // ==========================================
+    // PASTE YOUR GOOGLE SCRIPT WEB APP URL BELOW
+    // ==========================================
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbxt4Bhk5Oop5lKgRb8XgOImsIGfMQlQ9i7iIBz1JpyNNpBLtYsNsq7FUP3Df7sai2uo/exec';
+
+    const questions = [
+        { q: "What is 5 + 7?", options: ["10", "11", "12", "13"], a: 2 },
+        { q: "What is 10 - 4?", options: ["4", "5", "6", "7"], a: 2 },
+        { q: "What is 3 x 4?", options: ["7", "12", "14", "9"], a: 1 },
+        { q: "What is 20 / 5?", options: ["2", "3", "4", "5"], a: 2 },
+        { q: "What is the square root of 9?", options: ["2", "3", "4", "4.5"], a: 1 },
+        { q: "How many sides does a triangle have?", options: ["2", "3", "4", "5"], a: 1 },
+        { q: "What is 15 + 15?", options: ["20", "25", "30", "35"], a: 2 },
+        { q: "What is 7 x 7?", options: ["42", "47", "49", "54"], a: 2 },
+        { q: "What is 100 - 25?", options: ["65", "70", "75", "80"], a: 2 },
+        { q: "What is 8 / 2?", options: ["2", "4", "6", "8"], a: 1 },
+        { q: "What is the perimeter of a square with a side length of 5?", options: ["10", "15", "20", "25"], a: 2 },
+        { q: "How many degrees are in a full circle?", options: ["90", "180", "270", "360"], a: 3 },
+        { q: "What is 9 + 6?", options: ["13", "14", "15", "16"], a: 2 },
+        { q: "What is 12 x 2?", options: ["22", "24", "26", "28"], a: 1 },
+        { q: "What is 50 / 10?", options: ["5", "10", "15", "50"], a: 0 },
+        { q: "What is the next number in the sequence: 2, 4, 6, 8, ...?", options: ["9", "10", "11", "12"], a: 1 },
+        { q: "How many sides does a hexagon have?", options: ["5", "6", "7", "8"], a: 1 },
+        { q: "What is 11 x 11?", options: ["111", "121", "131", "141"], a: 1 },
+        { q: "What is 1000 + 500?", options: ["1050", "1500", "5000", "15000"], a: 1 },
+        { q: "What is 8 + 8 + 8?", options: ["16", "22", "24", "32"], a: 2 },
+        { q: "What is half of 50?", options: ["20", "25", "30", "100"], a: 1 },
+        { q: "What is 9 x 5?", options: ["35", "40", "45", "50"], a: 2 },
+        { q: "What is 30 - 12?", options: ["16", "18", "20", "22"], a: 1 },
+        { q: "How many cents are in a dollar?", options: ["10", "50", "100", "1000"], a: 2 },
+        { q: "What is 14 / 2?", options: ["6", "7", "8", "9"], a: 1 }
+    ];
+
+    let currentQ = 0, score = 0, timeLeft = 30, timerInterval;
+    let userName = "";
+    const userAnswers = [];
+
+    function startQuiz() {
+        userName = document.getElementById("student-name").value.trim();
+        if (userName === "") return alert("Please enter your name.");
+        document.getElementById("start-container").style.display = "none";
+        document.getElementById("quiz-container").style.display = "block";
+        loadQuestion();
+    }
+
+    function loadQuestion() {
+        timeLeft = 30;
+        document.getElementById("timer").innerText = `00:${timeLeft}`;
+        document.getElementById("q-num").innerText = currentQ + 1;
+        document.getElementById("question").innerText = questions[currentQ].q;
+        
+        const optionsDiv = document.getElementById("options");
+        optionsDiv.innerHTML = "";
+        
+        questions[currentQ].options.forEach((opt, index) => {
+            const btn = document.createElement("button");
+            btn.className = "option-btn";
+            btn.innerText = opt;
+            btn.onclick = () => checkAnswer(index, btn);
+            optionsDiv.appendChild(btn);
+        });
+
+        timerInterval = setInterval(() => {
+            timeLeft--;
+            document.getElementById("timer").innerText = `00:${timeLeft < 10 ? '0'+timeLeft : timeLeft}`;
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                checkAnswer(-1, null); 
+            }
+        }, 1000);
+    }
+
+    function checkAnswer(selectedIndex, btnNode) {
+        clearInterval(timerInterval);
+        const correctIndex = questions[currentQ].a;
+        const buttons = document.querySelectorAll(".option-btn");
+        
+        buttons.forEach(btn => btn.disabled = true);
+        buttons[correctIndex].classList.add("correct");
+
+        let status = "Incorrect";
+        if (selectedIndex === correctIndex) {
+            score++; status = "Correct";
+        } else if (selectedIndex !== -1) {
+            btnNode.classList.add("wrong");
+        }
+
+        userAnswers.push({
+            q: questions[currentQ].q,
+            userAns: selectedIndex !== -1 ? questions[currentQ].options[selectedIndex] : "Timeout (No Answer)",
+            correctAns: questions[currentQ].options[correctIndex],
+            status: status
+        });
+
+        setTimeout(nextQuestion, 2000); 
+    }
+
+    function nextQuestion() {
+        currentQ++;
+        if (currentQ < questions.length) loadQuestion();
+        else showResults();
+    }
+
+    function showResults() {
+        document.getElementById("quiz-container").style.display = "none";
+        document.getElementById("result-container").style.display = "block";
+        document.getElementById("display-name").innerText = userName;
+        document.getElementById("final-score").innerText = score;
+
+        let detailsHTML = "";
+        userAnswers.forEach((ans, i) => {
+            let isCorrect = ans.status === "Correct";
+            let color = isCorrect ? "#27ae60" : "#c0392b";
+            let blockClass = isCorrect ? "correct-block" : "wrong-block";
+            
+            detailsHTML += `
+                <div class="qa-block ${blockClass}">
+                    <p style="margin: 0 0 8px 0; font-size: 16px;"><b>Q${i+1}: ${ans.q}</b></p>
+                    <p style="margin: 4px 0;">Your Answer: <span style="color:${color}; font-weight:bold;">${ans.userAns}</span></p>
+                    ${!isCorrect ? `<p style="margin: 4px 0;">Correct Answer: <span style="color:#27ae60; font-weight:bold;">${ans.correctAns}</span></p>` : ''}
+                </div>`;
+        });
+        document.getElementById("detailed-results").innerHTML = detailsHTML;
+
+        // Send Data to Google Sheets
+        fetch(scriptURL, {
+            method: 'POST',
+            body: JSON.stringify({ name: userName, quizName: "Math Quiz", score: score, answers: userAnswers })
+        }).then(() => {
+            document.getElementById("saving-msg").innerText = "Results saved to database successfully!";
+            document.getElementById("saving-msg").style.color = "green";
+        }).catch(err => {
+            document.getElementById("saving-msg").innerText = "Network error: Could not save to database.";
+            document.getElementById("saving-msg").style.color = "red";
+        });
+    }
+
+    function downloadPDF() {
+        const element = document.getElementById('marksheet');
+        const opt = {
+            margin:       0.3,
+            filename:     userName + '_Math_Report.pdf',
+            image:        { type: 'jpeg', quality: 0.98 },
+            html2canvas:  { scale: 2, useCORS: true },
+            jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
+        };
+        html2pdf().set(opt).from(element).save();
+    }
+</script>
+</body>
+</html>
