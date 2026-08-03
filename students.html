@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Good Shepherd Portal</title>
+  <style>
+    :root {
+      --brand-blue: #0f3995;
+      --light-blue: #2eb4e7;
+      --bg-gradient: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+      --notice-red: #d32f2f;
+      --success-green: #2e7d32;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; }
+    body { background: var(--bg-gradient); min-height: 100vh; display: flex; flex-direction: column; color: #333; }
+    
+    header {
+      background: linear-gradient(to right, var(--brand-blue), var(--light-blue));
+      color: white; padding: 1.5rem; text-align: center; box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    }
+    .header-container { max-width: 1200px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 1rem; }
+    .school-logo { height: 90px; width: auto; border-radius: 50%; background: white; padding: 4px; }
+    .header-text h1 { font-size: 1.5rem; font-weight: 700; line-height: 1.3; }
+
+    .portal-workspace { max-width: 500px; width: 100%; margin: 3rem auto; padding: 0 1rem; flex: 1; }
+    .card-panel { background: white; border-radius: 12px; box-shadow: 0 8px 20px rgba(0,0,0,0.06); padding: 2rem; border-top: 5px solid var(--brand-blue); }
+    .card-title { font-size: 1.25rem; color: var(--brand-blue); margin-bottom: 1.25rem; padding-bottom: 0.5rem; border-bottom: 2px solid #f0f0f0; text-transform: uppercase; text-align: center; }
+
+    .form-group { margin-bottom: 1.2rem; }
+    .form-group label { display: block; margin-bottom: 0.4rem; font-weight: 600; font-size: 0.9rem; }
+    .form-control { width: 100%; padding: 0.7rem; border: 1px solid #ccc; border-radius: 6px; font-size: 0.95rem; }
+    
+    .submit-btn { width: 100%; background: var(--brand-blue); color: white; border: none; padding: 0.85rem; font-size: 1rem; font-weight: bold; border-radius: 6px; cursor: pointer; transition: opacity 0.2s; }
+    .submit-btn:hover { opacity: 0.9; }
+
+    .toggle-footer { margin-top: 1.5rem; text-align: center; font-size: 0.95rem; color: #555; padding-top: 1rem; border-top: 1px solid #f0f0f0; }
+    .toggle-link { color: var(--brand-blue); font-weight: bold; text-decoration: none; cursor: pointer; margin-left: 0.25rem; }
+
+    .status-msg-box { margin-top: 1rem; padding: 0.75rem; border-radius: 6px; font-weight: bold; text-align: center; display: none; }
+    .info-state { background: #e3f2fd; color: #0f3995; }
+    .success-state { background: #e8f5e9; color: var(--success-green); }
+    .error-state { background: #ffebee; color: #c62828; }
+
+    /* --- POST AUTHENTICATION LAYOUT --- */
+    #dashboardView { max-width: 1200px; width: 100%; margin: 1.5rem auto; padding: 0 1rem; display: none; flex-direction: column; gap: 1.5rem; }
+    
+    /* Live Clock Styling */
+    #liveClock { background: white; padding: 0.75rem 1.5rem; border-radius: 8px; font-weight: bold; color: var(--brand-blue); box-shadow: 0 2px 5px rgba(0,0,0,0.05); text-align: center; font-size: 1.1rem; border-left: 5px solid var(--light-blue); }
+
+    .dash-nav { display: flex; gap: 0.5rem; background: white; padding: 0.5rem; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); overflow-x: auto; align-items: center; }
+    .nav-tab { padding: 0.75rem 1.5rem; border: none; background: transparent; cursor: pointer; font-weight: bold; font-size: 0.95rem; border-radius: 6px; color: #555; white-space: nowrap; }
+    .nav-tab.active { background: var(--brand-blue); color: white; }
+    
+    .dash-body { background: white; border-radius: 12px; padding: 2rem; box-shadow: 0 4px 15px rgba(0,0,0,0.05); min-height: 350px; }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+
+    /* --- FLOATING CARD HOVER ANIMATIONS --- */
+    .marquee-container {
+      width: 100%; background: var(--notice-red); color: white; padding: 0.6rem 1rem;
+      font-weight: bold; font-size: 0.95rem; overflow: hidden; white-space: nowrap;
+      border-radius: 6px; margin-bottom: 0.5rem; display: none; align-items: center; gap: 10px;
+    }
+    .marquee-text { display: inline-block; padding-left: 100%; animation: scrollMarquee 25s linear infinite; }
+    @keyframes scrollMarquee { 0% { transform: translate3d(0, 0, 0); } 100% { transform: translate3d(-100%, 0, 0); } }
+
+    .items-grid { display: flex; flex-direction: column; gap: 1rem; margin-top: 1rem; }
+    .item-row { 
+      display: flex; justify-content: space-between; align-items: center; padding: 1.2rem; 
+      background: #ffffff; border: 1px solid #eef2f5; border-left: 5px solid var(--brand-blue); 
+      border-radius: 8px; transform: translateY(0); transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .item-row:hover { transform: translateY(-4px); box-shadow: 0 8px 16px rgba(15, 57, 149, 0.12); }
+    .item-row.important { border-left-color: var(--notice-red); }
+    .view-action-btn { background: var(--brand-blue); color: white; text-decoration: none; padding: 0.6rem 1.2rem; border-radius: 6px; font-size: 0.85rem; font-weight: bold; text-align: center; }
+
+    /* PDF View Overlay Frame Container */
+    .pdf-pane-wrapper { display: none; margin-top: 1.5rem; border: 1px solid #ccc; border-radius: 8px; overflow: hidden; }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="header-container">
+      <img src="https://image2url.com/images/1763992201917-53de3abf-13dd-405e-a177-f304a5571173.jpg" alt="Good Shepherd Logo" class="school-logo">
+      <div class="header-text">
+        <h1>GOOD SHEPHERD HIGHER SECONDARY SCHOOL CHAPAHATI</h1>
+        <p>Students Registration Portal / Students Portal</p>
+      </div>
+    </div>
+  </header>
+
+  <main class="portal-workspace" id="authGatewayView">
+    <div class="card-panel">
+      <div id="portalStatusMsg" class="status-msg-box"></div>
+
+      <!-- LOGIN VIEW MODULE -->
+      <div id="loginViewContainer">
+        <h2 class="card-title">Portal Student Login</h2>
+        <form id="loginStep1Form" onsubmit="event.preventDefault(); runLoginStep1();">
+          <div class="form-group"><label>Student Username</label><input type="text" id="loginUser" class="form-control" required></div>
+          <div class="form-group"><label>Password</label><input type="password" id="loginPassword" class="form-control" required></div>
+          <div class="form-group"><label>Confirm Email</label><input type="email" id="loginEmailTarget" class="form-control" required></div>
+          <button type="submit" class="submit-btn">REQUEST ACCESS OTP</button>
+        </form>
+
+        <form id="loginStep2Form" style="display:none;" onsubmit="event.preventDefault(); runLoginStep2();">
+          <div class="form-group">
+            <label style="color:var(--notice-red); text-align:center; display:block;">Enter 6-Digit Email OTP Code</label>
+            <input type="text" id="inputOtpCode" class="form-control" maxlength="6" pattern="[0-9]{6}" required style="text-align:center; font-size:1.5rem; letter-spacing:8px;">
+          </div>
+          <button type="submit" class="submit-btn" style="background:var(--success-green);">VERIFY CODE & OPEN DASHBOARD</button>
+        </form>
+        
+        <div class="toggle-footer" id="loginRedirectFooter">New Student? <span style="color:var(--brand-blue); font-weight:bold; cursor:pointer;" onclick="switchAuthMode('REGISTRATION')">Register here</span></div>
+        
+        <!-- BACK TO HOME NAVIGATION -->
+        <div style="text-align:center; margin-top: 1.5rem;">
+          <a href="index.html" style="color:#555; text-decoration:none; font-weight:bold; font-size: 0.95rem;">🏠 Back to Home Page</a>
+        </div>
+      </div>
+
+      <!-- REGISTRATION VIEW MODULE -->
+      <div id="registrationViewContainer" style="display:none;">
+        <h2 class="card-title">New Student Registration</h2>
+        <form id="registrationForm" onsubmit="event.preventDefault(); executeRegistration();">
+          <div class="form-group"><label>Student Full Name</label><input type="text" id="regName" class="form-control" required></div>
+          <div class="form-group"><label>Registration No / Roll ID</label><input type="text" id="regRoll" class="form-control" required></div>
+          <div class="form-group"><label>Email Address</label><input type="email" id="regEmail" class="form-control" required></div>
+          <button type="submit" class="submit-btn" style="background:#4caf50;">REGISTER & RECORD TO SHEET</button>
+        </form>
+        <div class="toggle-footer">Already Registered? <span style="color:var(--brand-blue); font-weight:bold; cursor:pointer;" onclick="switchAuthMode('LOGIN')">Login here</span></div>
+      </div>
+    </div>
+  </main>
+
+  <!-- STUDENT DASHBOARD COMPONENT MODULE -->
+  <div id="dashboardView">
+    <div class="marquee-container" id="topMarqueeAlert"><div class="marquee-text" id="marqueeDynamicText"></div></div>
+    
+    <!-- LIVE CLOCK MODULE -->
+    <div id="liveClock">Loading current time...</div>
+
+    <nav class="dash-nav">
+      <button class="nav-tab active" onclick="switchDashboardTab('noticeTab', this)">📢 Notice Board</button>
+      <button class="nav-tab" onclick="switchDashboardTab('programsTab', this)">📅 School Programs</button>
+      <button class="nav-tab" onclick="switchDashboardTab('libraryTab', this)">📚 Books & Comics</button>
+      <!-- LOGOUT BUTTON ON THE FAR RIGHT -->
+      <button class="nav-tab" onclick="logoutStudent()" style="color:var(--notice-red); margin-left:auto; border: 1px solid var(--notice-red);">🚪 Logout</button>
+    </nav>
+
+    <main class="dash-body">
+      <!-- Tab 1: Notices -->
+      <div id="noticeTab" class="tab-content active">
+        <h2 style="color:var(--brand-blue);">Official Announcements</h2>
+        <div id="liveNoticesArea" class="items-grid"></div>
+      </div>
+
+      <!-- Tab 2: School Programs Sheet Panel Layout -->
+      <div id="programsTab" class="tab-content">
+        <h2 style="color:var(--brand-blue); margin-bottom:1rem;">School Events Calendar</h2>
+        <div id="liveProgramsArea" class="items-grid"></div>
+      </div>
+
+      <!-- Tab 3: Digital Library E-Book Shelf Layout -->
+      <div id="libraryTab" class="tab-content">
+        <h2 style="color:var(--brand-blue);">Digital E-Library Hub</h2>
+        <h3 style="color:#555; margin:1rem 0; border-bottom:1px solid #eee;">Course Textbooks</h3>
+        <div id="textbooksGridArea" class="items-grid"></div>
+        
+        <h3 style="color:#555; margin:2rem 0 1rem 0; border-bottom:1px solid #eee;">Comics & Reading Material</h3>
+        <div id="comicsGridArea" class="items-grid"></div>
+        
+        <div class="pdf-pane-wrapper" id="libraryPdfPane" style="margin-top:2rem;"><iframe id="libraryPdfIframe" src="" width="100%" height="550px" style="border:none;"></iframe></div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    // 👇 ADD YOUR GOOGLE APPS SCRIPT WEB APP URL HERE 👇
+    const API_URL = "https://script.google.com/macros/s/AKfycbyyR9H7RZkuYcObOpbiBdNslLG4fR8oxdfSC0he5EJBPHHLqNCe3X01qlAjIjFs2mlWPg/exec";
+
+    var ACTIVE_STUDENT_USER = "";
+    var SYSTEM_CACHED_DATA = {};
+    const SESSION_DURATION_MS = 30 * 60 * 1000; // 30 minutes in milliseconds
+
+    // --- SESSION PERSISTENCE & INITIALIZATION ---
+    window.onload = function() {
+        startLiveClock();
+        
+        // Check for active session upon refresh
+        const savedUser = localStorage.getItem("gshss_student_user");
+        const savedTime = localStorage.getItem("gshss_login_time");
+        
+        if (savedUser && savedTime) {
+            const timeElapsed = Date.now() - parseInt(savedTime);
+            if (timeElapsed < SESSION_DURATION_MS) {
+                // Session is valid. Resume dashboard.
+                ACTIVE_STUDENT_USER = savedUser;
+                document.getElementById('authGatewayView').style.display = "none";
+                document.getElementById('dashboardView').style.display = "flex";
+                syncDashboardData();
+                
+                // Reset the timer on load to extend session
+                localStorage.setItem("gshss_login_time", Date.now().toString());
+            } else {
+                // Session expired
+                logoutStudent();
+            }
+        }
+    };
+
+    // --- LIVE CLOCK ENGINE ---
+    function startLiveClock() {
+        setInterval(() => {
+            const now = new Date();
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' };
+            document.getElementById('liveClock').innerText = now.toLocaleDateString('en-IN', options);
+        }, 1000);
+    }
+
+    // --- API & COMMUNICATION ---
+    async function apiCall(action, payload = {}) {
+        try {
+            const response = await fetch(API_URL, {
+                method: 'POST',
+                body: JSON.stringify({ action: action, payload: payload }),
+                headers: { 'Content-Type': 'text/plain;charset=utf-8' }
+            });
+            return await response.json();
+        } catch (error) {
+            console.error("API Error:", error);
+            return { success: false, msg: "Network error. Make sure your API_URL is correct and deployed as 'Anyone'." };
+        }
+    }
+
+    function switchAuthMode(mode) {
+      document.getElementById('loginViewContainer').style.display = (mode === 'LOGIN') ? "block" : "none";
+      document.getElementById('registrationViewContainer').style.display = (mode === 'REGISTRATION') ? "block" : "none";
+      document.getElementById('portalStatusMsg').style.display = "none";
+    }
+
+    function updateStatusBox(txt, cls) {
+      const b = document.getElementById('portalStatusMsg'); b.className = "status-msg-box " + cls; b.innerText = txt; b.style.display = "block";
+    }
+
+    async function executeRegistration() {
+      const payload = { 
+          name: document.getElementById('regName').value, 
+          rollId: document.getElementById('regRoll').value, 
+          email: document.getElementById('regEmail').value 
+      };
+      updateStatusBox("⏳ Logging dataset to sheet... Processing entry rows...", "info-state");
+      
+      const res = await apiCall('processStudentRegistration', payload);
+      updateStatusBox(res.msg, res.success ? "success-state" : "error-state");
+    }
+
+    async function runLoginStep1() {
+      ACTIVE_STUDENT_USER = document.getElementById('loginUser').value;
+      updateStatusBox("⏳ Validating security records database rows...", "info-state");
+      
+      const payload = {
+          username: ACTIVE_STUDENT_USER,
+          password: document.getElementById('loginPassword').value,
+          studentEmail: document.getElementById('loginEmailTarget').value
+      };
+
+      const res = await apiCall('requestLoginOtp', payload);
+      
+      if(res.success) { 
+          updateStatusBox(res.msg, "success-state"); 
+          document.getElementById('loginStep1Form').style.display="none"; 
+          document.getElementById('loginStep2Form').style.display="block"; 
+      } else { 
+          updateStatusBox(res.msg, "error-state"); 
+      }
+    }
+
+    async function runLoginStep2() {
+      updateStatusBox("⏳ Authorizing credentials session setup...", "info-state");
+      
+      const payload = {
+          username: ACTIVE_STUDENT_USER,
+          enteredOtp: document.getElementById('inputOtpCode').value
+      };
+
+      const res = await apiCall('verifyLoginOtp', payload);
+      
+      if(res.success) { 
+          // Save session data to localStorage
+          localStorage.setItem("gshss_student_user", ACTIVE_STUDENT_USER);
+          localStorage.setItem("gshss_login_time", Date.now().toString());
+          
+          document.getElementById('authGatewayView').style.display="none"; 
+          document.getElementById('dashboardView').style.display="flex"; 
+          syncDashboardData(); 
+      } else { 
+          updateStatusBox(res.msg, "error-state"); 
+      }
+    }
+
+    // Pulls data across all sheets simultaneously 
+    async function syncDashboardData() {
+      const dataset = await apiCall('fetchAllDashboardData', { username: ACTIVE_STUDENT_USER });
+      
+      if (dataset && dataset.notices) {
+          SYSTEM_CACHED_DATA = dataset;
+          renderNotices(dataset.notices);
+          renderPrograms(dataset.programs);
+          renderLibrary(dataset.library);
+      }
+    }
+
+    function renderNotices(rows) {
+      const area = document.getElementById('liveNoticesArea');
+      if(!rows || rows.length === 0) { area.innerHTML = "<p>No active announcements posted.</p>"; return; }
+      let html = "", marquee = "";
+      rows.forEach(r => {
+        let imp = r[3] && r[3].toString().toLowerCase() === "important";
+        marquee += `🔥 ${r[0]} (${r[1]}) &nbsp;&nbsp;&nbsp;&nbsp;☉&nbsp;&nbsp;&nbsp;&nbsp; `;
+        html += `<div class="item-row ${imp ? 'important' : ''}"><div><h4>${r[0]}</h4><p style='font-size:0.85rem; color:#666'>Date: ${r[1]}</p></div><a href='${r[2]}' target='_blank' class='view-action-btn' ${imp ? "style='background:var(--notice-red);'" : ""}>Open PDF Or Link</a></div>`;
+      });
+      area.innerHTML = html;
+      document.getElementById('marqueeDynamicText').innerHTML = marquee;
+      document.getElementById('topMarqueeAlert').style.display = "flex";
+    }
+
+    function renderPrograms(rows) {
+      const area = document.getElementById('liveProgramsArea');
+      if(!rows || rows.length === 0) { area.innerHTML = "<p>No upcoming scheduled calendar events found.</p>"; return; }
+      let html = "";
+      rows.forEach(r => {
+        html += `<div class="item-row"><div><h4>${r[0]}</h4><p style='font-size:0.85rem; color:#666'>Date: ${r[1]}</p></div><span style='font-weight:bold; color:var(--brand-blue);'>${r[2]}</span></div>`;
+      });
+      area.innerHTML = html;
+    }
+
+    function renderLibrary(rows) {
+      const booksArea = document.getElementById('textbooksGridArea');
+      const comicsArea = document.getElementById('comicsGridArea');
+      if(!rows || rows.length === 0) { booksArea.innerHTML = comicsArea.innerHTML = "<p>Library asset catalog empty.</p>"; return; }
+      
+      let booksHtml = "", comicsHtml = "";
+      rows.forEach(r => {
+        let block = `<div class="item-row"><div><h4>${r[0]}</h4><p style='font-size:0.85rem; color:#666'>Format: ${r[1]}</p></div><button class='view-action-btn' onclick='openLibraryPdf("${r[2]}")'>Load PDF</button></div>`;
+        if(r[3] && r[3].toString().toLowerCase() === "comic") { comicsHtml += block; } 
+        else { booksHtml += block; }
+      });
+      booksArea.innerHTML = booksHtml || "<p>No textbooks uploaded.</p>";
+      comicsArea.innerHTML = comicsHtml || "<p>No comics uploaded.</p>";
+    }
+
+    function openLibraryPdf(url) {
+      let embedUrl = url.replace("/view?usp=sharing", "/preview").replace("/view", "/preview");
+      document.getElementById('libraryPdfIframe').src = embedUrl;
+      document.getElementById('libraryPdfPane').style.display = "block";
+    }
+
+    function switchDashboardTab(tabId, btn) {
+      document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+      document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+      document.getElementById(tabId).classList.add('active'); btn.classList.add('active');
+    }
+
+    function logoutStudent() {
+      // Clear persistent session data
+      localStorage.removeItem("gshss_student_user");
+      localStorage.removeItem("gshss_login_time");
+      ACTIVE_STUDENT_USER = "";
+      
+      // Navigate back to login view
+      document.getElementById('dashboardView').style.display = "none";
+      document.getElementById('authGatewayView').style.display = "block";
+      document.getElementById('loginStep1Form').style.display = "block";
+      document.getElementById('loginStep2Form').style.display = "none";
+      document.getElementById('portalStatusMsg').style.display = "none";
+      document.getElementById('loginStep1Form').reset();
+    }
+  </script>
+</body>
+</html>
