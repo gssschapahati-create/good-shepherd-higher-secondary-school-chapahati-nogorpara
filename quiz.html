@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inter-Club Science & Math Quiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f4f8;
+            color: #333;
+            text-align: center;
+            padding: 20px;
+            margin: 0;
+        }
+        .container {
+            background: white;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        h1, h2, h3 { color: #1a365d; }
+        .media-intro {
+            max-width: 100%;
+            height: 250px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            object-fit: cover;
+        }
+        #timer {
+            font-size: 26px;
+            font-weight: bold;
+            color: #d32f2f;
+            margin: 15px 0;
+        }
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        button {
+            padding: 15px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            background-color: #4CAF50;
+            color: white;
+            transition: background 0.3s;
+        }
+        button:hover { background-color: #45a049; }
+        button:disabled { opacity: 0.7; cursor: not-allowed; }
+        .option-btn { background-color: #e0e0e0; color: #333; }
+        .option-btn:hover:not(:disabled) { background-color: #d5d5d5; }
+        
+        #feedback-box {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .correct-feedback { background-color: #e8f5e9; color: #2e7d32; border: 1px solid #c8e6c9; }
+        .wrong-feedback { background-color: #ffebee; color: #c62828; border: 1px solid #ffcdd2; }
+        
+        .hidden { display: none; }
+        select { padding: 10px; font-size: 16px; margin-bottom: 20px; }
+        
+        /* Table Styles for Results */
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; text-align: left; }
+        th, td { border: 1px solid #ddd; padding: 8px; }
+        th { background-color: #f2f2f2; color: #333; }
+        .row-correct { background-color: #e8f5e9; }
+        .row-wrong { background-color: #ffebee; }
+
+        /* Print formatting for PDF generation */
+        @media print {
+            body { background: white; padding: 0; }
+            .no-print { display: none; }
+            .container { box-shadow: none; max-width: 100%; padding: 0; }
+            table { font-size: 12px; }
+            h1 { font-size: 18px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="no-print">
+        <h1>Good Shepherd Hr. Sec. School Chapahati - Nogorpara</h1> 
+        <h2>Presents the Inter-Club Quiz competition - 2026.</h2>
+    </div>
+    
+    <!-- Setup Section -->
+    <div id="setup-section">
+        <h1>Inter-Club Science & Math Quiz</h1>
+        <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExMGEzOGY4N3ZwdzV0MjZ0MXZjaHJqN252d2h2cjgybXU4N28xY2g3YSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/6A9hefwTjvCDMURljb/giphy.gif" alt="Science Animated" class="media-intro">
+        <h3>Select Your Club to Begin</h3>
+        <select id="club-select">
+            <option value="">-- Choose a Club --</option>
+            <option value="Media Club">Media Club </option>
+            <option value="Music Club">Music Club</option>
+            <option value="Decoration Club">Decoration Club</option>
+            <option value="Chees Club">Chees Club</option>
+            <option value="Art Club">Art Club</option>
+            <option value="Eco Club">Eco Club</option>
+        </select>
+        <br>
+        <button onclick="startSubject('science')">Start Science Quiz</button>
+    </div>
+
+    <!-- Math Intro Section -->
+    <div id="math-intro-section" class="hidden no-print">
+        <h1>Science Quiz Complete!</h1>
+        <video src="https://cdn.pixabay.com/video/2020/02/21/32616-393278556_large.mp4" autoplay loop muted class="media-intro"></video>
+        <h2>Get Ready for the Math Section</h2>
+        <p>25 Questions. 15 Seconds each.</p>
+        <button onclick="startSubject('math')">Start Math Quiz</button>
+    </div>
+
+    <!-- Active Quiz Section -->
+    <div id="quiz-section" class="hidden no-print">
+        <h2 id="subject-title">Science Quiz</h2>
+        <div id="timer">Time Left: <span id="time">15</span>s</div>
+        <h3 id="question-text">Question will appear here</h3>
+        <div class="options-grid" id="options-container"></div>
+        
+        <div id="feedback-box" class="hidden"></div>
+        <div id="score-display" style="margin-top: 15px; font-size: 18px; font-weight: bold;"></div>
+    </div>
+
+    <!-- Final Result & PDF Section -->
+    <div id="result-section" class="hidden">
+        <h1>Final Quiz Report</h1>
+        <h2 id="final-club-name"></h2>
+        <h3>Total Score: <span id="final-score-display"></span> / 50</h3>
+        <p class="no-print"><strong>Note:</strong> Auto-rank will be compiled in the Google Sheet based on all 4 clubs' submissions.</p>
+        
+        <button class="no-print" style="margin-bottom: 20px; background-color: #2196F3;" onclick="window.print()">Download Score as PDF</button>
+
+        <div id="report-table-container"></div>
+    </div>
+</div>
+
+<script>
+    const GAS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyhncuxk8zwOO36CrTUJrnXEmF4Fn1sILtA2IBn1AplmXJ9sruel1nvGukmTkn25QEo/exec"; 
+
+    const scienceData = [
+        { q: "What is the boiling point of water?", options: ["100°C", "90°C", "120°C", "50°C"], answer: "100°C" },
+        { q: "Which planet is known as the Red Planet?", options: ["Venus", "Mars", "Jupiter", "Saturn"], answer: "Mars" },
+        { q: "What gas do plants absorb from the air?", options: ["Oxygen", "Nitrogen", "Carbon dioxide (CO₂)", "Hydrogen"], answer: "Carbon dioxide (CO₂)" },
+        { q: "Which is the largest organ in the human body?", options: ["Heart", "Liver", "Skin", "Brain"], answer: "Skin" },
+        { q: "What is the chemical symbol for gold?", options: ["Ag", "Au", "Pb", "Fe"], answer: "Au" },
+        { q: "Who discovered gravity?", options: ["Albert Einstein", "Galileo Galilei", "Sir Isaac Newton", "Nikola Tesla"], answer: "Sir Isaac Newton" },
+        { q: "What is the unit of force?", options: ["Joule", "Watt", "Newton (N)", "Pascal"], answer: "Newton (N)" },
+        { q: "Which color of light has the highest energy?", options: ["Red", "Green", "Blue", "Violet"], answer: "Violet" },
+        { q: "What is the speed of light in a vacuum?", options: ["150,000 km/s", "299,792 km/s", "1,000,000 km/s", "30,000 km/s"], answer: "299,792 km/s" },
+        { q: "What type of energy is stored in a stretched rubber band?", options: ["Kinetic energy", "Thermal energy", "Elastic potential energy", "Chemical energy"], answer: "Elastic potential energy" },
+        { q: "Which part of the plant conducts photosynthesis?", options: ["Roots", "Stem", "Leaves", "Flowers"], answer: "Leaves" },
+        { q: "What is the basic unit of life?", options: ["Tissue", "Organ", "The cell", "Atom"], answer: "The cell" },
+        { q: "Which gas do humans exhale?", options: ["Oxygen", "Carbon dioxide (CO₂)", "Nitrogen", "Helium"], answer: "Carbon dioxide (CO₂)" },
+        { q: "What is the powerhouse of the cell?", options: ["Nucleus", "Ribosome", "Mitochondria", "Lysosome"], answer: "Mitochondria" },
+        { q: "Which blood cells help fight infection?", options: ["Red blood cells", "White blood cells", "Platelets", "Plasma"], answer: "White blood cells" },
+        { q: "What is the chemical formula of water?", options: ["H₂O", "CO₂", "O₂", "NaCl"], answer: "H₂O" },
+        { q: "Which metal is liquid at room temperature?", options: ["Iron", "Mercury", "Copper", "Aluminum"], answer: "Mercury" },
+        { q: "What is the main gas found in the Earth’s atmosphere?", options: ["Oxygen", "Carbon dioxide", "Nitrogen", "Hydrogen"], answer: "Nitrogen" },
+        { q: "Which element is needed for breathing?", options: ["Helium", "Oxygen", "Nitrogen", "Argon"], answer: "Oxygen" },
+        { q: "What is the pH value of a neutral substance?", options: ["1", "14", "7", "5"], answer: "7" },
+        { q: "What is the Earth’s outermost layer called?", options: ["Mantle", "Core", "The crust", "Lithosphere"], answer: "The crust" },
+        { q: "Which natural disaster is measured using the Richter scale?", options: ["Tornado", "Hurricane", "Earthquake", "Tsunami"], answer: "Earthquake" },
+        { q: "What causes tides in the ocean?", options: ["Wind", "Earth's rotation", "The Moon’s gravitational pull", "Solar flares"], answer: "The Moon’s gravitational pull" },
+        { q: "What is the longest river in the world?", options: ["Amazon", "The Nile River", "Yangtze", "Mississippi"], answer: "The Nile River" },
+        { q: "What is the hardest natural substance on Earth?", options: ["Gold", "Iron", "Diamond", "Quartz"], answer: "Diamond" }
+    ];
+
+    const mathData = [
+        { q: "What is the sum of 130+125+191?", options: ["335", "456", "446", "426"], answer: "446" },
+        { q: "If we minus 712 from 1500, how much do we get?", options: ["788", "778", "768", "758"], answer: "788" },
+        { q: "50 times of 8 is equal to:", options: ["80", "400", "800", "4000"], answer: "400" },
+        { q: "110 divided by 10 is:", options: ["11", "10", "5", "None of these"], answer: "11" },
+        { q: "20+(90÷2) is equal to:", options: ["50", "55", "65", "60"], answer: "65" },
+        { q: "The product of 82 and 5 is:", options: ["400", "410", "420", "None of these"], answer: "410" },
+        { q: "Find the missing terms in multiple of 3: 3, 6, 9, __, 15", options: ["10", "11", "12", "13"], answer: "12" },
+        { q: "Solve 24÷8+2.", options: ["5", "6", "8", "12"], answer: "5" },
+        { q: "Solve: 300 – (150×2)", options: ["150", "100", "50", "0"], answer: "0" },
+        { q: "The product of 121 x 0 x 200 x 25 is:", options: ["1500", "0", "4000", "None of these"], answer: "0" },
+        { q: "What is the next prime number after 5?", options: ["6", "7", "9", "11"], answer: "7" },
+        { q: "The circumference of the circle is also sometimes called:", options: ["Area", "Perimeter of a circle", "Volume", "Diameter"], answer: "Perimeter of a circle" },
+        { q: "90 – 35 is equal to:", options: ["45", "55", "65", "50"], answer: "55" },
+        { q: "72 divided by 8 is equal to:", options: ["7", "8", "9", "10"], answer: "9" },
+        { q: "How many sides does a decagon have?", options: ["8", "9", "Ten", "12"], answer: "Ten" },
+        { q: "Is -5 an integer?", options: ["Yes", "No", "Only positive", "Not a number"], answer: "Yes" },
+        { q: "The value of pi is equal to:", options: ["22/7", "21/7", "3.14", "22/7 or 3.14"], answer: "22/7 or 3.14" },
+        { q: "9 x 7 is equal to:", options: ["54", "63", "72", "81"], answer: "63" },
+        { q: "Is a triangle a two-dimensional or three-dimensional shape?", options: ["1D", "A two-dimensional shape", "3D", "4D"], answer: "A two-dimensional shape" },
+        { q: "An equilateral triangle has two of its sides equal. True or false?", options: ["True", "False", "Sometimes", "None"], answer: "False" },
+        { q: "10 is a natural number. True or false?", options: ["True", "False", "Undefined", "None"], answer: "True" },
+        { q: "-10 is a whole number. True or false?", options: ["True", "False", "Undefined", "None"], answer: "False" },
+        { q: "8 raised to the power 0 is equal to:", options: ["0", "8", "1", "80"], answer: "1" },
+        { q: "The largest 4 digit number is:", options: ["1000", "9999", "9000", "9990"], answer: "9999" },
+        { q: "The smallest 4-digit number is:", options: ["1111", "1000", "9999", "0000"], answer: "1000" }
+    ];
+
+    let currentSubject = "";
+    let activeData = [];
+    let currentQuestionIndex = 0;
+    
+    let sciScore = 0;
+    let mathScore = 0;
+    
+    let timerInterval;
+    let timeLeft = 15;
+    let selectedClub = "";
+    
+    let reportLog = []; // Stores objects for the PDF report
+    let rawAnswers = []; // Array of booleans for Google Sheets
+
+    function startSubject(subject) {
+        if (subject === 'science') {
+            selectedClub = document.getElementById("club-select").value;
+            if (selectedClub === "") { alert("Please select a club first!"); return; }
+            document.getElementById("setup-section").classList.add("hidden");
+            currentSubject = "Science";
+            activeData = scienceData;
+        } else {
+            document.getElementById("math-intro-section").classList.add("hidden");
+            currentSubject = "Math";
+            activeData = mathData;
+            currentQuestionIndex = 0; // Reset for math
+        }
+
+        document.getElementById("subject-title").innerText = `${currentSubject} Quiz`;
+        document.getElementById("quiz-section").classList.remove("hidden");
+        loadQuestion();
+    }
+
+    function loadQuestion() {
+        clearTimeout(timerInterval);
+        document.getElementById("feedback-box").classList.add("hidden");
+        
+        if (currentQuestionIndex >= activeData.length) {
+            if (currentSubject === "Science") {
+                document.getElementById("quiz-section").classList.add("hidden");
+                document.getElementById("math-intro-section").classList.remove("hidden");
+            } else {
+                endQuiz();
+            }
+            return;
+        }
+
+        timeLeft = 15;
+        document.getElementById("time").innerText = timeLeft;
+        let totalScore = sciScore + mathScore;
+        document.getElementById("score-display").innerText = "Total Score: " + totalScore;
+
+        const qData = activeData[currentQuestionIndex];
+        document.getElementById("question-text").innerText = `Q${currentQuestionIndex + 1}: ${qData.q}`;
+        
+        const optionsContainer = document.getElementById("options-container");
+        optionsContainer.innerHTML = "";
+        
+        // Randomize options
+        let shuffledOptions = [...qData.options].sort(() => Math.random() - 0.5);
+
+        shuffledOptions.forEach(opt => {
+            const btn = document.createElement("button");
+            btn.innerText = opt;
+            btn.className = "option-btn";
+            btn.onclick = () => processAnswer(opt);
+            optionsContainer.appendChild(btn);
+        });
+
+        startTimer();
+    }
+
+    function startTimer() {
+        timerInterval = setInterval(() => {
+            timeLeft--;
+            document.getElementById("time").innerText = timeLeft;
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                processAnswer("No Answer Provided");
+            }
+        }, 1000);
+    }
+
+    function processAnswer(selectedOption) {
+        clearInterval(timerInterval);
+        const qData = activeData[currentQuestionIndex];
+        const correctOption = qData.answer;
+        const feedbackBox = document.getElementById("feedback-box");
+        
+        // Disable buttons
+        const buttons = document.querySelectorAll(".option-btn");
+        buttons.forEach(btn => btn.disabled = true);
+
+        let isCorrect = (selectedOption === correctOption);
+        rawAnswers.push(isCorrect);
+        
+        feedbackBox.classList.remove("hidden", "correct-feedback", "wrong-feedback");
+
+        if (isCorrect) {
+            if(currentSubject === "Science") sciScore++; else mathScore++;
+            feedbackBox.classList.add("correct-feedback");
+            feedbackBox.innerHTML = `👍✅ Correct!<br><span style="font-size:16px;">You selected: ${selectedOption}</span>`;
+        } else {
+            feedbackBox.classList.add("wrong-feedback");
+            let total = sciScore + mathScore;
+            feedbackBox.innerHTML = `😂 Wrong Answer!<br>
+                <span style="font-size:16px;">You selected: <b>${selectedOption}</b><br>
+                Correct Answer: <b>${correctOption}</b></span>`;
+            announceVoice(`Wrong answer. Total score is ${total}.`);
+        }
+
+        // Save for PDF Report
+        reportLog.push({
+            subject: currentSubject,
+            questionNum: currentQuestionIndex + 1,
+            question: qData.q,
+            selected: selectedOption,
+            correct: correctOption,
+            marks: isCorrect ? 1 : 0
+        });
+
+        let currentTotal = sciScore + mathScore;
+        document.getElementById("score-display").innerText = "Total Score: " + currentTotal;
+
+        currentQuestionIndex++;
+        // Show feedback for 4 seconds before moving on
+        setTimeout(loadQuestion, 4000); 
+    }
+
+    function announceVoice(text) {
+        if ('speechSynthesis' in window) {
+            const msg = new SpeechSynthesisUtterance(text);
+            window.speechSynthesis.speak(msg);
+        }
+    }
+
+    function endQuiz() {
+        document.getElementById("quiz-section").classList.add("hidden");
+        document.getElementById("result-section").classList.remove("hidden");
+        
+        let grandTotal = sciScore + mathScore;
+        document.getElementById("final-club-name").innerText = selectedClub;
+        document.getElementById("final-score-display").innerText = grandTotal;
+        
+        generateReportTable();
+        submitToGoogleSheets();
+    }
+
+    function generateReportTable() {
+        let container = document.getElementById("report-table-container");
+        let html = `<table>
+            <thead>
+                <tr>
+                    <th>Subject</th>
+                    <th>Q#</th>
+                    <th>Question</th>
+                    <th>Your Answer</th>
+                    <th>Correct Answer</th>
+                    <th>Marks</th>
+                </tr>
+            </thead>
+            <tbody>`;
+            
+        reportLog.forEach(item => {
+            let rowClass = item.marks === 1 ? "row-correct" : "row-wrong";
+            html += `<tr class="${rowClass}">
+                <td>${item.subject}</td>
+                <td>${item.questionNum}</td>
+                <td>${item.question}</td>
+                <td>${item.selected}</td>
+                <td>${item.correct}</td>
+                <td>${item.marks}</td>
+            </tr>`;
+        });
+        
+        html += `</tbody></table>`;
+        container.innerHTML = html;
+    }
+
+    function submitToGoogleSheets() {
+        const payload = {
+            club: selectedClub,
+            sciScore: sciScore,
+            mathScore: mathScore,
+            answers: rawAnswers // 50 items long
+        };
+
+        fetch(GAS_WEB_APP_URL, {
+            method: 'POST',
+            body: JSON.stringify(payload),
+            mode: 'no-cors' 
+        }).then(() => {
+            console.log("Database updated successfully.");
+        }).catch(err => console.error("Error saving data:", err));
+    }
+</script>
+
+</body>
+</html>

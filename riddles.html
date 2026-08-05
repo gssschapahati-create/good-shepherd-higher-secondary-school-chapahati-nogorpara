@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inter-Club Riddles Quiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f4f8;
+            color: #333;
+            text-align: center;
+            padding: 20px;
+            margin: 0;
+        }
+        .container {
+            background: white;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        h1, h2, h3 { color: #1a365d; }
+        .media-intro {
+            max-width: 100%;
+            height: 250px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            object-fit: cover;
+        }
+        #timer {
+            font-size: 26px;
+            font-weight: bold;
+            color: #d32f2f;
+            margin: 15px 0;
+        }
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        button {
+            padding: 15px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            background-color: #4CAF50;
+            color: white;
+            transition: background 0.3s;
+        }
+        button:hover { background-color: #45a049; }
+        button:disabled { opacity: 0.7; cursor: not-allowed; }
+        .option-btn { background-color: #e0e0e0; color: #333; }
+        .option-btn:hover:not(:disabled) { background-color: #d5d5d5; }
+        
+        #feedback-box {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .correct-feedback { background-color: #e8f5e9; color: #2e7d32; border: 1px solid #c8e6c9; }
+        .wrong-feedback { background-color: #ffebee; color: #c62828; border: 1px solid #ffcdd2; }
+        
+        .hidden { display: none; }
+        select { padding: 10px; font-size: 16px; margin-bottom: 20px; }
+        
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; text-align: left; }
+        th, td { border: 1px solid #ddd; padding: 8px; }
+        th { background-color: #f2f2f2; color: #333; }
+        .row-correct { background-color: #e8f5e9; }
+        .row-wrong { background-color: #ffebee; }
+
+        @media print {
+            body { background: white; padding: 0; }
+            .no-print { display: none; }
+            .container { box-shadow: none; max-width: 100%; padding: 0; }
+            table { font-size: 12px; }
+            h1 { font-size: 18px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="no-print">
+        <h1>Good Shepherd Hr. Sec. School Chapahati - Nogorpara</h1> 
+        <h2>Presents the Inter-Club Quiz competition - 2026.</h2>
+    </div>
+    
+    <!-- Setup Section -->
+    <div id="setup-section">
+        <h1>Inter-Club Riddles Quiz</h1>
+        <img src="https://media.giphy.com/media/l41YtZOb9EUABnuqA/giphy.gif" alt="Thinking Animated GIF" class="media-intro">
+        <h3>Select Your Club to Begin</h3>
+        <select id="club-select">
+            <option value="">-- Choose a Club --</option>
+            <option value="Media Club">Media Club </option>
+            <option value="Music Club">Music Club</option>
+            <option value="Decoration Club">Decoration Club</option>
+            <option value="Chees Club">Chees Club</option>
+            <option value="Art Club">Art Club</option>
+            <option value="Eco Club">Eco Club</option>
+        </select>
+        <br>
+        <button onclick="startQuiz()">Start Riddles Quiz</button>
+    </div>
+
+    <!-- Active Quiz Section -->
+    <div id="quiz-section" class="hidden no-print">
+        <h2>Riddle Me This!</h2>
+        <div id="timer">Time Left: <span id="time">15</span>s</div>
+        <h3 id="question-text">Question will appear here</h3>
+        <div class="options-grid" id="options-container"></div>
+        
+        <div id="feedback-box" class="hidden"></div>
+        <div id="score-display" style="margin-top: 15px; font-size: 18px; font-weight: bold;"></div>
+    </div>
+
+    <!-- Final Result & PDF Section -->
+    <div id="result-section" class="hidden">
+        <h1>Final Quiz Report</h1>
+        <h2 id="final-club-name"></h2>
+        <h3>Total Score: <span id="final-score-display"></span> / 30</h3>
+        <p class="no-print"><strong>Note:</strong> Auto-rank will be compiled in the Google Sheet based on all 4 clubs' submissions.</p>
+        
+        <button class="no-print" style="margin-bottom: 20px; background-color: #2196F3;" onclick="window.print()">Download Score as PDF</button>
+
+        <div id="report-table-container"></div>
+    </div>
+</div>
+
+<script>
+    const GAS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzV1gq_HwxLJ-mXwfRPMjLfH22IDnrDYS9jzW-uRAKzYG-6IjQfqDqjtiSAu4D5d5ws/exec"; 
+
+    const riddleData = [
+        { q: "What has keys, but cannot open any door?", options: ["A piano", "A padlock", "A computer", "A map"], answer: "A piano" },
+        { q: "What has a face and two hands, but no arms or legs?", options: ["A clock", "A doll", "A statue", "A coin"], answer: "A clock" },
+        { q: "What gets wetter the more it dries?", options: ["A towel", "A cloud", "A sponge", "A puddle"], answer: "A towel" },
+        { q: "What has to be broken before you can use it?", options: ["An egg", "A window", "A coconut", "A promise"], answer: "An egg" },
+        { q: "Which month of the year has 28 days?", options: ["All of them!", "February", "December", "January"], answer: "All of them!" },
+        { q: "I have a face but no expression. I live on the classroom wall and tell you when lunch is. What am I?", options: ["A clock!", "A poster", "A whiteboard", "A teacher"], answer: "A clock!" },
+        { q: "I'm at the front of the room and teachers love to write on me. I used to be green, now I'm white. What am I?", options: ["A whiteboard!", "A desk", "A piece of paper", "A notebook"], answer: "A whiteboard!" },
+        { q: "You press me to share your ideas with the class, and I make them big enough for everyone to see. What am I?", options: ["A projector!", "A microphone", "A megaphone", "A computer monitor"], answer: "A projector!" },
+        { q: "I have 100 pages but no words at the start. By June I'll be full of your ideas and art. What am I?", options: ["An exercise book!", "A calendar", "A dictionary", "A novel"], answer: "An exercise book!" },
+        { q: "I'm black and white and read all over. What am I?", options: ["A newspaper", "A zebra", "A panda", "A barcode"], answer: "A newspaper" },
+        { q: "I'm long and straight and show you where the line should be. Without me your margin would be quite a mess. What am I?", options: ["A ruler!", "A pencil", "A marker", "A string"], answer: "A ruler!" },
+        { q: "I bear the weight of knowledge on my shoulders every day. You'll find me full at dawn and lighter by the hallway. What am I?", options: ["A backpack!", "A library", "A student", "A locker"], answer: "A backpack!" },
+        { q: "I ring when it's time to start or end. I'm not a phone, but I'm every student's friend. What am I?", options: ["A school bell!", "A fire alarm", "A whistle", "A timer"], answer: "A school bell!" },
+        { q: "I'm full of words and pictures too. Open me up to learn something new. What am I?", options: ["A textbook!", "A television", "A tablet", "A poster"], answer: "A textbook!" },
+        { q: "I'm not a teacher, but I help you write. What am I?", options: ["A pencil!", "A dictionary", "A keyboard", "A desk"], answer: "A pencil!" },
+        { q: "I hold things together without any glue or string. I can stretch, and I'm often found in offices. What am I?", options: ["A rubber band!", "A paperclip", "A stapler", "Tape"], answer: "A rubber band!" },
+        { q: "I start as a tree but end as something you write on. What am I?", options: ["Paper!", "A desk", "A pencil", "A wooden chair"], answer: "Paper!" },
+        { q: "I have keys but no locks. I have space but no room. You can enter but you can't go inside. What am I?", options: ["A keyboard!", "A house", "A spaceship", "A puzzle"], answer: "A keyboard!" },
+        { q: "I show you yourself but never remember what you look like. What am I?", options: ["A mirror!", "A camera", "A photograph", "A painting"], answer: "A mirror!" },
+        { q: "I'm black when you buy me, red when you use me, and grey when you throw me away. What am I?", options: ["Charcoal!", "Firewood", "A match", "A tire"], answer: "Charcoal!" },
+        { q: "I have four legs in the morning, four legs at noon, and four legs at night, but I never walk anywhere. What am I?", options: ["A table!", "A dog", "A horse", "A chair"], answer: "A table!" },
+        { q: "I have bristles and a handle, and I visit your mouth twice a day. What am I?", options: ["A toothbrush!", "A hairbrush", "A broom", "A comb"], answer: "A toothbrush!" },
+        { q: "I have a screen, buttons, and I ring, but I'm not an alarm. What am I?", options: ["A phone!", "A microwave", "A television", "A calculator"], answer: "A phone!" },
+        { q: "I have a spine, pages, and a cover, but I never go to school. What am I?", options: ["A book!", "A student", "A folder", "A binder"], answer: "A book!" },
+        { q: "I have two hands, one face, and I tick-tock all day, but I never move from my spot. What am I?", options: ["A clock!", "A metronome", "A robot", "A watch"], answer: "A clock!" },
+        { q: "I am tall when I am young, and I am short when I am old. What am I?", options: ["A candle", "A tree", "A person", "A mountain"], answer: "A candle" },
+        { q: "What has hands but cannot clap?", options: ["A clock", "A statue", "A monkey", "A tree"], answer: "A clock" },
+        { q: "What belongs to you, but other people use it more than you?", options: ["Your name", "Your car", "Your house", "Your money"], answer: "Your name" },
+        { q: "I can fly without wings. I can cry without eyes. Wherever I go, darkness follows me. What am I?", options: ["A cloud", "A bat", "The wind", "A shadow"], answer: "A cloud" },
+        { q: "I have branches, but no fruit, trunk or leaves. What am I?", options: ["A bank", "A river", "A library", "A family tree"], answer: "A bank" }
+    ];
+
+    let currentQuestionIndex = 0;
+    let score = 0;
+    
+    let timerInterval;
+    let timeLeft = 15;
+    let selectedClub = "";
+    
+    let reportLog = []; 
+    let rawAnswers = []; 
+
+    function startQuiz() {
+        selectedClub = document.getElementById("club-select").value;
+        if (selectedClub === "") { alert("Please select a club first!"); return; }
+        
+        document.getElementById("setup-section").classList.add("hidden");
+        document.getElementById("quiz-section").classList.remove("hidden");
+        loadQuestion();
+    }
+
+    function loadQuestion() {
+        clearTimeout(timerInterval);
+        document.getElementById("feedback-box").classList.add("hidden");
+        
+        if (currentQuestionIndex >= riddleData.length) {
+            endQuiz();
+            return;
+        }
+
+        timeLeft = 15;
+        document.getElementById("time").innerText = timeLeft;
+        document.getElementById("score-display").innerText = "Total Score: " + score;
+
+        const qData = riddleData[currentQuestionIndex];
+        document.getElementById("question-text").innerText = `Q${currentQuestionIndex + 1}: ${qData.q}`;
+        
+        const optionsContainer = document.getElementById("options-container");
+        optionsContainer.innerHTML = "";
+        
+        // Randomize options
+        let shuffledOptions = [...qData.options].sort(() => Math.random() - 0.5);
+
+        shuffledOptions.forEach(opt => {
+            const btn = document.createElement("button");
+            btn.innerText = opt;
+            btn.className = "option-btn";
+            btn.onclick = () => processAnswer(opt);
+            optionsContainer.appendChild(btn);
+        });
+
+        startTimer();
+    }
+
+    function startTimer() {
+        timerInterval = setInterval(() => {
+            timeLeft--;
+            document.getElementById("time").innerText = timeLeft;
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                processAnswer("No Answer Provided");
+            }
+        }, 1000);
+    }
+
+    function processAnswer(selectedOption) {
+        clearInterval(timerInterval);
+        const qData = riddleData[currentQuestionIndex];
+        const correctOption = qData.answer;
+        const feedbackBox = document.getElementById("feedback-box");
+        
+        // Disable buttons
+        const buttons = document.querySelectorAll(".option-btn");
+        buttons.forEach(btn => btn.disabled = true);
+
+        let isCorrect = (selectedOption === correctOption);
+        rawAnswers.push(isCorrect);
+        
+        feedbackBox.classList.remove("hidden", "correct-feedback", "wrong-feedback");
+
+        if (isCorrect) {
+            score++;
+            feedbackBox.classList.add("correct-feedback");
+            feedbackBox.innerHTML = `👍✅ Correct!<br><span style="font-size:16px;">You selected: ${selectedOption}</span>`;
+        } else {
+            feedbackBox.classList.add("wrong-feedback");
+            feedbackBox.innerHTML = `😂 Wrong Answer!<br>
+                <span style="font-size:16px;">You selected: <b>${selectedOption}</b><br>
+                Correct Answer: <b>${correctOption}</b></span>`;
+            announceVoice(`Wrong answer. Total score is ${score}.`);
+        }
+
+        // Save for PDF Report
+        reportLog.push({
+            questionNum: currentQuestionIndex + 1,
+            question: qData.q,
+            selected: selectedOption,
+            correct: correctOption,
+            marks: isCorrect ? 1 : 0
+        });
+
+        document.getElementById("score-display").innerText = "Total Score: " + score;
+        currentQuestionIndex++;
+        
+        // Show feedback for 4 seconds before loading the next riddle
+        setTimeout(loadQuestion, 4000); 
+    }
+
+    function announceVoice(text) {
+        if ('speechSynthesis' in window) {
+            const msg = new SpeechSynthesisUtterance(text);
+            window.speechSynthesis.speak(msg);
+        }
+    }
+
+    function endQuiz() {
+        document.getElementById("quiz-section").classList.add("hidden");
+        document.getElementById("result-section").classList.remove("hidden");
+        
+        document.getElementById("final-club-name").innerText = selectedClub;
+        document.getElementById("final-score-display").innerText = score;
+        
+        generateReportTable();
+        submitToGoogleSheets();
+    }
+
+    function generateReportTable() {
+        let container = document.getElementById("report-table-container");
+        let html = `<table>
+            <thead>
+                <tr>
+                    <th>Q#</th>
+                    <th>Question</th>
+                    <th>Your Answer</th>
+                    <th>Correct Answer</th>
+                    <th>Marks</th>
+                </tr>
+            </thead>
+            <tbody>`;
+            
+        reportLog.forEach(item => {
+            let rowClass = item.marks === 1 ? "row-correct" : "row-wrong";
+            html += `<tr class="${rowClass}">
+                <td>${item.questionNum}</td>
+                <td>${item.question}</td>
+                <td>${item.selected}</td>
+                <td>${item.correct}</td>
+                <td>${item.marks}</td>
+            </tr>`;
+        });
+        
+        html += `</tbody></table>`;
+        container.innerHTML = html;
+    }
+
+    function submitToGoogleSheets() {
+        const payload = {
+            club: selectedClub,
+            score: score,
+            answers: rawAnswers // Array of 30 booleans
+        };
+
+        fetch(GAS_WEB_APP_URL, {
+            method: 'POST',
+            body: JSON.stringify(payload),
+            mode: 'no-cors' 
+        }).then(() => {
+            console.log("Database updated successfully.");
+        }).catch(err => console.error("Error saving data:", err));
+    }
+</script>
+
+</body>
+</html>
