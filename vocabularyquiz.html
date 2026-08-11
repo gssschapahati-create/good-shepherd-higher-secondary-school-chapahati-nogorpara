@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inter-Club Vocabulary Quiz</title>
+<style>
+  body {
+    font-family: Arial, sans-serif; background-color: #f4f7f6;
+    margin: 0; padding: 0; display: flex; flex-direction: column; align-items: center;
+    min-height: 100vh; position: relative; padding-bottom: 60px; overflow-x: hidden;
+  }
+  .header {
+    background-color: #4CAF50; color: white; width: 100%;
+    text-align: center; padding: 20px 0; box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  }
+  
+  /* Door Animation Styles */
+  #door-container {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    z-index: 9999; display: flex; background: #000;
+  }
+  .door {
+    width: 50%; height: 100%; background-color: #8B4513; 
+    background-image: linear-gradient(90deg, rgba(255,255,255,0.1) 0%, rgba(0,0,0,0.1) 100%);
+    transition: transform 1.5s ease-in-out;
+    display: flex; justify-content: center; align-items: center;
+    box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
+  }
+  .door.left { border-right: 4px solid #3e1f08; }
+  .door.right { border-left: 4px solid #3e1f08; }
+  .door-open .door.left { transform: translateX(-100%); }
+  .door-open .door.right { transform: translateX(100%); }
+  
+  /* Intro Sequence Styles */
+  #intro-sequence {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background-color: #f4f7f6; z-index: 9998;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+  }
+  #typing-text {
+    font-size: 2.5em; font-family: 'Comic Sans MS', cursive, sans-serif; color: #2E86C1;
+    min-height: 60px; text-align: center; margin: 0 20px;
+  }
+  #countdown-timer {
+    font-size: 8em; font-weight: bold; color: #E74C3C; display: none; margin-top: 30px;
+  }
+
+  /* Main App Styles */
+  .container {
+    background: white; width: 90%; max-width: 650px; margin-top: 20px; 
+    padding: 20px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); text-align: center;
+  }
+  .visuals img { max-width: 150px; margin: 10px; border-radius: 10px; }
+  select, button {
+    padding: 12px; margin-top: 15px; width: 100%; font-size: 16px; 
+    border-radius: 5px; border: 1px solid #ccc;
+  }
+  button { background-color: #2196F3; color: white; border: none; cursor: pointer; font-weight: bold; }
+  button:hover { background-color: #0b7dda; }
+  
+  #quiz-section { display: none; }
+  .option-btn { margin: 8px 0; background-color: #e7e7e7; color: black; transition: 0.2s; text-align: left; }
+  .option-btn:hover { background-color: #d4d4d4; }
+  
+  .timer { font-size: 22px; font-weight: bold; color: #d32f2f; margin-bottom: 15px; }
+  
+  /* Popup Modals */
+  .modal-overlay {
+    display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.5); justify-content: center; align-items: center; z-index: 1000;
+  }
+  .modal-content { background: white; padding: 30px; border-radius: 10px; text-align: center; font-size: 24px; }
+  
+  #go-popup {
+    display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(46, 204, 113, 0.95); justify-content: center; align-items: center; z-index: 10000;
+  }
+  #go-popup h1 { font-size: 12em; color: white; margin: 0; font-style: italic; animation: zoomIn 0.5s ease-out; }
+  @keyframes zoomIn { 0% { transform: scale(0); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+
+  #record-table { width: 100%; border-collapse: collapse; margin-top: 20px; font-size: 14px; }
+  #record-table th, #record-table td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+  #record-table th { background-color: #4CAF50; color: white; }
+  
+  /* Footer Styles */
+  .footer {
+    position: absolute; bottom: 0; width: 100%; text-align: center;
+    padding: 15px 0; background-color: #333; color: white; font-size: 14px;
+  }
+
+  /* Print Styles */
+  @media print {
+    body * { visibility: hidden; }
+    #result-section, #result-section * { visibility: visible; }
+    #result-section { position: absolute; left: 0; top: 0; width: 100%; }
+    .no-print { display: none !important; }
+    .footer { visibility: visible; position: fixed; bottom: 0; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Door Animation Elements -->
+<div id="door-container">
+  <div class="door left"></div>
+  <div class="door right"></div>
+</div>
+
+<!-- Welcome Intro Sequence -->
+<div id="intro-sequence">
+  <div id="typing-text"></div>
+  <div id="countdown-timer"></div>
+</div>
+
+<!-- GO Popup -->
+<div id="go-popup">
+  <h1>GO!</h1>
+</div>
+
+<div class="header">
+  <h1>Good Shepherd Higher Secondary School</h1>
+  <h2>Chapahati - Nogorpara | Inter-Club Quiz</h2>
+</div>
+
+<!-- Onboarding Section -->
+<div class="container" id="start-section">
+  <div class="visuals">
+    <img src="https://cdn-icons-png.flaticon.com/512/3557/3557635.png" alt="Vocabulary Logo">
+    <img src="https://media.giphy.com/media/26ufdipQqU2lhNA4g/giphy.gif" alt="Emoji GIF">
+  </div>
+  <h3>Select Your Club</h3>
+  <select id="club-select">
+    <option value="">-- Choose Club --</option>
+    <option value="Eco Club">Eco Club</option>
+    <option value="Media Club">Media Club</option>
+    <option value="Chess Club">Chess Club</option>
+    <option value="Music Club">Music Club</option>
+    <option value="Decoration Club">Decoration Club</option>
+    <option value="Art Club">Art Club</option>
+  </select>
+  <button id="start-btn" onclick="checkClubAndStart()">Start Quiz</button>
+  <p id="loading-msg" style="display:none; color: #2196F3;">Checking club records...</p>
+</div>
+
+<!-- Quiz Section -->
+<div class="container" id="quiz-section">
+  <div class="timer" id="timer-display">Time Left: 15s</div>
+  <h3 id="question-text">Question goes here</h3>
+  <button class="option-btn" id="opt0" onclick="checkAnswer(0)"></button>
+  <button class="option-btn" id="opt1" onclick="checkAnswer(1)"></button>
+  <button class="option-btn" id="opt2" onclick="checkAnswer(2)"></button>
+  <p>Question <span id="current-q-num">1</span> of <span id="total-q-num"></span></p>
+</div>
+
+<!-- Result Section -->
+<div class="container" id="result-section" style="display: none;">
+  <h2>Quiz Completed!</h2>
+  <h3 id="final-club-name"></h3>
+  <p id="final-score" style="font-size: 20px; font-weight: bold;"></p>
+  <p id="final-time"></p>
+  
+  <table id="record-table">
+    <thead>
+      <tr>
+        <th>Question</th>
+        <th>Your Answer</th>
+        <th>Status</th>
+        <th>Time (s)</th>
+      </tr>
+    </thead>
+    <tbody id="record-body"></tbody>
+  </table>
+  
+  <button class="no-print" onclick="window.print()" style="margin-top: 20px; background-color: #4CAF50;">Print / Save as PDF</button>
+</div>
+
+<!-- Custom Popup Modal -->
+<div class="modal-overlay" id="popup-modal">
+  <div class="modal-content" id="popup-message"></div>
+</div>
+
+<!-- Footer Section -->
+<div class="footer">
+  &copy; 2026 copyright and developed by SangmaWebdeveloper in cooperation with Local Administrative
+</div>
+
+<script>
+// IMPORTANT: Replace this with your Google Apps Script Web App URL!
+const GOOGLE_SHEET_API_URL = "https://script.google.com/macros/s/AKfycbxHxkBq4geUZW43_AwumA5zixcyBrRpVWSZ8BZOkZcdUWhw2puP550mfsQLY9yPmDMS/exec";
+
+// Initial Animation Sequence logic
+window.onload = function() {
+  // 1. Open the doors
+  setTimeout(() => {
+    document.getElementById('door-container').classList.add('door-open');
+  }, 500);
+
+  // 2. Remove doors and start writing text
+  setTimeout(() => {
+    document.getElementById('door-container').style.display = 'none';
+    startTyping();
+  }, 2000);
+};
+
+function startTyping() {
+  const text = "Welcome to English Quiz on Vocabulary";
+  const words = text.split(" ");
+  let i = 0;
+  const textEl = document.getElementById('typing-text');
+  
+  const typeInterval = setInterval(() => {
+    if (i < words.length) {
+      textEl.innerHTML += words[i] + " ";
+      i++;
+    } else {
+      clearInterval(typeInterval);
+      // Fade out intro sequence to show club selection
+      setTimeout(() => {
+        document.getElementById('intro-sequence').style.display = 'none';
+      }, 1000);
+    }
+  }, 350); 
+}
+
+// 75 Questions randomized
+const questions = [
+  { q: "Yield", options: ["To produce or provide something for example profit or crop.", "To take somebody’s position or power without having the right to do this.", "The study of coins and medals."], answer: 0 },
+  { q: "A place where young plants are reared.", options: ["Cemetery", "Granary", "Nursery"], answer: 2 },
+  { q: "Blare", options: ["A field covered in grass.", "To make a loud unpleasant noise.", "A word or statement that can be understood in more than one way."], answer: 1 },
+  { q: "Government carried on by an absolute ruler.", options: ["Democracy", "Dictatorship", "Bureaucracy"], answer: 1 },
+  { q: "Traitor", options: ["A person who reveals the secrets about their friends.", "A person who is an expert in law.", "The former students of the school, college and university."], answer: 0 },
+  { q: "A substance that kills germs.", options: ["Germicide", "Insecticide", "Antidote"], answer: 0 },
+  { q: "Glimpse", options: ["Looking at somebody for a very short time.", "Showing great happiness because of a success.", "A short story that teaches a moral or spiritual lesson."], answer: 0 },
+  { q: "That which cannot be read.", options: ["Illegible", "Inaudible", "Invisible"], answer: 0 },
+  { q: "Biome", options: ["The ending of a law.", "A list of books or articles about a particular subject.", "Plants and animals that exist in a particular type of environment."], answer: 2 },
+  { q: "One who knows many languages.", options: ["Orator", "Linguist", "Stoic"], answer: 1 },
+  { q: "Decibel", options: ["A unit for measuring how loud a sound is.", "A unit of energy or work.", "A printed piece of paper that can be used instead of money."], answer: 0 },
+  { q: "A person who lives by himself.", options: ["Fatalist", "Recluse", "Spendthrift"], answer: 1 },
+  { q: "Flyover", options: ["A bridge that carries one road over another one.", "A series of short scenes from films.", "A building in which films or movies are shown."], answer: 0 },
+  { q: "One who looks at the dark side of things.", options: ["Optimist", "Pessimist", "Misanthropist"], answer: 1 },
+  { q: "Zest", options: ["Extreme anger.", "Enjoyment or enthusiasm.", "Quiet or peaceful."], answer: 1 },
+  { q: "A general pardon of political offenders.", options: ["Armistice", "Amnesty", "Retaliate"], answer: 1 },
+  { q: "Wreath", options: ["An arrangement of flowers and leaves in the shape of circle, placed on the graves.", "A bright green precious stone.", "A type of rough cloth used for making sacks."], answer: 0 },
+  { q: "Murder of a king.", options: ["Infanticide", "Homicide", "Regicide"], answer: 2 },
+  { q: "Usurp", options: ["To make something become smaller or weaker.", "To take somebody’s position or power without having the right to do this.", "To free somebody, especially from legal, political or social restrictions."], answer: 1 },
+  { q: "A speech made without preparation.", options: ["Extempore", "Manuscript", "Colloquy"], answer: 0 },
+  { q: "Stagnant", options: ["Water or air is not moving and therefore smells unpleasant.", "Changing easily from one mood to another.", "Attractive in an unusual way."], answer: 0 },
+  { q: "A place for burial or dead bodies.", options: ["Cemetery", "Orphanage", "Meadow"], answer: 0 },
+  { q: "Route", options: ["A way that you follow to get from one place to another.", "A period of time spent in travelling.", "The activity of buying and selling or exchanging goods."], answer: 0 },
+  { q: "The life history of a person written by himself.", options: ["Biography", "Autobiography", "Anonymous"], answer: 1 },
+  { q: "Parable", options: ["A long story.", "A short story that teaches a moral or spiritual lesson.", "The act of speaking or expressing something to an audience."], answer: 1 },
+  { q: "A cure for all diseases.", options: ["Panacea", "Antidote", "Urology"], answer: 0 },
+  { q: "Niche", options: ["A comfortable, suitable role, job, way of life.", "A dream that is very frightening or unpleasant.", "A statue of a famous person."], answer: 0 },
+  { q: "That which cannot be seen.", options: ["Invisible", "Opaque", "Transparent"], answer: 0 },
+  { q: "Mycology", options: ["The scientific study of earthquakes.", "The scientific study of fungi.", "The scientific study of urinary system."], answer: 1 },
+  { q: "A false or mistake belief.", options: ["Fallacy", "Ideology", "Doctrine"], answer: 0 },
+  { q: "Lethargy", options: ["Feeling of very great happiness.", "Not having energy or enthusiasm doing something.", "The quality of being loyal to somebody."], answer: 1 },
+  { q: "Being unable to pay one's debts.", options: ["Insolvent", "Mercenary", "Illicit"], answer: 0 },
+  { q: "Jubilant", options: ["Showing great happiness because of a success.", "Violent or cruel.", "Very aggressive or violent."], answer: 0 },
+  { q: "One who leaves his country to settle elsewhere.", options: ["Native", "Emigrant", "Immigrant"], answer: 1 },
+  { q: "Impeccable", options: ["Without mistakes or faults.", "Difficult or impossible to read.", "Not clear in person’s mind."], answer: 0 },
+  { q: "Being present everywhere.", options: ["Omniscient", "Omnipotent", "Omnipresent"], answer: 2 },
+  { q: "Honorarium", options: ["Money that you have to pay to the government.", "A payment made for somebody’s professional services.", "Money or property that is given to you by somebody when they die."], answer: 1 },
+  { q: "One who looks at the bright side of things.", options: ["Optimist", "Pessimist", "Theist"], answer: 0 },
+  { q: "Granary", options: ["A shop or store that sells a particular type of goods.", "A small room on a ship in which we live or sleep.", "A building where grain is stored."], answer: 2 },
+  { q: "A member of a council.", options: ["Councilor", "Jurist", "Dictator"], answer: 0 },
+  { q: "Fluorescent", options: ["Producing bright light by using some forms of radiation.", "That can be touched and felt.", "Able to use the right hand or the left hand equally well."], answer: 0 },
+  { q: "Taking of one's own life.", options: ["Suicide", "Homicide", "Genocide"], answer: 0 },
+  { q: "Emporium", options: ["A shop or store that sells a particular type of goods.", "A home for children whose parents are dead.", "A city in Saudi Arabia that is the holiest city of Islam."], answer: 0 },
+  { q: "A medicine to counteract the effect of poison.", options: ["Panacea", "Germicide", "Antidote"], answer: 2 },
+  { q: "Diminish", options: ["To make something become smaller or weaker.", "To explain or describe something in a more detailed way.", "To lift something up or put something in a higher position."], answer: 0 },
+  { q: "A language that is no longer spoken.", options: ["Dead", "Obsolete", "Illegible"], answer: 0 },
+  { q: "Conglomerate", options: ["A government formed by two or more political parties.", "A group of people or nations who have combined for a particular purpose.", "A large company formed by joining together different firms."], answer: 2 },
+  { q: "Subject to death.", options: ["Mortal", "Eternal", "Immortal"], answer: 0 },
+  { q: "Browser", options: ["A program that lets you look at or read documents on the internet.", "A printed piece of paper that can be used instead of money.", "A list of special words explaining their meanings."], answer: 0 },
+  { q: "The absence of government in a company.", options: ["Autocracy", "Anarchy", "Democracy"], answer: 1 },
+  { q: "Authentic", options: ["Attractive and showing of a good sense of style.", "Known to be real and genuine and not a copy.", "Complicated or difficult to solve."], answer: 1 },
+  { q: "A substance that kills insects.", options: ["Insecticide", "Germicide", "Antidote"], answer: 0 },
+  { q: "Vagabond", options: ["A person who uses the internet a lot.", "A person who is boring, stupid and not fashionable.", "A person who has no home or job and who travels from place to place."], answer: 2 },
+  { q: "The driver of a taxi cab.", options: ["Pedestrian", "Cabby", "Vendor"], answer: 1 },
+  { q: "Tranquillity", options: ["Quiet or peaceful.", "Violent and cruel.", "Feeling of very great happiness."], answer: 0 },
+  { q: "All of one mind.", options: ["Unanimous", "Unilateral", "Unique"], answer: 0 },
+  { q: "Taxonomy", options: ["The scientific process of classification things.", "The study of coins and medals.", "The scientific study of fungi."], answer: 0 },
+  { q: "That which cannot be conquered.", options: ["Invincible", "Invulnerable", "Impregnable"], answer: 0 },
+  { q: "Salient", options: ["Most important or noticeable.", "Extremely large or great.", "Small in quantity and poor in quality."], answer: 0 },
+  { q: "That which cannot be burnt.", options: ["Incombustible", "Inflammable", "Indivisible"], answer: 0 },
+  { q: "Quaint", options: ["Attractive in an unusual way.", "Changing easily from one mood to another.", "Having a very unpleasant personality."], answer: 0 },
+  { q: "The yearly return of a date.", options: ["Anniversary", "Contemporary", "Yule"], answer: 0 },
+  { q: "Pedagogy", options: ["The study of teaching methods.", "The scientific study of earthquakes.", "A set of ideas that an economic and political system is based on."], answer: 0 },
+  { q: "Allowing the passage of rays of light.", options: ["Transparent", "Opaque", "Invisible"], answer: 0 },
+  { q: "Numismatics", options: ["The study of family history.", "The study of coins and medals.", "The study of teaching methods."], answer: 1 },
+  { q: "Not allowing the passage of light.", options: ["Opaque", "Transparent", "Immiscible"], answer: 0 },
+  { q: "Matriarch", options: ["A woman who is head of a family.", "A woman who works as a nurse in a school.", "The male head of a family or community."], answer: 0 },
+  { q: "Animals which give birth to babies and feed them with their milk.", options: ["Mammals", "Zygote", "Biome"], answer: 0 },
+  { q: "Liability", options: ["The state of being legally responsible for something.", "The pair treatment of people.", "The state of being married."], answer: 0 },
+  { q: "Existing forever - without any beginning or end.", options: ["Eternal", "Mortal", "Obsolete"], answer: 0 },
+  { q: "Joule", options: ["A unit for measuring how loud a sound is.", "A unit of energy or work.", "A bridge that carries one road over another one."], answer: 1 },
+  { q: "One who eats human flesh.", options: ["Vegetarian", "Cannibal", "Glutton"], answer: 1 },
+  { q: "Illiterate", options: ["Not knowing how to read or write.", "Difficult or impossible to read.", "Not clear in person’s mind."], answer: 0 },
+  { q: "One who knows everything.", options: ["Omniscient", "Omnipotent", "Omnipresent"], answer: 0 },
+  { q: "Glutton", options: ["A person who eats too much.", "A man trained to fight other men.", "A person who is famous for writing or telling amusing stories."], answer: 0 }
+];
+
+let currentQuestion = 0;
+let score = 0;
+let timeLeft = 15;
+let timerInterval;
+let selectedClub = "";
+let questionStartTime = 0;
+let quizRecords = []; 
+
+document.getElementById('total-q-num').innerText = questions.length;
+
+function checkClubAndStart() {
+  selectedClub = document.getElementById('club-select').value;
+  if (!selectedClub) { alert("Please select your club first!"); return; }
+  
+  document.getElementById('start-btn').style.display = 'none';
+  document.getElementById('loading-msg').style.display = 'block';
+
+  if(GOOGLE_SHEET_API_URL === "https://script.google.com/macros/s/AKfycbxHxkBq4geUZW43_AwumA5zixcyBrRpVWSZ8BZOkZcdUWhw2puP550mfsQLY9yPmDMS/exec") {
+      startQuizAnimation();
+  } else {
+      fetch(`${GOOGLE_SHEET_API_URL}?club=${encodeURIComponent(selectedClub)}`)
+        .then(response => response.json())
+        .then(data => {
+          if(data.status === "exists") {
+            alert(`The ${selectedClub} has already completed the quiz. Second chances are not allowed!`);
+            document.getElementById('start-btn').style.display = 'block';
+            document.getElementById('loading-msg').style.display = 'none';
+          } else {
+            startQuizAnimation();
+          }
+        })
+        .catch(err => {
+          alert("Error verifying club. Proceeding anyway.");
+          startQuizAnimation();
+        });
+  }
+}
+
+function startQuizAnimation() {
+  document.getElementById('start-section').style.display = 'none';
+  
+  const introSeq = document.getElementById('intro-sequence');
+  const countEl = document.getElementById('countdown-timer');
+  
+  // Hide the typing text and show the countdown within the intro sequence
+  document.getElementById('typing-text').style.display = 'none';
+  introSeq.style.display = 'flex';
+  countEl.style.display = 'block';
+  
+  let count = 5;
+  countEl.innerText = count;
+  
+  const countInterval = setInterval(() => {
+    count--;
+    if(count > 0) {
+      countEl.innerText = count;
+    } else if (count === 0) {
+      countEl.innerText = "0";
+    } else {
+      clearInterval(countInterval);
+      introSeq.style.display = 'none';
+      
+      const goPopup = document.getElementById('go-popup');
+      goPopup.style.display = 'flex';
+      
+      setTimeout(() => {
+        goPopup.style.display = 'none';
+        document.getElementById('quiz-section').style.display = 'block';
+        loadQuestion();
+      }, 1200); // Display GO for 1.2 seconds before starting quiz
+    }
+  }, 1000);
+}
+
+function loadQuestion() {
+  if (currentQuestion >= questions.length) {
+    endQuiz();
+    return;
+  }
+  
+  let qData = questions[currentQuestion];
+  document.getElementById('question-text').innerText = qData.q;
+  document.getElementById('opt0').innerText = qData.options[0];
+  document.getElementById('opt1').innerText = qData.options[1];
+  document.getElementById('opt2').innerText = qData.options[2];
+  document.getElementById('current-q-num').innerText = currentQuestion + 1;
+  
+  timeLeft = 15;
+  document.getElementById('timer-display').innerText = "Time Left: " + timeLeft + "s";
+  questionStartTime = Date.now();
+  
+  clearInterval(timerInterval);
+  timerInterval = setInterval(updateTimer, 1000);
+}
+
+function updateTimer() {
+  timeLeft--;
+  document.getElementById('timer-display').innerText = "Time Left: " + timeLeft + "s";
+  if (timeLeft <= 0) {
+    clearInterval(timerInterval);
+    recordAnswer(null, false, 15); 
+    showPopup(false, "Time is up!");
+  }
+}
+
+function checkAnswer(selectedIndex) {
+  clearInterval(timerInterval);
+  let timeTaken = ((Date.now() - questionStartTime) / 1000).toFixed(1);
+  let correctIndex = questions[currentQuestion].answer;
+  let isCorrect = (selectedIndex === correctIndex);
+  
+  recordAnswer(selectedIndex, isCorrect, timeTaken);
+  
+  if (isCorrect) {
+    score++;
+    showPopup(true, "Correct Answer!");
+  } else {
+    showPopup(false, "Wrong Answer!");
+  }
+}
+
+function recordAnswer(selectedIndex, isCorrect, timeTaken) {
+  let qData = questions[currentQuestion];
+  let userAnswerText = selectedIndex !== null ? qData.options[selectedIndex] : "No Answer (Timeout)";
+  
+  quizRecords.push({
+    question: qData.q,
+    userAnswer: userAnswerText,
+    status: isCorrect ? "Correct" : "Wrong",
+    time: parseFloat(timeTaken)
+  });
+}
+
+function showPopup(isCorrect, msgText) {
+  let modal = document.getElementById('popup-modal');
+  let msgDiv = document.getElementById('popup-message');
+  
+  if (isCorrect) {
+    msgDiv.innerHTML = `<span style="font-size: 60px;">😊✅</span><br><br><span style="color: green; font-weight: bold;">${msgText}</span>`;
+  } else {
+    msgDiv.innerHTML = `<span style="font-size: 60px;">❌</span><br><br><span style="color: red; font-weight: bold;">${msgText}</span>`;
+  }
+  
+  modal.style.display = 'flex';
+  
+  setTimeout(() => {
+    modal.style.display = 'none';
+    currentQuestion++;
+    loadQuestion();
+  }, 2000);
+}
+
+function endQuiz() {
+  document.getElementById('quiz-section').style.display = 'none';
+  document.getElementById('result-section').style.display = 'block';
+  
+  let totalTime = quizRecords.reduce((sum, record) => sum + record.time, 0).toFixed(1);
+  
+  document.getElementById('final-club-name').innerText = `Club: ${selectedClub}`;
+  document.getElementById('final-score').innerText = `Total Score: ${score} / ${questions.length} Correct`;
+  document.getElementById('final-time').innerText = `Total Time Taken: ${totalTime} seconds`;
+  
+  let tbody = document.getElementById('record-body');
+  quizRecords.forEach(rec => {
+    let tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>${rec.question}</td>
+      <td>${rec.userAnswer}</td>
+      <td style="color: ${rec.status === 'Correct' ? 'green' : 'red'}; font-weight: bold;">${rec.status}</td>
+      <td>${rec.time}s</td>
+    `;
+    tbody.appendChild(tr);
+  });
+  
+  if(GOOGLE_SHEET_API_URL !== "https://script.google.com/macros/s/AKfycbxHxkBq4geUZW43_AwumA5zixcyBrRpVWSZ8BZOkZcdUWhw2puP550mfsQLY9yPmDMS/exec"){
+      let payload = {
+        club: selectedClub,
+        score: score,
+        totalTime: totalTime,
+        details: quizRecords
+      };
+      
+      fetch(GOOGLE_SHEET_API_URL, {
+        method: 'POST',
+        body: JSON.stringify(payload)
+      }).catch(err => console.error("Error saving to sheet:", err));
+  }
+}
+</script>
+</body>
+</html>
