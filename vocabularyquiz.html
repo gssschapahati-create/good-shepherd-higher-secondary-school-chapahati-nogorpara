@@ -15,7 +15,6 @@
     text-align: center; padding: 20px 0; box-shadow: 0 4px 6px rgba(0,0,0,0.1);
   }
   
-  /* Door Animation Styles */
   #door-container {
     position: fixed; top: 0; left: 0; width: 100%; height: 100%;
     z-index: 9999; display: flex; background: #000;
@@ -32,7 +31,6 @@
   .door-open .door.left { transform: translateX(-100%); }
   .door-open .door.right { transform: translateX(100%); }
   
-  /* Intro Sequence Styles */
   #intro-sequence {
     position: fixed; top: 0; left: 0; width: 100%; height: 100%;
     background-color: #f4f7f6; z-index: 9998;
@@ -46,9 +44,8 @@
     font-size: 8em; font-weight: bold; color: #E74C3C; display: none; margin-top: 30px;
   }
 
-  /* Main App Styles */
   .container {
-    background: white; width: 90%; max-width: 650px; margin-top: 20px; 
+    background: white; width: 90%; max-width: 750px; margin-top: 20px; 
     padding: 20px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); text-align: center;
   }
   .visuals img { max-width: 150px; margin: 10px; border-radius: 10px; }
@@ -63,9 +60,27 @@
   .option-btn { margin: 8px 0; background-color: #e7e7e7; color: black; transition: 0.2s; text-align: left; }
   .option-btn:hover { background-color: #d4d4d4; }
   
-  .timer { font-size: 22px; font-weight: bold; color: #d32f2f; margin-bottom: 15px; }
+  .timer { font-size: 22px; font-weight: bold; color: #d32f2f; margin-bottom: 10px; }
   
-  /* Popup Modals */
+  .scoreboard {
+    background: #e3f2fd; padding: 15px; border-radius: 8px; margin-bottom: 20px;
+    border: 2px solid #90caf9;
+  }
+  .scoreboard h3 { margin: 0; color: #1565c0; font-size: 24px; }
+  .live-clubs {
+    display: flex; flex-wrap: wrap; justify-content: center; gap: 15px;
+    margin-top: 10px; font-size: 16px; color: #333;
+  }
+  .club-badge { 
+    background: #fff; padding: 8px 15px; border-radius: 20px; 
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1); display: flex; align-items: center; gap: 8px;
+  }
+  .rank-badge {
+    background: #ff9800; color: white; padding: 2px 8px; border-radius: 50%; font-weight: bold;
+  }
+  .club-badge.first-place { border: 2px solid #ffd700; background: #fffdf0; }
+  .first-place .rank-badge { background: #ffd700; color: #333; }
+
   .modal-overlay {
     display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
     background: rgba(0,0,0,0.5); justify-content: center; align-items: center; z-index: 1000;
@@ -83,13 +98,11 @@
   #record-table th, #record-table td { border: 1px solid #ddd; padding: 8px; text-align: left; }
   #record-table th { background-color: #4CAF50; color: white; }
   
-  /* Footer Styles */
   .footer {
     position: absolute; bottom: 0; width: 100%; text-align: center;
     padding: 15px 0; background-color: #333; color: white; font-size: 14px;
   }
 
-  /* Print Styles */
   @media print {
     body * { visibility: hidden; }
     #result-section, #result-section * { visibility: visible; }
@@ -101,19 +114,16 @@
 </head>
 <body>
 
-<!-- Door Animation Elements -->
 <div id="door-container">
   <div class="door left"></div>
   <div class="door right"></div>
 </div>
 
-<!-- Welcome Intro Sequence -->
 <div id="intro-sequence">
   <div id="typing-text"></div>
   <div id="countdown-timer"></div>
 </div>
 
-<!-- GO Popup -->
 <div id="go-popup">
   <h1>GO!</h1>
 </div>
@@ -123,7 +133,6 @@
   <h2>Chapahati - Nogorpara | Inter-Club Quiz</h2>
 </div>
 
-<!-- Onboarding Section -->
 <div class="container" id="start-section">
   <div class="visuals">
     <img src="https://cdn-icons-png.flaticon.com/512/3557/3557635.png" alt="Vocabulary Logo">
@@ -143,8 +152,14 @@
   <p id="loading-msg" style="display:none; color: #2196F3;">Checking club records...</p>
 </div>
 
-<!-- Quiz Section -->
 <div class="container" id="quiz-section">
+  <div class="scoreboard">
+    <h3>Live Score & Rankings</h3>
+    <div class="live-clubs" id="live-standings">
+      <div class="club-badge">Fetching live data...</div>
+    </div>
+  </div>
+
   <div class="timer" id="timer-display">Time Left: 15s</div>
   <h3 id="question-text">Question goes here</h3>
   <button class="option-btn" id="opt0" onclick="checkAnswer(0)"></button>
@@ -153,18 +168,23 @@
   <p>Question <span id="current-q-num">1</span> of <span id="total-q-num"></span></p>
 </div>
 
-<!-- Result Section -->
 <div class="container" id="result-section" style="display: none;">
   <h2>Quiz Completed!</h2>
   <h3 id="final-club-name"></h3>
   <p id="final-score" style="font-size: 20px; font-weight: bold;"></p>
   <p id="final-time"></p>
   
+  <div class="scoreboard">
+    <h3>Final Club Standings</h3>
+    <div class="live-clubs" id="final-standings"></div>
+  </div>
+  
   <table id="record-table">
     <thead>
       <tr>
         <th>Question</th>
         <th>Your Answer</th>
+        <th>Correct Answer</th>
         <th>Status</th>
         <th>Time (s)</th>
       </tr>
@@ -175,28 +195,23 @@
   <button class="no-print" onclick="window.print()" style="margin-top: 20px; background-color: #4CAF50;">Print / Save as PDF</button>
 </div>
 
-<!-- Custom Popup Modal -->
 <div class="modal-overlay" id="popup-modal">
   <div class="modal-content" id="popup-message"></div>
 </div>
 
-<!-- Footer Section -->
 <div class="footer">
   &copy; 2026 copyright and developed by SangmaWebdeveloper in cooperation with Local Administrative
 </div>
 
 <script>
-// IMPORTANT: Replace this with your Google Apps Script Web App URL!
-const GOOGLE_SHEET_API_URL = "https://script.google.com/macros/s/AKfycbxHxkBq4geUZW43_AwumA5zixcyBrRpVWSZ8BZOkZcdUWhw2puP550mfsQLY9yPmDMS/exec";
+// IMPORTANT: Paste your NEW App Script Web App URL below
+const GOOGLE_SHEET_API_URL = "https://script.google.com/macros/s/AKfycbxbC9hRmh0vLxPqnRv46HHLG-_8hyi_GMsJ01MeF7k3CMOXE_vgkc_CwTEUA2PkrE0I/exec";
 
-// Initial Animation Sequence logic
 window.onload = function() {
-  // 1. Open the doors
   setTimeout(() => {
     document.getElementById('door-container').classList.add('door-open');
   }, 500);
 
-  // 2. Remove doors and start writing text
   setTimeout(() => {
     document.getElementById('door-container').style.display = 'none';
     startTyping();
@@ -215,7 +230,6 @@ function startTyping() {
       i++;
     } else {
       clearInterval(typeInterval);
-      // Fade out intro sequence to show club selection
       setTimeout(() => {
         document.getElementById('intro-sequence').style.display = 'none';
       }, 1000);
@@ -223,7 +237,6 @@ function startTyping() {
   }, 350); 
 }
 
-// 75 Questions randomized
 const questions = [
   { q: "Yield", options: ["To produce or provide something for example profit or crop.", "To take somebody’s position or power without having the right to do this.", "The study of coins and medals."], answer: 0 },
   { q: "A place where young plants are reared.", options: ["Cemetery", "Granary", "Nursery"], answer: 2 },
@@ -306,6 +319,7 @@ let currentQuestion = 0;
 let score = 0;
 let timeLeft = 15;
 let timerInterval;
+let liveSyncInterval;
 let selectedClub = "";
 let questionStartTime = 0;
 let quizRecords = []; 
@@ -319,24 +333,26 @@ function checkClubAndStart() {
   document.getElementById('start-btn').style.display = 'none';
   document.getElementById('loading-msg').style.display = 'block';
 
-  if(GOOGLE_SHEET_API_URL === "https://script.google.com/macros/s/AKfycbxHxkBq4geUZW43_AwumA5zixcyBrRpVWSZ8BZOkZcdUWhw2puP550mfsQLY9yPmDMS/exec") {
+  if(GOOGLE_SHEET_API_URL === "YOUR_GOOGLE_WEB_APP_URL_HERE") {
       startQuizAnimation();
   } else {
-      fetch(`${GOOGLE_SHEET_API_URL}?club=${encodeURIComponent(selectedClub)}`)
-        .then(response => response.json())
-        .then(data => {
-          if(data.status === "exists") {
-            alert(`The ${selectedClub} has already completed the quiz. Second chances are not allowed!`);
-            document.getElementById('start-btn').style.display = 'block';
-            document.getElementById('loading-msg').style.display = 'none';
-          } else {
-            startQuizAnimation();
-          }
-        })
-        .catch(err => {
-          alert("Error verifying club. Proceeding anyway.");
+      // Uses a standard GET request to avoid CORS blocking when reading response
+      fetch(`${GOOGLE_SHEET_API_URL}?action=checkClub&club=${encodeURIComponent(selectedClub)}`)
+      .then(response => response.json())
+      .then(data => {
+        if(data.status === "exists") {
+          alert(`The ${selectedClub} has already completed the quiz. Second chances are not allowed!`);
+          document.getElementById('start-btn').style.display = 'block';
+          document.getElementById('loading-msg').style.display = 'none';
+        } else {
           startQuizAnimation();
-        });
+        }
+      })
+      .catch(err => {
+        console.error(err);
+        alert("Error verifying club. Proceeding anyway.");
+        startQuizAnimation();
+      });
   }
 }
 
@@ -346,7 +362,6 @@ function startQuizAnimation() {
   const introSeq = document.getElementById('intro-sequence');
   const countEl = document.getElementById('countdown-timer');
   
-  // Hide the typing text and show the countdown within the intro sequence
   document.getElementById('typing-text').style.display = 'none';
   introSeq.style.display = 'flex';
   countEl.style.display = 'block';
@@ -370,8 +385,14 @@ function startQuizAnimation() {
       setTimeout(() => {
         goPopup.style.display = 'none';
         document.getElementById('quiz-section').style.display = 'block';
+        
+        if(GOOGLE_SHEET_API_URL !== "YOUR_GOOGLE_WEB_APP_URL_HERE"){
+            fetchOtherClubsScores();
+            liveSyncInterval = setInterval(fetchOtherClubsScores, 5000);
+        }
+        
         loadQuestion();
-      }, 1200); // Display GO for 1.2 seconds before starting quiz
+      }, 1200); 
     }
   }, 1000);
 }
@@ -402,7 +423,8 @@ function updateTimer() {
   document.getElementById('timer-display').innerText = "Time Left: " + timeLeft + "s";
   if (timeLeft <= 0) {
     clearInterval(timerInterval);
-    recordAnswer(null, false, 15); 
+    let correctIndex = questions[currentQuestion].answer;
+    recordAnswer(null, false, 15, correctIndex); 
     showPopup(false, "Time is up!");
   }
 }
@@ -413,26 +435,45 @@ function checkAnswer(selectedIndex) {
   let correctIndex = questions[currentQuestion].answer;
   let isCorrect = (selectedIndex === correctIndex);
   
-  recordAnswer(selectedIndex, isCorrect, timeTaken);
+  if (isCorrect) score++;
+  
+  recordAnswer(selectedIndex, isCorrect, timeTaken, correctIndex);
   
   if (isCorrect) {
-    score++;
     showPopup(true, "Correct Answer!");
   } else {
     showPopup(false, "Wrong Answer!");
   }
 }
 
-function recordAnswer(selectedIndex, isCorrect, timeTaken) {
+function recordAnswer(selectedIndex, isCorrect, timeTaken, correctIndex) {
   let qData = questions[currentQuestion];
   let userAnswerText = selectedIndex !== null ? qData.options[selectedIndex] : "No Answer (Timeout)";
+  let correctAnswerText = qData.options[correctIndex];
   
-  quizRecords.push({
+  let currentAnsData = {
     question: qData.q,
     userAnswer: userAnswerText,
-    status: isCorrect ? "Correct" : "Wrong",
+    correctAnswer: correctAnswerText,
+    status: isCorrect ? "✅ Correct" : "❌ Wrong",
     time: parseFloat(timeTaken)
-  });
+  };
+  
+  quizRecords.push(currentAnsData);
+  
+  // IMMEDIATELY SEND THIS SINGLE ANSWER TO GOOGLE SHEETS [no-cors bypass exactly like Riddles]
+  if(GOOGLE_SHEET_API_URL !== "YOUR_GOOGLE_WEB_APP_URL_HERE") {
+    fetch(GOOGLE_SHEET_API_URL, {
+      method: 'POST',
+      body: JSON.stringify({ 
+        action: "saveAnswer", 
+        club: selectedClub, 
+        score: score, 
+        details: currentAnsData 
+      }),
+      mode: 'no-cors'
+    }).catch(err => console.error("Error saving live answer:", err));
+  }
 }
 
 function showPopup(isCorrect, msgText) {
@@ -446,7 +487,6 @@ function showPopup(isCorrect, msgText) {
   }
   
   modal.style.display = 'flex';
-  
   setTimeout(() => {
     modal.style.display = 'none';
     currentQuestion++;
@@ -454,40 +494,79 @@ function showPopup(isCorrect, msgText) {
   }, 2000);
 }
 
+// ----- FETCH LIVE SCORES (NOW USING GET) -----
+function fetchOtherClubsScores() {
+  fetch(`${GOOGLE_SHEET_API_URL}?action=getScores`)
+  .then(res => res.json())
+  .then(data => {
+    let scoreArray = [];
+    for (const [cName, cScore] of Object.entries(data)) {
+      scoreArray.push({ club: cName, score: parseInt(cScore) });
+    }
+    
+    // Sort descending
+    scoreArray.sort((a, b) => b.score - a.score);
+    
+    let liveDiv = document.getElementById('live-standings');
+    let finalDiv = document.getElementById('final-standings');
+    let html = "";
+    
+    scoreArray.forEach((item, index) => {
+      let rank = index + 1;
+      let isFirst = rank === 1 ? "first-place" : "";
+      html += `<div class="club-badge ${isFirst}">
+                 <span class="rank-badge">${rank}</span> 
+                 <strong>${item.club}</strong>: <span style="color:#e91e63;">${item.score} / 75</span>
+               </div>`;
+    });
+    
+    if(html === "") html = "<div class='club-badge'>Waiting for other clubs...</div>";
+    
+    if(liveDiv) liveDiv.innerHTML = html;
+    if(finalDiv) finalDiv.innerHTML = html; 
+  })
+  .catch(err => console.log("Live score fetch error", err));
+}
+
 function endQuiz() {
+  clearInterval(liveSyncInterval); 
   document.getElementById('quiz-section').style.display = 'none';
   document.getElementById('result-section').style.display = 'block';
   
-  let totalTime = quizRecords.reduce((sum, record) => sum + record.time, 0).toFixed(1);
+  let totalSeconds = quizRecords.reduce((sum, record) => sum + record.time, 0);
+  let mins = Math.floor(totalSeconds / 60);
+  let secs = (totalSeconds % 60).toFixed(1);
+  let formattedTime = `${mins}m ${secs}s`;
   
   document.getElementById('final-club-name').innerText = `Club: ${selectedClub}`;
   document.getElementById('final-score').innerText = `Total Score: ${score} / ${questions.length} Correct`;
-  document.getElementById('final-time').innerText = `Total Time Taken: ${totalTime} seconds`;
+  document.getElementById('final-time').innerText = `Total Time Taken: ${formattedTime}`;
   
   let tbody = document.getElementById('record-body');
   quizRecords.forEach(rec => {
     let tr = document.createElement('tr');
     tr.innerHTML = `
       <td>${rec.question}</td>
-      <td>${rec.userAnswer}</td>
-      <td style="color: ${rec.status === 'Correct' ? 'green' : 'red'}; font-weight: bold;">${rec.status}</td>
+      <td style="color: ${rec.status === '✅ Correct' ? 'green' : 'red'};">${rec.userAnswer}</td>
+      <td style="color: blue; font-weight:bold;">${rec.correctAnswer}</td>
+      <td style="color: ${rec.status === '✅ Correct' ? 'green' : 'red'}; font-weight: bold;">${rec.status}</td>
       <td>${rec.time}s</td>
     `;
     tbody.appendChild(tr);
   });
   
-  if(GOOGLE_SHEET_API_URL !== "https://script.google.com/macros/s/AKfycbxHxkBq4geUZW43_AwumA5zixcyBrRpVWSZ8BZOkZcdUWhw2puP550mfsQLY9yPmDMS/exec"){
-      let payload = {
-        club: selectedClub,
-        score: score,
-        totalTime: totalTime,
-        details: quizRecords
-      };
-      
+  // Sends the final summary summary using the no-cors bypass
+  if(GOOGLE_SHEET_API_URL !== "YOUR_GOOGLE_WEB_APP_URL_HERE"){
       fetch(GOOGLE_SHEET_API_URL, {
         method: 'POST',
-        body: JSON.stringify(payload)
-      }).catch(err => console.error("Error saving to sheet:", err));
+        body: JSON.stringify({
+          action: "saveFinal",
+          club: selectedClub,
+          score: score,
+          totalTime: formattedTime
+        }),
+        mode: 'no-cors'
+      }).catch(err => console.error("Error saving final data to sheet:", err));
   }
 }
 </script>
