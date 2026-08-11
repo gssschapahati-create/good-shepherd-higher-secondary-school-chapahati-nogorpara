@@ -10,88 +10,160 @@
             background-color: #f0f4f8;
             color: #333;
             text-align: center;
-            padding: 20px;
+            padding: 0;
             margin: 0;
+            display: flex; flex-direction: column; align-items: center;
+            min-height: 100vh; position: relative; padding-bottom: 60px; overflow-x: hidden;
         }
+        
+        .header {
+            background-color: #4CAF50; color: white; width: 100%;
+            text-align: center; padding: 20px 0; box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .header h1 { margin: 0; font-size: 24px; color: white; }
+        .header h2 { margin: 5px 0 0 0; font-size: 16px; font-weight: normal; color: white; }
+
+        /* Door Animation Styles */
+        #door-container {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 9999; display: flex; background: #000;
+        }
+        .door {
+            width: 50%; height: 100%; background-color: #8B4513; 
+            background-image: linear-gradient(90deg, rgba(255,255,255,0.1) 0%, rgba(0,0,0,0.1) 100%);
+            transition: transform 1.5s ease-in-out;
+            display: flex; justify-content: center; align-items: center;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
+        }
+        .door.left { border-right: 4px solid #3e1f08; }
+        .door.right { border-left: 4px solid #3e1f08; }
+        .door-open .door.left { transform: translateX(-100%); }
+        .door-open .door.right { transform: translateX(100%); }
+        
+        /* Intro Sequence Styles */
+        #intro-sequence {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: #f4f7f6; z-index: 9998;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+        }
+        #typing-text {
+            font-size: 2.5em; font-family: 'Comic Sans MS', cursive, sans-serif; color: #2E86C1;
+            min-height: 60px; text-align: center; margin: 0 20px;
+        }
+        #countdown-timer {
+            font-size: 8em; font-weight: bold; color: #E74C3C; display: none; margin-top: 30px;
+        }
+
+        /* Go Popup */
+        #go-popup {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(46, 204, 113, 0.95); justify-content: center; align-items: center; z-index: 10000;
+        }
+        #go-popup h1 { font-size: 12em; color: white; margin: 0; font-style: italic; animation: zoomIn 0.5s ease-out; }
+        @keyframes zoomIn { 0% { transform: scale(0); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+
+        /* Container and Core UI */
         .container {
             background: white;
-            max-width: 900px;
-            margin: 0 auto;
+            width: 90%; max-width: 900px;
+            margin: 0 auto 20px auto;
             padding: 30px;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
         }
         h1, h2, h3 { color: #1a365d; }
         .media-intro {
-            max-width: 100%;
-            height: 250px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            object-fit: cover;
+            max-width: 100%; height: 250px; border-radius: 10px; margin-bottom: 20px; object-fit: cover;
         }
-        #timer {
-            font-size: 26px;
-            font-weight: bold;
-            color: #d32f2f;
-            margin: 15px 0;
+        select, button.start-btn {
+            padding: 12px; margin-top: 15px; width: 100%; font-size: 16px; 
+            border-radius: 5px; border: 1px solid #ccc;
         }
-        .options-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin-top: 20px;
-        }
-        button {
-            padding: 15px;
-            font-size: 16px;
-            cursor: pointer;
-            border: none;
-            border-radius: 5px;
-            background-color: #4CAF50;
-            color: white;
-            transition: background 0.3s;
-        }
-        button:hover { background-color: #45a049; }
-        button:disabled { opacity: 0.7; cursor: not-allowed; }
-        .option-btn { background-color: #e0e0e0; color: #333; }
-        .option-btn:hover:not(:disabled) { background-color: #d5d5d5; }
+        button.start-btn { background-color: #4CAF50; color: white; border: none; cursor: pointer; font-weight: bold; }
+        button.start-btn:hover { background-color: #45a049; }
+
+        /* Quiz specific UI */
+        #timer { font-size: 26px; font-weight: bold; color: #d32f2f; margin: 15px 0; }
         
-        #feedback-box {
-            margin-top: 20px;
-            padding: 15px;
-            border-radius: 8px;
-            font-size: 20px;
-            font-weight: bold;
+        .options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px; }
+        .option-btn {
+            padding: 15px; font-size: 16px; cursor: pointer; border: none;
+            border-radius: 5px; background-color: #e0e0e0; color: #333; transition: background 0.3s;
         }
+        .option-btn:hover:not(:disabled) { background-color: #d5d5d5; }
+        .option-btn:disabled { opacity: 0.7; cursor: not-allowed; }
+        
+        #feedback-box { margin-top: 20px; padding: 15px; border-radius: 8px; font-size: 20px; font-weight: bold; }
         .correct-feedback { background-color: #e8f5e9; color: #2e7d32; border: 1px solid #c8e6c9; }
         .wrong-feedback { background-color: #ffebee; color: #c62828; border: 1px solid #ffcdd2; }
-        
-        .hidden { display: none; }
-        select { padding: 10px; font-size: 16px; margin-bottom: 20px; }
-        
+        .hidden { display: none !important; }
+
+        /* Live Scoreboard */
+        .scoreboard {
+            background: #e3f2fd; padding: 15px; border-radius: 8px; margin-bottom: 20px;
+            border: 2px solid #90caf9;
+        }
+        .scoreboard h3 { margin: 0; color: #1565c0; font-size: 24px; }
+        .live-clubs {
+            display: flex; flex-wrap: wrap; justify-content: center; gap: 15px;
+            margin-top: 10px; font-size: 16px; color: #333;
+        }
+        .club-badge { 
+            background: #fff; padding: 8px 15px; border-radius: 20px; 
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1); display: flex; align-items: center; gap: 8px;
+        }
+        .rank-badge { background: #ff9800; color: white; padding: 2px 8px; border-radius: 50%; font-weight: bold; }
+        .club-badge.first-place { border: 2px solid #ffd700; background: #fffdf0; }
+        .first-place .rank-badge { background: #ffd700; color: #333; }
+
+        /* Tables & PDF */
         table { width: 100%; border-collapse: collapse; margin-top: 20px; text-align: left; }
         th, td { border: 1px solid #ddd; padding: 8px; }
-        th { background-color: #f2f2f2; color: #333; }
+        th { background-color: #4CAF50; color: white; }
         .row-correct { background-color: #e8f5e9; }
         .row-wrong { background-color: #ffebee; }
+        
+        .footer {
+            position: absolute; bottom: 0; width: 100%; text-align: center;
+            padding: 15px 0; background-color: #333; color: white; font-size: 14px;
+        }
 
         @media print {
-            body { background: white; padding: 0; }
-            .no-print { display: none; }
-            .container { box-shadow: none; max-width: 100%; padding: 0; }
+            body { background: white; padding: 0; display: block; }
+            .no-print { display: none !important; }
+            .header { display: none; }
+            .container { box-shadow: none; max-width: 100%; padding: 0; margin: 0; }
+            #result-section { position: relative; width: 100%; }
             table { font-size: 12px; }
             h1 { font-size: 18px; }
+            .footer { position: fixed; bottom: 0; visibility: visible; }
         }
     </style>
 </head>
 <body>
 
+<!-- Opening Animations -->
+<div id="door-container">
+  <div class="door left"></div>
+  <div class="door right"></div>
+</div>
+
+<div id="intro-sequence">
+  <div id="typing-text"></div>
+  <div id="countdown-timer"></div>
+</div>
+
+<div id="go-popup">
+  <h1>GO!</h1>
+</div>
+
+<div class="header no-print">
+  <h1>Good Shepherd Hr. Sec. School Chapahati - Nogorpara</h1>
+  <h2>Presents the Inter-Club Quiz competition - 2026.</h2>
+</div>
+
 <div class="container">
-    <div class="no-print">
-        <h1>Good Shepherd Hr. Sec. School Chapahati - Nogorpara</h1> 
-        <h2>Presents the Inter-Club Quiz competition - 2026.</h2>
-    </div>
-    
     <!-- Setup Section -->
     <div id="setup-section">
         <h1>Inter-Club Riddles Quiz</h1>
@@ -106,19 +178,27 @@
             <option value="Art Club">Art Club</option>
             <option value="Eco Club">Eco Club</option>
         </select>
-        <br>
-        <button onclick="startQuiz()">Start Riddles Quiz</button>
+        <button class="start-btn" id="start-btn" onclick="checkClubAndStart()">Start Riddles Quiz</button>
+        <p id="loading-msg" style="display:none; color: #2196F3; font-weight: bold; margin-top: 15px;">Checking club records...</p>
     </div>
 
     <!-- Active Quiz Section -->
     <div id="quiz-section" class="hidden no-print">
+        <div class="scoreboard">
+            <h3>Live Score & Rankings (<span id="my-live-score">0</span> / 30)</h3>
+            <div class="live-clubs" id="live-standings">
+                <div class="club-badge">Fetching live data...</div>
+            </div>
+        </div>
+
         <h2>Riddle Me This!</h2>
         <div id="timer">Time Left: <span id="time">15</span>s</div>
         <h3 id="question-text">Question will appear here</h3>
+        
         <div class="options-grid" id="options-container"></div>
         
         <div id="feedback-box" class="hidden"></div>
-        <div id="score-display" style="margin-top: 15px; font-size: 18px; font-weight: bold;"></div>
+        <p style="margin-top: 15px; color: #666;">Question <span id="current-q-num">1</span> of <span id="total-q-num"></span></p>
     </div>
 
     <!-- Final Result & PDF Section -->
@@ -126,16 +206,57 @@
         <h1>Final Quiz Report</h1>
         <h2 id="final-club-name"></h2>
         <h3>Total Score: <span id="final-score-display"></span> / 30</h3>
-        <p class="no-print"><strong>Note:</strong> Auto-rank will be compiled in the Google Sheet based on all 4 clubs' submissions.</p>
+        <h4 id="final-time"></h4>
         
-        <button class="no-print" style="margin-bottom: 20px; background-color: #2196F3;" onclick="window.print()">Download Score as PDF</button>
+        <div class="scoreboard no-print">
+            <h3>Final Club Standings</h3>
+            <div class="live-clubs" id="final-standings"></div>
+        </div>
+        
+        <button class="no-print start-btn" style="margin-bottom: 20px; background-color: #2196F3;" onclick="window.print()">Download Score as PDF</button>
 
         <div id="report-table-container"></div>
     </div>
 </div>
 
+<div class="footer">
+  &copy; 2026 copyright and developed by SangmaWebdeveloper in cooperation with Local Administrative
+</div>
+
 <script>
-    const GAS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzV1gq_HwxLJ-mXwfRPMjLfH22IDnrDYS9jzW-uRAKzYG-6IjQfqDqjtiSAu4D5d5ws/exec"; 
+    // IMPORTANT: Paste your NEW App Script Web App URL below
+    const GAS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwlXLSKMSqPtYdP3me9xzbhBjB15XfSBFRJeXDIn7KNc3v7M3DPgDCwMtxiKJv-iyQ/exec"; 
+
+    // Initial Animation Sequence logic
+    window.onload = function() {
+      setTimeout(() => {
+        document.getElementById('door-container').classList.add('door-open');
+      }, 500);
+
+      setTimeout(() => {
+        document.getElementById('door-container').style.display = 'none';
+        startTyping();
+      }, 2000);
+    };
+
+    function startTyping() {
+      const text = "Welcome to Inter-Club Riddles Quiz";
+      const words = text.split(" ");
+      let i = 0;
+      const textEl = document.getElementById('typing-text');
+      
+      const typeInterval = setInterval(() => {
+        if (i < words.length) {
+          textEl.innerHTML += words[i] + " ";
+          i++;
+        } else {
+          clearInterval(typeInterval);
+          setTimeout(() => {
+            document.getElementById('intro-sequence').style.display = 'none';
+          }, 1000);
+        }
+      }, 350); 
+    }
 
     const riddleData = [
         { q: "What has keys, but cannot open any door?", options: ["A piano", "A padlock", "A computer", "A map"], answer: "A piano" },
@@ -174,19 +295,84 @@
     let score = 0;
     
     let timerInterval;
+    let liveSyncInterval;
     let timeLeft = 15;
     let selectedClub = "";
+    let questionStartTime = 0;
     
-    let reportLog = []; 
-    let rawAnswers = []; 
+    let quizRecords = []; 
 
-    function startQuiz() {
+    document.getElementById('total-q-num').innerText = riddleData.length;
+
+    function checkClubAndStart() {
         selectedClub = document.getElementById("club-select").value;
         if (selectedClub === "") { alert("Please select a club first!"); return; }
         
-        document.getElementById("setup-section").classList.add("hidden");
-        document.getElementById("quiz-section").classList.remove("hidden");
-        loadQuestion();
+        document.getElementById('start-btn').style.display = 'none';
+        document.getElementById('loading-msg').style.display = 'block';
+
+        if(GAS_WEB_APP_URL === "YOUR_GOOGLE_WEB_APP_URL_HERE") {
+            startQuizAnimation();
+        } else {
+            // Check records using GET
+            fetch(`${GAS_WEB_APP_URL}?action=checkClub&club=${encodeURIComponent(selectedClub)}`)
+            .then(response => response.json())
+            .then(data => {
+                if(data.status === "exists") {
+                    alert(`The ${selectedClub} has already completed the quiz. Second chances are not allowed!`);
+                    document.getElementById('start-btn').style.display = 'block';
+                    document.getElementById('loading-msg').style.display = 'none';
+                } else {
+                    startQuizAnimation();
+                }
+            })
+            .catch(err => {
+                console.error(err);
+                alert("Error verifying club. Proceeding anyway.");
+                startQuizAnimation();
+            });
+        }
+    }
+
+    function startQuizAnimation() {
+        document.getElementById('setup-section').classList.add('hidden');
+        
+        const introSeq = document.getElementById('intro-sequence');
+        const countEl = document.getElementById('countdown-timer');
+        
+        document.getElementById('typing-text').style.display = 'none';
+        introSeq.style.display = 'flex';
+        countEl.style.display = 'block';
+        
+        let count = 5;
+        countEl.innerText = count;
+        
+        const countInterval = setInterval(() => {
+            count--;
+            if(count > 0) {
+                countEl.innerText = count;
+            } else if (count === 0) {
+                countEl.innerText = "0";
+            } else {
+                clearInterval(countInterval);
+                introSeq.style.display = 'none';
+                
+                const goPopup = document.getElementById('go-popup');
+                goPopup.style.display = 'flex';
+                
+                setTimeout(() => {
+                    goPopup.style.display = 'none';
+                    document.getElementById('quiz-section').classList.remove('hidden');
+                    
+                    if(GAS_WEB_APP_URL !== "YOUR_GOOGLE_WEB_APP_URL_HERE"){
+                        fetchOtherClubsScores();
+                        liveSyncInterval = setInterval(fetchOtherClubsScores, 5000);
+                    }
+                    
+                    loadQuestion();
+                }, 1200); 
+            }
+        }, 1000);
     }
 
     function loadQuestion() {
@@ -198,17 +384,14 @@
             return;
         }
 
-        timeLeft = 15;
-        document.getElementById("time").innerText = timeLeft;
-        document.getElementById("score-display").innerText = "Total Score: " + score;
-
         const qData = riddleData[currentQuestionIndex];
         document.getElementById("question-text").innerText = `Q${currentQuestionIndex + 1}: ${qData.q}`;
+        document.getElementById('current-q-num').innerText = currentQuestionIndex + 1;
+        document.getElementById('my-live-score').innerText = score;
         
         const optionsContainer = document.getElementById("options-container");
         optionsContainer.innerHTML = "";
         
-        // Randomize options
         let shuffledOptions = [...qData.options].sort(() => Math.random() - 0.5);
 
         shuffledOptions.forEach(opt => {
@@ -219,18 +402,20 @@
             optionsContainer.appendChild(btn);
         });
 
-        startTimer();
+        timeLeft = 15;
+        document.getElementById("time").innerText = timeLeft;
+        questionStartTime = Date.now();
+        
+        timerInterval = setInterval(updateTimer, 1000);
     }
 
-    function startTimer() {
-        timerInterval = setInterval(() => {
-            timeLeft--;
-            document.getElementById("time").innerText = timeLeft;
-            if (timeLeft <= 0) {
-                clearInterval(timerInterval);
-                processAnswer("No Answer Provided");
-            }
-        }, 1000);
+    function updateTimer() {
+        timeLeft--;
+        document.getElementById('time').innerText = timeLeft;
+        if (timeLeft <= 0) {
+            clearInterval(timerInterval);
+            processAnswer("No Answer Provided");
+        }
     }
 
     function processAnswer(selectedOption) {
@@ -239,17 +424,19 @@
         const correctOption = qData.answer;
         const feedbackBox = document.getElementById("feedback-box");
         
-        // Disable buttons
         const buttons = document.querySelectorAll(".option-btn");
         buttons.forEach(btn => btn.disabled = true);
 
+        let timeTaken = ((Date.now() - questionStartTime) / 1000).toFixed(1);
+        if (selectedOption === "No Answer Provided") timeTaken = 15.0;
+
         let isCorrect = (selectedOption === correctOption);
-        rawAnswers.push(isCorrect);
         
         feedbackBox.classList.remove("hidden", "correct-feedback", "wrong-feedback");
 
         if (isCorrect) {
             score++;
+            document.getElementById('my-live-score').innerText = score;
             feedbackBox.classList.add("correct-feedback");
             feedbackBox.innerHTML = `👍✅ Correct!<br><span style="font-size:16px;">You selected: ${selectedOption}</span>`;
         } else {
@@ -257,22 +444,36 @@
             feedbackBox.innerHTML = `😂 Wrong Answer!<br>
                 <span style="font-size:16px;">You selected: <b>${selectedOption}</b><br>
                 Correct Answer: <b>${correctOption}</b></span>`;
-            announceVoice(`Wrong answer. Total score is ${score}.`);
+            if (selectedOption !== "No Answer Provided") {
+                announceVoice(`Wrong answer. Total score is ${score}.`);
+            }
         }
 
-        // Save for PDF Report
-        reportLog.push({
-            questionNum: currentQuestionIndex + 1,
+        let currentAnsData = {
             question: qData.q,
-            selected: selectedOption,
-            correct: correctOption,
-            marks: isCorrect ? 1 : 0
-        });
-
-        document.getElementById("score-display").innerText = "Total Score: " + score;
-        currentQuestionIndex++;
+            userAnswer: selectedOption,
+            correctAnswer: correctOption,
+            status: isCorrect ? "✅ Correct" : "❌ Wrong",
+            time: parseFloat(timeTaken)
+        };
         
-        // Show feedback for 4 seconds before loading the next riddle
+        quizRecords.push(currentAnsData);
+
+        // IMMEDIATELY SEND INDIVIDUAL ANSWER [no-cors bypass]
+        if(GAS_WEB_APP_URL !== "YOUR_GOOGLE_WEB_APP_URL_HERE") {
+            fetch(GAS_WEB_APP_URL, {
+                method: 'POST',
+                body: JSON.stringify({ 
+                    action: "saveAnswer", 
+                    club: selectedClub, 
+                    score: score, 
+                    details: currentAnsData 
+                }),
+                mode: 'no-cors'
+            }).catch(err => console.error("Error saving live answer:", err));
+        }
+
+        currentQuestionIndex++;
         setTimeout(loadQuestion, 4000); 
     }
 
@@ -283,15 +484,68 @@
         }
     }
 
+    // LIVE SCORING POLLING (GET)
+    function fetchOtherClubsScores() {
+        fetch(`${GAS_WEB_APP_URL}?action=getScores`)
+        .then(res => res.json())
+        .then(data => {
+            let scoreArray = [];
+            for (const [cName, cScore] of Object.entries(data)) {
+                scoreArray.push({ club: cName, score: parseInt(cScore) });
+            }
+            
+            scoreArray.sort((a, b) => b.score - a.score);
+            
+            let liveDiv = document.getElementById('live-standings');
+            let finalDiv = document.getElementById('final-standings');
+            let html = "";
+            
+            scoreArray.forEach((item, index) => {
+                let rank = index + 1;
+                let isFirst = rank === 1 ? "first-place" : "";
+                html += `<div class="club-badge ${isFirst}">
+                           <span class="rank-badge">${rank}</span> 
+                           <strong>${item.club}</strong>: <span style="color:#e91e63;">${item.score} / 30</span>
+                         </div>`;
+            });
+            
+            if(html === "") html = "<div class='club-badge'>Waiting for other clubs...</div>";
+            
+            if(liveDiv) liveDiv.innerHTML = html;
+            if(finalDiv) finalDiv.innerHTML = html; 
+        })
+        .catch(err => console.log("Live score fetch error", err));
+    }
+
     function endQuiz() {
+        clearInterval(liveSyncInterval);
         document.getElementById("quiz-section").classList.add("hidden");
         document.getElementById("result-section").classList.remove("hidden");
         
-        document.getElementById("final-club-name").innerText = selectedClub;
+        let totalSeconds = quizRecords.reduce((sum, record) => sum + record.time, 0);
+        let mins = Math.floor(totalSeconds / 60);
+        let secs = (totalSeconds % 60).toFixed(1);
+        let formattedTime = `${mins}m ${secs}s`;
+
+        document.getElementById("final-club-name").innerText = `Club: ${selectedClub}`;
         document.getElementById("final-score-display").innerText = score;
+        document.getElementById('final-time').innerText = `Total Time Taken: ${formattedTime}`;
         
         generateReportTable();
-        submitToGoogleSheets();
+
+        // SEND FINAL SUMMARY
+        if(GAS_WEB_APP_URL !== "YOUR_GOOGLE_WEB_APP_URL_HERE"){
+            fetch(GAS_WEB_APP_URL, {
+                method: 'POST',
+                body: JSON.stringify({
+                    action: "saveFinal",
+                    club: selectedClub,
+                    score: score,
+                    totalTime: formattedTime
+                }),
+                mode: 'no-cors'
+            }).catch(err => console.error("Error saving final data to sheet:", err));
+        }
     }
 
     function generateReportTable() {
@@ -303,40 +557,28 @@
                     <th>Question</th>
                     <th>Your Answer</th>
                     <th>Correct Answer</th>
-                    <th>Marks</th>
+                    <th>Status</th>
+                    <th>Time (s)</th>
                 </tr>
             </thead>
             <tbody>`;
             
-        reportLog.forEach(item => {
-            let rowClass = item.marks === 1 ? "row-correct" : "row-wrong";
+        quizRecords.forEach((item, index) => {
+            let rowClass = item.status === "✅ Correct" ? "row-correct" : "row-wrong";
+            let statusColor = item.status === "✅ Correct" ? "green" : "red";
+            
             html += `<tr class="${rowClass}">
-                <td>${item.questionNum}</td>
+                <td>${index + 1}</td>
                 <td>${item.question}</td>
-                <td>${item.selected}</td>
-                <td>${item.correct}</td>
-                <td>${item.marks}</td>
+                <td style="color: ${statusColor};">${item.userAnswer}</td>
+                <td style="color: blue; font-weight:bold;">${item.correctAnswer}</td>
+                <td style="color: ${statusColor}; font-weight: bold;">${item.status}</td>
+                <td>${item.time}s</td>
             </tr>`;
         });
         
         html += `</tbody></table>`;
         container.innerHTML = html;
-    }
-
-    function submitToGoogleSheets() {
-        const payload = {
-            club: selectedClub,
-            score: score,
-            answers: rawAnswers // Array of 30 booleans
-        };
-
-        fetch(GAS_WEB_APP_URL, {
-            method: 'POST',
-            body: JSON.stringify(payload),
-            mode: 'no-cors' 
-        }).then(() => {
-            console.log("Database updated successfully.");
-        }).catch(err => console.error("Error saving data:", err));
     }
 </script>
 
