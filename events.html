@@ -225,7 +225,7 @@
             justify-content: center;
             gap: 5px;
             padding: 8px 16px;
-            color: #ffffff;
+            color: #ffffff !important;
             text-decoration: none;
             font-size: 13px;
             font-weight: 500;
@@ -234,19 +234,27 @@
         }
 
         .btn-link-style {
-            background-color: #778ca3; /* Slate grey button layout option */
+            background-color: #404040; /* Black Light */
         }
 
         .btn-link-style:hover {
-            background-color: #4b6584;
+            background-color: #1a1a1a;
         }
 
         .btn-download-style {
-            background-color: #0288d1; /* Clean system blueprint blue action element */
+            background-color: #0000FF; /* Download Blue */
         }
 
         .btn-download-style:hover {
-            background-color: #01579b;
+            background-color: #0000CD;
+        }
+
+        .btn-file-style {
+            background-color: #D2691E; /* File Other Colour (Chocolate) */
+        }
+
+        .btn-file-style:hover {
+            background-color: #A0522D;
         }
 
         /* Status Badge Indicators */
@@ -258,10 +266,10 @@
             border-radius: 12px;
             text-transform: uppercase;
         }
-        .pill-process { background-color: #e8f5e9; color: #2e7d32; }
-        .pill-ongoing { background-color: #fff3e0; color: #f57c00; }
-        .pill-prospectus { background-color: #ffebee; color: #c62828; }
-        .pill-completed { background-color: #eceff1; color: #455a64; }
+        .pill-process { background-color: #00008B; color: #ffffff; } /* Blue Dark (Under Process) */
+        .pill-ongoing { background-color: #006400; color: #ffffff; } /* Dark Green (Ongoing) */
+        .pill-prospectus { background-color: #ffebee; color: #c62828; } 
+        .pill-completed { background-color: #800000; color: #ffffff; } /* Dark Maroon (Completed) */
 
         /* Donation Box Floating Panel Styles */
         #donation-qr-box {
@@ -431,54 +439,60 @@
                     </thead>
                     <tbody id="event-table-body">
                         
-                       <!-- Event Row 1: Ongoing -->
-                        <tr class="event-row-record" data-status="ongoing">
+                        <!-- Event Row 1: Completed -->
+                        <tr class="event-row-record" data-status="completed">
                             <td>1</td>
                             <td>27-06-2026</td>
                             <td>
                                 <span class="event-title-text">Notice for XI Registration Link</span>
-                                <span class="status-pill pill-process" style="margin-left: 8px;">Ongoing</span>
+                                <span class="status-pill pill-completed" style="margin-left: 8px;">Completed</span>
                             </td>
                             <td class="action-cell">
-                                <a href="https://script.google.com/macros/s/AKfycbxtVWhQzqD0SFMfgR7x2L53vd0LB-JYyDvZCMqL5wq-6EkAoYytwno-yyYLAhf4XoDkCg/exec" target="_blank" class="btn-attachment btn-link-style">🔗 Open Link</a>
+                                <a href="" target="_blank" class="btn-attachment btn-link-style">🔗 Open Link</a>
                             </td>
                         </tr>
-                        <tr class="event-row-record" data-status="ongoing">
+
+                        <!-- Event Row 2: Under Process -->
+                        <tr class="event-row-record" data-status="process">
                             <td>2</td>
                             <td>27-06-2026</td>
                             <td>
                                 <span class="event-title-text">Notice for Past Pupil And Students</span>
-                                <span class="status-pill pill-process" style="margin-left: 8px;">Ongoing</span>
+                                <span class="status-pill pill-process" style="margin-left: 8px;">Under Process</span>
                             </td>
                             <td class="action-cell">
-                                <a href="https://script.google.com/macros/s/AKfycbz_ToQmo0Mf9Jl3ljv9iBAMcynYQZrjc_fvFALwuDX9RKAU8v2Fu8cFwQtQvLTAF3h7/exec" target="_blank" class="btn-attachment btn-link-style">🔗 Open Link</a>
+                                <a href="" target="_blank" class="btn-attachment btn-link-style">🔗 Open Link</a>
                             </td>
                         </tr>
+
+                        <!-- Event Row 3: Ongoing -->
                         <tr class="event-row-record" data-status="ongoing">
                             <td>3</td>
                             <td>22-06-2026</td>
                             <td>
                                 <span class="event-title-text">Update Your UDISE + Details</span>
-                                <span class="status-pill pill-process" style="margin-left: 8px;">Ongoing</span>
+                                <span class="status-pill pill-ongoing" style="margin-left: 8px;">Ongoing</span>
                             </td>
                             <td class="action-cell">
                                 <a href="udiseentry.html" target="_blank" class="btn-attachment btn-link-style">🔗 Open Link</a>
                             </td>
                         </tr>
-                        <tr class="event-row-record" data-status="ongoing">
+
+                        <!-- Event Row 4: Completed -->
+                        <tr class="event-row-record" data-status="completed">
                             <td>4</td>
                             <td>16-May-2026</td>
                             <td>
                                 <strong class="event-title-text" style="font-weight: 600;">Half Yearly Examination of 2026</strong>
-                                <span class="status-pill pill-ongoing" style="margin-left: 8px;">Ongoing</span>
+                                <span class="status-pill pill-completed" style="margin-left: 8px;">Completed</span>
                                 <div class="meta-text-inline">📅 <b>Date:</b> 17-06-2026 till 29-06-2026</div>
                             </td>
                             <td class="action-cell">
-                                <a href="https://script.google.com/macros/s/AKfycbwTuWpa9AW1q1jjYVDTdfVekp3hrpBetWI_nqBQVqZHcatCCJ2TKp75M_PUBNmEFN3I/exec" class="btn-attachment btn-link-style">📥 Download the Report</a>
+                                <a href="" class="btn-attachment btn-file-style">📥 Download the Report</a>
                             </td>
                         </tr>
 
-                        <!-- Event Row 2: Prospectus -->
+                        <!-- Event Row 5: Prospectus -->
                         <tr class="event-row-record" data-status="prospectus">
                             <td>5</td>
                             <td>11-May-2026</td>
@@ -487,11 +501,11 @@
                                 <span class="status-pill pill-prospectus" style="margin-left: 8px;">Prospectus</span>
                             </td>
                             <td class="action-cell">
-                                <a href="https://dawn-sea-485.linkyhost.com/" target="_blank" download class="btn-attachment btn-download-style">📥 Download</a>
+                                <a href="" target="_blank" download class="btn-attachment btn-download-style">📥 Download</a>
                             </td>
                         </tr>
 
-                        <!-- Event Row 3: Completed -->
+                        <!-- Event Row 6: Completed -->
                         <tr class="event-row-record" data-status="completed">
                             <td>6</td>
                             <td>11-May-2026</td>
