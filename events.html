@@ -361,6 +361,54 @@
             .sidebar-btn { flex-grow: 1; text-align: center; }
             .sidebar-btn.active { border-left: none; border-bottom: 4px solid #00cc7a; padding-left: 20px; }
         }
+
+        /* --- SCHOOL WEEK CELEBRATION STYLES --- */
+        .celebration-section {
+            text-align: center;
+            padding: 40px 20px 20px 20px;
+        }
+        .celebration-heading {
+            font-size: 26px;
+            color: #1d4e73;
+            margin-bottom: 30px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .celebration-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            max-width: 1000px;
+            margin: 0 auto 30px auto;
+        }
+        .celebration-box {
+            background-color: #ffffff;
+            border: 2px solid #00cc7a;
+            border-radius: 8px;
+            padding: 20px 15px;
+            text-decoration: none;
+            color: #1d4e73;
+            font-size: 18px;
+            font-weight: 700;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .celebration-box:hover {
+            background-color: #00cc7a;
+            color: #ffffff;
+            transform: translateY(-5px);
+            box-shadow: 0 6px 15px rgba(0,204,122,0.3);
+        }
+        @media (max-width: 768px) {
+            .celebration-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 480px) {
+            .celebration-grid { grid-template-columns: 1fr; }
+        }
     </style>
 </head>
 <body>
@@ -412,6 +460,20 @@
 
     <!-- Refactored Minimalist Main Section Box Layout -->
     <div class="main-section">
+
+        <!-- --- ADDED: School Week Celebration Section --- -->
+        <div class="container celebration-section">
+            <h2 class="celebration-heading">School Week Celebration - 2026</h2>
+            <div class="celebration-grid">
+                <!-- Replace 'day1.html', etc., with your actual redirect links -->
+                <a href="day1.html" class="celebration-box">Day - 1</a>
+                <a href="day2.html" class="celebration-box">Day - 2</a>
+                <a href="day3.html" class="celebration-box">Day - 3</a>
+                <a href="finalresult.html" class="celebration-box">Final Result</a>
+            </div>
+        </div>
+        <!-- -------------------------------------------- -->
+
         <div class="container dashboard-container">
             
             <!-- Left Filtering Dynamic Navigation Panel Sidebar -->
