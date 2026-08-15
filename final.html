@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day 1 & Day 3 Events - Competition Results</title>
+    <style>
+        /* General Page Styling */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
+            margin: 0;
+            padding: 20px;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .header-title {
+            text-align: center;
+            color: #2c3e50;
+            animation: fadeInDown 0.8s ease-out;
+        }
+
+        .sub-title {
+            text-align: center;
+            color: #7f8c8d;
+            margin-bottom: 40px;
+            animation: fadeInDown 1s ease-out;
+        }
+
+        /* Card Container and Layout */
+        .event-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 25px;
+            max-width: 1300px;
+            margin: 0 auto;
+            flex: 1;
+        }
+
+        /* Animation Cards Styling */
+        .card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            width: 320px;
+            padding: 20px;
+            opacity: 0; 
+            transform: translateY(40px);
+            animation: fadeInUp 0.8s ease-out forwards;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        /* Staggered entrance animation for all cards */
+        .card:nth-child(1) { animation-delay: 0.1s; }
+        .card:nth-child(2) { animation-delay: 0.2s; }
+        .card:nth-child(3) { animation-delay: 0.3s; }
+        .card:nth-child(4) { animation-delay: 0.4s; }
+        .card:nth-child(5) { animation-delay: 0.5s; }
+        .card:nth-child(6) { animation-delay: 0.6s; }
+        .card:nth-child(7) { animation-delay: 0.7s; }
+        .card:nth-child(8) { animation-delay: 0.8s; }
+        .card:nth-child(9) { animation-delay: 0.9s; }
+        .card:nth-child(10) { animation-delay: 1.0s; }
+        .card:nth-child(11) { animation-delay: 1.1s; }
+        .card:nth-child(12) { animation-delay: 1.2s; }
+
+        /* Hover Effect for Cards */
+        .card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+            border-bottom: 4px solid #3498db;
+        }
+
+        .card h2 {
+            text-align: center;
+            color: #34495e;
+            border-bottom: 2px solid #ecf0f1;
+            padding-bottom: 10px;
+            margin-top: 0;
+            font-size: 1.2rem;
+        }
+        
+        .special-day {
+            color: #e67e22 !important;
+            font-size: 1.3rem !important;
+        }
+
+        /* Table Styling */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        th, td {
+            padding: 10px 8px;
+            text-align: left;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 0.95rem;
+        }
+
+        th {
+            background-color: #f8f9fa;
+            color: #333;
+            font-weight: 600;
+        }
+
+        td { color: #555; }
+
+        /* Highlight Top Ranks */
+        .rank-1 { color: #d4af37; font-weight: bold; } /* Gold */
+        .rank-2 { color: #95a5a6; font-weight: bold; } /* Silver */
+        .rank-3 { color: #cd7f32; font-weight: bold; } /* Bronze */
+
+        /* Professional Animation for Overall Winner Box */
+        .winner-container {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            margin-top: 40px;
+            animation: fadeInUp 1s ease-out forwards;
+            animation-delay: 1.5s;
+            opacity: 0;
+        }
+
+        .winner-card {
+            background: linear-gradient(135deg, #1f4037, #99f2c8);
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(46, 204, 113, 0.4);
+            width: 90%;
+            max-width: 800px;
+            padding: 30px;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .winner-card::before {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%; width: 200%; height: 200%;
+            background: rgba(255, 255, 255, 0.1);
+            transform: rotate(45deg);
+            animation: shine 4s infinite;
+        }
+
+        .winner-card h1 {
+            font-size: 2.5rem;
+            margin: 0 0 10px 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .winner-card h2 {
+            font-size: 1.8rem;
+            color: #f1c40f;
+            margin-top: 0;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.4);
+        }
+        
+        .winner-card table {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 8px;
+            overflow: hidden;
+            color: #333;
+            margin-top: 20px;
+        }
+        
+        .winner-card th {
+            background: #2c3e50;
+            color: white;
+            font-size: 1.1rem;
+        }
+
+        /* Exit Box (Floating Button) */
+        .exit-box {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #e74c3c;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+            transition: background-color 0.3s, transform 0.2s;
+            z-index: 1000;
+        }
+
+        .exit-box:hover {
+            background-color: #c0392b;
+            transform: scale(1.05);
+        }
+
+        /* Fullscreen Overlay for Exit Action */
+        .overlay {
+            display: none; 
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            color: white;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .overlay h1 { margin-bottom: 10px; animation: fadeInUp 0.5s ease-out; }
+        
+        .spinner {
+            border: 4px solid rgba(255,255,255,0.3);
+            border-top: 4px solid #3498db;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin-top: 20px;
+        }
+
+        /* Footer Styling */
+        .site-footer {
+            text-align: center;
+            padding: 25px 20px;
+            margin-top: 50px;
+            background-color: #2c3e50;
+            color: #bdc3c7;
+            border-radius: 8px 8px 0 0;
+            animation: fadeInUp 1s ease-out forwards;
+            animation-delay: 2s;
+            opacity: 0;
+        }
+
+        .site-footer p { margin: 5px 0; font-size: 14px; }
+        .developer-credit { color: #3498db; font-weight: bold; letter-spacing: 0.5px; }
+
+        /* Keyframes */
+        @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeInDown { from { opacity: 0; transform: translateY(-30px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        @keyframes shine { 
+            0% { transform: translateX(-150%) rotate(45deg); } 
+            100% { transform: translateX(150%) rotate(45deg); } 
+        }
+    </style>
+</head>
+<body>
+
+    <div class="exit-box" onclick="triggerExit()">✖ Close Results</div>
+    <div class="overlay" id="exitOverlay">
+        <h1>Exiting to Homepage...</h1>
+        <div class="spinner"></div>
+    </div>
+
+    <h1 class="header-title">GOOD SHEPHERD HIGHER SECONDARY SCHOOL-2026</h1>
+    <h1 class="sub-title">Extracurricular Competitions - Judging Sheets & Final Standings</h1>
+
+    <div class="event-container">
+        
+        <!-- Skit -->
+        <div class="card">
+            <h2>🎭 Skit Competition</h2>
+            <table>
+                <tr><th>Club Name</th><th>Total</th><th>Rank</th></tr>
+                <tr><td>Art</td><td>78</td><td class="rank-1">1st</td></tr>
+                <tr><td>Media</td><td>68</td><td class="rank-2">2nd</td></tr>
+                <tr><td>Music</td><td>67</td><td class="rank-3">3rd</td></tr>
+                <tr><td>Chess</td><td>52</td><td>4th</td></tr>
+            </table>
+        </div>
+
+        <!-- Folk Dance -->
+        <div class="card">
+            <h2>💃 Folk Dance</h2>
+            <table>
+                <tr><th>Club Name</th><th>Total</th><th>Rank</th></tr>
+                <tr><td>Media</td><td>91</td><td class="rank-1">1st</td></tr>
+                <tr><td>Music</td><td>91</td><td class="rank-1">1st</td></tr>
+                <tr><td>Art</td><td>89</td><td class="rank-2">2nd</td></tr>
+                <tr><td>Eco</td><td>80</td><td class="rank-3">3rd</td></tr>
+                <tr><td>Chess</td><td>75</td><td>4th</td></tr>
+                <tr><td>Decoration</td><td>73</td><td>5th</td></tr>
+            </table>
+        </div>
+
+        <!-- Folk Song -->
+        <div class="card">
+            <h2>🎤 Folk Song</h2>
+            <table>
+                <tr><th>Club Name</th><th>Total</th><th>Rank</th></tr>
+                <tr><td>Chess</td><td>96</td><td class="rank-1">1st</td></tr>
+                <tr><td>Media</td><td>92</td><td class="rank-2">2nd</td></tr>
+                <tr><td>Eco</td><td>88</td><td class="rank-3">3rd</td></tr>
+                <tr><td>Music</td><td>87</td><td>4th</td></tr>
+                <tr><td>Decoration</td><td>83</td><td>5th</td></tr>
+                <tr><td>Art</td><td>70</td><td>6th</td></tr>
+            </table>
+        </div>
+
+        <!-- English Vocab -->
+        <div class="card">
+            <h2>📖 English Vocab</h2>
+            <table>
+                <tr><th>Club Name</th><th>Total</th><th>Rank</th></tr>
+                <tr><td>Decoration</td><td>90</td><td class="rank-1">1st</td></tr>
+                <tr><td>Media</td><td>66</td><td class="rank-2">2nd</td></tr>
+                <tr><td>Eco</td><td>58</td><td class="rank-3">3rd</td></tr>
+                <tr><td>Chess</td><td>57</td><td>4th</td></tr>
+                <tr><td>Music</td><td>55</td><td>5th</td></tr>
+                <tr><td>Art</td><td>25</td><td>6th</td></tr>
+            </table>
+        </div>
+
+        <!-- Reading Spot -->
+        <div class="card">
+            <h2>📚 Reading Spot</h2>
+            <table>
+                <tr><th>Club Name</th><th>Total</th><th>Rank</th></tr>
+                <tr><td>Music</td><td>67</td><td class="rank-1">1st</td></tr>
+                <tr><td>Chess</td><td>60</td><td class="rank-2">2nd</td></tr>
+                <tr><td>Eco</td><td>60</td><td class="rank-2">2nd</td></tr>
+                <tr><td>Decoration</td><td>58</td><td class="rank-3">3rd</td></tr>
+                <tr><td>Media</td><td>50</td><td>4th</td></tr>
+                <tr><td>Art</td><td>48</td><td>5th</td></tr>
+            </table>
+        </div>
+
+        <!-- Declamation -->
+        <div class="card">
+            <h2>🗣️ Declamation</h2>
+            <table>
+                <tr><th>Club Name</th><th>Total</th><th>Rank</th></tr>
+                <tr><td>Music</td><td>80</td><td class="rank-1">1st</td></tr>
+                <tr><td>Art</td><td>69</td><td class="rank-2">2nd</td></tr>
+                <tr><td>Eco</td><td>60</td><td class="rank-3">3rd</td></tr>
+                <tr><td>Media</td><td>60</td><td class="rank-3">3rd</td></tr>
+                <tr><td>Decoration</td><td>57</td><td>4th</td></tr>
+                <tr><td>Chess</td><td>39</td><td>5th</td></tr>
+            </table>
+        </div>
+
+        <!-- Quiz -->
+        <div class="card">
+            <h2>🧠 Quiz</h2>
+            <table>
+                <tr><th>Club Name</th><th>Total</th><th>Rank</th></tr>
+                <tr><td>Chess</td><td>38</td><td class="rank-1">1st</td></tr>
+                <tr><td>Decoration</td><td>34</td><td class="rank-2">2nd</td></tr>
+                <tr><td>Media</td><td>33</td><td class="rank-3">3rd</td></tr>
+                <tr><td>Eco</td><td>30</td><td>4th</td></tr>
+                <tr><td>Art</td><td>29</td><td>5th</td></tr>
+                <tr><td>Music</td><td>24</td><td>6th</td></tr>
+            </table>
+        </div>
+
+        <!-- Riddle -->
+        <div class="card">
+            <h2>❓ Riddle</h2>
+            <table>
+                <tr><th>Club Name</th><th>Total</th><th>Rank</th></tr>
+                <tr><td>Eco</td><td>24</td><td class="rank-1">1st</td></tr>
+                <tr><td>Music</td><td>24</td><td class="rank-1">1st</td></tr>
+                <tr><td>Chess</td><td>23</td><td class="rank-2">2nd</td></tr>
+                <tr><td>Decoration</td><td>23</td><td class="rank-2">2nd</td></tr>
+                <tr><td>Media</td><td>21</td><td class="rank-3">3rd</td></tr>
+                <tr><td>Art</td><td>18</td><td>4th</td></tr>
+            </table>
+        </div>
+
+        <!-- Poetry Writing -->
+        <div class="card">
+            <h2>✍️ Poetry Writing</h2>
+            <table>
+                <tr><th>Club Name</th><th>Total</th><th>Rank</th></tr>
+                <tr><td>Media</td><td>37</td><td class="rank-1">1st</td></tr>
+                <tr><td>Music</td><td>32</td><td class="rank-2">2nd</td></tr>
+                <tr><td>Chess</td><td>20</td><td class="rank-3">3rd</td></tr>
+                <tr><td>Decoration</td><td>19</td><td>4th</td></tr>
+                <tr><td>Eco</td><td>13</td><td>5th</td></tr>
+                <tr><td>Art</td><td>5</td><td>6th</td></tr>
+            </table>
+        </div>
+
+        <!-- Science Exhibition -->
+        <div class="card">
+            <h2>🔬 Science Exhibition</h2>
+            <table>
+                <tr><th>Club Name</th><th>Total</th><th>Rank</th></tr>
+                <tr><td>Art</td><td>58</td><td class="rank-1">1st</td></tr>
+                <tr><td>Decoration</td><td>57</td><td class="rank-2">2nd</td></tr>
+                <tr><td>Music</td><td>55</td><td class="rank-3">3rd</td></tr>
+                <tr><td>Eco</td><td>53</td><td>4th</td></tr>
+                <tr><td>Chess</td><td>52</td><td>5th</td></tr>
+                <tr><td>Media</td><td>0</td><td>6th</td></tr>
+            </table>
+        </div>
+
+        <!-- Morning Assembly -->
+        <div class="card">
+            <h2>🌅 Morning Assembly</h2>
+            <table>
+                <tr><th>Club Name</th><th>Total</th><th>Rank</th></tr>
+                <tr><td>Media</td><td>46</td><td class="rank-1">1st</td></tr>
+                <tr><td>Decoration</td><td>44</td><td class="rank-2">2nd</td></tr>
+                <tr><td>Chess</td><td>41</td><td class="rank-3">3rd</td></tr>
+                <tr><td>Music</td><td>41</td><td class="rank-3">3rd</td></tr>
+                <tr><td>Eco</td><td>34</td><td>4th</td></tr>
+                <tr><td>Art</td><td>32</td><td>5th</td></tr>
+            </table>
+        </div>
+
+        <!-- Day 3 Pyramid Dance -->
+        <div class="card">
+            <h2 class="special-day">🔺 Day 3 - Pyramid Dance</h2>
+            <table>
+                <tr><th>Club Name</th><th>Total</th><th>Rank</th></tr>
+                <tr><td>Art</td><td>767</td><td class="rank-1">1st</td></tr>
+                <tr><td>Decoration</td><td>721</td><td class="rank-2">2nd</td></tr>
+                <tr><td>Media</td><td>624</td><td class="rank-3">3rd</td></tr>
+                <tr><td>Chess</td><td>608</td><td>4th</td></tr>
+                <tr><td>Music</td><td>590</td><td>5th</td></tr>
+                <tr><td>Eco</td><td>581</td><td>6th</td></tr>
+            </table>
+        </div>
+    </div>
+
+    <!-- Professionally Animated Overall Winner Box -->
+    <div class="winner-container">
+        <div class="winner-card">
+            <h1>🏆 THE GRAND CHAMPIONS 🏆</h1>
+            <h2>Congratulations, ART CLUB!</h2>
+            <p>Overall standings computed from Day 1 & Day 3 Events.</p>
+            <table>
+                <tr>
+                    <th>Final Rank</th>
+                    <th>Club Name</th>
+                    <th>Grand Total Marks</th>
+                </tr>
+                <tr>
+                    <td class="rank-1" style="font-size:1.2rem;">1st Place</td>
+                    <td style="font-weight:bold; font-size:1.2rem;">Art</td>
+                    <td style="font-weight:bold; font-size:1.2rem;">1288</td>
+                </tr>
+                <tr>
+                    <td class="rank-2">2nd Place</td>
+                    <td>Decoration</td>
+                    <td>1259</td>
+                </tr>
+                <tr>
+                    <td class="rank-3">3rd Place</td>
+                    <td>Music</td>
+                    <td>1213</td>
+                </tr>
+                <tr>
+                    <td>4th Place</td>
+                    <td>Media</td>
+                    <td>1188</td>
+                </tr>
+                <tr>
+                    <td>5th Place</td>
+                    <td>Chess</td>
+                    <td>1161</td>
+                </tr>
+                <tr>
+                    <td>6th Place</td>
+                    <td>Eco</td>
+                    <td>1081</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <footer class="site-footer">
+        <p>&copy; 2026 Good Shepherd Higher Secondary School. All Rights Reserved.</p>
+        <p>Developed by <span class="developer-credit">SangmaWebdeveloper</span></p>
+    </footer>
+
+    <script>
+        const overlay = document.getElementById('exitOverlay');
+
+        function triggerExit() {
+            overlay.style.display = 'flex';
+            setTimeout(() => {
+                overlay.style.opacity = '1';
+            }, 10); 
+            setTimeout(() => {
+                window.location.href = 'events.html';
+            }, 1000);
+        }
+    </script>
+</body>
+</html>
