@@ -13,6 +13,34 @@
             width: 100%;
             overflow: hidden;
         }
+
+        /* Continuous Sliding Animation for 10 Images */
+        .slides-wrapper {
+            display: flex;
+            width: 1000%;
+            animation: heroSlideshow 30s infinite ease-in-out;
+        }
+        .slide-img {
+            width: 10%;
+            height: auto;
+            object-fit: cover;
+            display: block;
+        }
+
+        @keyframes heroSlideshow {
+            0%, 7% { transform: translateX(0%); }
+            10%, 17% { transform: translateX(-10%); }
+            20%, 27% { transform: translateX(-20%); }
+            30%, 37% { transform: translateX(-30%); }
+            40%, 47% { transform: translateX(-40%); }
+            50%, 57% { transform: translateX(-50%); }
+            60%, 67% { transform: translateX(-60%); }
+            70%, 77% { transform: translateX(-70%); }
+            80%, 87% { transform: translateX(-80%); }
+            90%, 97% { transform: translateX(-90%); }
+            100% { transform: translateX(0%); }
+        }
+
         .slider-overlay {
             position: absolute;
             top: 0;
@@ -28,6 +56,7 @@
             color: #ffffff;
             padding: 20px;
             box-sizing: border-box;
+            z-index: 2;
         }
         .animate-school-name {
             font-size: 2.5rem;
@@ -355,7 +384,7 @@
         .action-btn-group {
             position: fixed;
             bottom: 30px;
-            left: 30px; /* Positioned on left to avoid overlap with donation box */
+            left: 30px;
             display: flex;
             flex-direction: column;
             gap: 15px;
@@ -451,16 +480,16 @@
     <!-- Universal Image Slideshow Hero Block -->
     <div class="slider-container">
         <div class="slides-wrapper">
-            <img src="images/11.jpg" alt="School Campus View" class="slide-img" style="width:100%;">
-            <img src="images/22.jpg" alt="School Campus View" class="slide-img" style="width:100%;">
-            <img src="images/33.jpg" alt="School Campus View" class="slide-img" style="width:100%;">
-            <img src="images/44.jpg" alt="School Campus View" class="slide-img" style="width:100%;">
-            <img src="images/55.jpg" alt="School Campus View" class="slide-img" style="width:100%;">
-            <img src="images/66.jpg" alt="School Campus View" class="slide-img" style="width:100%;">
-            <img src="images/77.jpg" alt="School Campus View" class="slide-img" style="width:100%;">
-            <img src="images/88.jpg" alt="School Campus View" class="slide-img" style="width:100%;">
-            <img src="images/99.jpg" alt="School Campus View" class="slide-img" style="width:100%;">
-            <img src="images/100.jpg" alt="School Campus View" class="slide-img" style="width:100%;">
+            <img src="images/11.jpg" alt="School Campus View" class="slide-img">
+            <img src="images/22.jpg" alt="School Campus View" class="slide-img">
+            <img src="images/33.jpg" alt="School Campus View" class="slide-img">
+            <img src="images/44.jpg" alt="School Campus View" class="slide-img">
+            <img src="images/55.jpg" alt="School Campus View" class="slide-img">
+            <img src="images/66.jpg" alt="School Campus View" class="slide-img">
+            <img src="images/77.jpg" alt="School Campus View" class="slide-img">
+            <img src="images/88.jpg" alt="School Campus View" class="slide-img">
+            <img src="images/99.jpg" alt="School Campus View" class="slide-img">
+            <img src="images/100.jpg" alt="School Campus View" class="slide-img">
         </div>
         <div class="slider-overlay">
             <h1 class="animate-school-name">SCHOOL EVENTS</h1>
@@ -508,7 +537,8 @@
                                 </a>
                             </li>
                             <li>
-                             <li>
+                            </li>
+                            <li>
                                 <a href="registration.html" class="news-link">
                                     <i>04-July-2026 :</i> Class XI Registration Notice. <img src="images/new (1).gif" alt="new">
                                 </a>
@@ -611,7 +641,7 @@
                             </li>
                             <li style="margin-bottom: 20px;">
                                 <img src="images/iconpdf.gif" alt="pdf"> 
-                                <a href="registration.html" " target="_blank">Notice for the Past Pupil and  Students</a> 
+                                <a href="registration.html" target="_blank">Notice for the Past Pupil and  Students</a> 
                                 <img src="images/new (1).gif" alt="new">
                             </li>
                             <li style="margin-bottom: 20px;">
@@ -731,7 +761,7 @@
                         <div class="contact-value">
                             <strong>Md. Pinali Sangma</strong><br>
                             <a href="tel:+917005783404">+91 70051 71278</a>
-                            <a href="https://wa.me/70051 71278" target="_blank" class="whatsapp-link">💬 WhatsApp</a>
+                            <a href="https://wa.me/7005171278" target="_blank" class="whatsapp-link">💬 WhatsApp</a>
                         </div>
                     </div>
                     <div class="contact-item">
@@ -851,27 +881,19 @@
         }, 1500); 
 
         // ---------------- MODAL CONTROLS ----------------
-        
-        // Modal Elements
         const feedbackModal = document.getElementById('feedbackModal');
-        
-        // Button Elements
         const openFeedbackBtn = document.getElementById('openFeedbackBtn');
         const closeFeedbackBtn = document.getElementById('closeFeedbackBtn');
 
-        // Open/Close logic
         openFeedbackBtn.onclick = () => feedbackModal.style.display = 'flex';
         closeFeedbackBtn.onclick = () => feedbackModal.style.display = 'none';
 
-        // Close when clicking outside of the modal card
         window.onclick = (e) => { 
             if (e.target === feedbackModal) feedbackModal.style.display = 'none'; 
         }
 
         // ---------------- FORM SUBMISSION LOGIC ----------------
-        
-        // Feedback Form Submission
-        const feedbackScriptURL = 'https://script.google.com/macros/s/AKfycbyGdVJyh5pxQg5LxLdPv_l4Tly72TKl4cLKZcW1ieIAubalzILU7qyG4oxp2SnuIXdI/exec'; // Replace with actual URL
+        const feedbackScriptURL = 'https://script.google.com/macros/s/AKfycbyGdVJyh5pxQg5LxLdPv_l4Tly72TKl4cLKZcW1ieIAubalzILU7qyG4oxp2SnuIXdI/exec';
         const feedbackForm = document.getElementById('feedbackForm');
         const feedbackMsg = document.getElementById('feedbackStatusMsg');
         const feedbackBtn = document.getElementById('submitFeedbackBtn');
